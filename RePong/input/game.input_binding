@@ -1,0 +1,36 @@
+key_trigger {
+  input: KEY_W
+  action: "player_up"
+}
+key_trigger {
+  input: KEY_S
+  action: "player_down"
+}
+key_trigger {
+  input: KEY_UP
+  action: "enemy_up"
+}
+key_trigger {
+  input: KEY_DOWN
+  action: "enemy_down"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_1
+  action: "touch"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_UP
+  action: "player_up"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_DOWN
+  action: "player_down"
+}
+gamepad_trigger {
+  input: GAMEPAD_LPAD_UP
+  action: "enemy_up"
+}
+gamepad_trigger {
+  input: GAMEPAD_LPAD_DOWN
+  action: "enemy_down"
+}
