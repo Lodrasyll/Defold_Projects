@@ -1,3 +1,7 @@
+components {
+  id: "paddle_enemy"
+  component: "/main/paddle_enemy.script"
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
@@ -18,7 +22,8 @@ embedded_components {
   "restitution: 0.5\n"
   "group: \"paddles\"\n"
   "mask: \"balls\"\n"
-  "mask: \"walls\"\n"
+  "mask: \"wall_up\"\n"
+  "mask: \"wall_down\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"

@@ -1,7 +1,5 @@
 local sceen_h = 640
 
-local is_move_sound_playing = false
-
 function init(self)
 	msg.post('.', 'acquire_input_focus')
 
@@ -49,9 +47,9 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	if action_id == hash('player_up') then
+	if action_id == hash('enemy_up') then
 		self.input.y = 1
-	elseif action_id == hash('player_down') then
+	elseif action_id == hash('enemy_down') then
 		self.input.y = -1
 	end
 

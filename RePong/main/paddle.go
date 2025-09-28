@@ -22,7 +22,8 @@ embedded_components {
   "restitution: 0.5\n"
   "group: \"paddles\"\n"
   "mask: \"balls\"\n"
-  "mask: \"walls\"\n"
+  "mask: \"wall_up\"\n"
+  "mask: \"wall_down\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
@@ -39,5 +40,12 @@ embedded_components {
   "  data: 117.35496\n"
   "  data: 10.0\n"
   "}\n"
+  ""
+}
+embedded_components {
+  id: "sfx_move"
+  type: "sound"
+  data: "sound: \"/assets/sfxs/move.ogg\"\n"
+  "looping: 1\n"
   ""
 }
