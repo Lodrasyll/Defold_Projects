@@ -1,3 +1,20 @@
+components {
+  id: "ball"
+  component: "/main/ball.script"
+}
+components {
+  id: "trail_mesh"
+  component: "/hyper_trails/models/trail_mesh.mesh"
+}
+components {
+  id: "trail_maker"
+  component: "/hyper_trails/trail_maker.script"
+  properties {
+    id: "trail_tint_color"
+    value: "0.0, 1.0, 1.0, 1.0"
+    type: PROPERTY_TYPE_VECTOR4
+  }
+}
 embedded_components {
   id: "sprite"
   type: "sprite"

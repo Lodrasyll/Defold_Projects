@@ -17,4 +17,15 @@ scale_mode = stretch
 
 [project]
 title = RePong
+dependencies#0 = https://github.com/indiesoftby/defold-hyper-trails/archive/refs/tags/1.4.2.zip
+dependencies#1 = https://github.com/KorolevSoftware/defold-faststream/archive/refs/tags/beta_1.0.zip
+
+[graphics]
+default_texture_min_filter = nearest
+default_texture_mag_filter = nearest
+
+[render]
+clear_color_green = 1.0
+clear_color_red = 1.0
+clear_color_blue = 1.0
 

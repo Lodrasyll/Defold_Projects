@@ -10,7 +10,7 @@ instances {
   scale3 {
     x: 0.7
     y: 0.7
-    z: 0.7
+    z: 1.0E-6
   }
 }
 instances {
@@ -64,10 +64,10 @@ embedded_instances {
   data: "embedded_components {\n"
   "  id: \"collisionobject\"\n"
   "  type: \"collisionobject\"\n"
-  "  data: \"type: COLLISION_OBJECT_TYPE_KINEMATIC\\n"
+  "  data: \"type: COLLISION_OBJECT_TYPE_STATIC\\n"
   "mass: 0.0\\n"
   "friction: 0.1\\n"
-  "restitution: 0.5\\n"
+  "restitution: 1.0\\n"
   "group: \\\"wall_up\\\"\\n"
   "mask: \\\"paddles\\\"\\n"
   "mask: \\\"balls\\\"\\n"
@@ -98,10 +98,10 @@ embedded_instances {
   data: "embedded_components {\n"
   "  id: \"collisionobject\"\n"
   "  type: \"collisionobject\"\n"
-  "  data: \"type: COLLISION_OBJECT_TYPE_KINEMATIC\\n"
+  "  data: \"type: COLLISION_OBJECT_TYPE_STATIC\\n"
   "mass: 0.0\\n"
   "friction: 0.1\\n"
-  "restitution: 0.5\\n"
+  "restitution: 1.0\\n"
   "group: \\\"wall_down\\\"\\n"
   "mask: \\\"paddles\\\"\\n"
   "mask: \\\"balls\\\"\\n"

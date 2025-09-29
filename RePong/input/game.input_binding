@@ -14,6 +14,10 @@ key_trigger {
   input: KEY_DOWN
   action: "enemy_down"
 }
+key_trigger {
+  input: KEY_SPACE
+  action: "restart"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"
