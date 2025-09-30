@@ -11,8 +11,18 @@ components {
   component: "/hyper_trails/trail_maker.script"
   properties {
     id: "trail_tint_color"
-    value: "0.0, 1.0, 1.0, 1.0"
+    value: "0.0, 0.0, 0.0, 1.0"
     type: PROPERTY_TYPE_VECTOR4
+  }
+  properties {
+    id: "fade_tail_alpha"
+    value: "12.0"
+    type: PROPERTY_TYPE_NUMBER
+  }
+  properties {
+    id: "shrink_tail_width"
+    value: "true"
+    type: PROPERTY_TYPE_BOOLEAN
   }
 }
 embedded_components {

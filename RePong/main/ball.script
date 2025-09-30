@@ -20,6 +20,7 @@ local function setup_ball(self)
 	self.velocity = self.dir * self.speed
 
 	self.increase_factor = 1.13
+	self.score = 1
 end
 
 local function reset_ball(self)
@@ -44,7 +45,10 @@ function update(self, dt)
 	local pos = go.get_position()
 	pos = pos + self.velocity * dt
 	go.set_position(pos)
-	
+
+	if pos.x < 0 then
+		msg.post('gui#gui', message_id, {score = })
+	end
 end
 
 function fixed_update(self, dt)

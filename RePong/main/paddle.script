@@ -1,6 +1,4 @@
-local sceen_h = 640
-
-local is_move_sound_playing = false
+local sceen_h = tonumber(sys.get_config("display.height"))
 
 function init(self)
 	msg.post('.', 'acquire_input_focus')

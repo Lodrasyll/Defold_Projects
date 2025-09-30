@@ -1,7 +1,3 @@
-components {
-  id: "paddle_enemy"
-  component: "/main/paddle_enemy.script"
-}
 embedded_components {
   id: "sprite"
   type: "sprite"

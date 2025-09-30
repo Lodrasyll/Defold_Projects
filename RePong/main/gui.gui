@@ -4,7 +4,7 @@ fonts {
 }
 nodes {
   position {
-    x: 500.0
+    x: 401.0
     y: 481.0
   }
   size {
@@ -20,7 +20,7 @@ nodes {
   text: "0\n"
   ""
   font: "font"
-  id: "score"
+  id: "score_p"
   inherit_alpha: true
 }
 nodes {
@@ -41,6 +41,26 @@ nodes {
   text: "Hello!RePong."
   font: "font"
   id: "title"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 602.0
+    y: 482.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "0"
+  font: "font"
+  id: "score_e"
   inherit_alpha: true
 }
 material: "/builtins/materials/gui.material"
