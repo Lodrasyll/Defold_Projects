@@ -2,29 +2,6 @@ components {
   id: "ball"
   component: "/main/ball.script"
 }
-components {
-  id: "trail_mesh"
-  component: "/hyper_trails/models/trail_mesh.mesh"
-}
-components {
-  id: "trail_maker"
-  component: "/hyper_trails/trail_maker.script"
-  properties {
-    id: "trail_tint_color"
-    value: "0.0, 0.0, 0.0, 1.0"
-    type: PROPERTY_TYPE_VECTOR4
-  }
-  properties {
-    id: "fade_tail_alpha"
-    value: "12.0"
-    type: PROPERTY_TYPE_NUMBER
-  }
-  properties {
-    id: "shrink_tail_width"
-    value: "true"
-    type: PROPERTY_TYPE_BOOLEAN
-  }
-}
 embedded_components {
   id: "sprite"
   type: "sprite"
@@ -51,15 +28,15 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      x: -1.0\n"
-  "      y: -1.0\n"
+  "      x: -3.0\n"
+  "      y: -4.0\n"
   "    }\n"
   "    rotation {\n"
   "    }\n"
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 30.973724\n"
+  "  data: 30.222744\n"
   "  data: 25.259512\n"
   "  data: 10.0\n"
   "}\n"

@@ -1,7 +1,6 @@
 function init(self)
-	-- Add initialization code here
-	-- Learn more: https://defold.com/manuals/script/
-	-- Remove this function if not needed
+	self.score_p1 = 0
+	self.score_p2 = 0
 end
 
 function final(self)
@@ -17,9 +16,15 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
-	-- Add message-handling code here
-	-- Learn more: https://defold.com/manuals/message-passing/
-	-- Remove this function if not needed
+	if message_id == hash('update_score_p2') then
+		self.score_p2 = self.score_p2 + message.score_p2
+		local score_node = gui.get_node('score_p2')
+		gui.set_text(score_node, self.score_p2)
+	elseif message_id == hash('update_score_p1') then
+		self.score_p1 = self.score_p1 + message.score_p1
+		local score_node = gui.get_node('score_p1')
+		gui.set_text(score_node, self.score_p1)
+	end
 end
 
 function on_input(self, action_id, action)

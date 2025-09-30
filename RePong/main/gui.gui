@@ -1,3 +1,4 @@
+script: "/main/gui.gui_script"
 fonts {
   name: "font"
   font: "/main/font.font"
@@ -20,7 +21,7 @@ nodes {
   text: "0\n"
   ""
   font: "font"
-  id: "score_p"
+  id: "score_p1"
   inherit_alpha: true
 }
 nodes {
@@ -45,8 +46,8 @@ nodes {
 }
 nodes {
   position {
-    x: 602.0
-    y: 482.0
+    x: 601.0
+    y: 481.0
   }
   size {
     x: 200.0
@@ -58,9 +59,10 @@ nodes {
     z: 0.0
   }
   type: TYPE_TEXT
-  text: "0"
+  text: "0\n"
+  ""
   font: "font"
-  id: "score_e"
+  id: "score_p2"
   inherit_alpha: true
 }
 material: "/builtins/materials/gui.material"

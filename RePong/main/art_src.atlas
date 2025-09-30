@@ -1,13 +1,13 @@
 animations {
   id: "paddle"
   images {
+    image: "/assets/sprites/paddle_000.png"
+  }
+  images {
     image: "/assets/sprites/paddle_001.png"
   }
   images {
     image: "/assets/sprites/paddle_002.png"
-  }
-  images {
-    image: "/assets/sprites/paddlle_003.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
   fps: 24
@@ -15,13 +15,13 @@ animations {
 animations {
   id: "ball"
   images {
+    image: "/assets/sprites/ball_000.png"
+  }
+  images {
     image: "/assets/sprites/ball_001.png"
   }
   images {
     image: "/assets/sprites/ball_002.png"
-  }
-  images {
-    image: "/assets/sprites/ball_003.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
   fps: 24
