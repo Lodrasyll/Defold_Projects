@@ -1,0 +1,127 @@
+{
+  :bundle {
+    :last-bundle-command :project.bundle-windows
+    :output-directory "G:\\test"
+    :windows {
+      :build_report false
+      :contentless false
+      :liveupdate false
+      :platform "x86_64-win32"
+      :texture_compression "enabled"
+      :variant "release"
+      :with_symbols false
+    }
+  }
+  :workflow {
+    :recent-files [
+      [
+        "/main/main.collection"
+        :scene
+      ]
+      [
+        "/assets/font/large.font"
+        :scene
+      ]
+      [
+        "/assets/font/tiny.font"
+        :scene
+      ]
+      [
+        "/menu/menu.collection"
+        :scene
+      ]
+      [
+        "/menu/bg.gui_script"
+        :code
+      ]
+      [
+        "/menu/controls.gui_script"
+        :code
+      ]
+      [
+        "/menu/menu.gui_script"
+        :code
+      ]
+      [
+        "/main/custom.render_script"
+        :code
+      ]
+      [
+        "/main/handler.script"
+        :code
+      ]
+      [
+        "/game/core/camera.script"
+        :code
+      ]
+      [
+        "/assets/font/hand.font"
+        :scene
+      ]
+      [
+        "/game/gui/game.gui"
+        :scene
+      ]
+      [
+        "/assets/font/main.font"
+        :scene
+      ]
+      [
+        "/game/gui/complete.gui_script"
+        :code
+      ]
+      [
+        "/game/gui/game.gui_script"
+        :code
+      ]
+      [
+        "/game/gui/pause.gui"
+        :scene
+      ]
+      [
+        "/game/gui/gameover.gui_script"
+        :code
+      ]
+      [
+        "/game/gui/gameover.gui"
+        :scene
+      ]
+      [
+        "/game/gui/shutter.gui_script"
+        :code
+      ]
+      [
+        "/game/gui/slab.gui_script"
+        :code
+      ]
+      [
+        "/game/gui/pause.gui_script"
+        :code
+      ]
+      [
+        "/game/gui/lock.gui_script"
+        :code
+      ]
+      [
+        "/game/core/item.lua"
+        :code
+      ]
+      [
+        "/main/data.lua"
+        :code
+      ]
+      [
+        "/game/core/room.lua"
+        :code
+      ]
+      [
+        "/menu/credits.gui_script"
+        :code
+      ]
+      [
+        "/menu/credits.gui"
+        :scene
+      ]
+    ]
+  }
+}
