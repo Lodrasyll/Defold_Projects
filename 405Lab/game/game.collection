@@ -1,0 +1,81 @@
+name: "game"
+scale_along_z: 0
+embedded_instances {
+  id: "black"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"black\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/arts.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 118.0
+    y: 592.0
+    z: 1.0
+  }
+  scale3 {
+    x: 0.2
+    y: 0.2
+    z: 0.2
+  }
+}
+embedded_instances {
+  id: "view"
+  data: "components {\n"
+  "  id: \"game\"\n"
+  "  component: \"/game/game.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "diglogue"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"dialogue_texture\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/arts.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  scale {\n"
+  "    x: 0.14\n"
+  "    y: 0.14\n"
+  "    z: 0.14\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 322.0
+    y: 565.0
+    z: 1.0
+  }
+  scale3 {
+    x: 1.84
+    y: 1.84
+    z: 1.84
+  }
+}
+embedded_instances {
+  id: "bg"
+  data: "components {\n"
+  "  id: \"bg_fx\"\n"
+  "  component: \"/game/bg_fx.particlefx\"\n"
+  "  position {\n"
+  "    x: 654.0\n"
+  "    y: 365.0\n"
+  "  }\n"
+  "}\n"
+  "components {\n"
+  "  id: \"game\"\n"
+  "  component: \"/game/game.script\"\n"
+  "}\n"
+  ""
+}

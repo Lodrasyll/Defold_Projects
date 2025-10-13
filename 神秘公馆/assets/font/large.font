@@ -1,6 +1,0 @@
-font: "/assets/font/Kong_ming_hai_ou_ti.ttf"
-material: "/builtins/fonts/font.material"
-size: 48
-antialias: 0
-all_chars: true
-characters: " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
