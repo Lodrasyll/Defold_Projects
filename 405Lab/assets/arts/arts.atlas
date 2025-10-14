@@ -1,10 +1,21 @@
-images {
-  image: "/assets/arts/dialogue_texture.png"
-}
 animations {
   id: "black"
   images {
-    image: "/assets/arts/\345\260\217\351\273\221.png"
+    image: "/assets/arts/black_001.png"
+  }
+  images {
+    image: "/assets/arts/black_002.png"
+  }
+  images {
+    image: "/assets/arts/black_003.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 15
+}
+animations {
+  id: "dialogue_texture"
+  images {
+    image: "/assets/arts/dialogue_texture.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
 }

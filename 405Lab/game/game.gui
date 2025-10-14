@@ -1,2 +1,97 @@
+script: "/game/gui.gui_script"
+fonts {
+  name: "font"
+  font: "/assets/fonts/font.font"
+}
+textures {
+  name: "arts"
+  texture: "/assets/arts/arts.atlas"
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: 640.0
+    y: 670.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "title"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "TEST TITLE"
+  font: "font"
+  id: "text1"
+  parent: "title"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 138.0
+    y: 140.0
+  }
+  rotation {
+    x: -0.001
+    y: -0.607
+    z: -0.066
+  }
+  scale {
+    x: 0.2322
+    y: 0.2322
+    z: 0.2322
+  }
+  type: TYPE_BOX
+  texture: "arts/dialogue_texture"
+  id: "dialog_box"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    y: 447.88974
+  }
+  scale {
+    x: 2.64
+    y: 2.64
+    z: 2.64
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "\350\277\231\346\230\257\344\270\200\346\256\265\346\226\207\346\234\254\357\274\214\346\265\213\350\257\225\344\270\255"
+  font: "font"
+  id: "text"
+  parent: "dialog_box"
+  inherit_alpha: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

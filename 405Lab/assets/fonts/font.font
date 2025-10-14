@@ -1,4 +1,6 @@
-font: "/builtins/fonts/vera_mo_bd.ttf"
+font: "/assets/fonts/ChillBitmap_7px.ttf"
 material: "/builtins/fonts/font.material"
-size: 15
+size: 28
+antialias: 0
+all_chars: true
 characters: " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
