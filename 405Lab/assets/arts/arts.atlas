@@ -1,3 +1,6 @@
+images {
+  image: "/assets/arts/dialog_box_texture.png"
+}
 animations {
   id: "black"
   images {
@@ -11,12 +14,5 @@ animations {
   }
   playback: PLAYBACK_LOOP_FORWARD
   fps: 15
-}
-animations {
-  id: "dialogue_texture"
-  images {
-    image: "/assets/arts/dialogue_texture.png"
-  }
-  playback: PLAYBACK_LOOP_FORWARD
 }
 extrude_borders: 2

@@ -7,10 +7,18 @@ textures {
   name: "arts"
   texture: "/assets/arts/arts.atlas"
 }
+textures {
+  name: "arts1"
+  texture: "/assets/arts/arts.tilesource"
+}
 nodes {
+  position {
+    x: 640.0
+    y: 360.0
+  }
   size {
-    x: 200.0
-    y: 100.0
+    x: 1280.0
+    y: 720.0
   }
   type: TYPE_BOX
   id: "root"
@@ -20,8 +28,7 @@ nodes {
 }
 nodes {
   position {
-    x: 640.0
-    y: 670.0
+    y: 300.0
   }
   size {
     x: 200.0
@@ -42,44 +49,38 @@ nodes {
   type: TYPE_TEXT
   text: "TEST TITLE"
   font: "font"
-  id: "text1"
+  id: "title_text"
   parent: "title"
   inherit_alpha: true
 }
 nodes {
   position {
-    x: 138.0
-    y: 140.0
+    x: 330.0
+    y: 170.0
   }
-  rotation {
-    x: -0.001
-    y: -0.607
-    z: -0.066
-  }
-  scale {
-    x: 0.2322
-    y: 0.2322
-    z: 0.2322
+  size {
+    x: 633.0
+    y: 300.0
   }
   type: TYPE_BOX
-  texture: "arts/dialogue_texture"
+  texture: "arts/dialog_box_texture"
   id: "dialog_box"
-  parent: "root"
   inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
+  slice9 {
+    x: 1.9
+    y: 1.8
+    z: 1.8
+    w: 1.9
+  }
 }
 nodes {
   position {
-    y: 447.88974
-  }
-  scale {
-    x: 2.64
-    y: 2.64
-    z: 2.64
+    x: -294.0
+    y: 134.0
   }
   size {
-    x: 200.0
-    y: 100.0
+    x: 587.0
+    y: 275.0
   }
   color {
     x: 0.0
@@ -87,9 +88,10 @@ nodes {
     z: 0.0
   }
   type: TYPE_TEXT
-  text: "\350\277\231\346\230\257\344\270\200\346\256\265\346\226\207\346\234\254\357\274\214\346\265\213\350\257\225\344\270\255"
   font: "font"
-  id: "text"
+  id: "dialog_text"
+  pivot: PIVOT_NW
+  line_break: true
   parent: "dialog_box"
   inherit_alpha: true
 }

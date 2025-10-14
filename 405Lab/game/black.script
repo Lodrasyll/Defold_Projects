@@ -1,6 +1,8 @@
 
 
 function init(self)
+	self.scaled = false
+	
 	particlefx.play('bg#bg_fx')
 	msg.post('.', 'acquire_input_focus')
 end
@@ -31,8 +33,15 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-	if action_id == hash('touch') and action.pressed then 
+	if action_id == hash('touch') and action.pressed then
 		msg.post('view#game', 'dialog_start')
+		if not self.scaled then
+			go.animate('.', 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(0.5, 0.5, 0), go.EASING_OUTBACK, 0.5)
+			self.scaled = true
+		else
+			go.animate('.', 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(0.27, 0.27, 0), go.EASING_OUTBACK, 0.5)
+			self.scaled = false
+		end
 	end
 end
 

@@ -1,11 +1,25 @@
-local init_pos = vmath.vector3(138, -138, 0)
-local end_pos = vmath.vector3(138, 140, 0)
+local defarc = require 'defarc.defarc'
 
+local hide_pos = vmath.vector3(330, -170, 0)
+local end_pos = vmath.vector3(330, 170, 0)
 
 function init(self)
+	defarc.load('/assets/project_settings.json')
+	local start_element = defarc.get_starting_element_id()
+	local text = defarc.get_text(start_element)
+	
 	self.dialog_node = gui.get_node('dialog_box')
-	gui.set_position(self.dialog_node, init_pos)
+	gui.set_position(self.dialog_node, hide_pos)
 	self.is_show = false
+
+	self.dialog_text = gui.get_node('dialog_text')
+	gui.set_text(self.dialog_text, text)
+	
+	self.title_node = gui.get_node('title_text')
+	gui.set_color(self.title_node, vmath.vector4(1, 0, 0, 1))
+	self.color_a = vmath.vector4(1, 0, 0, 1)
+	self.color_b = vmath.vector4(0, 0, 1, 1)
+	self.time = 0
 end
 
 function final(self)
@@ -15,21 +29,25 @@ function final(self)
 end
 
 function update(self, dt)
-	
+	self.time = self.time + dt
+	local t = (math.sin(self.time) + 1) / 2
+	local color = vmath.lerp(t, self.color_a, self.color_b)
+	gui.set_color(self.title_node, color)
 end
 
 function dialog_show(self)
 	if self.is_show then 
-		gui.animate(self.dialog_node, gui.PROP_POSITION, init_pos, gui.EASING_OUTCUBIC, 0.8)
+		gui.animate(self.dialog_node, gui.PROP_POSITION, hide_pos, gui.EASING_OUTCUBIC, 0.8)
 		self.is_show = false
 	else
-		self.is_show = true
 		gui.animate(self.dialog_node, gui.PROP_POSITION, end_pos, gui.EASING_OUTCUBIC, 0.8)
+		-- self.is_show = true
 	end
 end
 
 function on_message(self, message_id, message, sender)
 	if message_id == hash('dialog_start') then
+		print('get!')
 		dialog_show(self)
 	end
 end
