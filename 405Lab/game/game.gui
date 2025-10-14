@@ -30,6 +30,11 @@ nodes {
   position {
     y: 300.0
   }
+  scale {
+    x: 2.0
+    y: 2.0
+    z: 2.0
+  }
   size {
     x: 200.0
     y: 100.0
@@ -42,12 +47,16 @@ nodes {
   visible: false
 }
 nodes {
+  position {
+    x: 181.0
+    y: -317.5
+  }
   size {
-    x: 200.0
-    y: 100.0
+    x: 280.0
+    y: 35.0
   }
   type: TYPE_TEXT
-  text: "TEST TITLE"
+  text: "LittleBlack Adventure"
   font: "font"
   id: "title_text"
   parent: "title"
@@ -67,19 +76,19 @@ nodes {
   id: "dialog_box"
   inherit_alpha: true
   slice9 {
-    x: 1.9
-    y: 1.8
-    z: 1.8
-    w: 1.9
+    x: 2.0
+    y: 2.0
+    z: 2.0
+    w: 2.0
   }
 }
 nodes {
   position {
-    x: -294.0
-    y: 134.0
+    x: -299.0
+    y: 137.0
   }
   size {
-    x: 587.0
+    x: 600.0
     y: 275.0
   }
   color {
