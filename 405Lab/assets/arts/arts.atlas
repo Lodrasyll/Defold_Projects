@@ -1,6 +1,9 @@
 images {
   image: "/assets/arts/dialog_box_texture.png"
 }
+images {
+  image: "/assets/arts/particle.png"
+}
 animations {
   id: "black"
   images {
@@ -11,6 +14,20 @@ animations {
   }
   images {
     image: "/assets/arts/black_003.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 15
+}
+animations {
+  id: "reseacher"
+  images {
+    image: "/assets/arts/reseacher_sprites/reseacher_000.png"
+  }
+  images {
+    image: "/assets/arts/reseacher_sprites/reseacher_001.png"
+  }
+  images {
+    image: "/assets/arts/reseacher_sprites/reseacher_002.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
   fps: 15

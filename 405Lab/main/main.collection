@@ -3,18 +3,43 @@ scale_along_z: 0
 embedded_instances {
   id: "handler"
   data: "components {\n"
-  "  id: \"script\"\n"
-  "  component: \"/main/handler.script\"\n"
+  "  id: \"handler_script\"\n"
+  "  component: \"/main/scripts/handler.script\"\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"game\"\n"
   "  type: \"collectionproxy\"\n"
-  "  data: \"collection: \\\"/game/game.collection\\\"\\n"
+  "  data: \"collection: \\\"/game/core/game.collection\\\"\\n"
   "\"\n"
   "}\n"
   ""
 }
 embedded_instances {
-  id: "sound"
-  data: ""
+  id: "sfx"
+  data: "embedded_components {\n"
+  "  id: \"click_sound\"\n"
+  "  type: \"sound\"\n"
+  "  data: \"sound: \\\"/assets/sfx/cilck.wav\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "music"
+  data: "embedded_components {\n"
+  "  id: \"moon\"\n"
+  "  type: \"sound\"\n"
+  "  data: \"sound: \\\"/assets/music/moon_bgm.ogg\\\"\\n"
+  "gain: 0.5\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "mangers"
+  data: "components {\n"
+  "  id: \"input_manager\"\n"
+  "  component: \"/main/scripts/input_manager.script\"\n"
+  "}\n"
+  ""
 }
