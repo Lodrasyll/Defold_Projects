@@ -18,7 +18,7 @@ input_method = HiddenInputField
 scale_mode = stretch
 
 [project]
-title = 405LAB
+title = 403LAB
 version = 0.1
 custom_resources = /assets/project_settings.json
 dependencies#0 = https://github.com/subsoap/defos/archive/master.zip

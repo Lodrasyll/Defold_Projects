@@ -8,11 +8,6 @@ local TEXT_COUNT = #ALL_TEXTS
 local hide_pos = vmath.vector3(300, -550, 0)
 local end_pos = vmath.vector3(300, -190, 0)
 
-local small_node = vmath.vector3(0.99)
-local normal_node = vmath.vector3(1.0)
-
-local options = {}
-
 function init(self)
 
 	-- 获取和设置对话框节点 --
