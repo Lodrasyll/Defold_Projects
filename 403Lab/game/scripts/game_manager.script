@@ -2,7 +2,7 @@ local audio_manager = require 'main.managers.audio_manager'
 
 function init(self)
 	particlefx.play('background#bg_fx')
-	audio_manager.play_music('moon')
+	-- audio_manager.play_music('moon')
 end
 
 function final(self)

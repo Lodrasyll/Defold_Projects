@@ -1,3 +1,6 @@
+images {
+  image: "/assets/arts/bg.png"
+}
 animations {
   id: "black"
   images {

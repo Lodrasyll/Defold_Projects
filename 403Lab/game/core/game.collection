@@ -63,7 +63,7 @@ embedded_instances {
   id: "view"
   data: "components {\n"
   "  id: \"game\"\n"
-  "  component: \"/game/core/game.gui\"\n"
+  "  component: \"/game/gui/game.gui\"\n"
   "}\n"
   ""
 }
@@ -103,6 +103,7 @@ embedded_instances {
   "  position {\n"
   "    x: 613.0\n"
   "    y: 393.0\n"
+  "    z: 0.4\n"
   "  }\n"
   "}\n"
   ""
