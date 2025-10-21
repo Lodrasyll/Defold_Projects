@@ -121,12 +121,9 @@ nodes {
   }
 }
 nodes {
-  position {
-    y: -51.0
-  }
   size {
-    x: 468.0
-    y: 143.0
+    x: 500.0
+    y: 300.0
   }
   type: TYPE_BOX
   id: "command_slots"
@@ -136,25 +133,9 @@ nodes {
   visible: false
 }
 nodes {
-  size {
-    x: 300.0
-    y: 15.0
-  }
-  type: TYPE_BOX
-  texture: "arts1/rect_line"
-  id: "pass_line"
-  parent: "command_slots"
-  inherit_alpha: true
-  slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 10.0
-  }
-}
-nodes {
   position {
     x: -176.0
+    y: -60.0
   }
   size {
     x: 100.0
@@ -186,6 +167,9 @@ nodes {
   inherit_alpha: true
 }
 nodes {
+  position {
+    y: -60.0
+  }
   size {
     x: 100.0
     y: 100.0
@@ -205,6 +189,7 @@ nodes {
 nodes {
   position {
     x: 175.0
+    y: -60.0
   }
   size {
     x: 100.0
@@ -223,29 +208,21 @@ nodes {
   }
 }
 nodes {
-  position {
-    x: 1.0
-    y: 90.0
-  }
   size {
-    x: 480.0
-    y: 100.0
+    x: 500.0
+    y: 300.0
   }
   type: TYPE_BOX
-  texture: "arts1/rect_line"
-  id: "command_collection"
+  id: "command_frags"
   parent: "command_systeam"
   inherit_alpha: true
-  slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 10.0
-  }
+  size_mode: SIZE_MODE_AUTO
+  visible: false
 }
 nodes {
   position {
     x: -179.0
+    y: 86.0
   }
   size {
     x: 80.0
@@ -258,7 +235,7 @@ nodes {
   type: TYPE_BOX
   texture: "arts1/rect_line"
   id: "command_frag_1"
-  parent: "command_collection"
+  parent: "command_frags"
   inherit_alpha: true
   slice9 {
     x: 10.0
@@ -270,6 +247,7 @@ nodes {
 nodes {
   position {
     x: -90.0
+    y: 86.0
   }
   size {
     x: 80.0
@@ -282,7 +260,7 @@ nodes {
   type: TYPE_BOX
   texture: "arts1/rect_line"
   id: "command_frag_2"
-  parent: "command_collection"
+  parent: "command_frags"
   inherit_alpha: true
   slice9 {
     x: 10.0
@@ -292,6 +270,9 @@ nodes {
   }
 }
 nodes {
+  position {
+    y: 86.0
+  }
   size {
     x: 80.0
     y: 80.0
@@ -303,7 +284,7 @@ nodes {
   type: TYPE_BOX
   texture: "arts1/rect_line"
   id: "command_frag_3"
-  parent: "command_collection"
+  parent: "command_frags"
   inherit_alpha: true
   slice9 {
     x: 10.0
@@ -315,6 +296,7 @@ nodes {
 nodes {
   position {
     x: 89.0
+    y: 86.0
   }
   size {
     x: 80.0
@@ -327,7 +309,7 @@ nodes {
   type: TYPE_BOX
   texture: "arts1/rect_line"
   id: "command_frag_4"
-  parent: "command_collection"
+  parent: "command_frags"
   inherit_alpha: true
   slice9 {
     x: 10.0
@@ -339,6 +321,7 @@ nodes {
 nodes {
   position {
     x: 176.0
+    y: 86.0
   }
   size {
     x: 80.0
@@ -351,7 +334,7 @@ nodes {
   type: TYPE_BOX
   texture: "arts1/rect_line"
   id: "command_frag_5"
-  parent: "command_collection"
+  parent: "command_frags"
   inherit_alpha: true
   slice9 {
     x: 10.0

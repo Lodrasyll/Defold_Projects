@@ -52,10 +52,17 @@ function init(self)
 		'command_frag_5',
 	}
 
-	self.zone = gui.get_node('command_slot_1')
-	self.counter = 0
-	self.text_counter = gui.get_node('text_counter')
-	gui.set_text(self.text_counter, self.counter)
+	local slot_names = {
+		'command_slot_1',
+		'command_slot_2',
+		'command_slot_3',
+	}
+
+	-- self.zone = gui.get_node('command_slot_1')
+	-- self.zone_position = gui.get_position(self.zone)
+	-- self.counter = 0
+	-- self.text_counter = gui.get_node('text_counter')
+	-- gui.set_text(self.text_counter, self.counter)
 
 
 	self.items = {}
@@ -70,18 +77,18 @@ function init(self)
 			placed_slot = nil
 		}
 	end
--- 
--- 	self.slots = {}
--- 	for i, name in ipairs(slot_names) do
--- 		local node = gui.get_node(name)
--- 		local slot_position = gui.get_position(node)
--- 		self.slots[i] = {
--- 			name = name,
--- 			node = node,
--- 			position = slot_position,
--- 			occupied_by = nil  -- 当被占用时储存item索引 --
--- 		}
--- 	end
+
+	self.slots = {}
+	for i, name in ipairs(slot_names) do
+		local node = gui.get_node(name)
+		local slot_position = gui.get_position(node)
+		self.slots[i] = {
+			name = name,
+			node = node,
+			position = slot_position,
+			occupied_by = nil  -- 当被占用时储存item索引 --
+		}
+	end
 
 	-- 创建每个item的drag组件（循环创建），注意闭包捕获 --
 	for i, item in ipairs(self.items) do
@@ -99,22 +106,55 @@ function init(self)
 			gui.set(node, 'position.x', px + dx)
 			gui.set(node, 'position.y', py + dy)
 			
-			local is_pick_zone = gui.pick_node(self.zone, touch.x, touch.y)
+			-- local is_pick_zone = gui.pick_node(self.zone, touch.x, touch.y)
 		end)
 
 		-- 拖拽的回调函数 --
 		drag.on_drag_start:subscribe(function()
-			
+			-- 核心修正：释放 Item 当前占据的 Slot
+			if item.placed_slot then
+				local slot_idx_to_free = item.placed_slot
+				local slot_to_free = self.slots[slot_idx_to_free]
+
+				-- 1. 释放 Slot：将 Slot 的占用状态设为 nil
+				slot_to_free.occupied_by = nil 
+
+				-- 2. 清除 Item 的放置记录
+				item.placed_slot = nil 
+			end
 		end)
 
 		drag.on_drag_end:subscribe(function(_, _, _, touch)
-			gui.animate(node, 'position', start_position, gui.EASING_OUTBACK, 0.3)
-			local is_pick_zone = gui.pick_node(self.zone, touch.x, touch.y)
-			if is_pick_zone then
-				self.counter = self.counter + 1
-				gui.set_text(self.text_counter, self.counter)
+			local placed = false
+			for slot_idx, slot in ipairs(self.slots) do
+				local is_pick_zone = gui.pick_node(slot.node, touch.x, touch.y)
+				if not slot.occupied_by and is_pick_zone then
+					slot.occupied_by = item_index
+					item.placed_slot = slot_idx
+					gui.animate(node, 'position', slot.position, gui.EASING_OUTBACK, 0.3)
+					placed = true
+					print('go zone: '..slot.position)
+					break
+				end
 			end
+
+			if not placed then
+				gui.animate(node, 'position', start_position, gui.EASING_OUTBACK, 0.3)
+				print('back: '..start_position)
+			end
+
+			-- if is_pick_zone then
+			-- 	gui.animate(node, 'position', self.zone_position, gui.EASING_OUTBACK, 0.3)
+			-- 	self.counter = self.counter + 1
+			-- 	gui.set_text(self.text_counter, self.counter)
+			-- 	print('go zone: '..self.zone_position)
+			-- else
+			-- 	gui.animate(node, 'position', start_position, gui.EASING_OUTBACK, 0.3)
+			-- 	print('back: '..start_position)
+			-- end
 		end)
+
+		item.drag = drag
 	end
 
 end
