@@ -174,6 +174,19 @@ nodes {
 }
 nodes {
   size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "text_counter"
+  parent: "command_slot_1"
+  inherit_alpha: true
+}
+nodes {
+  size {
     x: 100.0
     y: 100.0
   }

@@ -9,23 +9,20 @@ local TEXT_COUNT = #ALL_TEXTS
 local hide_pos = vmath.vector3(300, -550, 0)
 local end_pos = vmath.vector3(300, -190, 0)
 
+function on_drag(dx, dy, x, y, touch)
+	local position_x = gui.get(self.drag.node, "position.x")
+	local position_y = gui.get(self.drag.node, "position.y")
+	gui.set(self.drag.node, "position.x", position_x + dx)
+	gui.set(self.drag.node, "position.y", position_y + dy)
 
-local function nodes_overlap(node_a, node_b)
-	local ax = gui.get(node_a, 'position.x')
-	local ay = gui.get(node_a, 'position.y')
-	local bx = gui.get(node_b, 'position.x')
-	local by = gui.get(node_b, 'position.y')
-
-	local a_size = gui.get_size(node_a)
-	local b_size = gui.get_size(node_b)
-	local half_aw, half_ah = (a_size.x / 2), (a_size.y / 2)
-	local half_bw, half_bh = (b_size.x / 2), (b_size.y / 2)
-
-	local dx = math.abs(ax - bx)
-	local dy = math.abs(ay - by)
-
-	return dx <= half_bw and dy <= half_bh
+	local is_pick_zone = gui.pick_node(self.zone, touch.x, touch.y)
 end
+
+
+local function on_drag_end(x, y, touch)
+
+end
+
 
 
 function init(self)
@@ -55,11 +52,12 @@ function init(self)
 		'command_frag_5',
 	}
 
-	local slot_names = {
-		'command_slot_1',
-		'command_slot_2',
-		'command_slot_3'
-	}
+	self.zone = gui.get_node('command_slot_1')
+	self.counter = 0
+	self.text_counter = gui.get_node('text_counter')
+	gui.set_text(self.text_counter, self.counter)
+
+
 	self.items = {}
 	for i, name in ipairs(item_names) do
 		local node = gui.get_node(name)
@@ -72,18 +70,18 @@ function init(self)
 			placed_slot = nil
 		}
 	end
-
-	self.slots = {}
-	for i, name in ipairs(slot_names) do
-		local node = gui.get_node(name)
-		local slot_position = gui.get_position(node)
-		self.slots[i] = {
-			name = name,
-			node = node,
-			position = slot_position,
-			occupied_by = nil  -- 当被占用时储存item索引 --
-		}
-	end
+-- 
+-- 	self.slots = {}
+-- 	for i, name in ipairs(slot_names) do
+-- 		local node = gui.get_node(name)
+-- 		local slot_position = gui.get_position(node)
+-- 		self.slots[i] = {
+-- 			name = name,
+-- 			node = node,
+-- 			position = slot_position,
+-- 			occupied_by = nil  -- 当被占用时储存item索引 --
+-- 		}
+-- 	end
 
 	-- 创建每个item的drag组件（循环创建），注意闭包捕获 --
 	for i, item in ipairs(self.items) do
@@ -95,42 +93,28 @@ function init(self)
 		-- druid的拖拽功能 --
 			-- 创建druid拖拽按钮功能 ， 第一个参数可以使节点对象或者节点id（这里我们传节点对象）--
 			-- 初始化拖拽并在拖拽回调中移动拖拽节点 --
-		local drag = self.druid:new_drag(node, function(_, dx, dy) 
+		local drag = self.druid:new_drag(node, function(_, dx, dy, x, y, touch) 
 			local px = gui.get(node, 'position.x')
 			local py = gui.get(node, 'position.y')
 			gui.set(node, 'position.x', px + dx)
 			gui.set(node, 'position.y', py + dy)
+			
+			local is_pick_zone = gui.pick_node(self.zone, touch.x, touch.y)
 		end)
 
 		-- 拖拽的回调函数 --
 		drag.on_drag_start:subscribe(function()
-			-- 如果此item已被放入某个slot，则释放该slot
-			if item.placed_slot then
-				local slot = self.slots[item.placed_slot]
-			end
 			
 		end)
-		drag.on_drag:subscribe(function(_, dx, dy) 
-		end)
-		drag.on_drag_end:subscribe(function()
-			local placed = false
-			for slot_idx, slot in ipairs(self.slots) do
-				if not slot.occupied_by and nodes_overlap(node, slot.node) then
-					slot.occupied_by = item_index
-					item.placed_slot = slot_idx
-					local slot_position = slot.position
-					gui.animate(node, 'position', slot_position, gui.EASING_OUTBACK, 0.2)
-					placed = true
-					print(nodes_overlap())
-				end
+
+		drag.on_drag_end:subscribe(function(_, _, _, touch)
+			gui.animate(node, 'position', start_position, gui.EASING_OUTBACK, 0.3)
+			local is_pick_zone = gui.pick_node(self.zone, touch.x, touch.y)
+			if is_pick_zone then
+				self.counter = self.counter + 1
+				gui.set_text(self.text_counter, self.counter)
 			end
-
-			-- if not placed then
-			-- 	gui.animate(node, 'position', start_position, gui.EASING_OUTBACK, 0.3)
-			-- end
 		end)
-
-		item.drag = drag
 	end
 
 end
@@ -162,7 +146,7 @@ end
 
 local function dialog_show(self)
 	if self.is_show then 
-		gui.animate(self.dialog_node, gui.PROP_POSITION, hide_pos, gui.EASING_OUTCUBIC, 0.8)
+		gui.animate(self.dialog_node, gui.PROP_POSITION, hide_pos, gui.gui.EASING_OUTBACK_OUTCUBIC, 0.8)
 		self.is_show = false
 	else
 		gui.animate(self.dialog_node, gui.PROP_POSITION, end_pos, gui.EASING_OUTCUBIC, 0.8)
