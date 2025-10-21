@@ -1,4 +1,4 @@
-script: "/game/scripts/gui.gui_script"
+script: "/game/scripts/game.gui_script"
 fonts {
   name: "font"
   font: "/assets/fonts/font.font"
@@ -81,7 +81,6 @@ nodes {
     z: 10.0
     w: 10.0
   }
-  enabled: false
 }
 nodes {
   position {
@@ -113,6 +112,95 @@ nodes {
   texture: "arts1/rect_line"
   id: "command_systeam"
   parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    y: -51.0
+  }
+  size {
+    x: 468.0
+    y: 143.0
+  }
+  type: TYPE_BOX
+  id: "command_slots"
+  parent: "command_systeam"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 300.0
+    y: 15.0
+  }
+  type: TYPE_BOX
+  texture: "arts1/rect_line"
+  id: "pass_line"
+  parent: "command_slots"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: -176.0
+  }
+  size {
+    x: 100.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  texture: "arts1/rect_line"
+  id: "command_1"
+  parent: "command_slots"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  size {
+    x: 100.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  texture: "arts1/rect_line"
+  id: "command_2"
+  parent: "command_slots"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: 175.0
+  }
+  size {
+    x: 100.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  texture: "arts1/rect_line"
+  id: "command_3"
+  parent: "command_slots"
   inherit_alpha: true
   slice9 {
     x: 10.0
@@ -251,95 +339,6 @@ nodes {
   texture: "arts1/rect_line"
   id: "command_frag_5"
   parent: "command_collection"
-  inherit_alpha: true
-  slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 10.0
-  }
-}
-nodes {
-  position {
-    y: -51.0
-  }
-  size {
-    x: 468.0
-    y: 143.0
-  }
-  type: TYPE_BOX
-  id: "command_slots"
-  parent: "command_systeam"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
-}
-nodes {
-  size {
-    x: 300.0
-    y: 15.0
-  }
-  type: TYPE_BOX
-  texture: "arts1/rect_line"
-  id: "pass_line"
-  parent: "command_slots"
-  inherit_alpha: true
-  slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 10.0
-  }
-}
-nodes {
-  position {
-    x: -176.0
-  }
-  size {
-    x: 100.0
-    y: 100.0
-  }
-  type: TYPE_BOX
-  texture: "arts1/rect_line"
-  id: "command_1"
-  parent: "command_slots"
-  inherit_alpha: true
-  slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 10.0
-  }
-}
-nodes {
-  size {
-    x: 100.0
-    y: 100.0
-  }
-  type: TYPE_BOX
-  texture: "arts1/rect_line"
-  id: "command_2"
-  parent: "command_slots"
-  inherit_alpha: true
-  slice9 {
-    x: 10.0
-    y: 10.0
-    z: 10.0
-    w: 10.0
-  }
-}
-nodes {
-  position {
-    x: 175.0
-  }
-  size {
-    x: 100.0
-    y: 100.0
-  }
-  type: TYPE_BOX
-  texture: "arts1/rect_line"
-  id: "command_3"
-  parent: "command_slots"
   inherit_alpha: true
   slice9 {
     x: 10.0
