@@ -162,7 +162,7 @@ nodes {
   }
   type: TYPE_BOX
   texture: "arts1/rect_line"
-  id: "command_1"
+  id: "command_slot_1"
   parent: "command_slots"
   inherit_alpha: true
   slice9 {
@@ -179,7 +179,7 @@ nodes {
   }
   type: TYPE_BOX
   texture: "arts1/rect_line"
-  id: "command_2"
+  id: "command_slot_2"
   parent: "command_slots"
   inherit_alpha: true
   slice9 {
@@ -199,7 +199,7 @@ nodes {
   }
   type: TYPE_BOX
   texture: "arts1/rect_line"
-  id: "command_3"
+  id: "command_slot_3"
   parent: "command_slots"
   inherit_alpha: true
   slice9 {

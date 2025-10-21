@@ -47,11 +47,11 @@ function on_message(self, message_id, message, sender)
 			go.animate('.', 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(0.3, 0.3, 0), go.EASING_OUTBACK, 0.5)
 			self.scaled = true
 		end
-		print('start dragging', go.get_id())
+		print('start dragging black')
 	elseif message_id == cursor.DRAG_END then
 		go.animate('.', 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(0.25, 0.25, 0), go.EASING_OUTBACK, 0.8)
 		self.scaled = false
-		print('stop dragging', go.get_id())
+		print('stop drag black')
 	end
 end
 
