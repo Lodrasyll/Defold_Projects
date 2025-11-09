@@ -1,0 +1,14 @@
+name: "main"
+instances {
+  id: "ship"
+  prototype: "/main/ship/ship.go"
+  position {
+    x: 971.0
+    y: 520.0
+  }
+}
+instances {
+  id: "asteroid_factory"
+  prototype: "/main/asteroid/asteroid_factory.go"
+}
+scale_along_z: 0

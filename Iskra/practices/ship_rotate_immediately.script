@@ -1,0 +1,13 @@
+
+
+function init(self)
+	msg.post('.', 'acquire_input_focus')
+
+	self.rot_speed = 10
+	self.position = go.get_position()
+end
+
+function on_input(self, action_id, action)
+	local look_at = vmath.vector3(action.x, action.y, 0)
+	self.target_angle = math.atan2(look_at.y - self.position.y, look_at.x - self.position.x)
+end

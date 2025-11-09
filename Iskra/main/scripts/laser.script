@@ -1,0 +1,27 @@
+go.property('speed', 0)
+go.property('direction', vmath.vector3())
+
+function init(self)
+	self.life_time = 2
+end
+
+function update(self, dt)
+	self.life_time = self.life_time - dt
+	if self.life_time <= 0 then
+		go.delete()
+	end
+	
+	local velocity = self.speed * self.direction
+	local pos = go.get_position()
+	pos = pos + velocity * dt
+	go.set_position(pos)
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash('trigger_response') then
+		go.delete()
+		if message.group == hash('asteroid') then
+			msg.post(message.other_id, 'explode')
+		end
+	end
+end

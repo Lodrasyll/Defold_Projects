@@ -63,12 +63,12 @@ nodes {
 }
 nodes {
   position {
-    x: 300.0
-    y: -190.0
+    x: -300.0
+    y: -265.0
   }
   size {
     x: 633.0
-    y: 300.0
+    y: 150.0
   }
   type: TYPE_BOX
   texture: "arts1/rect_line"
@@ -85,11 +85,11 @@ nodes {
 nodes {
   position {
     x: -299.0
-    y: 137.0
+    y: 59.0
   }
   size {
     x: 600.0
-    y: 275.0
+    y: 120.0
   }
   type: TYPE_TEXT
   font: "font"
@@ -102,11 +102,11 @@ nodes {
 nodes {
   position {
     x: 365.0
-    y: 180.0
+    y: -42.0
   }
   size {
     x: 500.0
-    y: 300.0
+    y: 600.0
   }
   type: TYPE_BOX
   texture: "arts1/rect_line"
@@ -342,6 +342,38 @@ nodes {
     z: 10.0
     w: 10.0
   }
+}
+nodes {
+  position {
+    y: -247.0
+  }
+  size {
+    x: 150.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  texture: "arts1/rect_line"
+  id: "inject"
+  parent: "command_systeam"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "INJECT"
+  font: "font"
+  id: "text"
+  parent: "inject"
+  inherit_alpha: true
 }
 nodes {
   position {

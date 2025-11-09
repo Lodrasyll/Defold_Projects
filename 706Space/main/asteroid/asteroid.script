@@ -1,0 +1,133 @@
+-- 关于小行星类型的属性 --
+-- 小型 = 0， 大型 = 1 --
+go.property('type', 0)
+
+local rotation_speed = 90
+
+local size_sprite = vmath.vector3(64, 64, 0)
+local half_w = size_sprite.x / 2
+local half_h = size_sprite.y / 2
+
+local function wrap_position(self, position)
+
+
+	local should_wrap_X = false
+	local should_wrap_Y = false
+
+	-- 检查x轴的方向 --
+	if self.direction.x < 0 and position.x < SCREEN_WIDTH then
+		if position.x + half_w < 0 then
+			should_wrap_X = true
+		end
+	elseif self.direction.x > 0 and position.x > SCREEN_WIDTH then
+		if position.x + half_w > SCREEN_WIDTH then
+			should_wrap_X = true
+		end
+	end
+
+	-- 检查y轴的方向 --
+	if self.direction.y < 0 and position.y < SCREEN_HEIGHT then
+		if position.y + half_h < 0 then
+			should_wrap_Y = true
+		end
+	elseif self.direction.y > 0 and position.y > SCREEN_HEIGHT then
+		if position.y + half_h > SCREEN_HEIGHT then
+			should_wrap_Y = true
+		end
+	end
+
+	if should_wrap_X then
+		position.x = position.x % (SCREEN_WIDTH + size_sprite.x)
+		if position.x < 0.5 then
+			position.x = position.x - size_sprite.x
+		end
+	end
+
+	if should_wrap_Y then
+		position.y = position.y % (SCREEN_HEIGHT + size_sprite.y)
+		if position.y < 0.5 then
+			position.y = position.y - size_sprite.y
+		end
+	end 
+	
+	return position
+end
+
+
+local function move_to_center(self)
+	local target_pos = {}
+	target_pos.x = SCREEN_WIDTH / 2
+	target_pos.y = SCREEN_HEIGHT / 2
+
+	local start_pos = go.get_position()
+
+	local dx = target_pos.x - start_pos.x
+	local dy = target_pos.y - start_pos.y
+
+	self.direction = vmath.normalize(vmath.vector3(dx, dy, start_pos.z))
+end
+
+function spawn_small_asteroid()
+	local pos = go.get_position()
+	local number_to_spawn = math.random(2, 3)
+	
+	for i = 1, number_to_spawn do
+		local asteroid = factory.create('#factory', pos, nil, { type = 2 })
+
+		local rand_rad = math.random() * (2 * math.pi)
+		local rand_direction = vmath.vector3()
+		rand_direction.x = math.cos(rand_rad)
+		rand_direction.y = math.sin(rand_rad)
+
+		print(asteroid)
+		msg.post(asteroid, 'move_away', { move_away_direction = rand_direction})
+	end
+end
+
+local function explode(self)
+	if self.type == 1 then
+		spawn_small_asteroid()
+	end
+	go.delete()
+	print("explode type=", self.type)
+end
+
+function init(self)
+	self.speed = 100
+	self.direction = vmath.vector3()
+	self.rotation = 0
+
+	move_to_center(self)
+end
+
+function update(self, dt)
+	self.rotation = self.rotation + rotation_speed * dt
+
+	self.rotation = self.rotation % 360
+
+	local rad_rotation = math.rad(self.rotation)
+	
+	go.set_rotation(vmath.quat_rotation_z(rad_rotation))
+
+
+	local velocity = self.speed * self.direction
+
+	local pos = go.get_position()
+
+	pos = pos + velocity * dt
+	pos = wrap_position(self, pos)
+
+	go.set_position(pos)
+end
+
+local function move_away(self, new_dir)
+	self.direction = new_dir
+end
+
+function on_message(self, message_id, message)
+	if message_id == hash('explode') then
+		explode(self)
+	elseif self.type == 2 and message_id == hash("move_away") then
+		move_away(self,message.move_away_direction)
+	end
+end

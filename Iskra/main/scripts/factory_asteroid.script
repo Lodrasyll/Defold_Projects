@@ -1,0 +1,60 @@
+
+
+
+
+local spr_size = 64
+
+local function random_spawn()
+	local position = vmath.vector3()
+	local random_side = math.random(1, 4) -- 1=top 2=right 3=bottom 4=left 顺时针 --
+
+	if random_side == 1 then
+		position.x = math.random(0, SCREEN_WIDTH)
+		position.y = SCREEN_HEIGHT + spr_size
+	elseif random_side == 2 then
+		position.y = math.random(0, SCREEN_HEIGHT)
+		position.x = SCREEN_WIDTH + spr_size
+	elseif random_side == 3 then
+		position.x = math.random(0, SCREEN_WIDTH)
+		position.y = 0 - spr_size
+	elseif random_side == 4 then
+		position.y = math.random(0, SCREEN_HEIGHT)
+		position.x = 0 - SCREEN_WIDTH
+	end
+	return position
+end
+
+
+local function spawm_asteroid(self)
+	-- print('spawn an asteroid')
+
+	local position = random_spawn()
+	local component = '#factory'
+	local random_type = math.random(1, 2)
+	local prototype = self.asteroids[random_type]
+
+	factory.unload(component)
+	factory.set_prototype(component, prototype)
+	factory.create(component, position, nil, { type = random_type })
+end
+
+function init(self)
+	math.randomseed(os.time())
+	math.random()
+
+	self.asteroids = {
+		'/main/objects/asteroid_l.goc',
+		'/main/objects/asteroid_s.goc',
+	}
+
+	self.timer = 0
+	self.spawn_time = 1
+end
+
+function update(self, dt)
+	self.timer = self.timer + dt
+	if self.timer >= self.spawn_time then
+		spawm_asteroid(self)
+		self.timer = 0
+	end
+end

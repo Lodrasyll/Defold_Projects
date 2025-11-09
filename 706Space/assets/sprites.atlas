@@ -1,0 +1,21 @@
+images {
+  image: "/assets/asteroid_large.png"
+}
+images {
+  image: "/assets/asteroid_small.png"
+}
+images {
+  image: "/assets/background.png"
+  pivot_x: 0.0
+  pivot_y: 1.0
+}
+images {
+  image: "/assets/laser.png"
+}
+images {
+  image: "/assets/effect_yellow.png"
+}
+images {
+  image: "/assets/ship_G.png"
+}
+extrude_borders: 2

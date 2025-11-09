@@ -1,13 +1,13 @@
-# Welcome to Defold
+# RePong - 游戏项目开发简述
+**共创建两个游戏对象: paddle.go 与 ball.go 作为蓝图**
+## paddle.go - 简述
+**除开游戏对象内常规精灵图与碰撞体外，最重要的便是脚本内编写的游戏逻辑**
+1. 首先处理输入（键盘/手柄/触摸等）。处理为物体移动方向的指示的输入。创建 `self.input` 处理判断方向的变量。
+2. 初期可以使用输入来规定物体移动的方向。更为好的解决方案则是创建一个 `self.direction` 方向变量来中介输入处理，使它们职责分离。通过 **向量归一化** 来规范输入处理后赋值给方向变量
+3. 接着创建物体本身的速度常量 `self.speed` 规定物体移动的快慢
+4. 然后创建一个判断是否移动的布尔锁 `self.moving`，判断物体目前的状态，根据不同状态重置对应变量。
+5. 最后便是关于球拍垂直方向的碰撞检测：
+	- 当接受到来自碰撞体的消息后便使用 `vmath.clamp` 限制(钳制)球拍上下的位置
+	- 要点注意： `tonumber(sys.get_config("display.height"))` 通过使用系统自身的获取配置的函数来获取关于屏幕空间的高度，然后再跟根据精灵图的高度，两者相加与相减获得的最小最大值作为钳制的数值。
 
-This project was created from the "empty" project template.
-
-The settings in ["game.project"](defold://open?path=/game.project) are all the default. A bootstrap empty ["main.collection"](defold://open?path=/main/main.collection) is included.
-
-Check out [the documentation pages](https://defold.com/learn) for examples, tutorials, manuals and API docs.
-
-If you run into trouble, help is available in [our forum](https://forum.defold.com).
-
-Happy Defolding!
-
----
+## ball.go - 简述

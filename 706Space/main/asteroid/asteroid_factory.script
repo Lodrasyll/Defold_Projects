@@ -1,0 +1,69 @@
+local size_sprite = 64
+go.property('asteroids_to_spawn', 10)
+
+local function random_spawn()
+	local position = vmath.vector3()
+	local rand_side = math.random(1, 4)
+
+	if rand_side == 1 then
+		position.x = math.random(0, SCREEN_WIDTH)
+		position.x = position.x - size_sprite
+	elseif rand_side == 2 then
+		position.x = math.random(0, SCREEN_WIDTH)
+		position.x = position.x + size_sprite
+	elseif rand_side == 3 then
+		position.y = math.random(0, SCREEN_HEIGHT)
+		position.y = position.y - size_sprite
+	elseif rand_side == 4 then
+		position.y = math.random(0, SCREEN_HEIGHT)
+		position.y = position.y + size_sprite
+	end
+
+	return position
+end
+
+local function spawn_asteroid(self)
+	print('SPWAN AN ASTEROID!')
+	self.remain_asteroid = self.remain_asteroid - 1
+
+	local position = random_spawn()
+	local component = '#factory'
+	local rand_type = math.random(1, 2)
+	local prototype = self.asteroids[rand_type]
+
+	factory.unload(component)
+	factory.set_prototype(component, prototype)
+	factory.create(component, position, nil, { type = rand_type})
+end
+
+
+function init(self)
+	math.randomseed(os.time())
+	math.random()
+
+	self.asteroids = {
+		'/main/asteroid/asteroid_l.goc',
+		'/main/asteroid/asteroid_s.goc',
+	}
+
+	self.timer = 0
+	self.wait_time = 2
+	self.remain_asteroid = self.asteroids_to_spawn
+end
+
+function update(self, dt)
+	self.timer = self.timer + dt
+	if self.timer > self.wait_time then
+		self.timer = 0
+		if self.remain_asteroid ~= 0 then
+			spawn_asteroid(self)
+		end
+	end
+end
+
+function on_message(self, message_id, message)
+	if message_id == hash('split') then
+		print('split 3!')
+		factory.create(self.asteroids[2], random_spawn())
+	end
+end

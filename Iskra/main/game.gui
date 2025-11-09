@@ -1,0 +1,254 @@
+textures {
+  name: "arts"
+  texture: "/assets/arts.tilesource"
+}
+nodes {
+  size {
+    x: 1920.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  pivot: PIVOT_SW
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 600.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  texture: "arts/rect_line"
+  id: "command_systeam"
+  pivot: PIVOT_SW
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: 302.0
+    y: 150.0
+  }
+  size {
+    x: 500.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  id: "command_slots"
+  parent: "command_systeam"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -176.0
+    y: -60.0
+  }
+  size {
+    x: 100.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  texture: "arts/rect_line"
+  id: "command_slot_1"
+  parent: "command_slots"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    y: -60.0
+  }
+  size {
+    x: 100.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  texture: "arts/rect_line"
+  id: "command_slot_2"
+  parent: "command_slots"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: 175.0
+    y: -60.0
+  }
+  size {
+    x: 100.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  texture: "arts/rect_line"
+  id: "command_slot_3"
+  parent: "command_slots"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: 302.0
+    y: 150.0
+  }
+  size {
+    x: 500.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  id: "command_frags"
+  parent: "command_systeam"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -179.0
+    y: 86.0
+  }
+  size {
+    x: 80.0
+    y: 80.0
+  }
+  color {
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "arts/rect_line"
+  id: "command_frag_1"
+  parent: "command_frags"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: -90.0
+    y: 86.0
+  }
+  size {
+    x: 80.0
+    y: 80.0
+  }
+  color {
+    x: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "arts/rect_line"
+  id: "command_frag_2"
+  parent: "command_frags"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    y: 86.0
+  }
+  size {
+    x: 80.0
+    y: 80.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+  }
+  type: TYPE_BOX
+  texture: "arts/rect_line"
+  id: "command_frag_3"
+  parent: "command_frags"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: 89.0
+    y: 86.0
+  }
+  size {
+    x: 80.0
+    y: 80.0
+  }
+  color {
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "arts/rect_line"
+  id: "command_frag_4"
+  parent: "command_frags"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: 176.0
+    y: 86.0
+  }
+  size {
+    x: 80.0
+    y: 80.0
+  }
+  color {
+    x: 0.0
+    z: 0.0
+  }
+  type: TYPE_BOX
+  texture: "arts/rect_line"
+  id: "command_frag_5"
+  parent: "command_frags"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

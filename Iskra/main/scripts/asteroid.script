@@ -1,0 +1,70 @@
+-- 实现陨石旋转 --
+-- 实现陨石通过旋转而产生的移动 --
+-- 实现环绕效果 --
+
+go.property('type', 0) -- type=1为大型， type=2为小型 --
+
+local function move_to_center(self)
+	local target_pos = {}
+	target_pos.x = SCREEN_WIDTH / 2
+	target_pos.y = SCREEN_HEIGHT / 2
+
+	local start_pos = go.get_position()
+	local dx = target_pos.x - start_pos.x
+	local dy = target_pos.y - start_pos.y
+
+	local normalize_direction = vmath.normalize(vmath.vector3(dx, dy, start_pos.z) + vmath.vector3(math.random(-150, 150), math.random(-150, 150), 0))
+
+	self.direction = normalize_direction
+end
+
+local function explode(self)
+	sprite.play_flipbook('#sprite', 'explosion')
+	go.delete()
+end
+
+
+function init(self)
+	self.direction = vmath.vector3()
+	self.move_speed = 100
+	self.rotation = 0
+	self.rotation_speed = 15
+
+	move_to_center(self)
+end
+
+local function wrap_position(position)
+	position.x = position.x % SCREEN_WIDTH
+	position.y = position.y % SCREEN_HEIGHT
+	return position
+end
+
+
+function update(self, dt)
+	-- 通过增量时间对旋转进行递增 --
+	self.rotation = self.rotation + self.rotation_speed * dt
+	self.rotation = self.rotation % 360 -- 保持数值整洁，始终确保在0-360度之间 --
+	local rad_rotation = math.rad(self.rotation) -- 将角度转换为弧度 --
+	go.set_rotation(vmath.quat_rotation_z(rad_rotation)) -- 使用绕z轴旋转的四元数函数（期望弧度）计算出旋转值，应用至游戏对象上--
+
+	-- 移动 --
+	local position = go.get_position()
+	position = position + self.direction * self.move_speed * dt
+	position = wrap_position(position)
+	go.set_position(position)
+end
+
+
+function on_message(self, message_id, message)
+	if message_id == hash('collision_response') then
+		if message.group == hash('ship') then
+			local direction = -self.direction
+			self.direction = direction
+			print('asteroid attack!')
+		end
+	end
+
+	if message_id == hash('explode') then
+		explode(self)
+	end
+end

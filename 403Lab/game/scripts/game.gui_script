@@ -6,8 +6,8 @@ local ALL_TEXTS = dialog_data.dialog_text -- 方便访问文本数组 --
 -- 定义文本数组的长度 --
 local TEXT_COUNT = #ALL_TEXTS
 
-local hide_pos = vmath.vector3(300, -550, 0)
-local end_pos = vmath.vector3(300, -190, 0)
+local hide_pos = vmath.vector3(-300, -465, 0)
+local end_pos = vmath.vector3(-300, -265, 0)
 
 function on_drag(dx, dy, x, y, touch)
 	local position_x = gui.get(self.drag.node, "position.x")
@@ -120,7 +120,9 @@ function init(self)
 				slot_to_free.occupied_by = nil 
 
 				-- 2. 清除 Item 的放置记录
-				item.placed_slot = nil 
+				item.placed_slot = nil
+				
+				gui.set_color(self.slots[slot_idx_to_free].node, vmath.vector4(1, 1, 1, 1))
 			end
 		end)
 
@@ -132,6 +134,7 @@ function init(self)
 					slot.occupied_by = item_index
 					item.placed_slot = slot_idx
 					gui.animate(node, 'position', slot.position, gui.EASING_OUTBACK, 0.3)
+					gui.set_color(slot.node, vmath.vector4(0, 0.5, 0, 1))
 					placed = true
 					print('go zone: '..slot.position)
 					break
@@ -157,6 +160,10 @@ function init(self)
 		item.drag = drag
 	end
 
+	self.inject_node = self.druid:new_button('inject')
+	self.inject_node.on_click:subscribe(function() 
+		audio_manager.play_sfx('click')
+	end)
 end
 
 local function next_dialog_text(self)	
@@ -182,11 +189,14 @@ end
 
 function update(self, dt)
 	self.druid:update(dt)
+
+	-- 检测是否为红绿蓝药剂 --
+	
 end
 
 local function dialog_show(self)
 	if self.is_show then 
-		gui.animate(self.dialog_node, gui.PROP_POSITION, hide_pos, gui.gui.EASING_OUTBACK_OUTCUBIC, 0.8)
+		gui.animate(self.dialog_node, gui.PROP_POSITION, hide_pos, gui.EASING_OUTCUBIC, 0.8)
 		self.is_show = false
 	else
 		gui.animate(self.dialog_node, gui.PROP_POSITION, end_pos, gui.EASING_OUTCUBIC, 0.8)

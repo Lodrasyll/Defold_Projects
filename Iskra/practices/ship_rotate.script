@@ -1,0 +1,40 @@
+
+-- 让物体以固定旋转速度缓慢朝向鼠标点击方向
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	self.rot_speed = math.pi / 20 
+	self.current_angle = 0
+	self.target_angle = 0
+end
+
+function on_input(self, action_id, action)
+	if action.released then
+		local look_at = vmath.vector3(action.x, action.y, 0)
+		local pos = go.get_position()
+		local dx = look_at.x - pos.x
+		local dy = look_at.y - pos.y
+		self.target_angle = math.atan2(dy, dx)
+	end
+end
+
+function update(self, dt)
+	local delta = self.target_angle - self.current_angle
+
+	-- 归一化角差到 [-pi, pi]
+	if delta > math.pi then
+		delta = delta - 2 * math.pi
+	elseif delta < -math.pi then
+		delta = delta + 2 * math.pi
+	end
+
+	-- 限制每帧旋转步长
+	local max_step = self.rot_speed * dt
+	if math.abs(delta) < max_step then
+		self.current_angle = self.target_angle
+	else
+		self.current_angle = self.current_angle + max_step * (delta > 0 and 1 or -1)
+	end
+
+	go.set_rotation(vmath.quat_rotation_z(self.current_angle))
+end

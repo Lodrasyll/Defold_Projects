@@ -1,0 +1,33 @@
+images {
+  image: "/assets/ship.png"
+}
+images {
+  image: "/assets/asteroid_large.png"
+}
+images {
+  image: "/assets/asteroid_small.png"
+}
+images {
+  image: "/assets/background.png"
+}
+images {
+  image: "/assets/effect_yellow.png"
+}
+images {
+  image: "/assets/laser.png"
+}
+images {
+  image: "/assets/ship_G.png"
+}
+images {
+  image: "/assets/canon.png"
+  pivot_y: 0.68
+}
+animations {
+  id: "explosion"
+  images {
+    image: "/assets/explosion.png"
+  }
+  fps: 2
+}
+extrude_borders: 2
