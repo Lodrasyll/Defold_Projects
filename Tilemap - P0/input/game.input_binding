@@ -1,0 +1,8 @@
+mouse_trigger {
+  input: MOUSE_BUTTON_1
+  action: "plant"
+}
+mouse_trigger {
+  input: MOUSE_BUTTON_RIGHT
+  action: "remove_plant"
+}
