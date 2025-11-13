@@ -1,47 +1,45 @@
 components {
-  id: "laser"
-  component: "/main/scripts/laser.script"
+  id: "paddle"
+  component: "/main/scripts/paddle.script"
+  position {
+    x: -105.34491
+    y: -2.4217222
+  }
 }
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "default_animation: \"laser\"\n"
+  data: "default_animation: \"paddle\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/sprites.atlas\"\n"
+  "  texture: \"/assets/arts.atlas\"\n"
   "}\n"
   ""
-  rotation {
-    z: -0.70710677
-    w: 0.70710677
-  }
-  scale {
-    x: 4.0
-    y: 4.0
-  }
 }
 embedded_components {
   id: "collisionobject"
   type: "collisionobject"
-  data: "type: COLLISION_OBJECT_TYPE_TRIGGER\n"
+  data: "type: COLLISION_OBJECT_TYPE_KINEMATIC\n"
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"laser\"\n"
-  "mask: \"asteroid\"\n"
+  "group: \"paddle\"\n"
+  "mask: \"ball\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
+  "      y: -2.0\n"
   "    }\n"
   "    rotation {\n"
   "    }\n"
   "    index: 0\n"
   "    count: 3\n"
+  "    id: \"box\"\n"
   "  }\n"
-  "  data: 74.09185\n"
-  "  data: 11.503594\n"
+  "  data: 43.33015\n"
+  "  data: 118.124214\n"
   "  data: 10.0\n"
   "}\n"
   ""

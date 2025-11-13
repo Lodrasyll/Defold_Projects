@@ -1,0 +1,121 @@
+--------------- 设计与实现 ---------------
+--[[
+
+设计意图：
+- 在无限滚动的背景中使用鼠标/触摸虚拟摇杆控制P1上下与P2进行打乒乓，使用虚拟控制摇杆控制发球方向，先突破对方球门10分的一方获胜。
+    - 双方阵营有奖励点和功能点
+        - 奖励点：
+            1.在结算时，每3点奖励点，结算分数+1
+            2.每3点奖励点按使鼠标右键可随机使用一个功能点
+        - 功能点： 
+            1. 加速
+            2. 无敌
+            3. 幻影
+
+步骤实现：
+- [x] 实现虚拟光标移动
+- [x] 实现无限滚动背景
+    - !!!! Defold使用的是世界坐标，不是Love2d的绘制渲染偏移
+- [x] 实现上下按键控制球拍移动
+- [ ] 实现虚拟摇杆控制器方向（可使用druid）（视觉上）
+- [ ] 实现使用控制器控制球拍上下移动与上下屏幕限制
+- [ ] 实现球拍随机移动与反弹
+- [ ] 实现简易状态机的状态切换：开始与游玩状态
+- [ ] 实现分数检测
+- [ ] 实现胜利状态
+- [ ] 实现P2的敌方简易AI（作业）
+...
+
+项目结构：
+- main.collection
+    - ball.go
+        - ball.script         -- 控制球移动与反弹逻辑的脚本
+    - paddle.go
+        - paddle.script       -- 控制球拍移动与屏幕距离钳制的脚本
+    - paddle_ai.go
+        - paddle_ai.script    -- 控制对方球拍的简易ai脚本
+    - background
+    - main.go
+        - main.script         -- 控制游戏各方面设置的主脚本（游戏窗口与渲染设置、虚拟光标移动）
+    - 状态机对象与脚本
+]]--
+-----------------------------------------
+local scroll_speed = 60
+
+SCREEN_WIDTH = sys.get_config_number('display.width')
+SCREEN_HEIGHT = sys.get_config_number('display.height')
+
+
+---@package
+---@param self main.script
+function init(self)
+    defos.disable_window_resize()
+    defos.set_cursor_visible(false)
+
+    msg.post('.', 'acquire_input_focus')
+end
+
+---@package
+---@param self main.script
+---@param dt number
+function update(self, dt)
+    local bg_pos = go.get_position('/background')
+    bg_pos.x = bg_pos.x + (-scroll_speed * dt)
+    if bg_pos.x <= -1280 then
+        bg_pos.x = bg_pos.x + 1280
+    end
+    go.set_position(bg_pos, '/background')
+end
+
+---@package
+---@param self main.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    if action_id == hash('touch') then
+        local mouse_pos = vmath.vector3(action.x, action.y, 1)
+        go.set_position(mouse_pos, '/cursor')
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

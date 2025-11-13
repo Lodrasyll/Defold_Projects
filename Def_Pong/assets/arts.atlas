@@ -1,0 +1,37 @@
+images {
+  image: "/assets/arts/background.png"
+  pivot_x: 0.0
+  pivot_y: 1.0
+}
+images {
+  image: "/assets/arts/circele.png"
+}
+animations {
+  id: "ball"
+  images {
+    image: "/assets/arts/ball_000.png"
+  }
+  images {
+    image: "/assets/arts/ball_001.png"
+  }
+  images {
+    image: "/assets/arts/ball_002.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 24
+}
+animations {
+  id: "paddle"
+  images {
+    image: "/assets/arts/paddle_000.png"
+  }
+  images {
+    image: "/assets/arts/paddle_001.png"
+  }
+  images {
+    image: "/assets/arts/paddle_002.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 24
+}
+extrude_borders: 2

@@ -1,0 +1,67 @@
+-- 随机方向 --
+-- 方向控制 --
+
+local function set_random_dir(self)
+    self.speed = 30
+    self.direction = vmath.vector3(math.random(2) == 1 and 10 or -10, math.random(-5, 5), 0)
+end
+
+---@package
+---@param self ball.script
+function init(self)
+    math.randomseed(os.time())
+
+    self.init_pos = go.get_position()
+
+    self.speed = 30
+    set_random_dir(self)
+
+    msg.post('.', 'acquire_input_focus')
+end
+
+---@package
+---@param self ball.script
+---@param dt number
+function update(self, dt)
+    local pos = go.get_position()
+    pos = pos + self.direction * self.speed * dt
+    go.set_position(pos)
+
+    if pos.y >= SCREEN_HEIGHT - 25 then
+        self.direction.y = -self.direction.y
+    elseif pos.y <= 0 + 25 then
+        pos.y = 0
+        self.direction.y = -self.direction.y
+    end
+
+end
+
+---@package
+---@param self ball.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    if action_id == hash('reset') then
+        local pos = go.get_position()
+        pos = self.init_pos
+        go.set_position(pos)
+        set_random_dir(self)
+    end
+end
+
+---@package
+---@param self ball.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('collision_response') then
+        if message.group == hash('paddle') then
+            self.direction = -self.direction
+            self.speed = self.speed * 1.03
+            self.direction.y = math.random(-15, 15)
+            local pos = go.get_position()
+        end
+    end
+end

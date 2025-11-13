@@ -16,5 +16,10 @@ input_method = HiddenInputField
 scale_mode = stretch
 
 [project]
-title = Def-Pong
+title = Def_Pong
+dependencies#0 = https://github.com/subsoap/defos/archive/master.zip
+
+[graphics]
+default_texture_mag_filter = nearest
+default_texture_min_filter = nearest
 

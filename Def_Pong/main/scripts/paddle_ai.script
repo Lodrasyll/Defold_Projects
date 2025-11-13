@@ -1,0 +1,35 @@
+---@package
+---@param self paddle.script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+    self.input = vmath.vector3()
+    self.speed = 300  
+end
+
+---@package
+---@param self paddle.script
+---@param dt number
+function update(self, dt)
+    local pos = go.get_position()
+    if self.input.y == 1 then
+        pos = pos + self.input * self.speed * dt
+        go.set_position(pos)
+    elseif self.input.y == -1 then
+        pos = pos + self.input * self.speed * dt
+        go.set_position(pos)
+    end
+    self.input.y = 0
+end
+
+---@package
+---@param self paddle.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    if action_id == hash('ai_up') then
+        self.input.y = 1
+    elseif action_id == hash('ai_down') then
+        self.input.y = -1
+    end
+end
