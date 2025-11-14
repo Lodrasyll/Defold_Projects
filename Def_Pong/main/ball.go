@@ -1,10 +1,6 @@
 components {
   id: "ball"
   component: "/main/scripts/ball.script"
-  position {
-    x: -87.5613
-    y: 14.085558
-  }
 }
 embedded_components {
   id: "sprite"

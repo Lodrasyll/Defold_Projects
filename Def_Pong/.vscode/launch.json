@@ -1,5 +1,6 @@
 {
     "configurations": [
+        
         {
             "name": "Defold Kit",
             "type": "lua-local",

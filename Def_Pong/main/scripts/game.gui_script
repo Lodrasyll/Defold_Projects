@@ -1,0 +1,40 @@
+--------- 难点 ---------
+--[[
+1. 如何让进球得分只加一次的分？
+	- 在检测后的下一帧：重置位置 或 增加一个布尔锁（判断得分）
+
+]]--
+
+
+---@package
+---@param self game.gui_script
+function init(self)
+	---- 分数变量 ----
+	self.player1_score = 0
+	self.player2_score = 0
+
+	---- 拿到gui节点（必须要用gui.get_node()） ----
+	self.player1_score_node = gui.get_node('player1_score')
+	self.player2_score_node = gui.get_node('player2_score')
+
+	---- 初始化文本 ----
+	---- 注意text需要tostring字符串转换 ----
+	gui.set_text(self.player1_score_node, tostring(self.player1_score))
+	gui.set_text(self.player2_score_node, tostring(self.player2_score))
+
+end	
+
+---@package
+---@param self game.gui_script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('player1_score') then
+		self.player1_score = self.player1_score + message.score
+		gui.set_text(self.player1_score_node, self.player1_score)
+	elseif message_id == hash('player2_score') then
+		self.player2_score = self.player2_score + message.score
+		gui.set_text(self.player2_score_node, self.player2_score)
+	end
+end	

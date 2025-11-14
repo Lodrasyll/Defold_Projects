@@ -17,8 +17,16 @@ instances {
   prototype: "/main/paddle.go"
   position {
     x: 40.0
-    y: 640.0
-    z: 0.9
+    y: 580.0
+    z: 1.0
+  }
+  component_properties {
+    id: "paddle"
+    properties {
+      id: "speed"
+      value: "450.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
   }
   scale3 {
     x: 0.5
@@ -30,7 +38,16 @@ instances {
   prototype: "/main/paddle_ai.go"
   position {
     x: 1240.0
-    y: 80.0
+    y: 120.0
+    z: 1.0
+  }
+  component_properties {
+    id: "paddle_ai"
+    properties {
+      id: "speed"
+      value: "450.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
   }
   scale3 {
     x: 0.5
@@ -52,6 +69,9 @@ embedded_instances {
   "\"\n"
   "}\n"
   ""
+  position {
+    z: -0.7
+  }
 }
 embedded_instances {
   id: "gui"
@@ -88,10 +108,38 @@ embedded_instances {
   "}\n"
   ""
   position {
+    x: 640.0
+    y: 360.0
     z: 1.0
   }
   scale3 {
     x: 2.0
     y: 2.0
+  }
+}
+embedded_instances {
+  id: "circle"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"circle\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "size {\\n"
+  "  x: 507.0\\n"
+  "  y: 464.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 640.0\n"
+  "    y: 360.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    z: 0.7
   }
 }

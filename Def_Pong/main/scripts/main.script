@@ -40,6 +40,7 @@
     - 状态机对象与脚本
 ]]--
 -----------------------------------------
+
 local scroll_speed = 60
 
 SCREEN_WIDTH = sys.get_config_number('display.width')
@@ -50,7 +51,7 @@ SCREEN_HEIGHT = sys.get_config_number('display.height')
 ---@param self main.script
 function init(self)
     defos.disable_window_resize()
-    defos.set_cursor_visible(false)
+
 
     msg.post('.', 'acquire_input_focus')
 end
@@ -65,19 +66,9 @@ function update(self, dt)
         bg_pos.x = bg_pos.x + 1280
     end
     go.set_position(bg_pos, '/background')
+
 end
 
----@package
----@param self main.script
----@param action_id hash
----@param action on_input.action
----@return boolean|nil
-function on_input(self, action_id, action)
-    if action_id == hash('touch') then
-        local mouse_pos = vmath.vector3(action.x, action.y, 1)
-        go.set_position(mouse_pos, '/cursor')
-    end
-end
 
 
 
