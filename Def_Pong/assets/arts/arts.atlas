@@ -20,13 +20,13 @@ animations {
 animations {
   id: "paddle"
   images {
+    image: "/assets/arts/paddle_000.png"
+  }
+  images {
     image: "/assets/arts/paddle_001.png"
   }
   images {
     image: "/assets/arts/paddle_002.png"
-  }
-  images {
-    image: "/assets/arts/paddle_003.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
   fps: 8
