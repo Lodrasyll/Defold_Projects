@@ -23,3 +23,6 @@ dependencies#0 = https://github.com/subsoap/defos/archive/master.zip
 default_texture_mag_filter = nearest
 default_texture_min_filter = nearest
 
+[physics]
+debug = 1
+

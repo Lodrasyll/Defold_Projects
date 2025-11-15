@@ -41,32 +41,66 @@
 ]]--
 -----------------------------------------
 
-local scroll_speed = 60
-
+---- 获取屏幕尺寸 ----
 SCREEN_WIDTH = sys.get_config_number('display.width')
 SCREEN_HEIGHT = sys.get_config_number('display.height')
+
+---- 设置背景滚动速度和方向 ----
+local scroll_speed = 60
+local scroll_dir = -1       ---- 沿着x轴向左（负方向）运动
+
+------------ 游戏状态管理 ------------
+game_state = 'start'        ---- 创建一个全局变量让其他游戏对象能够检查该状态，同时在main中根据输入处理来改变状态 ----
+
 
 
 ---@package
 ---@param self main.script
 function init(self)
-    defos.disable_window_resize()
-
-
     msg.post('.', 'acquire_input_focus')
+    profiler.set_ui_view_mode(profiler.VIEW_MODE_MINIMIZED)
 end
 
 ---@package
 ---@param self main.script
 ---@param dt number
 function update(self, dt)
-    local bg_pos = go.get_position('/background')
-    bg_pos.x = bg_pos.x + (-scroll_speed * dt)
-    if bg_pos.x <= -1280 then
-        bg_pos.x = bg_pos.x + 1280
+    ---- 获取背景位置 根据速度和方向通过dt更新背景位置 ----
+    local BG = '/background'
+    local bg_pos = go.get_position(BG)
+    bg_pos.x = bg_pos.x + scroll_speed * scroll_dir * dt        ---- 注意点（多次）：向左运动只需要**单独**操作x轴变量 ----
+    if bg_pos.x <= SCREEN_WIDTH * scroll_dir then
+        bg_pos.x = bg_pos.x + SCREEN_WIDTH
     end
-    go.set_position(bg_pos, '/background')
+    go.set_position(bg_pos, BG)
 
+end
+
+---@package
+---@param self main.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('win') then
+        game_state = 'done'
+    end
+end
+
+---@package
+---@param self main.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    ---- 根据输入处理来改变游戏状态 ----
+    if action_id == hash('start_game') and action.pressed then
+        if game_state == 'start' then
+            game_state = 'play'
+        else
+            game_state = 'start'
+        end
+    end
 end
 
 

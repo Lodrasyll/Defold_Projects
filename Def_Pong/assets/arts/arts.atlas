@@ -15,7 +15,7 @@ animations {
     image: "/assets/arts/Spritesheet_002.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 24
+  fps: 8
 }
 animations {
   id: "paddle"
@@ -29,7 +29,7 @@ animations {
     image: "/assets/arts/paddle_003.png"
   }
   playback: PLAYBACK_LOOP_FORWARD
-  fps: 24
+  fps: 8
 }
 animations {
   id: "circle"

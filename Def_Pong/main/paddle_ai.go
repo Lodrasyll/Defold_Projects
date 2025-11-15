@@ -40,7 +40,7 @@ embedded_components {
   "}\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/arts.atlas\"\n"
+  "  texture: \"/assets/arts/arts.atlas\"\n"
   "}\n"
   ""
 }

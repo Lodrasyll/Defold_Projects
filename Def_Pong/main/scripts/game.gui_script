@@ -5,6 +5,7 @@
 
 ]]--
 
+local win_score = 2
 
 ---@package
 ---@param self game.gui_script
@@ -12,17 +13,44 @@ function init(self)
 	---- 分数变量 ----
 	self.player1_score = 0
 	self.player2_score = 0
+	self.game_state = {
+		'start',
+		'play',
+		'done'
+	}
 
 	---- 拿到gui节点（必须要用gui.get_node()） ----
 	self.player1_score_node = gui.get_node('player1_score')
 	self.player2_score_node = gui.get_node('player2_score')
+	self.game_state_node = gui.get_node('game_state')
 
 	---- 初始化文本 ----
 	---- 注意text需要tostring字符串转换 ----
 	gui.set_text(self.player1_score_node, tostring(self.player1_score))
 	gui.set_text(self.player2_score_node, tostring(self.player2_score))
 
-end	
+end
+
+---@package
+---@param self game.gui_script
+---@param dt number
+function update(self, dt)
+	if game_state == 'start' then
+		gui.set_text(self.game_state_node, self.game_state[1])
+	elseif game_state == 'play' then
+		gui.set_text(self.game_state_node, self.game_state[2])
+	elseif game_state == 'done' then
+		gui.set_text(self.game_state_node, self.game_state[3])
+		self.player1_score = 0
+		self.player2_score = 0
+		gui.set_text(self.player1_score_node, tostring(self.player1_score))
+		gui.set_text(self.player2_score_node, tostring(self.player2_score))
+	end
+
+	if self.player1_score == win_score or self.player2_score == win_score then
+		msg.post('/main_manager', 'win')
+	end
+end
 
 ---@package
 ---@param self game.gui_script

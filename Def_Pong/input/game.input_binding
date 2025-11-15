@@ -15,8 +15,8 @@ key_trigger {
   action: "ai_down"
 }
 key_trigger {
-  input: KEY_SPACE
-  action: "reset"
+  input: KEY_ENTER
+  action: "start_game"
 }
 mouse_trigger {
   input: MOUSE_BUTTON_1

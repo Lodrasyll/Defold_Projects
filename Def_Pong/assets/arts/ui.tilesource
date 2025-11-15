@@ -1,4 +1,4 @@
-image: "/assets/simple_ui.png"
+image: "/assets/arts/simple_ui.png"
 tile_width: 16
 tile_height: 16
 animations {
