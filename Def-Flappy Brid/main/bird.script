@@ -1,0 +1,53 @@
+
+---- 重力实现与反重力实现 ----
+---- 所需属性：重力、鸟对象的位置j、位置变化量（速率）、反重力方向（处理输入响应） ----
+---- 所需方法：根据dt、重力、鸟自身位置等属性 进行位置递增的方法 ----
+
+go.property('power', 1)
+
+---@package
+---@param self bird.script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+    self.gravity = physics.get_gravity().y
+    self.dir = vmath.vector3(0, -1, 0)
+    self.velocity = vmath.vector3()
+end
+
+---@package
+---@param self bird.script
+---@param dt number
+function update(self, dt)
+    local pos = go.get_position()
+    self.velovity = self.dir * self.gravity
+    pos = pos + self.power * self.velovity * dt
+    go.set_position(pos)
+end
+
+---@package
+---@param self bird.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    if action_id == hash('fly') or action_id == hash('touch') then
+        if action.pressed then
+            self.dir.y = 1
+            self.power = 1.3
+        elseif action.released then
+            self.dir.y = -1
+            self.power = 1
+        end
+    end
+end
+
+---@package
+---@param self bird.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('trigger_response') then
+        print('you die!')
+    end
+end

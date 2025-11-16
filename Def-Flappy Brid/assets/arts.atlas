@@ -1,0 +1,63 @@
+images {
+  image: "/assets/arts/background.png"
+  pivot_x: 0.0
+  pivot_y: 1.0
+}
+animations {
+  id: "bird"
+  images {
+    image: "/assets/arts/Spritesheet_000.png"
+  }
+  images {
+    image: "/assets/arts/Spritesheet_001.png"
+  }
+  images {
+    image: "/assets/arts/Spritesheet_002.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "pipe"
+  images {
+    image: "/assets/arts/paddle_000.png"
+  }
+  images {
+    image: "/assets/arts/paddle_001.png"
+  }
+  images {
+    image: "/assets/arts/paddle_002.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "circle"
+  images {
+    image: "/assets/arts/circle_000.png"
+  }
+  images {
+    image: "/assets/arts/circle_001.png"
+  }
+  images {
+    image: "/assets/arts/circle_002.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "ground"
+  images {
+    image: "/assets/arts/ground_000.png"
+    pivot_x: 0.0
+    pivot_y: 1.0
+  }
+  images {
+    image: "/assets/arts/ground_001.png"
+    pivot_x: 0.0
+    pivot_y: 1.0
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 2
+}
+extrude_borders: 2

@@ -1,0 +1,56 @@
+---- 管道生成工厂 ----
+---- 疑问：工厂如何生效？如何生成在想要的位置上？渲染z轴有影响吗 ----
+
+---- 管道生成所需的属性和方法 ----
+---- 属性：上下管道的间隙，管道对之间的间隔  ----
+---- 计时器 ----
+
+local spawn_time = 2
+local component = '#pipes_factory'
+local gap = 0
+local spawn_x = SCREEN_WIDTH + 60
+local center_y = SCREEN_HEIGHT / 2
+local offset = math.random(300, 400)
+
+---- 有了中心点位置，就有离这个中心点最小与最大值的offset偏移值 ----
+---- 追踪生成的实例，拿到上一个实例的y轴位置的参数 ----
+
+
+local function spawn_pipe_top(self)
+	local pos = go.get_position()
+	pos = vmath.vector3(spawn_x, math.random(center_y + offset, SCREEN_HEIGHT), 0)
+	local rot = vmath.quat_rotation_z(math.rad(180))
+	factory.create(component, pos, rot)
+end
+
+local function spawn_pipe_bottom(self)
+	local pos = go.get_position()
+	pos = vmath.vector3(spawn_x, math.random(0, center_y - offset), 0)
+	local id = factory.create(component, pos, nil, { scored = false })
+	table.insert(self.spawn_pipes, id)
+end
+
+local function compute_pipes_gap(self)
+	
+end
+
+---@package
+---@param self pipe_factory.script
+function init(self)
+	math.random(os.time())
+
+	self.timer = 0
+	self.spawn_pipes = {}
+end
+
+---@package
+---@param self pipes_factory.script
+---@param dt number
+function update(self, dt)
+	self.timer = self.timer + dt
+	if self.timer >= spawn_time then
+		spawn_pipe_top(self)
+		spawn_pipe_bottom(self)
+		self.timer = 0
+	end
+end

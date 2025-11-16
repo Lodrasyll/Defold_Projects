@@ -1,0 +1,54 @@
+components {
+  id: "pipe1"
+  component: "/main/pipe.script"
+  position {
+    x: -329.90854
+    y: 125.94001
+  }
+}
+embedded_components {
+  id: "pipe"
+  type: "sprite"
+  data: "default_animation: \"pipe\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "slice9 {\n"
+  "  y: 149.0\n"
+  "  w: 34.0\n"
+  "}\n"
+  "size {\n"
+  "  x: 121.0\n"
+  "  y: 400.0\n"
+  "}\n"
+  "size_mode: SIZE_MODE_MANUAL\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/assets/arts.atlas\"\n"
+  "}\n"
+  ""
+}
+embedded_components {
+  id: "collisionobject_bottom"
+  type: "collisionobject"
+  data: "type: COLLISION_OBJECT_TYPE_TRIGGER\n"
+  "mass: 0.0\n"
+  "friction: 0.1\n"
+  "restitution: 0.5\n"
+  "group: \"pipes\"\n"
+  "mask: \"bird\"\n"
+  "embedded_collision_shape {\n"
+  "  shapes {\n"
+  "    shape_type: TYPE_BOX\n"
+  "    position {\n"
+  "    }\n"
+  "    rotation {\n"
+  "    }\n"
+  "    index: 0\n"
+  "    count: 3\n"
+  "    id: \"box\"\n"
+  "  }\n"
+  "  data: 43.551903\n"
+  "  data: 193.0911\n"
+  "  data: 10.0\n"
+  "}\n"
+  ""
+}

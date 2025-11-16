@@ -1,0 +1,23 @@
+[bootstrap]
+main_collection = /main/main.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 1280
+height = 720
+high_dpi = 1
+
+[android]
+input_method = HiddenInputField
+
+[html5]
+scale_mode = stretch
+
+[project]
+title = Def-Flappy Brid
+
+[physics]
+gravity_y = 500.0
+

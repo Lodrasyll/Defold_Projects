@@ -1,0 +1,31 @@
+---- 管道滚动速度、方向 ----
+
+
+
+---@package
+---@param self pipe.script
+function init(self)
+	self.scroll_speed = 120
+	self.dir = -1
+	self.scored = false
+	
+end
+
+---@package
+---@param self pipe.script
+---@param dt number
+function update(self, dt)
+	local pos = go.get_position()
+	pos.x = pos.x + self.scroll_speed * self.dir * dt
+	go.set_position(pos)
+
+	if pos.x < -SCREEN_WIDTH then
+		go.delete()
+	end
+
+	local bird = go.get_position('/bird')
+	if pos.x < bird.x and not self.scored then
+		msg.post('/gui', 'add_score', { score = 1/2 })
+		self.scored = true
+	end
+end

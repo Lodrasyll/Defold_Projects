@@ -1,0 +1,31 @@
+
+
+
+
+---@package
+---@param self game.gui_script
+function init(self)
+    self.score = 0
+    self.score_node = gui.get_node('score')
+    gui.set_text(self.score_node, 'score: ' .. self.score)
+end
+
+---@package
+---@param self game.gui_script
+---@param dt number
+function update(self, dt)
+    print(self.score)
+end
+
+---@package
+---@param self game.gui_script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('add_score') then
+        print(message.score)
+        self.score = self.score + message.score
+        gui.set_text(self.score_node, 'score: ' .. self.score)
+    end
+end

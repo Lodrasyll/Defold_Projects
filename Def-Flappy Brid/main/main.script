@@ -1,0 +1,134 @@
+--------------- 设计与实现 ---------------
+--[[
+
+设计意图：
+- 
+
+
+步骤实现：
+- [] 实现无限滚动背景
+    - !!!! Defold使用的是世界坐标，不是Love2d的绘制渲染偏移
+...
+
+项目结构：
+- main.collection
+
+
+]] --
+-----------------------------------------
+
+---- 滚动背景实现 ----
+--- 需要的属性：背景滚动速度 背景滚动方向 背景位置 ---
+go.property('scroll_speed', 80)
+local scroll_dir = -1
+
+local GROUND = '/BG#ground'
+local BACKGROUND = 'BG#background'
+
+SCREEN_WIDTH = sys.get_config_number('display.width')
+SCREEN_HEIGHT = sys.get_config_number('display.height')
+
+
+---@package
+---@param self main.script
+---@param dt number
+function update(self, dt)
+	--- 获取自身位置，根据背景位置，通过dt和滚动速度和滚动方向更新自身位置
+	local bg_pos = go.get_position(BACKGROUND)
+	local grd_pos = go.get_position(GROUND)
+
+	bg_pos.x = bg_pos.x + self.scroll_speed * scroll_dir * dt    	-- 注意：横向移动只需要操作x轴方向的变量 --
+	grd_pos.x = grd_pos.x + self.scroll_speed * 2 * scroll_dir * dt
+
+	--- 判断当到达循环点时回到原位，形成背景无限滚动循环 ---
+	if bg_pos.x < -SCREEN_WIDTH then 					-- 注意：横向移动只需要操作x轴方向的变量 --
+		bg_pos.x = bg_pos.x + SCREEN_WIDTH
+	end
+	if grd_pos.x < -SCREEN_WIDTH then -- 注意：横向移动只需要操作x轴方向的变量 --
+		grd_pos.x = grd_pos.x + SCREEN_WIDTH
+	end
+	
+	---- 然后更新自身位置 ----
+	go.set_position(grd_pos, GROUND)
+	go.set_position(bg_pos, BACKGROUND)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
