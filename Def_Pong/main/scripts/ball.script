@@ -2,18 +2,17 @@
 -- 方向控制 --
 
 local audio_manager = require('main.audio_manager')
-go.property('speed', 30)
+go.property('speed', 350)
 
 local function set_random_dir(self)
     local pos = go.get_position()
     pos = self.init_pos
 
     local direction = vmath.vector3(math.random(2) == 1 and 10 or -10, math.random(-5, 5), 0)
-    local speed = math.random(30, 35)
 
-    -- self.direction = vmath.normalize(direction)
-    self.direction = direction
-    self.speed = speed
+    self.direction = vmath.normalize(direction)
+    -- self.direction = direction
+    self.speed = 350
 
     go.set_position(pos)
     -- 调试模块 --
@@ -23,7 +22,6 @@ end
 ---@param self ball.script
 function init(self)
     math.randomseed(os.time())
-    self.speed = 0
     self.direction = vmath.vector3()
     self.init_pos = go.get_position()
 end
@@ -36,11 +34,11 @@ function update(self, dt)
 
     pos = pos + self.direction * self.speed * dt
     
-    if pos.y >= SCREEN_HEIGHT - 18 then
+    if pos.y > SCREEN_HEIGHT - 18 then
         audio_manager.play_sfx('wall_hit')
         self.direction.y = -self.direction.y
         msg.post('/paddle_ai', 'ball_info', { dir = self.direction, speed = self.speed })
-    elseif pos.y <= 0 + 18 then
+    elseif pos.y < 0 + 18 then
         audio_manager.play_sfx('wall_hit')
         self.direction.y = -self.direction.y
         msg.post('/paddle_ai', 'ball_info', { dir = self.direction, speed = self.speed })
@@ -90,13 +88,19 @@ function on_message(self, message_id, message, sender)
     if message_id == hash('contact_point_response') then
         if message.group == hash('paddle') then
             audio_manager.play_sfx('paddle_hit')
-            local newpos = go.get_position() + message.normal * message.distance * 2
-            
-            self.direction = -self.direction
-            self.speed = self.speed * 1.03
-            self.direction.y = math.random(-8, 8)
-            
+
+            local newpos = go.get_position() + message.normal * message.distance
             go.set_position(newpos)
+
+            -- 计算反弹方向 --
+            self.direction.x = -self.direction.x
+            self.direction.y = math.random(-1, 1)
+            -- local dot = vmath.dot(self.direction, message.normal)
+            -- local direction = self.direction - 2 * dot * message.normal
+            -- self.direction = vmath.normalize(direction)
+
+            self.speed = self.speed * 1.03
+            
             msg.post('/paddle_ai', 'ball_info', { dir = self.direction, speed = self.speed })
         end
     end
