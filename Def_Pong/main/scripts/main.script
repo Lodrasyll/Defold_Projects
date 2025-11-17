@@ -58,7 +58,7 @@ game_state = 'start'        ---- 创建一个全局变量让其他游戏对象�
 ---@param self main.script
 function init(self)
     msg.post('.', 'acquire_input_focus')
-    profiler.set_ui_view_mode(profiler.VIEW_MODE_MINIMIZED)
+    game_state = 'start'
 end
 
 ---@package
@@ -85,6 +85,10 @@ function on_message(self, message_id, message, sender)
     if message_id == hash('win') then
         game_state = 'done'
     end
+
+    if message_id == hash('change_to_serve') then
+        game_state = 'serve'
+    end
 end
 
 ---@package
@@ -96,9 +100,11 @@ function on_input(self, action_id, action)
     ---- 根据输入处理来改变游戏状态 ----
     if action_id == hash('start_game') and action.pressed then
         if game_state == 'start' then
+            game_state = 'serve'
+        elseif game_state == 'serve' then
             game_state = 'play'
-        else
-            game_state = 'start'
+        elseif game_state == 'done' then
+            game_state = 'serve'
         end
     end
 end

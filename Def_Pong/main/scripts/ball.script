@@ -10,12 +10,25 @@ local function set_random_dir(self)
 
     local direction = vmath.vector3(math.random(2) == 1 and 10 or -10, math.random(-5, 5), 0)
 
+    if direction.x > 0 then
+        self.is_p1_serve = true
+        msg.post('/gui', 'p1_serve')
+    else
+        self.is_p2_serve = true
+        msg.post('/gui', 'p2_serve')
+    end
+    
     self.direction = vmath.normalize(direction)
     -- self.direction = direction
     self.speed = 400
     self.paddle_bounce_dir = 1
     go.set_position(pos)
     -- 调试模块 --
+end
+
+function clear_serve(self)
+    self.is_p1_serve = false
+    self.is_p2_score = false
 end
 
 ---@package
@@ -25,6 +38,9 @@ function init(self)
     self.direction = vmath.vector3()
     self.init_pos = go.get_position()
     self.paddle_bounce_dir = 0
+    self.is_p1_serve = false
+    self.is_p2_serve = false
+    set_random_dir(self)
 end
 
 ---@package
@@ -33,7 +49,9 @@ end
 function update(self, dt)
     ---- 根据游戏状态来执行对应状态下的操作 ----
     if game_state == 'start' then
-        set_random_dir(self)
+        clear_serve(self)
+    elseif game_state == 'serve' then
+
     elseif game_state == 'play' then
         -- 获取位置
         local pos = go.get_position()
@@ -46,6 +64,7 @@ function update(self, dt)
             audio_manager.play_sfx('wall_hit')
             self.direction.y = -self.direction.y
             msg.post('/paddle_ai', 'ball_info', { dir = self.direction, speed = self.speed })
+            
         elseif pos.y < 0 + 18 then
             audio_manager.play_sfx('wall_hit')
             self.direction.y = -self.direction.y
@@ -56,16 +75,20 @@ function update(self, dt)
         if pos.x > SCREEN_WIDTH then
             audio_manager.play_sfx('score')
             msg.post('/gui#game', 'player1_score', { score = 1 })
-            game_state = 'start'
+            msg.post('/main_manager', 'change_to_serve')
+            self.is_p2_serve = true
+            set_random_dir(self)
         elseif pos.x < 0 then
             audio_manager.play_sfx('score')
             msg.post('/gui#game', 'player2_score', { score = 1 })
-            game_state = 'start'
+            msg.post('/main_manager', 'change_to_serve')
+            self.is_p1_serve = true
+            set_random_dir(self)
         end
 
         msg.post('/paddle_ai', 'ball_info', { dir = self.direction, speed = self.speed })
     elseif game_state == 'done' then
-        set_random_dir(self)
+
     end
 
     -- 游戏性改动：改进球的方向
@@ -74,7 +97,7 @@ function update(self, dt)
     end
 
     -- 调试模块 --
-    print(self.direction.x)
+
 end
 
 ---@package

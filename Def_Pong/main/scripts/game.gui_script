@@ -15,6 +15,7 @@ function init(self)
 	self.player2_score = 0
 	self.game_state = {
 		'start',
+		'serve',
 		'play',
 		'done'
 	}
@@ -23,6 +24,7 @@ function init(self)
 	self.player1_score_node = gui.get_node('player1_score')
 	self.player2_score_node = gui.get_node('player2_score')
 	self.game_state_node = gui.get_node('game_state')
+	self.game_serve_node = gui.get_node('game_serve')
 
 	---- 初始化文本 ----
 	---- 注意text需要tostring字符串转换 ----
@@ -37,10 +39,13 @@ end
 function update(self, dt)
 	if game_state == 'start' then
 		gui.set_text(self.game_state_node, self.game_state[1])
-	elseif game_state == 'play' then
+		-- gui.set_text(self.game_serve_node, 'Enter to start game')
+	elseif game_state == 'serve' then
 		gui.set_text(self.game_state_node, self.game_state[2])
-	elseif game_state == 'done' then
+	elseif game_state == 'play' then
 		gui.set_text(self.game_state_node, self.game_state[3])
+	elseif game_state == 'done' then
+		gui.set_text(self.game_state_node, self.game_state[4])
 		self.player1_score = 0
 		self.player2_score = 0
 		gui.set_text(self.player1_score_node, tostring(self.player1_score))
@@ -64,5 +69,15 @@ function on_message(self, message_id, message, sender)
 	elseif message_id == hash('player2_score') then
 		self.player2_score = self.player2_score + message.score
 		gui.set_text(self.player2_score_node, self.player2_score)
+	end
+
+	if message_id == hash('p1_serve') then
+		local text = 'Player_1 Serve!'
+		gui.set_text(self.game_serve_node, text)
+	end
+	
+	if message_id == hash('p2_serve') then
+		local text = 'Player_2 Serve!'
+		gui.set_text(self.game_serve_node, text)
 	end
 end	
