@@ -14,7 +14,8 @@
         "lowercase-global",
         "redefined-local",
         "inject-field",
-        "undefined-field"
+        "undefined-field",
+        "undefined-doc-name"
     ],
     "Lua.workspace.library": [
         "~\\AppData\\Roaming\\Code\\User\\globalStorage\\astronachos.defold",

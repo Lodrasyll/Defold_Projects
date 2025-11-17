@@ -10,11 +10,13 @@ local function set_random_dir(self)
 
     local direction = vmath.vector3(math.random(2) == 1 and 10 or -10, math.random(-5, 5), 0)
     local speed = math.random(30, 35)
-    
+
+    -- self.direction = vmath.normalize(direction)
     self.direction = direction
     self.speed = speed
 
     go.set_position(pos)
+    -- 调试模块 --
 end
 
 ---@package
@@ -23,7 +25,7 @@ function init(self)
     math.randomseed(os.time())
     self.speed = 0
     self.direction = vmath.vector3()
-    self.init_pos = go.get_position()    
+    self.init_pos = go.get_position()
 end
 
 ---@package
@@ -37,9 +39,11 @@ function update(self, dt)
     if pos.y >= SCREEN_HEIGHT - 18 then
         audio_manager.play_sfx('wall_hit')
         self.direction.y = -self.direction.y
+        msg.post('/paddle_ai', 'ball_info', { dir = self.direction, speed = self.speed })
     elseif pos.y <= 0 + 18 then
         audio_manager.play_sfx('wall_hit')
         self.direction.y = -self.direction.y
+        msg.post('/paddle_ai', 'ball_info', { dir = self.direction, speed = self.speed })
     end
 
     if pos.x > SCREEN_WIDTH then
@@ -52,17 +56,29 @@ function update(self, dt)
         game_state = 'start'
     end
 
+    if math.abs(self.direction.y) < 1 then
+        self.direction.y = math.random(-1, 1)
+    end
+
     go.set_position(pos)
 
     ---- 根据游戏状态来执行对应状态下的操作 ----
     if game_state == 'start' then
         set_random_dir(self)
-        print('reset!')
     elseif game_state == 'play' then
-        print('go!')
+        msg.post('/paddle_ai', 'ball_info', { dir = self.direction, speed = self.speed })
     elseif game_state == 'done' then
         set_random_dir(self)
     end
+
+
+    -- 调试模块 --
+    -- if game_state == 'start' then
+    --     print('reset')
+    -- elseif game_state == 'play' then
+    --     print('go!')
+    -- end
+    --------------
 end
 
 ---@package
@@ -81,6 +97,7 @@ function on_message(self, message_id, message, sender)
             self.direction.y = math.random(-8, 8)
             
             go.set_position(newpos)
+            msg.post('/paddle_ai', 'ball_info', { dir = self.direction, speed = self.speed })
         end
     end
 end
