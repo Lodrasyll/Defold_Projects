@@ -13,10 +13,6 @@ local function reset_game(self)
     fly(self)
 end
 
-local function clamp(n, min, max)
-    return n < min and min or (n > max and max or n)
-end
-
 
 ---@package
 ---@param self bird.script
@@ -26,9 +22,6 @@ function init(self)
     self.start_pos = go.get_position()
     self.jump_force = 400
     self.gravity = -980
-    
-    self.rot_factor = 0.015
-    self.lerp_speed = 3
     
     -- 游戏体验 让玩家有反应时间 
     fly(self)
@@ -40,18 +33,10 @@ end
 function update(self, dt)
     -- 重力值加速度
     self.velocity = self.velocity + self.gravity * dt
-
-    -- 根据重力加速度更新鸟的位置
+    -- 给鸟加上速度更新
     local bird_pos = go.get_position()
     bird_pos.y = bird_pos.y + self.velocity * dt
     go.set_position(bird_pos)
-
-    -- 根据重力加速度来表现旋转
-    local target_angle = clamp(self.velocity * self.rot_factor, -1, 1)
-    local taget_rotation = vmath.quat_rotation_z(target_angle)
-    local current_rotation = go.get_rotation()
-    local new_rotation = vmath.slerp(self.lerp_speed * dt, current_rotation, taget_rotation)
-    go.set_rotation(new_rotation)
 
     -- 调试模式
 end

@@ -1,6 +1,10 @@
 components {
   id: "pipe1"
   component: "/main/pipe.script"
+  position {
+    x: -329.90854
+    y: 125.94001
+  }
 }
 embedded_components {
   id: "pipe"
