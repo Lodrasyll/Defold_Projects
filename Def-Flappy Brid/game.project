@@ -18,6 +18,3 @@ scale_mode = stretch
 [project]
 title = Def-Flappy Brid
 
-[physics]
-gravity_y = 500.0
-
