@@ -3,25 +3,42 @@
 ---- 所需属性：重力、鸟对象的位置j、位置变化量（速率）、反重力方向（处理输入响应） ----
 ---- 所需方法：根据dt、重力、鸟自身位置等属性 进行位置递增的方法 ----
 
-go.property('power', 1)
+
+local function fly(self)
+    self.velocity = self.jump_force
+end
+
+local function reset_game(self)
+    go.set_position(self.start_pos)
+    fly(self)
+end
+
 
 ---@package
 ---@param self bird.script
 function init(self)
     msg.post('.', 'acquire_input_focus')
-    self.gravity = physics.get_gravity().y
-    self.dir = vmath.vector3(0, -1, 0)
-    self.velocity = vmath.vector3()
+    self.velocity = 0
+    self.start_pos = go.get_position()
+    self.jump_force = 400
+    self.gravity = -980
+    
+    -- 游戏体验 让玩家有反应时间 
+    fly(self)
 end
 
 ---@package
 ---@param self bird.script
 ---@param dt number
 function update(self, dt)
-    local pos = go.get_position()
-    self.velovity = self.dir * self.gravity
-    pos = pos + self.power * self.velovity * dt
-    go.set_position(pos)
+    -- 重力值加速度
+    self.velocity = self.velocity + self.gravity * dt
+    -- 给鸟加上速度更新
+    local bird_pos = go.get_position()
+    bird_pos.y = bird_pos.y + self.velocity * dt
+    go.set_position(bird_pos)
+
+    -- 调试模式
 end
 
 ---@package
@@ -30,14 +47,12 @@ end
 ---@param action on_input.action
 ---@return boolean|nil
 function on_input(self, action_id, action)
-    if action_id == hash('fly') or action_id == hash('touch') then
-        if action.pressed then
-            self.dir.y = 1
-            self.power = 1.3
-        elseif action.released then
-            self.dir.y = -1
-            self.power = 1
-        end
+    if action_id == hash('touch') or action_id == hash('fly') and action.pressed then
+        fly(self)
+    end
+
+    if action_id == hash('reset') then
+        reset_game(self)
     end
 end
 

@@ -2,6 +2,10 @@ key_trigger {
   input: KEY_SPACE
   action: "fly"
 }
+key_trigger {
+  input: KEY_ENTER
+  action: "reset"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"
