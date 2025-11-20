@@ -1,0 +1,17 @@
+---@package
+---@param self game_sceen_loader.script
+function init(self)
+	msg.post('.', 'acquire_input_focus')
+	msg.post('#collectionproxy', 'load')
+end
+
+---@package
+---@param self game_sceen_loader.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('proxy_loaded') then
+		msg.post(sender, 'enable')
+	end
+end

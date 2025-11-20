@@ -1,6 +1,6 @@
 ---- 管道滚动速度、方向 ----
 
-
+local game_manager = require('main.game_manager')
 
 ---@package
 ---@param self pipe.script
@@ -15,17 +15,32 @@ end
 ---@param self pipe.script
 ---@param dt number
 function update(self, dt)
-	local pos = go.get_position()
+	-- 如果处于标题开始状态
+	if game_manager.game_state == 'play_state' then
+		local pos = go.get_position()
 	pos.x = pos.x + self.scroll_speed * self.dir * dt
 	go.set_position(pos)
 
 	if pos.x < -SCREEN_WIDTH then
 		go.delete()
 	end
+	end
 
-	local bird = go.get_position('/bird')
-	if pos.x < bird.x and not self.scored then
-		msg.post('/gui', 'add_score', { score = 1/2 })
+	-- 如果处于开始倒数状态
+	-- 如果处于游玩游戏状态
+	-- 如果处于结算游戏状态
+	
+	-- 调试模块
+end
+
+---@package
+---@param self pipe.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('trigger_response') and message.group == hash('bird') and not self.scored then
+		msg.post('/gui', 'add_score', { score = 1 })
 		self.scored = true
 	end
 end

@@ -17,28 +17,34 @@
 ]] --
 -----------------------------------------
 
----- 滚动背景实现 ----
---- 需要的属性：背景滚动速度 背景滚动方向 背景位置 ---
-go.property('scroll_speed', 80)
-local scroll_dir = -1
+-- 滚动背景实现
+-- 需要的属性：背景滚动速度 背景滚动方向 背景位置
 
-local GROUND = '/BG#ground'
-local BACKGROUND = 'BG#background'
+go.property('scroll_speed', 80)
 
 SCREEN_WIDTH = sys.get_config_number('display.width')
 SCREEN_HEIGHT = sys.get_config_number('display.height')
 
+local scroll_dir = -1
+local game_manager = require('main.game_manager')
+
+
+---@package
+---@param self main.script
+function init(self)
+	msg.post('.', 'acquire_input_focus')
+end
 
 ---@package
 ---@param self main.script
 ---@param dt number
 function update(self, dt)
 	--- 获取自身位置，根据背景位置，通过dt和滚动速度和滚动方向更新自身位置
-	local bg_pos = go.get_position(BACKGROUND)
-	local grd_pos = go.get_position(GROUND)
+	local grd_pos = go.get_position('/ground')
+	local bg_pos = go.get_position('/background')
 
 	bg_pos.x = bg_pos.x + self.scroll_speed * scroll_dir * dt    	-- 注意：横向移动只需要操作x轴方向的变量 --
-	grd_pos.x = grd_pos.x + self.scroll_speed * 2 * scroll_dir * dt
+	grd_pos.x = grd_pos.x + self.scroll_speed * 2.5 * scroll_dir * dt
 
 	--- 判断当到达循环点时回到原位，形成背景无限滚动循环 ---
 	if bg_pos.x < -SCREEN_WIDTH then 					-- 注意：横向移动只需要操作x轴方向的变量 --
@@ -49,11 +55,44 @@ function update(self, dt)
 	end
 	
 	---- 然后更新自身位置 ----
-	go.set_position(grd_pos, GROUND)
-	go.set_position(bg_pos, BACKGROUND)
+	go.set_position(grd_pos, '/ground')
+	go.set_position(bg_pos, '/background')
+
+	-- 调试模式
+	if game_manager.game_state == 'title_state' then
+		print('title')
+	elseif game_manager.game_state == 'counter_state' then
+		print('counter_state')
+	elseif game_manager.game_state == 'play_state' then
+		print('play_state')
+	elseif game_manager.game_state == 'play_state' then
+		print('score_state')
+	end
 end
 
+---@package
+---@param self main.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+	if action_id == hash('touch') and game_manager.game_state == 'title_state' then
+		game_manager.set_game_state('counter_state')
+		msg.post('/gui', 'counter_state')
+	end
+end
 
+---@package
+---@param self main.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('counter_end') then
+		game_manager.set_game_state('play_state')
+		msg.post('/gui', 'play_state')
+	end
+end
 
 
 

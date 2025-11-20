@@ -1,20 +1,78 @@
+local game_manager = require('main.game_manager')
 
 
+
+local function play_game(self)
+    gui.set_enabled(self.counter_node, false)
+    gui.set_enabled(self.score_node, true)
+    gui.set_enabled(self.pause_node, true)
+end
+
+local function title_game(self)
+    local text = 'Def-Flappy Brid~\nClick to start game~'
+    gui.set_text(self.title_node, text)
+    gui.set_enabled(self.title_node, true)
+    gui.set_enabled(self.score_node, false)
+    gui.set_enabled(self.pause_node, false)
+    gui.set_enabled(self.counter_node, false)
+end
+
+local function counter_game(self, dt)
+    gui.set_enabled(self.title_node, false)
+    gui.set_enabled(self.counter_node, true)
+
+    self.counter = self.counter - dt * 2
+    if self.counter <= 0 then
+        msg.post('/main_manager', 'counter_end')
+    end
+    gui.set_text(self.counter_node, tostring(string.format('%0d', self.counter)))
+end
+
+local function end_game(self)
+    
+end
+
+
+
+local function pause_game(self)
+    self.paused = not self.paused
+    if self.paused then
+        msg.post('main:/game_sceen_loader', 'set_time_step', { factor = 0, mode = 1 })
+    else
+        msg.post('main:/game_sceen_loader', 'set_time_step', { factor = 1, mode = 0 })
+    end
+end
 
 
 ---@package
 ---@param self game.gui_script
 function init(self)
+    msg.post('.', 'acquire_input_focus')
     self.score = 0
+    self.counter = 4
     self.score_node = gui.get_node('score')
-    gui.set_text(self.score_node, 'score: ' .. self.score)
+    self.pause_node = gui.get_node('pause_button')
+    self.title_node = gui.get_node('title')
+    self.counter_node = gui.get_node('counter')
+
+    self.paused = false
+    title_game(self)
 end
 
 ---@package
 ---@param self game.gui_script
 ---@param dt number
 function update(self, dt)
-    print(self.score)
+    -- 如果处于标题开始状态
+    -- 如果处于开始倒数状态
+    
+    if game_manager.game_state == 'counter_state' then
+        counter_game(self, dt)
+    end
+    -- 如果处于游玩游戏状态
+    -- 如果处于结算游戏状态
+
+    -- 调试模式
 end
 
 ---@package
@@ -23,9 +81,33 @@ end
 ---@param message table
 ---@param sender url
 function on_message(self, message_id, message, sender)
+    if message_id == hash('title_state') then
+        title_game(self)
+    elseif message_id == hash('counter_state') then
+
+    elseif message_id == hash('play_state') then
+        play_game(self)
+    elseif message_id == hash('end_state') then
+        
+    elseif message_id == hash('set_score') then
+
+    end
+
     if message_id == hash('add_score') then
         print(message.score)
         self.score = self.score + message.score
-        gui.set_text(self.score_node, 'score: ' .. self.score)
+        gui.set_text(self.score_node, tostring(self.score))
+    end
+end
+
+---@package
+---@param self game.gui_script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    if action_id == hash('left_click') and action.pressed and
+    gui.pick_node(self.pause_node, action.x, action.y) then
+        pause_game(self)
     end
 end
