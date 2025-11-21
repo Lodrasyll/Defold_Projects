@@ -1,11 +1,17 @@
 local game_manager = require('main.game_manager')
 
 
+local gold_score = 10
+local sliver_score = 8
+local bronze_score = 5
+
 
 local function play_game(self)
     gui.set_enabled(self.counter_node, false)
     gui.set_enabled(self.score_node, true)
     gui.set_enabled(self.pause_node, true)
+    
+    gui.set_text(self.score_node, self.score)
 end
 
 local function title_game(self)
@@ -15,6 +21,9 @@ local function title_game(self)
     gui.set_enabled(self.score_node, false)
     gui.set_enabled(self.pause_node, false)
     gui.set_enabled(self.counter_node, false)
+    gui.set_enabled(self.gold_score_node, false)
+    gui.set_enabled(self.sliver_score_node, false)
+    gui.set_enabled(self.bronze_score_node, false)
 end
 
 local function counter_game(self, dt)
@@ -54,6 +63,9 @@ function init(self)
     self.pause_node = gui.get_node('pause_button')
     self.title_node = gui.get_node('title')
     self.counter_node = gui.get_node('counter')
+    self.gold_score_node = gui.get_node('gold_score')
+    self.sliver_score_node = gui.get_node('sliver_score')
+    self.bronze_score_node = gui.get_node('bronze_score')
 
     self.paused = false
     title_game(self)
@@ -71,6 +83,26 @@ function update(self, dt)
     end
     -- 如果处于游玩游戏状态
     -- 如果处于结算游戏状态
+    if game_manager.get_game_state() == 'score_state' then
+        msg.post('/main_manager', 'final_score', { score = self.score})
+        
+        if self.score >= gold_score then
+            gui.set_enabled(self.gold_score_node, true)
+            local text = 'Congratulation!\nYou got a Gold!'
+            local node = gui.get_node('gold_text')
+            gui.set_text(node, text)
+        elseif self.score >= gold_score then
+            gui.set_enabled(self.sliver_score_node, true)
+            local text = 'Congratulation!\nYou got a Sliver!'
+            local node = gui.get_node('sliver_text')
+            gui.set_text(node, text)
+        elseif self.score >= gold_score then
+            gui.set_enabled(self.bronze_score_node, true)
+            local text = 'Congratulation!\nYou got a Bronze!'
+            local node = gui.get_node('bronze_text')
+            gui.set_text(node, text)
+        end
+    end
 
     -- 调试模式
 end

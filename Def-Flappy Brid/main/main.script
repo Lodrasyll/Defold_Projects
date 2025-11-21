@@ -65,7 +65,8 @@ function update(self, dt)
 		print('counter_state')
 	elseif game_manager.game_state == 'play_state' then
 		print('play_state')
-	elseif game_manager.game_state == 'play_state' then
+	elseif game_manager.game_state == 'score_state' then
+		self.scroll_speed = 0
 		print('score_state')
 	end
 end
@@ -91,6 +92,10 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash('counter_end') then
 		game_manager.set_game_state('play_state')
 		msg.post('/gui', 'play_state')
+	end
+
+	if message_id == hash('score_state') then
+		game_manager.set_game_state('score_state')
 	end
 end
 

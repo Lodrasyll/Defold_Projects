@@ -12,6 +12,22 @@ instances {
     y: 0.8
   }
 }
+instances {
+  id: "fps"
+  prototype: "/metrics/fps.go"
+  position {
+    x: 10.0
+    y: 20.0
+  }
+}
+instances {
+  id: "mem"
+  prototype: "/metrics/mem.go"
+  position {
+    x: 10.0
+    y: 40.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "background"

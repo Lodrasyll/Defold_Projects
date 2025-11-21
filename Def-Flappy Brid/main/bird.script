@@ -8,7 +8,7 @@ local game_manager = require('main.game_manager')
 
 local function dead(self)
     self.is_dead = true
-    msg.post('main:/game_sceen_loader', 'set_time_step', { factor = 0, mode = 1 })
+    msg.post('/main_manager', 'score_state')
 end
 
 local function start_game(self)

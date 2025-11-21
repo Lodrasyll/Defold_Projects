@@ -3,6 +3,12 @@ images {
   pivot_x: 0.0
   pivot_y: 1.0
 }
+images {
+  image: "/assets/arts/pause_button.png"
+}
+images {
+  image: "/assets/arts/medal.png"
+}
 animations {
   id: "bird"
   images {
