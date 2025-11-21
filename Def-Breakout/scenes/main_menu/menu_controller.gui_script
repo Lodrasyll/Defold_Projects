@@ -1,0 +1,57 @@
+local BgScroll = require('scenes.shared.BgScroll')
+local druid = require("druid.druid")
+
+---@package
+---@param self menu_controller.gui_script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+    self.druid = druid.new(self)
+    self.bg_node = gui.get_node('background')
+    
+    self.start_button = self.druid:new_button('start_button')
+    self.start_button.on_click:subscribe(function()
+        msg.post('main:/game_loader', 'goto_level_1')
+    end)
+    self.quit_button_node = self.druid:new_button('quit_button')
+    -- self.start_button_node = gui.get_node('start_button')
+end
+
+---@package
+---@param self menu_controller.gui_script
+function final(self)
+    self.druid:final()
+end
+
+---@package
+---@param self menu_controller.gui_script
+---@param dt number
+function update(self, dt)
+    self.druid:update(dt)
+    BgScroll.update(nil, self.bg_node, dt)
+end
+
+---@package
+---@param self menu_controller.gui_script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+end
+
+---@package
+---@param self menu_controller.gui_script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    return self.druid:on_input(action_id, action)
+    -- if action_id == hash('click') and action.pressed then
+    --     if gui.pick_node(self.start_button_node, action.x, action.y) then
+    --         print('start game!')
+    --     end
+    -- end
+end
+
+
+

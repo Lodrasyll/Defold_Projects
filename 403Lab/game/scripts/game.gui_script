@@ -189,9 +189,6 @@ end
 
 function update(self, dt)
 	self.druid:update(dt)
-
-	-- 检测是否为红绿蓝药剂 --
-	
 end
 
 local function dialog_show(self)

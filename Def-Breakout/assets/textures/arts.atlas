@@ -1,0 +1,33 @@
+images {
+  image: "/assets/textures/background_1.png"
+  pivot_x: 0.0
+}
+animations {
+  id: "ball"
+  images {
+    image: "/assets/textures/ball_000.png"
+  }
+  images {
+    image: "/assets/textures/ball_001.png"
+  }
+  images {
+    image: "/assets/textures/ball_002.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 18
+}
+animations {
+  id: "paddle"
+  images {
+    image: "/assets/textures/paddle_horzional_000.png"
+  }
+  images {
+    image: "/assets/textures/paddle_horzional_001.png"
+  }
+  images {
+    image: "/assets/textures/paddle_horzional_002.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 18
+}
+extrude_borders: 2

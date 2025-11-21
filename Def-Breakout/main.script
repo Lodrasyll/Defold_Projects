@@ -1,0 +1,46 @@
+SCREEN_WIDTH = sys.get_config_number('display.width')
+SCREEN_HEIGHT = sys.get_config_number('display.height')
+
+local function load_main_menu(self)
+    msg.post('#main_menu', 'load')
+end
+
+local function unload_main_menu(self)
+    msg.post('#main_menu', 'unload')
+end
+
+local function load_level_1(self)
+    msg.post('#level_1', 'load')
+end
+
+local function unload_level_1(self)
+    msg.post('#level_1', 'unload')
+end
+
+---@package
+---@param self main.script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+    load_main_menu(self)
+end
+
+---@package
+---@param self main.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('goto_level_1') then
+        unload_main_menu(self)
+        load_level_1(self)
+    -- elseif message_id == hash(s) then
+
+    elseif message_id == hash('proxy_loaded') then
+        msg.post(sender, 'init')
+        msg.post(sender, 'enable')
+    end
+end
+
+function final(self)
+    msg.post(".", "release_input_focus")
+end

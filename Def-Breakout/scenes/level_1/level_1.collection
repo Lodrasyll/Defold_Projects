@@ -1,0 +1,47 @@
+name: "level_1"
+instances {
+  id: "ball"
+  prototype: "/game/entities/compaions/ball.go"
+  position {
+    x: 653.50964
+    y: 140.75
+    z: 1.0
+  }
+}
+instances {
+  id: "player"
+  prototype: "/game/entities/player/player.go"
+  position {
+    x: 653.2019
+    y: 62.51923
+    z: 1.0
+  }
+  component_properties {
+    id: "player"
+    properties {
+      id: "speed"
+      value: "350.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+}
+instances {
+  id: "background"
+  prototype: "/game/entities/others/background.go"
+  position {
+    z: -0.7
+  }
+}
+instances {
+  id: "wall"
+  prototype: "/game/entities/others/wall.go"
+}
+scale_along_z: 0
+embedded_instances {
+  id: "manager"
+  data: "components {\n"
+  "  id: \"level_1\"\n"
+  "  component: \"/scenes/level_1/level_1.script\"\n"
+  "}\n"
+  ""
+}

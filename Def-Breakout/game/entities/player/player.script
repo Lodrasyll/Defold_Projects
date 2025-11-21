@@ -1,0 +1,38 @@
+local lume = require('lib.thirdparty.lume')
+
+go.property('speed', 250)
+
+---@package
+---@param self player.script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+    self.speed = self.speed
+    self.direction = vmath.vector3()
+    self.width = go.get('#sprite', 'size.y') * 0.7
+end
+
+---@package
+---@param self player.script
+---@param dt number
+function update(self, dt)
+    local pos = go.get_position()
+    pos.x = pos.x + self.direction.x * self.speed * dt
+    pos.x = lume.clamp(pos.x, 0 + self.width / 2, SCREEN_WIDTH - self.width / 2)
+    go.set_position(pos)
+
+    self.direction.x = 0
+    -- 调试模块
+end
+
+---@package
+---@param self player.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    if action_id == hash('left') then
+        self.direction.x = -1
+    elseif action_id == hash('right') then
+        self.direction.x = 1
+    end
+end

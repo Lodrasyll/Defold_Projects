@@ -1,0 +1,65 @@
+
+go.property('speed', 400)
+
+local function serve(self)
+	local direction = vmath.vector3(math.random(-10, 10), math.random(1, 5), 0)
+	self.direction = vmath.normalize(direction)
+	self.current_speed = self.init_speed
+end
+
+---@package
+---@param self ball.script
+function init(self)
+	msg.post('.', 'acquire_input_focus')
+	math.randomseed(os.time())
+	
+	self.init_pos = go.get_position()
+	self.init_speed = go.get('#', 'speed')
+	print(self.init_speed)
+	self.current_speed = self.init_speed
+	self.direction = vmath.vector3()
+end
+
+---@package
+---@param self ball.script
+---@param dt number
+function update(self, dt)
+	local pos = go.get_position()
+	pos = pos + self.current_speed * self.direction * dt
+	go.set_position(pos)
+
+	-- 调试模块
+	print(self.current_speed)
+end
+
+---@package
+---@param self ball.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('contact_point_response') then
+		-- 分离碰撞体，防止卡住
+		new_pos = go.get_position() + message.distance * message.normal
+		go.set_position(new_pos)
+		
+		-- 正确的计算反弹
+		local dot = vmath.dot(self.direction, message.normal)
+		local direction = self.direction - 2 * dot * message.normal
+		self.direction = vmath.normalize(direction)
+
+		self.current_speed = self.current_speed * 1.13
+	end
+end
+
+---@package
+---@param self ball.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+	if action_id == hash('serve') and action.pressed then
+		go.set_position(self.init_pos)
+		serve(self)
+	end
+end

@@ -1,0 +1,17 @@
+image: "/assets/textures/simple_ui.png"
+tile_width: 16
+tile_height: 16
+animations {
+  id: "control"
+  start_tile: 197
+  end_tile: 197
+  fps: 1
+}
+animations {
+  id: "cursor"
+  start_tile: 46
+  end_tile: 46
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 2
+}
+extrude_borders: 2

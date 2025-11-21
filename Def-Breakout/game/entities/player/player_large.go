@@ -1,15 +1,28 @@
+components {
+  id: "player"
+  component: "/game/entities/player/player.script"
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
   data: "default_animation: \"paddle\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
+  "slice9 {\n"
+  "  y: 180.0\n"
+  "  w: 180.0\n"
+  "}\n"
+  "size {\n"
+  "  x: 90.0\n"
+  "  y: 500.0\n"
+  "}\n"
+  "size_mode: SIZE_MODE_MANUAL\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/arts/arts.atlas\"\n"
+  "  texture: \"/assets/textures/arts.atlas\"\n"
   "}\n"
   ""
   rotation {
-    z: 0.70710677
+    z: -0.70710677
     w: 0.70710677
   }
 }
@@ -26,15 +39,14 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      y: -2.0\n"
   "    }\n"
   "    rotation {\n"
   "    }\n"
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 119.49395\n"
-  "  data: 47.932953\n"
+  "  data: 247.35178\n"
+  "  data: 42.671227\n"
   "  data: 10.0\n"
   "}\n"
   ""

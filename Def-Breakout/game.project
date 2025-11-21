@@ -1,12 +1,12 @@
 [bootstrap]
-main_collection = /main/main.collectionc
+main_collection = /main.collectionc
 
 [script]
 shared_state = 1
 
 [display]
-width = 960
-height = 640
+width = 1280
+height = 720
 high_dpi = 1
 
 [android]
@@ -17,4 +17,9 @@ scale_mode = stretch
 
 [project]
 title = Def-Breakout
+dependencies#0 = https://github.com/Insality/druid/archive/refs/tags/1.1.6.zip
+dependencies#1 = https://github.com/Insality/defold-event/archive/refs/tags/12.zip
+
+[input]
+game_binding = /game.input_bindingc
 

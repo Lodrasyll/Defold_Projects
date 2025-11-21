@@ -12,9 +12,15 @@
     "Lua.diagnostics.libraryFiles": "Disable",
     "Lua.diagnostics.disable": [
         "lowercase-global",
-        "redefined-local"
+        "redefined-local",
+        "inject-field",
+        "undefined-field",
+        "undefined-doc-name"
     ],
-    "Lua.workspace.library": [],
+    "Lua.workspace.library": [
+        "~\\AppData\\Roaming\\Code\\User\\globalStorage\\astronachos.defold",
+        "~\\AppData\\Roaming\\Code\\User\\workspaceStorage\\657e8f7108b8ce0b3b8d232347c53c8e\\astronachos.defold"
+    ],
     "glsllint.additionalStageAssociations": {
         ".fp": "frag",
         ".vp": "vert"
