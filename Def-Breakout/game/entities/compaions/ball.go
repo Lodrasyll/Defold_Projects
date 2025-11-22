@@ -23,7 +23,7 @@ embedded_components {
   "    index: 0\n"
   "    count: 1\n"
   "  }\n"
-  "  data: 32.15839\n"
+  "  data: 25.676853\n"
   "}\n"
   ""
 }
@@ -37,4 +37,8 @@ embedded_components {
   "  texture: \"/assets/textures/arts.atlas\"\n"
   "}\n"
   ""
+  scale {
+    x: 0.8
+    y: 0.8
+  }
 }

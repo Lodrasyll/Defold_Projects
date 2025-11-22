@@ -1,0 +1,26 @@
+name: "select_paddle"
+instances {
+  id: "player"
+  prototype: "/game/entities/player/player.go"
+  position {
+    x: -0.7046875
+    y: 0.54471153
+  }
+}
+instances {
+  id: "player_large"
+  prototype: "/game/entities/player/player_large.go"
+  position {
+    x: -0.7046875
+    y: 0.54471153
+  }
+}
+instances {
+  id: "player_small"
+  prototype: "/game/entities/player/player_small.go"
+  position {
+    x: -0.7046875
+    y: 0.54471153
+  }
+}
+scale_along_z: 0

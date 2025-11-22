@@ -1,0 +1,57 @@
+local function spawn_current(self)
+	local position = go.get_position()
+	local component = '#factory'
+	local prototype = self.player[self.selected]
+
+	factory.unload(component)
+	factory.set_prototype(component, prototype)
+	factory.create(component, position)
+end
+
+
+local function select_paddle(self, action_id, action)
+	if action.pressed then return end
+	if action_id == hash('left') then
+		self.selected = self.selected - 1
+		if self.selected < 1 then self.selected = #self.player end
+		spawn_current(self)
+	elseif action_id == hash('right') then
+		self.selected = self.selected + 1
+		if self.selected > #self.player then self.selected = 1 end
+		spawn_current(self)
+	elseif action_id == hash('start') and action.pressed then
+		msg.post('main:/game_loader', 'goto_level')
+		spawn_current(self)
+	end
+end
+
+---@package
+---@param self select_scene.script
+function init(self)
+	msg.post('.', 'acquire_input_focus')
+	self.player = {
+		'game:/entities/player/player.goc',
+		'game:/entities/player/player_player_large.goc',
+		'game:/entities/player/player_small.goc',
+	}
+	self.selected = 1
+	spawn_current(self)
+end
+
+---@package
+---@param self select_scene.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+
+end
+
+---@package
+---@param self select_scene.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+	select_paddle(self, action_id, action)
+end

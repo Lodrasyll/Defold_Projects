@@ -17,5 +17,4 @@ scale_mode = stretch
 
 [project]
 title = Def-Flappy Brid
-dependencies#0 = https://github.com/britzl/defold-metrics/archive/master.zip
 

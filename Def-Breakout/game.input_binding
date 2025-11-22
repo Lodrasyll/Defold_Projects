@@ -12,11 +12,11 @@ key_trigger {
 }
 key_trigger {
   input: KEY_UP
-  action: "select_up"
+  action: "up"
 }
 key_trigger {
   input: KEY_DOWN
-  action: "select_down"
+  action: "down"
 }
 key_trigger {
   input: KEY_ENTER

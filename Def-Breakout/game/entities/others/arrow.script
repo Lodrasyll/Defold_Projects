@@ -1,0 +1,27 @@
+local cursor = require 'in.cursor'
+
+---@package
+---@param self arrow.script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+end
+
+---@package
+---@param self arrow.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == cursor.CLICKED then
+        print('clicked')
+    end
+end
+
+---@package
+---@param self arrow.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+
+end

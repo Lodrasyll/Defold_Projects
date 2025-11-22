@@ -8,7 +8,7 @@ function init(self)
     msg.post('.', 'acquire_input_focus')
     self.speed = self.speed
     self.direction = vmath.vector3()
-    self.width = go.get('#sprite', 'size.y') * 0.7
+    self.width = go.get('#sprite', 'size.x')
 end
 
 ---@package

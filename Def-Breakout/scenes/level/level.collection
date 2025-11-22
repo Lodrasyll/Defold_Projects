@@ -1,0 +1,115 @@
+name: "level_1"
+instances {
+  id: "ball"
+  prototype: "/game/entities/compaions/ball.go"
+  position {
+    x: 960.0
+    y: 140.75
+    z: 1.0
+  }
+  component_properties {
+    id: "ball"
+    properties {
+      id: "speed"
+      value: "600.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+}
+instances {
+  id: "wall"
+  prototype: "/game/entities/others/wall.go"
+}
+instances {
+  id: "brick"
+  prototype: "/game/entities/others/brick.go"
+  position {
+    x: 2035.527
+    y: 415.06458
+  }
+}
+instances {
+  id: "background"
+  prototype: "/game/entities/others/background.go"
+  position {
+    x: 960.0
+    y: 540.0
+    z: -0.2
+  }
+}
+scale_along_z: 0
+embedded_instances {
+  id: "manager"
+  data: "components {\n"
+  "  id: \"level\"\n"
+  "  component: \"/scenes/level/level.script\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "level_maker"
+  data: "components {\n"
+  "  id: \"level_maker\"\n"
+  "  component: \"/game/managers/level_maker.factory\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"level_maker_manager\"\n"
+  "  component: \"/game/managers/level_maker_manager.script\"\n"
+  "}\n"
+  ""
+  position {
+    x: 960.0
+    y: 840.0
+  }
+}
+embedded_instances {
+  id: "bg_deco"
+  data: "embedded_components {\n"
+  "  id: \"neko_circle\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"neko_infinity_color\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "blend_mode: BLEND_MODE_MULT\\n"
+  "size {\\n"
+  "  x: 1618.0\\n"
+  "  y: 1627.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/textures/arts.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  scale {\n"
+  "    x: 1.4\n"
+  "    y: 1.4\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 960.0
+    y: 540.0
+    z: -0.1
+  }
+}
+embedded_instances {
+  id: "player_init"
+  data: "embedded_components {\n"
+  "  id: \"factory_3\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/player/player_small.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"factory_2\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/player/player_large.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"factory_1\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/player/player.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}

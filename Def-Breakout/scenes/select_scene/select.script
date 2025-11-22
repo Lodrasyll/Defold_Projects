@@ -1,0 +1,50 @@
+local game_state = require('scenes.shared.game_state')
+
+local function update_preview(self)
+	-- 禁用所有，启用一个
+	for i, id in ipairs(self.players) do
+		if i == self.selected then
+			msg.post(id, 'enable')
+		else
+			msg.post(id, 'disable')
+		end
+	end
+end
+
+local function select_paddle(self, action_id, action)
+	if action_id == hash('left') and action.pressed then
+		self.selected = self.selected - 1
+		if self.selected < 1 then self.selected = #self.players end
+		update_preview(self)
+	elseif action_id == hash('right') and action.pressed then
+		self.selected = self.selected + 1
+		if self.selected > #self.players then self.selected = 1 end
+		update_preview(self)
+	elseif action_id == hash('start') and action.pressed then
+		game_state.selected_player_index = self.selected
+		msg.post('main:/game_loader', 'goto_level')
+	end
+end
+
+---@package
+---@param self select_scene.script
+function init(self)
+	msg.post('.', 'acquire_input_focus')
+	self.selected = 1
+	self.players = {
+		go.get_id("/player"),
+		go.get_id("/player_large"),
+		go.get_id("/player_small"),
+	}
+	
+	update_preview(self)
+end
+
+---@package
+---@param self select_scene.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+	select_paddle(self, action_id, action)
+end

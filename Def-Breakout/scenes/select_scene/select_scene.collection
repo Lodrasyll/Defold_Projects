@@ -1,26 +1,149 @@
 name: "select_scene"
 instances {
+  id: "background"
+  prototype: "/game/entities/others/background.go"
+  position {
+    x: 960.0
+    y: 540.0
+    z: -0.2
+  }
+}
+instances {
+  id: "left_arrow"
+  prototype: "/game/entities/others/arrow.go"
+  position {
+    x: 300.0
+    y: 600.0
+  }
+}
+instances {
+  id: "right_arrow"
+  prototype: "/game/entities/others/arrow.go"
+  position {
+    x: 1620.0
+    y: 600.0
+  }
+  rotation {
+    z: -1.0
+    w: 6.123234E-17
+  }
+}
+instances {
   id: "player"
   prototype: "/game/entities/player/player.go"
   position {
-    x: -0.1424337
-    y: 0.11461908
+    x: 960.0
+    y: 600.0
   }
 }
 instances {
   id: "player_large"
   prototype: "/game/entities/player/player_large.go"
   position {
-    x: -0.1424337
-    y: 0.11461908
+    x: 960.0
+    y: 600.0
   }
 }
 instances {
   id: "player_small"
   prototype: "/game/entities/player/player_small.go"
   position {
-    x: -0.1424337
-    y: 0.11461908
+    x: 960.0
+    y: 600.0
   }
 }
 scale_along_z: 0
+embedded_instances {
+  id: "bg_deco"
+  data: "embedded_components {\n"
+  "  id: \"neko_circle\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"neko_infinity_color\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "blend_mode: BLEND_MODE_MULT\\n"
+  "size {\\n"
+  "  x: 1618.0\\n"
+  "  y: 1627.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/textures/arts.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  scale {\n"
+  "    x: 1.4\n"
+  "    y: 1.4\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    x: 960.0
+    y: 540.0
+    z: -0.1
+  }
+}
+embedded_instances {
+  id: "text"
+  data: "embedded_components {\n"
+  "  id: \"label\"\n"
+  "  type: \"label\"\n"
+  "  data: \"size {\\n"
+  "  x: 700.0\\n"
+  "  y: 50.0\\n"
+  "}\\n"
+  "text: \\\"Select Your Powful Paddle!\\\"\\n"
+  "font: \\\"/assets/fonts/font.font\\\"\\n"
+  "material: \\\"/builtins/fonts/label-df.material\\\"\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 954.0\n"
+  "    y: 369.0\n"
+  "  }\n"
+  "  scale {\n"
+  "    x: 1.5\n"
+  "    y: 1.5\n"
+  "  }\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "cursor"
+  data: "components {\n"
+  "  id: \"cursor\"\n"
+  "  component: \"/in/cursor.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collisionobject\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"type: COLLISION_OBJECT_TYPE_KINEMATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"cursor\\\"\\n"
+  "mask: \\\"clickable\\\"\\n"
+  "embedded_collision_shape {\\n"
+  "  shapes {\\n"
+  "    shape_type: TYPE_BOX\\n"
+  "    position {\\n"
+  "    }\\n"
+  "    rotation {\\n"
+  "    }\\n"
+  "    index: 0\\n"
+  "    count: 3\\n"
+  "  }\\n"
+  "  data: 22.4\\n"
+  "  data: 22.4\\n"
+  "  data: 22.4\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "script"
+  data: "components {\n"
+  "  id: \"select\"\n"
+  "  component: \"/scenes/select_scene/select.script\"\n"
+  "}\n"
+  ""
+}

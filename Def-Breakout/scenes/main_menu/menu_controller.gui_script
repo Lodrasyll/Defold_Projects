@@ -1,8 +1,8 @@
-local BgScroll = require('scenes.shared.BgScroll')
+local BgMovement = require('scenes.shared.BgMovement')
 local druid = require("druid.druid")
 
 local function start_game(self)
-    msg.post('main:/game_loader', 'goto_level_1')
+    msg.post('main:/game_loader', 'goto_select_scene')
 end
 
 local function start_or_quit(self)
@@ -19,7 +19,7 @@ end
 function init(self)
     msg.post('.', 'acquire_input_focus')
     self.druid = druid.new(self)
-    self.bg_node = gui.get_node('background')
+    self.bg_doco_node = gui.get_node('bg_deco')
     
     self.start_button = self.druid:new_button('start_button')
     self.quit_button = self.druid:new_button('quit_button')
@@ -37,7 +37,7 @@ end
 ---@param dt number
 function update(self, dt)
     self.druid:update(dt)
-    BgScroll.update(nil, self.bg_node, dt)
+    BgMovement.bg_rotate(nil, self.bg_deco_node, dt)
 end
 
 ---@package
