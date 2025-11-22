@@ -1,0 +1,17 @@
+---@package
+---@param self brick.script
+function init(self)
+
+
+end
+
+---@package
+---@param self brick.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('collision_response') and message.group == hash('ball') then
+		go.delete()
+	end
+end

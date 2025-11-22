@@ -1,0 +1,33 @@
+
+
+local function bricks_maker(self)
+    local component = '#level_maker'
+    local spawn_pos = go.get_position()
+    
+    for i = 1, self.brick_column, 1 do
+        spawn_pos.x = spawn_pos.x + (self.brick_gap + self.brick_w) * (i - 1)
+        -- spawn_pos.y = spawn_pos.y - 
+        factory.create(component, spawn_pos)
+
+        --调试模块
+        print('brick_' .. i)
+    end
+
+end
+
+---@package
+---@param self level_maker_manager.script
+function init(self)
+    math.randomseed(os.time())
+    self.brick_w = go.get('/brick#sprite', 'size.y') * 0.5
+    self.brick_h = go.get('/brick#sprite', 'size.x') * 0.5
+    self.brick_row = math.random(1, 4)
+    self.brick_column = 8
+    self.brick_gap = 8
+
+    bricks_maker(self)
+
+    -- 调试模块
+    print(self.brick_h, self.brick_w)
+end
+

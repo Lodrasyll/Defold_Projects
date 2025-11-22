@@ -10,6 +10,14 @@ key_trigger {
   input: KEY_SPACE
   action: "serve"
 }
+key_trigger {
+  input: KEY_UP
+  action: "select_up"
+}
+key_trigger {
+  input: KEY_DOWN
+  action: "select_down"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_LEFT
   action: "click"

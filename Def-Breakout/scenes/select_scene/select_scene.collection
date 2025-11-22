@@ -1,0 +1,26 @@
+name: "select_scene"
+instances {
+  id: "player"
+  prototype: "/game/entities/player/player.go"
+  position {
+    x: -0.1424337
+    y: 0.11461908
+  }
+}
+instances {
+  id: "player_large"
+  prototype: "/game/entities/player/player_large.go"
+  position {
+    x: -0.1424337
+    y: 0.11461908
+  }
+}
+instances {
+  id: "player_small"
+  prototype: "/game/entities/player/player_small.go"
+  position {
+    x: -0.1424337
+    y: 0.11461908
+  }
+}
+scale_along_z: 0

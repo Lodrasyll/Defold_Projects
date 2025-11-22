@@ -1,6 +1,15 @@
 local BgScroll = require('scenes.shared.BgScroll')
 local druid = require("druid.druid")
 
+local function start_or_quit(self)
+    self.start_button.on_click:subscribe(function()
+        msg.post('main:/game_loader', 'goto_level_1')
+    end)
+    self.quit_button.on_click:subscribe(function()
+        sys.exit(0)
+    end)
+end
+
 ---@package
 ---@param self menu_controller.gui_script
 function init(self)
@@ -9,11 +18,8 @@ function init(self)
     self.bg_node = gui.get_node('background')
     
     self.start_button = self.druid:new_button('start_button')
-    self.start_button.on_click:subscribe(function()
-        msg.post('main:/game_loader', 'goto_level_1')
-    end)
-    self.quit_button_node = self.druid:new_button('quit_button')
-    -- self.start_button_node = gui.get_node('start_button')
+    self.quit_button = self.druid:new_button('quit_button')
+    start_or_quit(self)
 end
 
 ---@package

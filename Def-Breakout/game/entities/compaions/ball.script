@@ -2,7 +2,11 @@
 go.property('speed', 400)
 
 local function serve(self)
-	local direction = vmath.vector3(math.random(-10, 10), math.random(1, 5), 0)
+	local direction = vmath.vector3(math.random(-5, 5), math.random(1, 3), 0)
+	-- 游戏体验改进
+	if math.abs(direction.x) < 0.1 then
+		math.random(-5, 5)
+	end
 	self.direction = vmath.normalize(direction)
 	self.current_speed = self.init_speed
 end
@@ -15,7 +19,6 @@ function init(self)
 	
 	self.init_pos = go.get_position()
 	self.init_speed = go.get('#', 'speed')
-	print(self.init_speed)
 	self.current_speed = self.init_speed
 	self.direction = vmath.vector3()
 end
@@ -46,9 +49,15 @@ function on_message(self, message_id, message, sender)
 		-- 正确的计算反弹
 		local dot = vmath.dot(self.direction, message.normal)
 		local direction = self.direction - 2 * dot * message.normal
+		-- 游戏体验改进
+		if math.abs(direction.x) < 0 and math.abs(direction.x) < 0.2 then
+			direction.x = 0.8
+		elseif math.abs(direction.x) > 0 and math.abs(direction.x) < 0.2 then
+			direction.x = -0.8
+		end
 		self.direction = vmath.normalize(direction)
 
-		self.current_speed = self.current_speed * 1.13
+		self.current_speed = self.current_speed * 1.03
 	end
 end
 

@@ -20,7 +20,7 @@ instances {
     id: "player"
     properties {
       id: "speed"
-      value: "350.0"
+      value: "400.0"
       type: PROPERTY_TYPE_NUMBER
     }
   }
@@ -36,6 +36,14 @@ instances {
   id: "wall"
   prototype: "/game/entities/others/wall.go"
 }
+instances {
+  id: "brick"
+  prototype: "/game/entities/others/brick.go"
+  position {
+    x: 1441.977
+    y: 224.91853
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "manager"
@@ -44,4 +52,20 @@ embedded_instances {
   "  component: \"/scenes/level_1/level_1.script\"\n"
   "}\n"
   ""
+}
+embedded_instances {
+  id: "level_maker"
+  data: "components {\n"
+  "  id: \"level_maker\"\n"
+  "  component: \"/game/managers/level_maker.factory\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"level_maker_manager\"\n"
+  "  component: \"/game/managers/level_maker_manager.script\"\n"
+  "}\n"
+  ""
+  position {
+    x: 640.0
+    y: 681.0
+  }
 }

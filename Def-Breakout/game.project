@@ -23,3 +23,6 @@ dependencies#1 = https://github.com/Insality/defold-event/archive/refs/tags/12.z
 [input]
 game_binding = /game.input_bindingc
 
+[physics]
+debug = 1
+
