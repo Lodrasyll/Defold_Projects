@@ -1,33 +1,10 @@
 components {
   id: "player"
   component: "/game/entities/player/player.script"
-}
-embedded_components {
-  id: "sprite"
-  type: "sprite"
-  data: "default_animation: \"paddle\"\n"
-  "material: \"/builtins/materials/sprite.material\"\n"
-  "slice9 {\n"
-  "  x: 26.0\n"
-  "  z: 23.0\n"
-  "}\n"
-  "size {\n"
-  "  x: 90.0\n"
-  "  y: 248.0\n"
-  "}\n"
-  "size_mode: SIZE_MODE_MANUAL\n"
-  "textures {\n"
-  "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/textures/arts.atlas\"\n"
-  "}\n"
-  ""
-  rotation {
-    z: -0.70710677
-    w: 0.70710677
-  }
-  scale {
-    x: 0.7
-    y: 0.7
+  properties {
+    id: "speed"
+    value: "400.0"
+    type: PROPERTY_TYPE_NUMBER
   }
 }
 embedded_components {
@@ -43,16 +20,48 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      y: -1.0\n"
   "    }\n"
   "    rotation {\n"
   "    }\n"
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 87.842476\n"
-  "  data: 30.850092\n"
+  "  shapes {\n"
+  "    shape_type: TYPE_SPHERE\n"
+  "    position {\n"
+  "      x: -70.0\n"
+  "    }\n"
+  "    rotation {\n"
+  "    }\n"
+  "    index: 3\n"
+  "    count: 1\n"
+  "  }\n"
+  "  shapes {\n"
+  "    shape_type: TYPE_SPHERE\n"
+  "    position {\n"
+  "      x: 70.0\n"
+  "    }\n"
+  "    rotation {\n"
+  "    }\n"
+  "    index: 4\n"
+  "    count: 1\n"
+  "  }\n"
+  "  data: 77.29488\n"
+  "  data: 32.240536\n"
   "  data: 10.0\n"
+  "  data: 32.90613\n"
+  "  data: 32.90613\n"
+  "}\n"
+  ""
+}
+embedded_components {
+  id: "sprite"
+  type: "sprite"
+  data: "default_animation: \"button_3\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/assets/textures/arts.atlas\"\n"
   "}\n"
   ""
 }

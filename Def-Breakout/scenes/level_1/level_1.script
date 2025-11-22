@@ -5,7 +5,7 @@ local BgScroll = require('scenes.shared.BgScroll')
 ---@package
 ---@param self level_1.script
 function init(self)
-    
+    go.set('/background', 'disable')
 end
 
 ---@package

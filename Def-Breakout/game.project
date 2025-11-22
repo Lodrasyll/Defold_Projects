@@ -5,8 +5,8 @@ main_collection = /main.collectionc
 shared_state = 1
 
 [display]
-width = 1280
-height = 720
+width = 1920
+height = 1080
 high_dpi = 1
 
 [android]
@@ -24,5 +24,5 @@ dependencies#1 = https://github.com/Insality/defold-event/archive/refs/tags/12.z
 game_binding = /game.input_bindingc
 
 [physics]
-debug = 1
+debug = 0
 

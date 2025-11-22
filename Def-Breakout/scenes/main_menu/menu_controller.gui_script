@@ -1,9 +1,13 @@
 local BgScroll = require('scenes.shared.BgScroll')
 local druid = require("druid.druid")
 
+local function start_game(self)
+    msg.post('main:/game_loader', 'goto_level_1')
+end
+
 local function start_or_quit(self)
     self.start_button.on_click:subscribe(function()
-        msg.post('main:/game_loader', 'goto_level_1')
+        start_game(self)
     end)
     self.quit_button.on_click:subscribe(function()
         sys.exit(0)
@@ -51,12 +55,10 @@ end
 ---@param action on_input.action
 ---@return boolean|nil
 function on_input(self, action_id, action)
+    if action_id == hash('start') and action.pressed then
+        start_game(self)
+    end
     return self.druid:on_input(action_id, action)
-    -- if action_id == hash('click') and action.pressed then
-    --     if gui.pick_node(self.start_button_node, action.x, action.y) then
-    --         print('start game!')
-    --     end
-    -- end
 end
 
 

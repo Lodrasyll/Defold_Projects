@@ -3,16 +3,24 @@ instances {
   id: "ball"
   prototype: "/game/entities/compaions/ball.go"
   position {
-    x: 653.50964
+    x: 960.0
     y: 140.75
     z: 1.0
+  }
+  component_properties {
+    id: "ball"
+    properties {
+      id: "speed"
+      value: "600.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
   }
 }
 instances {
   id: "player"
   prototype: "/game/entities/player/player.go"
   position {
-    x: 653.2019
+    x: 960.0
     y: 62.51923
     z: 1.0
   }
@@ -20,16 +28,9 @@ instances {
     id: "player"
     properties {
       id: "speed"
-      value: "400.0"
+      value: "600.0"
       type: PROPERTY_TYPE_NUMBER
     }
-  }
-}
-instances {
-  id: "background"
-  prototype: "/game/entities/others/background.go"
-  position {
-    z: -0.7
   }
 }
 instances {
@@ -40,8 +41,20 @@ instances {
   id: "brick"
   prototype: "/game/entities/others/brick.go"
   position {
-    x: 1441.977
-    y: 224.91853
+    x: 2035.527
+    y: 415.06458
+  }
+}
+instances {
+  id: "background"
+  prototype: "/game/entities/others/background.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  scale3 {
+    x: 1.484882
+    y: 1.06196
   }
 }
 scale_along_z: 0
@@ -65,7 +78,7 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 640.0
-    y: 681.0
+    x: 960.0
+    y: 840.0
   }
 }
