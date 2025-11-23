@@ -1,6 +1,9 @@
 local M = {
     game_state = 'title_state',
-    player_score = 0
+    player_score = 0,
+    gold_score = 10,
+    sliver_score = 8,
+    bronze_score = 5,
 }
 
 function M.get_game_state()

@@ -23,7 +23,7 @@ embedded_components {
   "group: \"bird\"\n"
   "mask: \"pipes\"\n"
   "mask: \"ground\"\n"
-  "mask: \"pass\"\n"
+  "mask: \"get_score\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
   "    shape_type: TYPE_SPHERE\n"

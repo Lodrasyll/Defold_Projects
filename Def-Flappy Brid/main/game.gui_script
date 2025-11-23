@@ -1,11 +1,6 @@
 local game_manager = require('main.game_manager')
 
 
-local gold_score = 10
-local sliver_score = 8
-local bronze_score = 5
-
-
 local function play_game(self)
     gui.set_enabled(self.counter_node, false)
     gui.set_enabled(self.score_node, true)
@@ -21,6 +16,7 @@ local function title_game(self)
     gui.set_enabled(self.score_node, false)
     gui.set_enabled(self.pause_node, false)
     gui.set_enabled(self.counter_node, false)
+    gui.set_enabled(self.final_text_node, false)
     gui.set_enabled(self.gold_score_node, false)
     gui.set_enabled(self.sliver_score_node, false)
     gui.set_enabled(self.bronze_score_node, false)
@@ -33,6 +29,7 @@ local function counter_game(self, dt)
     self.counter = self.counter - dt * 2
     if self.counter <= 0 then
         msg.post('/main_manager', 'counter_end')
+        self.counter = 4
     end
     gui.set_text(self.counter_node, tostring(string.format('%0d', self.counter)))
 end
@@ -57,12 +54,13 @@ end
 ---@param self game.gui_script
 function init(self)
     msg.post('.', 'acquire_input_focus')
-    self.score = 0
+    self.score = game_manager.get_player_score()
     self.counter = 4
     self.score_node = gui.get_node('score')
     self.pause_node = gui.get_node('pause_button')
     self.title_node = gui.get_node('title')
     self.counter_node = gui.get_node('counter')
+    self.final_text_node = gui.get_node('final_text')
     self.gold_score_node = gui.get_node('gold_score')
     self.sliver_score_node = gui.get_node('sliver_score')
     self.bronze_score_node = gui.get_node('bronze_score')
@@ -76,27 +74,34 @@ end
 ---@param dt number
 function update(self, dt)
     -- 如果处于标题开始状态
+    if game_manager.game_state == 'title_state' then
+        title_game(self)
+
     -- 如果处于开始倒数状态
-    
-    if game_manager.game_state == 'counter_state' then
+    elseif game_manager.game_state == 'counter_state' then
         counter_game(self, dt)
-    end
     -- 如果处于游玩游戏状态
+    elseif game_manager.game_state == 'play_state' then
+        self.score = game_manager.get_player_score()
+        gui.set_text(self.score_node, tostring(self.score))
     -- 如果处于结算游戏状态
-    if game_manager.get_game_state() == 'score_state' then
-        msg.post('/main_manager', 'final_score', { score = self.score})
-        
-        if self.score >= gold_score then
+    elseif game_manager.get_game_state() == 'score_state' then
+        -- 结算奖牌奖励
+        gui.set_enabled(self.final_text_node, true)
+        local text = 'You die!\n Score: ' .. self.score
+        gui.set_text(self.final_text_node, text)
+
+        if self.score >= game_manager.gold_score then
             gui.set_enabled(self.gold_score_node, true)
             local text = 'Congratulation!\nYou got a Gold!'
             local node = gui.get_node('gold_text')
             gui.set_text(node, text)
-        elseif self.score >= gold_score then
+        elseif self.score >= game_manager.sliver_score then
             gui.set_enabled(self.sliver_score_node, true)
             local text = 'Congratulation!\nYou got a Sliver!'
             local node = gui.get_node('sliver_text')
             gui.set_text(node, text)
-        elseif self.score >= gold_score then
+        elseif self.score >= game_manager.bronze_score then
             gui.set_enabled(self.bronze_score_node, true)
             local text = 'Congratulation!\nYou got a Bronze!'
             local node = gui.get_node('bronze_text')
@@ -115,18 +120,13 @@ end
 function on_message(self, message_id, message, sender)
     if message_id == hash('title_state') then
         title_game(self)
-    elseif message_id == hash('counter_state') then
-
     elseif message_id == hash('play_state') then
         play_game(self)
-    elseif message_id == hash('end_state') then
-        
-    elseif message_id == hash('set_score') then
+    elseif message_id == hash('score_state') then
 
     end
 
     if message_id == hash('add_score') then
-        print(message.score)
         self.score = self.score + message.score
         gui.set_text(self.score_node, tostring(self.score))
     end

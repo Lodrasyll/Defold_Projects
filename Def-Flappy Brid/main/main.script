@@ -20,14 +20,13 @@
 -- 滚动背景实现
 -- 需要的属性：背景滚动速度 背景滚动方向 背景位置
 
+local game_manager = require('main.game_manager')
 go.property('scroll_speed', 80)
 
 SCREEN_WIDTH = sys.get_config_number('display.width')
 SCREEN_HEIGHT = sys.get_config_number('display.height')
 
 local scroll_dir = -1
-local game_manager = require('main.game_manager')
-
 
 ---@package
 ---@param self main.script
@@ -39,33 +38,34 @@ end
 ---@param self main.script
 ---@param dt number
 function update(self, dt)
-	--- 获取自身位置，根据背景位置，通过dt和滚动速度和滚动方向更新自身位置
-	local grd_pos = go.get_position('/ground')
-	local bg_pos = go.get_position('/background')
-
-	bg_pos.x = bg_pos.x + self.scroll_speed * scroll_dir * dt    	-- 注意：横向移动只需要操作x轴方向的变量 --
-	grd_pos.x = grd_pos.x + self.scroll_speed * 2.5 * scroll_dir * dt
-
-	--- 判断当到达循环点时回到原位，形成背景无限滚动循环 ---
-	if bg_pos.x < -SCREEN_WIDTH then 					-- 注意：横向移动只需要操作x轴方向的变量 --
-		bg_pos.x = bg_pos.x + SCREEN_WIDTH
-	end
-	if grd_pos.x < -SCREEN_WIDTH then -- 注意：横向移动只需要操作x轴方向的变量 --
-		grd_pos.x = grd_pos.x + SCREEN_WIDTH
-	end
-	
-	---- 然后更新自身位置 ----
-	go.set_position(grd_pos, '/ground')
-	go.set_position(bg_pos, '/background')
-
 	-- 调试模式
 	if game_manager.game_state == 'title_state' then
-		print('title')
+		print('title_state')
 	elseif game_manager.game_state == 'counter_state' then
 		print('counter_state')
 	elseif game_manager.game_state == 'play_state' then
+		self.scroll_speed = 80
+		--- 获取自身位置，根据背景位置，通过dt和滚动速度和滚动方向更新自身位置
+		local grd_pos = go.get_position('/ground')
+		local bg_pos = go.get_position('/background')
+
+		bg_pos.x = bg_pos.x + self.scroll_speed * scroll_dir * dt -- 注意：横向移动只需要操作x轴方向的变量 --
+		grd_pos.x = grd_pos.x + self.scroll_speed * 2.5 * scroll_dir * dt
+
+		--- 判断当到达循环点时回到原位，形成背景无限滚动循环 ---
+		if bg_pos.x < -SCREEN_WIDTH then -- 注意：横向移动只需要操作x轴方向的变量 --
+			bg_pos.x = bg_pos.x + SCREEN_WIDTH
+		end
+		if grd_pos.x < -SCREEN_WIDTH then -- 注意：横向移动只需要操作x轴方向的变量 --
+			grd_pos.x = grd_pos.x + SCREEN_WIDTH
+		end
+
+		---- 然后更新自身位置 ----
+		go.set_position(grd_pos, '/ground')
+		go.set_position(bg_pos, '/background')
 		print('play_state')
 	elseif game_manager.game_state == 'score_state' then
+		game_manager.set_player_score(0)
 		self.scroll_speed = 0
 		print('score_state')
 	end
@@ -80,6 +80,10 @@ function on_input(self, action_id, action)
 	if action_id == hash('touch') and game_manager.game_state == 'title_state' then
 		game_manager.set_game_state('counter_state')
 		msg.post('/gui', 'counter_state')
+	end
+
+	if action_id == hash('reset') and game_manager.game_state == 'score_state' then
+		game_manager.set_game_state('title_state')
 	end
 end
 
@@ -96,6 +100,7 @@ function on_message(self, message_id, message, sender)
 
 	if message_id == hash('score_state') then
 		game_manager.set_game_state('score_state')
+		msg.post('/gui', 'score_state')
 	end
 end
 

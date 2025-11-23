@@ -11,10 +11,6 @@ local function dead(self)
     msg.post('/main_manager', 'score_state')
 end
 
-local function start_game(self)
-    self.velocity = self.jump_force
-end
-
 local function reset_game(self)
     go.set_position(self.start_pos)
     self.velocity = self.jump_force
@@ -39,9 +35,10 @@ function init(self)
     self.rot_factor = 0.015
     self.lerp_speed = 3
     self.is_dead = false
+    self.is_hit_wall = false
+    self.is_hit_pipe = false
     
-    -- 游戏体验 让玩家有反应时间 
-    self.velocity = self.jump_force
+    reset_game(self)
 end
 
 ---@package
@@ -49,12 +46,15 @@ end
 ---@param dt number
 function update(self, dt)
     -- 如果处于标题开始状态
-
+    if game_manager.game_state == 'title_state' then
+        reset_game(self)
+        msg.post('.', 'disable')
+    end
     -- 如果处于开始倒数状态
     
     -- 如果处于游玩游戏状态
     if game_manager.game_state == 'play_state' then
-        msg.post('#sprite', 'enable')
+        msg.post('.', 'enable')
         -- 重力值加速度
         self.velocity = self.velocity + self.gravity * dt
 
@@ -72,7 +72,7 @@ function update(self, dt)
     end
 
     -- 如果处于结算游戏状态
-
+    
     -- 调试模式
 end
 
@@ -87,13 +87,9 @@ function on_input(self, action_id, action)
         self.velocity = self.jump_force    -- 飞行
     end
 
-    if action_id == hash('reset') then
-        reset_game(self)
-    end
-
-    if action_id == hash('left_click') and game_manager.game_state == 'title' then
-        
-    end
+    -- if action_id == hash('reset') then
+    --     reset_game(self)
+    -- end
 end
 
 ---@package
@@ -106,5 +102,11 @@ function on_message(self, message_id, message, sender)
         if message.group == hash('pipes') or message.group == hash('ground') then
             dead(self)
         end
+    end
+
+    if message_id == hash('trigger_response') and message.group == hash('get_score') and message.enter then
+        local score = game_manager.get_player_score()
+        local new_score = score + 1
+        game_manager.set_player_score(new_score)
     end
 end
