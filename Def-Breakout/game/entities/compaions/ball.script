@@ -121,16 +121,21 @@ function on_message(self, message_id, message, sender)
 			-- 正确的计算反弹
 			-- 路径 B: 反射算法 (球拍静止 或 撞墙/砖块 -> 物理反弹)
 			local dot = vmath.dot(self.direction, message.normal)
-			local direction = self.direction - 2 * dot * message.normal
+			local new_dir = self.direction - 2 * dot * message.normal
 
-			-- 计算反弹后的游戏体验改	进
-			if math.abs(direction.x) < 0 and math.abs(direction.x) < 0.1 then
-				direction.x = 0.8
-			elseif math.abs(direction.x) > 0 and math.abs(direction.x) < 0.1 then
-				direction.x = -0.8
+			-- 计算反弹后的游戏体验改进
+			if math.abs(new_dir.x) < 0.05 then
+				local sign = 1
+				if new_dir.x < 0 then sign = -1 end
+				new_dir.x = 0.15 * sign
+			elseif math.abs(new_dir.x) > 0.9 then
+				local sign = 1
+				if new_dir.x < 0 then sign = -1 end
+				new_dir.x = 0.8 * sign
 			end
-			self.direction = vmath.normalize(direction)
-			self.current_speed = self.current_speed * 1.03
+			
+			self.direction = vmath.normalize(new_dir)
+			self.current_speed = self.current_speed * 1.02
 		end
 	end
 end
