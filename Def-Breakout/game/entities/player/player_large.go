@@ -1,10 +1,9 @@
 components {
   id: "player"
   component: "/game/entities/player/player.script"
-  properties {
-    id: "speed"
-    value: "400.0"
-    type: PROPERTY_TYPE_NUMBER
+  position {
+    x: -378.5965
+    y: 20.075136
   }
 }
 embedded_components {
