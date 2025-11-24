@@ -1,10 +1,6 @@
 components {
   id: "player"
   component: "/game/entities/player/player.script"
-  position {
-    x: -378.5965
-    y: 20.075136
-  }
 }
 embedded_components {
   id: "collisionobject"

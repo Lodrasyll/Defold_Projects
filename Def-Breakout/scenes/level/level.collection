@@ -21,20 +21,19 @@ instances {
   prototype: "/game/entities/others/wall.go"
 }
 instances {
-  id: "brick"
-  prototype: "/game/entities/others/brick.go"
-  position {
-    x: 2035.527
-    y: 415.06458
-  }
-}
-instances {
   id: "background"
   prototype: "/game/entities/others/background.go"
   position {
     x: 960.0
     y: 540.0
     z: -0.2
+  }
+}
+instances {
+  id: "brick"
+  prototype: "/game/entities/others/brick.go"
+  position {
+    y: -984.0
   }
 }
 scale_along_z: 0
@@ -110,6 +109,23 @@ embedded_instances {
   "  type: \"factory\"\n"
   "  data: \"prototype: \\\"/game/entities/player/player.go\\\"\\n"
   "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "bricks_instance"
+  children: "brick"
+  data: ""
+  position {
+    x: -287.0
+    y: 1067.0
+  }
+}
+embedded_instances {
+  id: "level_gui"
+  data: "components {\n"
+  "  id: \"level\"\n"
+  "  component: \"/ui/scenes/level/level.gui\"\n"
   "}\n"
   ""
 }

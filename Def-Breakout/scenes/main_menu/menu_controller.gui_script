@@ -1,5 +1,5 @@
 local BgMovement = require('scenes.shared.BgMovement')
-local druid = require("druid.druid")
+local druid = require('druid.druid')
 
 local function start_game(self)
     msg.post('main:/game_loader', 'goto_select_scene')

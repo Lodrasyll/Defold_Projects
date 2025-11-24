@@ -1,10 +1,6 @@
 components {
   id: "arrow"
   component: "/game/entities/others/arrow.script"
-  position {
-    x: -239.08827
-    y: 119.78937
-  }
 }
 embedded_components {
   id: "sprite"

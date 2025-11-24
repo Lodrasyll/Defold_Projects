@@ -24,10 +24,10 @@ end
 function M.play(sound_name, group)
     -- 门控检查 (Gating Check)
     local now = socket.gettime()
-    if settings[sound_name] and now - settings[sound_name] < GATE_WINDOW then
+    if settings.gating[sound_name] and now - settings.gating[sound_name] < GATE_WINDOW then
         return
     end
-    settings[sound_name] = now -- 更新该声音的最后播放时间
+    settings.gating[sound_name] = now -- 更新该声音的最后播放时间
 
     -- 计算最终音量
     local group_volume = (group == M.GROUP_MUSIC) and settings.music_volume or settings.sfx_volume

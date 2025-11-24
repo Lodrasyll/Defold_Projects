@@ -1,0 +1,61 @@
+local druid = require('druid.druid')
+local druid = require("druid.druid")
+
+local function pause_game(self)
+	self.paused = not self.paused
+	if self.paused then
+		msg.post('main:/game_loader', 'set_time_step', { factor = 0, mode = 1 })
+	else
+		msg.post('main:/game_loader', 'set_time_step', { factor = 1, mode = 1 })
+	end
+end
+
+function init(self)
+	
+	msg.post(".", "acquire_input_focus")
+	
+	-- self.hp_nodes = {}
+	-- for i = 1, 3 do
+	-- 	self.hp_nodes[i] = gui.get_node('hp_' .. i)
+	-- end
+	self.druid = druid.new(self)
+
+	self.hp_1_node = gui.get_node('hp_1')
+	self.hp_2_node = gui.get_node('hp_2')
+	self.hp_3_node = gui.get_node('hp_3')
+	self.pause_button = self.druid:new_button('pause_button')
+	self.paused = false
+
+	self.pause_button.on_click:subscribe(function()
+		pause_game(self)
+	end)
+end
+
+function final(self)
+	self.druid:final()
+end
+
+function update(self, dt)
+	self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+	self.druid:on_message(message_id, message, sender)
+	if message_id == hash('dead') then
+		-- 	for i = 3, message.hp, -1 do
+		-- 		gui.set_enabled(self.hp_nodes[message.hp], false)
+		-- 	end
+
+		if message.hp == 2 then
+			gui.set_enabled(self.hp_3_node, false)
+		elseif message.hp == 1 then
+			gui.set_enabled(self.hp_2_node, false)
+		elseif message.hp == 0 then
+			gui.set_enabled(self.hp_1_node, false)
+		end
+	end
+end
+
+function on_input(self, action_id, action)
+	return self.druid:on_input(action_id, action)
+end
