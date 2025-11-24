@@ -1,0 +1,10 @@
+local sound_controller = require('main.sound_controller')
+
+
+---@package
+---@param self sound_manager.script
+function init(self)
+	sound_controller.init()
+	sound_controller.play('bgmusic', sound_controller.GROUP_MUSIC)
+	sound_controller.set_volume(sound_controller.GROUP_MUSIC, 0.4)
+end
