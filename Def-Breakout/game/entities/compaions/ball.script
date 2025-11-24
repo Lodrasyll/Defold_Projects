@@ -191,6 +191,12 @@ function on_message(self, message_id, message, sender)
 			paddle_bounce_sound()
 		elseif message.group == hash('brick') then
 			brick_bounce_sound()
+			-- 1. 获取被撞砖块的位置
+			-- message.other_id 是被撞到的砖块的ID
+			local brick_pos = go.get_position(message.other_id)
+			-- 2. 在砖块的位置生成爆炸对象
+			-- 假设工厂组件在当前脚本所在的 URL 下，名为 'explosion_factory'
+			factory.create("/factory#star_explosion", brick_pos)
 		end
 	end
 end

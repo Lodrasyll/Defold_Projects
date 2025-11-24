@@ -5,5 +5,5 @@ local sound_controller = require('scenes.shared.sound_controller')
 function init(self)
 	sound_controller.init()
 	sound_controller.play('music', sound_controller.GROUP_MUSIC)
-	sound_controller.set_volume(sound_controller.GROUP_MUSIC, 0.6)
+	sound_controller.set_volume(sound_controller.GROUP_MUSIC, 0.4)
 end

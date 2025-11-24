@@ -31,7 +31,7 @@ instances {
 }
 instances {
   id: "brick"
-  prototype: "/game/entities/others/brick.go"
+  prototype: "/game/entities/enemies/brick_01.go"
   position {
     y: -984.0
   }
@@ -126,6 +126,14 @@ embedded_instances {
   data: "components {\n"
   "  id: \"level\"\n"
   "  component: \"/ui/scenes/level/level.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "factory"
+  data: "components {\n"
+  "  id: \"star_explosion\"\n"
+  "  component: \"/game/entities/others/star_explosion.factory\"\n"
   "}\n"
   ""
 }

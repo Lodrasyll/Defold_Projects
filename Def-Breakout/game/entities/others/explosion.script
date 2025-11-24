@@ -1,0 +1,5 @@
+---@package
+---@param self explosion.script
+function init(self)
+	particlefx.play('#star_explosion')
+end

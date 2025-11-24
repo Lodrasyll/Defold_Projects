@@ -1,6 +1,6 @@
 components {
   id: "brick"
-  component: "/game/entities/others/brick.script"
+  component: "/game/entities/enemies/brick.script"
 }
 embedded_components {
   id: "collisionobject"
@@ -30,7 +30,7 @@ embedded_components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "default_animation: \"line\"\n"
+  data: "default_animation: \"brick_001\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "slice9 {\n"
   "  x: 20.0\n"
@@ -42,7 +42,6 @@ embedded_components {
   "  x: 150.0\n"
   "  y: 50.0\n"
   "}\n"
-  "size_mode: SIZE_MODE_MANUAL\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
   "  texture: \"/assets/textures/arts.atlas\"\n"
