@@ -1,4 +1,3 @@
-local BgMovement = require('scenes.shared.BgMovement')
 local druid = require('druid.druid')
 
 local function start_game(self)
@@ -19,10 +18,11 @@ end
 function init(self)
     msg.post('.', 'acquire_input_focus')
     self.druid = druid.new(self)
-    self.bg_doco_node = gui.get_node('bg_deco')
-    
+
     self.start_button = self.druid:new_button('start_button')
     self.quit_button = self.druid:new_button('quit_button')
+    self.selected = 1
+
     start_or_quit(self)
 end
 
@@ -37,7 +37,10 @@ end
 ---@param dt number
 function update(self, dt)
     self.druid:update(dt)
-    BgMovement.bg_rotate(nil, self.bg_deco_node, dt)
+
+    if self.selected == 1 then
+        gui.set(gui.get_node('start_button_text'), 'color', vmath.vector4(1, 0, 0, 1))
+    end
 end
 
 ---@package
@@ -58,6 +61,12 @@ function on_input(self, action_id, action)
     if action_id == hash('start') and action.pressed then
         start_game(self)
     end
+    if action_id == hash('up') or self.selected == 2 then
+        self.selected = 1
+    elseif action_id == hash('down') and self.selected == 1 then
+        self.selected = 2
+    end
+
     return self.druid:on_input(action_id, action)
 end
 
