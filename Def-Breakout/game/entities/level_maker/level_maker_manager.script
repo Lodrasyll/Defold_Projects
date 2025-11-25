@@ -12,9 +12,9 @@ local function bricks_maker(self)
     for r = 1, self.num_rows do
         pos.x = start_x
         for c = 1, self.num_cols do
-            factory.create(component, pos)
+            local properties = { type = math.random(4) }
+            factory.create(component, pos, nil, properties)
             pos.x = pos.x + self.brick_w
-            
         end
         pos.y = pos.y - self.brick_h
     end
@@ -25,13 +25,17 @@ end
 ---@param self level_maker_manager.script
 function init(self)
     math.randomseed(os.time())
+    
     self.brick_w = go.get('/brick#sprite', 'size.x')
     self.brick_h = go.get('/brick#sprite', 'size.y')
     self.num_rows = math.random(1, 5)
     self.num_cols = math.random(6, 12)
     bricks_maker(self)
+
+    self.brick_01 = 1
+    self.brick_02 = 2
+    self.brick_03 = 3
+    self.brick_01 = 4
     -- 调试模块
-    print(self.num_cols)
-    print(self.num_rows)
 end
 

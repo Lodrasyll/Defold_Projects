@@ -1,8 +1,10 @@
+go.property('type', 1)
+
 ---@package
 ---@param self brick.script
 function init(self)
-
-
+	local anim_name = 'brick_00' .. self.type
+	sprite.play_flipbook('#sprite', anim_name)
 end
 
 ---@package
@@ -12,6 +14,12 @@ end
 ---@param sender url
 function on_message(self, message_id, message, sender)
 	if message_id == hash('collision_response') and message.group == hash('ball') then
-		go.delete()
+		if self.type == 1 then
+			go.delete()
+		elseif self.type >= 2 then
+			self.type = self.type - 1
+			local next_anim = string.format('brick_%03d', self.type)
+			sprite.play_flipbook('#sprite', next_anim)
+		end
 	end
 end

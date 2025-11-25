@@ -4,6 +4,14 @@ local sound_controller = require('scenes.shared.sound_controller')
 go.property('speed', 400)
 local CONSTANT_K = 0.8
 
+local function brick_bounce_particlefx(message)
+	-- 1. 获取被撞砖块的位置
+	-- message.other_id 是被撞到的砖块的ID
+	local brick_pos = go.get_position(message.other_id)
+	-- 2. 在砖块的位置生成爆炸对象 工厂组件在当前脚本所在的 URL 下
+	factory.create("/factory#star_explosion", brick_pos)
+end
+
 local function wall_bounce_sound()
 	sound_controller.play('wall_hit', sound_controller.GROUP_SFX)
 end
@@ -183,7 +191,7 @@ function on_message(self, message_id, message, sender)
 		end
 	end
 
-	-- 播放反馈音效，根据碰撞组类型
+	-- 根据碰撞组类型: 播放反馈音效，播放粒子
 	if message_id == hash('contact_point_response') then
 		if message.group == hash('wall') then
 			wall_bounce_sound()
@@ -191,12 +199,7 @@ function on_message(self, message_id, message, sender)
 			paddle_bounce_sound()
 		elseif message.group == hash('brick') then
 			brick_bounce_sound()
-			-- 1. 获取被撞砖块的位置
-			-- message.other_id 是被撞到的砖块的ID
-			local brick_pos = go.get_position(message.other_id)
-			-- 2. 在砖块的位置生成爆炸对象
-			-- 假设工厂组件在当前脚本所在的 URL 下，名为 'explosion_factory'
-			factory.create("/factory#star_explosion", brick_pos)
+			brick_bounce_particlefx(message)
 		end
 	end
 end

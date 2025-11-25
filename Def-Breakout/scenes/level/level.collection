@@ -33,7 +33,8 @@ instances {
   id: "brick"
   prototype: "/game/entities/enemies/brick_01.go"
   position {
-    y: -984.0
+    x: -75.0
+    y: 25.0
   }
 }
 scale_along_z: 0
@@ -49,11 +50,11 @@ embedded_instances {
   id: "level_maker"
   data: "components {\n"
   "  id: \"level_maker\"\n"
-  "  component: \"/game/managers/level_maker.factory\"\n"
+  "  component: \"/game/entities/level_maker/level_maker.factory\"\n"
   "}\n"
   "components {\n"
   "  id: \"level_maker_manager\"\n"
-  "  component: \"/game/managers/level_maker_manager.script\"\n"
+  "  component: \"/game/entities/level_maker/level_maker_manager.script\"\n"
   "}\n"
   ""
   position {
@@ -116,10 +117,6 @@ embedded_instances {
   id: "bricks_instance"
   children: "brick"
   data: ""
-  position {
-    x: -287.0
-    y: 1067.0
-  }
 }
 embedded_instances {
   id: "level_gui"

@@ -86,7 +86,7 @@ embedded_instances {
   "}\n"
   "components {\n"
   "  id: \"sound_manager\"\n"
-  "  component: \"/core/manager/sound_manager.script\"\n"
+  "  component: \"/game/managers/sound_manager.script\"\n"
   "}\n"
   ""
 }

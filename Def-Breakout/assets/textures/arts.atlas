@@ -32,9 +32,6 @@ images {
   image: "/assets/textures/Component 8.png"
 }
 images {
-  image: "/assets/textures/brick_000.png"
-}
-images {
   image: "/assets/textures/brick_001.png"
 }
 images {
@@ -42,6 +39,9 @@ images {
 }
 images {
   image: "/assets/textures/brick_003.png"
+}
+images {
+  image: "/assets/textures/brick_004.png"
 }
 images {
   image: "/assets/textures/star.png"

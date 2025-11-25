@@ -30,7 +30,7 @@ embedded_components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "default_animation: \"brick_000\"\n"
+  data: "default_animation: \"brick_001\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "slice9 {\n"
   "  x: 20.0\n"
