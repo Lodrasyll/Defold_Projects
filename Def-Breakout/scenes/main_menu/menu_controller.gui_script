@@ -1,6 +1,8 @@
 local druid = require('druid.druid')
+local game_manager = require('game.managers.game_manager')
 
 local function start_game(self)
+    game_manager.set_state('select_state')
     msg.post('main:/game_loader', 'goto_select_scene')
 end
 

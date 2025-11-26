@@ -1,8 +1,10 @@
 local lume = require('lib.thirdparty.lume')
 local sound_controller = require('scenes.shared.sound_controller')
+local game_manager = require('game.managers.game_manager')
 
 go.property('speed', 400)
 local CONSTANT_K = 0.8
+local paddle_id
 
 local function brick_bounce_particlefx(message)
 	-- 1. 获取被撞砖块的位置
@@ -42,6 +44,7 @@ local function serve(self)
 	end
 	self.direction = vmath.normalize(direction)
 	self.current_speed = self.init_speed
+	game_manager.set_state('play_state')
 end
 
 local function reset(self)
@@ -49,6 +52,7 @@ local function reset(self)
 	go.set_position(self.init_pos)
 	self.direction = vmath.vector3()
 	self.current_speed = self.init_speed
+	game_manager.set_state('serve_state')
 end
 
 local function debugger(self)
@@ -92,22 +96,28 @@ end
 ---@param self ball.script
 ---@param dt number
 function update(self, dt)
-	local pos = go.get_position()
-	pos = pos + self.current_speed * self.direction * dt
-	go.set_position(pos)
+	if game_manager.get_state() == 'serve_state' then
+		local paddle_pos = go.get_position(paddle_id)
+		paddle_pos.y = go.get_position().y
+		go.set_position(paddle_pos)
+	elseif game_manager.get_state() == 'play_state' then
+		local pos = go.get_position()
+		pos = pos + self.current_speed * self.direction * dt
+		go.set_position(pos)
 
-	-- 限制球的最大速度
-	self.current_speed = lume.clamp(self.current_speed, self.init_speed, 1100)
+		-- 限制球的最大速度
+		self.current_speed = lume.clamp(self.current_speed, self.init_speed, 1100)
 
-	-- 检测球是否死亡
-	if pos.y < 0 then dead(self) end
-	-- 死亡便重新发球
-	if self.dead then reset(self) end
-	-- 检测是否无法继续游戏
-	if self.hp <= 0 then
-		msg.post('.', 'disable')
+		-- 检测球是否死亡
+		if pos.y < 0 then dead(self) end
+		-- 死亡便重新发球
+		if self.dead then reset(self) end
+		-- 检测是否无法继续游戏
+		if self.hp <= 0 then
+			msg.post('.', 'disable')
+		end
 	end
-	
+
 	-- === 调试模块 ===
 	debugger(self)
 	print(self.current_speed)
@@ -202,6 +212,12 @@ function on_message(self, message_id, message, sender)
 			brick_bounce_particlefx(message)
 		end
 	end
+
+	-- 获取球拍生成实例的id
+	if message_id == hash('player_id_is') then
+		paddle_id = message.id
+		print(paddle_id)
+	end
 end
 
 ---@package
@@ -210,7 +226,7 @@ end
 ---@param action on_input.action
 ---@return boolean|nil
 function on_input(self, action_id, action)
-	if action_id == hash('serve') and action.pressed then
+	if action_id == hash('serve') and action.pressed and game_manager.get_state() == 'serve_state' then
 		serve(self)
 	end
 end

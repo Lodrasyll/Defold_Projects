@@ -1,23 +1,25 @@
 local BgMovement = require('scenes.shared.BgMovement')
-local game_state = require('scenes.shared.game_state')
+local game_manager = require('game.managers.game_manager')
 
-local function player_init()
-    local index = game_state.selected_player_index or 1
+
+local function player_init(self)
+    local index = game_manager.selected_player or 1
     local spawn_pos = vmath.vector3(960, 68, 0)
-    print("正在加载玩家类型: " .. index)
     local factory_id = '/player_init#factory_1'
+    
     if index == 2 then
         factory_id = '/player_init#factory_2'
     elseif index == 3 then
         factory_id = '/player_init#factory_3'
     end
     local player_id = factory.create(factory_id, spawn_pos)
+    msg.post('/ball', 'player_id_is', { id = player_id })
 end
 
 ---@package
 ---@param self level_1.script
 function init(self)
-    player_init()
+    player_init(self)
 end
 
 ---@package

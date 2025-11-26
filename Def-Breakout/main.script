@@ -1,6 +1,8 @@
 SCREEN_WIDTH = sys.get_config_number('display.width')
 SCREEN_HEIGHT = sys.get_config_number('display.height')
 
+local game_manager = require('game.managers.game_manager')
+
 local function load_main_menu(self)
     msg.post('#main_menu', 'load')
 end
@@ -31,6 +33,23 @@ end
 function init(self)
     msg.post('.', 'acquire_input_focus')
     load_main_menu(self)
+end
+
+---@package
+---@param self main.script
+---@param dt number
+function update(self, dt)
+    if game_manager.get_state() == 'title_state' then
+        print('title_state')
+    elseif game_manager.get_state() == 'select_state' then
+        print('select_state')
+    elseif game_manager.get_state() == 'serve_state' then
+        print('serve_state')
+    elseif game_manager.get_state() == 'play_state' then
+        print('serve_state')
+    elseif game_manager.get_state() == 'score_state' then
+        print('score_state')
+    end
 end
 
 ---@package

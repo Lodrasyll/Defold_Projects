@@ -143,7 +143,7 @@ embedded_instances {
   id: "script"
   data: "components {\n"
   "  id: \"select\"\n"
-  "  component: \"/scenes/select_scene/select.script\"\n"
+  "  component: \"/scenes/select_scene/select_scene.script\"\n"
   "}\n"
   ""
 }

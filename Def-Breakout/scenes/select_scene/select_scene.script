@@ -1,4 +1,5 @@
-local game_state = require('scenes.shared.game_state')
+local game_manager = require('game.managers.game_manager')
+
 
 local function update_preview(self)
 	-- 禁用所有，启用一个
@@ -21,7 +22,8 @@ local function select_paddle(self, action_id, action)
 		if self.selected > #self.players then self.selected = 1 end
 		update_preview(self)
 	elseif action_id == hash('start') and action.pressed then
-		game_state.selected_player_index = self.selected
+		game_manager.selected_player = self.selected
+		game_manager.set_state('serve_state')
 		msg.post('main:/game_loader', 'goto_level')
 	end
 end
