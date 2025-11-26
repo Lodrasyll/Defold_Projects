@@ -19,6 +19,7 @@ end
 ---@param self menu_controller.gui_script
 function init(self)
     msg.post('.', 'acquire_input_focus')
+    game_manager.set_score(0)
     self.druid = druid.new(self)
 
     self.start_button = self.druid:new_button('start_button')

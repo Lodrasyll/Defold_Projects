@@ -6,6 +6,12 @@ go.property('speed', 400)
 local CONSTANT_K = 0.8
 local paddle_id
 
+
+local function end_game(self)
+	game_manager.set_state('final_state')
+	msg.post('main:/game_loader', 'goto_final_scene')
+end
+
 local function brick_bounce_particlefx(message)
 	-- 1. 获取被撞砖块的位置
 	-- message.other_id 是被撞到的砖块的ID
@@ -46,6 +52,7 @@ local function serve(self)
 	self.current_speed = self.init_speed
 	game_manager.set_state('play_state')
 end
+
 
 local function reset(self)
 	self.dead = false
@@ -116,11 +123,14 @@ function update(self, dt)
 		if self.hp <= 0 then
 			msg.post('.', 'disable')
 		end
+
+		if self.hp == 0 then
+			end_game(self)
+		end
 	end
 
 	-- === 调试模块 ===
 	debugger(self)
-	print(self.current_speed)
 end
 
 ---@package
@@ -201,7 +211,7 @@ function on_message(self, message_id, message, sender)
 		end
 	end
 
-	-- 根据碰撞组类型: 播放反馈音效，播放粒子
+	-- 根据碰撞组类型: 播放反馈音效，播放粒子，计算分数
 	if message_id == hash('contact_point_response') then
 		if message.group == hash('wall') then
 			wall_bounce_sound()
@@ -210,13 +220,17 @@ function on_message(self, message_id, message, sender)
 		elseif message.group == hash('brick') then
 			brick_bounce_sound()
 			brick_bounce_particlefx(message)
+
+			-- local brick_id = message.other_id
+			-- local brick_script_url = msg.url(nil, brick_id, 'brick_script')
+			-- local brick_type = go.get(brick_script_url, 'type')
+			-- print(brick_type)
 		end
 	end
 
 	-- 获取球拍生成实例的id
 	if message_id == hash('player_id_is') then
 		paddle_id = message.id
-		print(paddle_id)
 	end
 end
 

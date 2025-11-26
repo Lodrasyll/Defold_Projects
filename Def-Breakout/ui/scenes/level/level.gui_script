@@ -1,5 +1,5 @@
 local druid = require('druid.druid')
-local druid = require("druid.druid")
+local game_manager = require('game.managers.game_manager')
 
 local function pause_game(self)
 	self.paused = not self.paused
@@ -25,10 +25,14 @@ function init(self)
 	self.hp_3_node = gui.get_node('hp_3')
 	self.pause_button = self.druid:new_button('pause_button')
 	self.paused = false
+	self.total_score = game_manager.get_score()
+	self.score_node = gui.get_node('score')
 
 	self.pause_button.on_click:subscribe(function()
 		pause_game(self)
 	end)
+	
+	gui.set_text(self.score_node, self.total_score)
 end
 
 function final(self)
@@ -37,6 +41,10 @@ end
 
 function update(self, dt)
 	self.druid:update(dt)
+
+	if game_manager.get_state() == 'final_state' then
+		game_manager.set_score(self.total_score)
+	end
 end
 
 function on_message(self, message_id, message, sender)
@@ -53,6 +61,11 @@ function on_message(self, message_id, message, sender)
 		elseif message.hp == 0 then
 			gui.set_enabled(self.hp_1_node, false)
 		end
+	end
+
+	if message_id == hash('add_score') then
+		self.total_score = self.total_score + message.score
+		gui.set_text(self.score_node, self.total_score)
 	end
 end
 

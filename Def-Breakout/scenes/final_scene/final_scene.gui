@@ -1,4 +1,4 @@
-script: "/ui/scenes/level/level.gui_script"
+script: "/scenes/final_scene/final_scene_gui.gui_script"
 fonts {
   name: "font"
   font: "/assets/fonts/font.font"
@@ -6,6 +6,18 @@ fonts {
 textures {
   name: "arts"
   texture: "/assets/textures/arts.atlas"
+}
+nodes {
+  size {
+    x: 1920.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  pivot: PIVOT_SW
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
 }
 nodes {
   position {
@@ -17,100 +29,83 @@ nodes {
     y: 1080.0
   }
   type: TYPE_BOX
-  id: "root"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
-}
-nodes {
-  position {
-    x: 873.0
-    y: 510.0
-  }
-  size {
-    x: 245.0
-    y: 100.0
-  }
-  type: TYPE_BOX
-  id: "hp"
+  texture: "arts/gameframe"
+  id: "bg"
   parent: "root"
   inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
+  slice9 {
+    x: 60.0
+    y: 60.0
+    z: 60.0
+    w: 60.0
+  }
 }
 nodes {
   position {
-    x: -63.0
+    x: 960.0
+    y: 540.0
   }
   scale {
-    x: 0.6
-    y: 0.6
+    x: 1.4
+    y: 1.4
   }
   type: TYPE_BOX
-  texture: "arts/button_1"
-  id: "hp_1"
-  parent: "hp"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: -4.0
-  }
-  scale {
-    x: 0.6
-    y: 0.6
-  }
-  type: TYPE_BOX
-  texture: "arts/button_1"
-  id: "hp_2"
-  parent: "hp"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 56.0
-  }
-  scale {
-    x: 0.6
-    y: 0.6
-  }
-  type: TYPE_BOX
-  texture: "arts/button_1"
-  id: "hp_3"
-  parent: "hp"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: -911.0
-    y: 491.0
-  }
-  scale {
-    x: 0.7
-    y: 0.7
-  }
-  type: TYPE_BOX
-  texture: "arts/button_2"
-  id: "pause_button"
+  texture: "arts/neko_infinity_color"
+  id: "bg_deco"
   parent: "root"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
 }
 nodes {
   position {
-    x: 651.0
-    y: 510.0
+    x: 960.0
+    y: 540.0
   }
   size {
     x: 200.0
     y: 100.0
   }
   type: TYPE_TEXT
+  text: "0\n"
+  ""
   font: "font"
-  id: "score"
+  id: "final_score"
+  parent: "root"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 750.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Game Over"
+  font: "font"
+  id: "final_title_text"
+  parent: "root"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 428.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Please Enter to restart!"
+  font: "font"
+  id: "continue_text"
   parent: "root"
   inherit_alpha: true
 }

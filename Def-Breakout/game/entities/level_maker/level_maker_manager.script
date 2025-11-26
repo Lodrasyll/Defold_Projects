@@ -14,11 +14,13 @@ local function bricks_maker(self)
         for c = 1, self.num_cols do
             local properties = { type = math.random(4) }
             factory.create(component, pos, nil, properties)
+            self.total_bricks = self.total_bricks + 1
             pos.x = pos.x + self.brick_w
         end
         pos.y = pos.y - self.brick_h
     end
 
+    game_manager.set_bricks_count(self.total_bricks)
 end
 
 ---@package
@@ -26,6 +28,7 @@ end
 function init(self)
     math.randomseed(os.time())
     
+    self.total_bricks = 0
     self.brick_w = go.get('/brick#sprite', 'size.x')
     self.brick_h = go.get('/brick#sprite', 'size.y')
     self.num_rows = math.random(1, 5)

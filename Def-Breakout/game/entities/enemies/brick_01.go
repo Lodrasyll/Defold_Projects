@@ -1,6 +1,6 @@
 components {
-  id: "brick"
-  component: "/game/entities/enemies/brick.script"
+  id: "brick_script"
+  component: "/game/entities/enemies/brick_script.script"
 }
 embedded_components {
   id: "collisionobject"
