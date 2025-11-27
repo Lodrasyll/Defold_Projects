@@ -47,7 +47,7 @@ nodes {
     y: 0.6
   }
   type: TYPE_BOX
-  texture: "arts/button_1"
+  texture: "arts/ball"
   id: "hp_1"
   parent: "hp"
   inherit_alpha: true
@@ -62,7 +62,7 @@ nodes {
     y: 0.6
   }
   type: TYPE_BOX
-  texture: "arts/button_1"
+  texture: "arts/ball"
   id: "hp_2"
   parent: "hp"
   inherit_alpha: true
@@ -77,7 +77,7 @@ nodes {
     y: 0.6
   }
   type: TYPE_BOX
-  texture: "arts/button_1"
+  texture: "arts/ball"
   id: "hp_3"
   parent: "hp"
   inherit_alpha: true

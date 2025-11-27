@@ -3,7 +3,6 @@ local sound_controller = require('scenes.shared.sound_controller')
 local game_manager = require('game.managers.game_manager')
 
 go.property('speed', 400)
-local CONSTANT_K = 0.8
 local paddle_id
 
 
@@ -29,9 +28,7 @@ local function paddle_bounce_sound()
 end
 
 local function brick_bounce_sound()
-	local sound_index = math.random(2)
-	local sound_name = 'brick_hit_' .. sound_index
-	sound_controller.play(sound_name, sound_controller.GROUP_SFX)
+	sound_controller.play('brick_hit_2', sound_controller.GROUP_SFX)
 end
 
 local function dead(self)
@@ -131,6 +128,7 @@ function update(self, dt)
 
 	-- === 调试模块 ===
 	debugger(self)
+	print(self.current_speed)
 end
 
 ---@package
@@ -151,7 +149,7 @@ function on_message(self, message_id, message, sender)
 
 		if is_paddle then
 			-- 动态获取paddle脚本的script中暴露的属性
-			local paddle_url = msg.url(nil, message.other_id, 'script')
+			local paddle_url = msg.url(nil, message.other_id, 'player_script')
 			local status, paddle_move_dir = pcall(go.get, paddle_url, 'current_move_dir')
 			if status and paddle_move_dir ~= 0 then
 				paddle_is_move = true
@@ -161,6 +159,7 @@ function on_message(self, message_id, message, sender)
 		-- 游戏体验预期改进：球拍引导球的方向，球拍的不同击中点会施加不同加速度，边缘最快 return dx-velocity or constant？
 		-- 不返回一个计算出来的dx/velocity 而是在分别修改方向与速度
 		if is_paddle and paddle_is_move then
+			self.current_speed = 600
 			-- 路径 A: 偏移算法 (球拍移动中 -> 玩家控制)
 			-- 获取ball_pos paddle_pos
 			local ball_pos = go.get_position()
@@ -178,7 +177,7 @@ function on_message(self, message_id, message, sender)
 			normalized_offset = lume.clamp(normalized_offset, -1, 1)
 
 			-- 修改与应用到方向 constant k
-
+			local CONSTANT_K = 0.8
 			local new_dir_x = normalized_offset * CONSTANT_K
 			local new_dir_y = 1.0
 			self.direction.x = new_dir_x
@@ -186,7 +185,7 @@ function on_message(self, message_id, message, sender)
 			self.direction = vmath.normalize(self.direction)
 
 			-- 修改与应用到速度（加速系数）init_bounce_power
-			local bounce_power = 150
+			local bounce_power = 300
 			local speed_boost = math.abs(normalized_offset) * bounce_power
 			self.current_speed = self.current_speed + speed_boost
 		else
@@ -207,7 +206,7 @@ function on_message(self, message_id, message, sender)
 			end
 			
 			self.direction = vmath.normalize(new_dir)
-			self.current_speed = self.current_speed * 1.02
+			self.current_speed = self.current_speed * 1.013
 		end
 	end
 

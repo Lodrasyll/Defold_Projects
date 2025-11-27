@@ -23,14 +23,14 @@ embedded_components {
   "    index: 0\n"
   "    count: 1\n"
   "  }\n"
-  "  data: 25.676853\n"
+  "  data: 19.327915\n"
   "}\n"
   ""
 }
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "default_animation: \"button_1\"\n"
+  data: "default_animation: \"ball\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
@@ -38,7 +38,7 @@ embedded_components {
   "}\n"
   ""
   scale {
-    x: 0.8
-    y: 0.8
+    x: 0.6
+    y: 0.6
   }
 }

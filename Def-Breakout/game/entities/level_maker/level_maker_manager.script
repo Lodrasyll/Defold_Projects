@@ -20,7 +20,7 @@ local function bricks_maker(self)
         pos.y = pos.y - self.brick_h
     end
 
-    game_manager.set_bricks_count(self.total_bricks)
+    -- game_manager.set_bricks_count(self.total_bricks)
 end
 
 ---@package

@@ -2,9 +2,6 @@ images {
   image: "/assets/textures/bar.png"
 }
 images {
-  image: "/assets/textures/button_1.png"
-}
-images {
   image: "/assets/textures/button_2.png"
 }
 images {
@@ -45,5 +42,8 @@ images {
 }
 images {
   image: "/assets/textures/star.png"
+}
+images {
+  image: "/assets/textures/ball.png"
 }
 extrude_borders: 2

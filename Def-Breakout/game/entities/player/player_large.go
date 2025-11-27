@@ -1,6 +1,6 @@
 components {
   id: "player"
-  component: "/game/entities/player/player.script"
+  component: "/game/entities/player/player_script.script"
 }
 embedded_components {
   id: "collisionobject"

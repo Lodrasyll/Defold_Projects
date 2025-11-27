@@ -1,27 +1,46 @@
 local druid = require('druid.druid')
 local game_manager = require('game.managers.game_manager')
+local sound_controller = require('scenes.shared.sound_controller')
 
-local function start_game(self)
+local function start_game()
     game_manager.set_state('select_state')
     msg.post('main:/game_loader', 'goto_select_scene')
 end
 
+local function quit_game()
+    sys.exit(0)
+end
+
 local function start_or_quit(self)
     self.start_button.on_click:subscribe(function()
-        start_game(self)
+        start_game()
     end)
     self.quit_button.on_click:subscribe(function()
-        sys.exit(0)
+        quit_game()
     end)
+end
+
+local function select_sound()
+    sound_controller.play('select', sound_controller.GROUP_SFX)
+end
+
+local function update_highlight(self)
+    if self.selected == 1 then
+        gui.set(gui.get_node('quit_button_text'), 'color', vmath.vector4(1, 1, 1, 1))
+        gui.set(gui.get_node('start_button_text'), 'color', vmath.vector4(0, 1, 1, 1))
+    elseif self.selected == 2 then
+        gui.set(gui.get_node('start_button_text'), 'color', vmath.vector4(1, 1, 1, 1))
+        gui.set(gui.get_node('quit_button_text'), 'color', vmath.vector4(0, 1, 1, 1))
+    end
 end
 
 ---@package
 ---@param self menu_controller.gui_script
 function init(self)
     msg.post('.', 'acquire_input_focus')
-    game_manager.set_score(0)
     self.druid = druid.new(self)
 
+    game_manager.set_score(0)
     self.start_button = self.druid:new_button('start_button')
     self.quit_button = self.druid:new_button('quit_button')
     self.selected = 1
@@ -40,10 +59,7 @@ end
 ---@param dt number
 function update(self, dt)
     self.druid:update(dt)
-
-    if self.selected == 1 then
-        gui.set(gui.get_node('start_button_text'), 'color', vmath.vector4(1, 0, 0, 1))
-    end
+    
 end
 
 ---@package
@@ -61,15 +77,20 @@ end
 ---@param action on_input.action
 ---@return boolean|nil
 function on_input(self, action_id, action)
-    if action_id == hash('start') and action.pressed then
-        start_game(self)
+    if action_id == hash('start') and action.pressed and self.selected == 1 then
+        start_game()
+    elseif action_id == hash('start') and action.pressed and self.selected == 2 then
+        quit_game()
     end
-    if action_id == hash('up') or self.selected == 2 then
-        self.selected = 1
-    elseif action_id == hash('down') and self.selected == 1 then
-        self.selected = 2
+    
+    if action_id == hash('up') or action_id == hash('down') then
+        if action.pressed then
+            self.selected = self.selected == 1 and 2 or 1
+            select_sound()
+            update_highlight(self)
+            print(self.selected)
+        end
     end
-
     return self.druid:on_input(action_id, action)
 end
 

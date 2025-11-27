@@ -11,11 +11,11 @@ key_trigger {
   action: "serve"
 }
 key_trigger {
-  input: KEY_UP
+  input: KEY_W
   action: "up"
 }
 key_trigger {
-  input: KEY_DOWN
+  input: KEY_S
   action: "down"
 }
 key_trigger {
