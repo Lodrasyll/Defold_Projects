@@ -1,4 +1,4 @@
-script: "/scenes/final_scene/final_scene_gui.gui_script"
+script: "/scenes/score_scene/score_scene_gui.gui_script"
 fonts {
   name: "font"
   font: "/assets/fonts/font.font"

@@ -4,7 +4,7 @@ embedded_instances {
   id: "gui"
   data: "components {\n"
   "  id: \"final_scene\"\n"
-  "  component: \"/scenes/final_scene/final_scene.gui\"\n"
+  "  component: \"/scenes/score_scene/score_scene.gui\"\n"
   "}\n"
   ""
 }

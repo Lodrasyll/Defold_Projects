@@ -27,12 +27,12 @@ local function unload_level(self)
     msg.post('#level', 'unload')
 end
 
-local function load_final_scene(self)
-    msg.post('#final_scene', 'load')
+local function load_score_scene(self)
+    msg.post('#score_scene', 'load')
 end
 
-local function unload_final_scene(self)
-    msg.post('#final_scene', 'unload')
+local function unload_score_scene(self)
+    msg.post('#score_scene', 'unload')
 end
 
 
@@ -52,14 +52,17 @@ function on_message(self, message_id, message, sender)
     if message_id == hash('goto_select_scene') then
         unload_main_menu(self)
         load_select_scene(self)
+    elseif message_id == hash('goto_next_level') then
+        unload_score_scene(self)
+        load_level(self)
     elseif message_id == hash('goto_level') then
         unload_select_scene(self)
         load_level(self)
-    elseif message_id == hash('goto_final_scene') then
+    elseif message_id == hash('goto_score_scene') then
         unload_level(self)
-        load_final_scene(self)
+        load_score_scene(self)
     elseif message_id == hash('goto_main_menu') then
-        unload_final_scene(self)
+        unload_score_scene(self)
         load_main_menu(self)
     elseif message_id == hash('proxy_loaded') then
         msg.post(sender, 'init')
@@ -67,6 +70,6 @@ function on_message(self, message_id, message, sender)
     end
 end
 
-function final(self)
+function score(self)
     msg.post(".", "release_input_focus")
 end

@@ -39,7 +39,7 @@ instances {
 }
 scale_along_z: 0
 embedded_instances {
-  id: "manager"
+  id: "level_manager"
   data: "components {\n"
   "  id: \"level\"\n"
   "  component: \"/scenes/level/level.script\"\n"

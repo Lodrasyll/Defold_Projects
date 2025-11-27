@@ -17,16 +17,39 @@ local function player_init(self)
 end
 
 ---@package
----@param self level_1.script
+---@param self level.script
 function init(self)
     player_init(self)
 end
 
 ---@package
----@param self level_1.script
+---@param self level.script
 ---@param dt number
 function update(self, dt)
     BgMovement.bg_rotate(go.get_id('/bg_deco'), nil, dt)
+    
+    if game_manager.get_state() == 'play_state' then
+        if game_manager.get_brick_count() <= 0 then
+            game_manager.set_state('next_level_state')
+            game_manager.set_level()
+            msg.post('main:/game_loader', 'goto_score_scene')
+        end
+    end
+
+    print(game_manager.get_level())
+    
     -- 调试模块
+end
+
+---@package
+---@param self level.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('player_dead') then
+        game_manager.set_state('score_state')
+        msg.post('main:/game_loader', 'goto_score_scene')
+    end
 end
 
