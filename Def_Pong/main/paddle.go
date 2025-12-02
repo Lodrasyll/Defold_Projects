@@ -1,6 +1,10 @@
 components {
-  id: "paddle"
-  component: "/main/scripts/paddle.script"
+  id: "paddle_ai"
+  component: "/main/scripts/paddle_ai.script"
+  position {
+    x: -81.38388
+    y: 24.02762
+  }
 }
 embedded_components {
   id: "sprite"

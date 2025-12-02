@@ -34,7 +34,7 @@ local function ball_dead(self)
 	self.hp = self.hp - 1
 	self.dead = true
 	msg.post('/level_gui', 'dead', { hp = self.hp })
-	print(self.hp)
+	-- print(self.hp)
 	sound_controller.play('hurt', sound_controller.GROUP_SFX)
 end
 
@@ -127,7 +127,7 @@ function update(self, dt)
 
 	-- === 调试模块 ===
 	debugger(self)
-	print(self.current_speed)
+	-- print(self.current_speed)
 end
 
 ---@package

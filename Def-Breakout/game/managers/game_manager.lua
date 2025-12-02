@@ -4,7 +4,6 @@ local M = {}
 M.selected_player = 1     -- 存储玩家选择的索引 (1: 普通, 2: 大, 3: 小)
 M.game_state = 'title_state'    -- 游戏默认状态
 M.player_score = 0              -- 游戏结算分数
-M.brick_count = 0
 M.level = 1
 
 function M.get_state()

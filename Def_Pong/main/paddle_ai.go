@@ -1,6 +1,10 @@
 components {
-  id: "paddle_ai"
-  component: "/main/scripts/paddle_ai.script"
+  id: "paddle_copy"
+  component: "/main/scripts/paddle_copy.script"
+  position {
+    x: 188.34555
+    y: 25.577791
+  }
 }
 embedded_components {
   id: "collisionobject"

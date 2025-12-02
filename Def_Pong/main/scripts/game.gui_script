@@ -5,7 +5,7 @@
 
 ]]--
 
-local win_score = 2
+local win_score = 100000
 
 ---@package
 ---@param self game.gui_script
