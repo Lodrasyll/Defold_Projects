@@ -22,6 +22,7 @@ dependencies#1 = https://github.com/Insality/defold-event/archive/refs/tags/12.z
 dependencies#2 = https://github.com/britzl/defold-input/archive/refs/tags/4.7.0.zip
 dependencies#3 = https://github.com/paweljarosz/editor-scripts-ui-collection/archive/master.zip
 dependencies#4 = https://github.com/britzl/lumiere/archive/master.zip
+dependencies#5 = https://github.com/Jerakin/editor-script-align/archive/master.zip
 
 [input]
 game_binding = /game.input_bindingc

@@ -42,7 +42,7 @@ end
 function update(self, dt)
 	self.druid:update(dt)
 
-	if game_manager.get_state() == 'score_state' then
+	if game_manager.get_state() == 'game_over' then
 		game_manager.set_score(self.total_score)
 	elseif game_manager.get_state() == 'next_level_state' then
 		game_manager.set_score(self.total_score)

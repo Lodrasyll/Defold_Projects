@@ -1,7 +1,9 @@
-SCREEN_WIDTH = sys.get_config_number('display.width')
-SCREEN_HEIGHT = sys.get_config_number('display.height')
 
 local game_manager = require('game.managers.game_manager')
+local highscore_manager = require('data.highscore_manager')
+
+SCREEN_WIDTH = sys.get_config_number('display.width')
+SCREEN_HEIGHT = sys.get_config_number('display.height')
 
 local function load_main_menu(self)
     msg.post('#main_menu', 'load')
@@ -35,11 +37,29 @@ local function unload_score_scene(self)
     msg.post('#score_scene', 'unload')
 end
 
+local function load_hightscore_scene(self)
+    msg.post('#highscore_scene', 'load')
+end
+
+local function unload_highscore_scene(self)
+    msg.post('#highscore_scene', 'unload')
+end
+
+local function load_entry_hightscore_scene(self)
+    msg.post('#entry_highscore_scene', 'load')
+end
+
+local function unload_entry_highscore_scene(self)
+    msg.post('#entry_highscore_scene', 'unload')
+end
+
 
 ---@package
 ---@param self main.script
 function init(self)
     msg.post('.', 'acquire_input_focus')
+    -- 第一次调用确保数据准备好
+    highscore_manager.load()
     load_main_menu(self)
 end
 
@@ -52,6 +72,9 @@ function on_message(self, message_id, message, sender)
     if message_id == hash('goto_select_scene') then
         unload_main_menu(self)
         load_select_scene(self)
+    elseif message_id == hash('goto_highscore_scene') then
+        unload_main_menu(self)
+        load_hightscore_scene(self)
     elseif message_id == hash('goto_next_level') then
         unload_score_scene(self)
         load_level(self)
@@ -61,9 +84,18 @@ function on_message(self, message_id, message, sender)
     elseif message_id == hash('goto_score_scene') then
         unload_level(self)
         load_score_scene(self)
+    elseif message_id == hash('goto_entry_highscore_scene') then
+        unload_score_scene(self)
+        load_entry_hightscore_scene(self)
     elseif message_id == hash('goto_main_menu') then
         unload_score_scene(self)
         load_main_menu(self)
+    elseif message_id == hash('highscore_goto_main_menu') then
+        unload_highscore_scene(self)
+        load_main_menu(self)
+    elseif message_id == hash('entry_highscore_scene_goto_highscore_scene') then
+        unload_entry_highscore_scene(self)
+        load_hightscore_scene(self)
     elseif message_id == hash('proxy_loaded') then
         msg.post(sender, 'init')
         msg.post(sender, 'enable')

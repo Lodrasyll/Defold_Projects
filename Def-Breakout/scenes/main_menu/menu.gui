@@ -91,7 +91,7 @@ nodes {
 nodes {
   position {
     x: 952.0
-    y: 431.0
+    y: 430.0
   }
   size {
     x: 200.0
@@ -124,7 +124,7 @@ nodes {
 nodes {
   position {
     x: 952.0
-    y: 363.0
+    y: 360.0
   }
   size {
     x: 200.0
@@ -147,6 +147,39 @@ nodes {
   font: "font"
   id: "quit_button_text"
   parent: "quit_button"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 952.0
+    y: 290.0
+  }
+  size {
+    x: 200.0
+    y: 60.0
+  }
+  color {
+    x: 0.102
+    y: 0.102
+    z: 0.102
+  }
+  type: TYPE_BOX
+  id: "highscore_button"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 250.0
+    y: 60.0
+  }
+  type: TYPE_TEXT
+  text: "Highscore"
+  font: "font"
+  id: "high_button_text"
+  parent: "highscore_button"
   inherit_alpha: true
 }
 material: "/builtins/materials/gui.material"

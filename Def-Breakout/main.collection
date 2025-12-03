@@ -30,6 +30,18 @@ embedded_instances {
   "  data: \"collection: \\\"/scenes/score_scene/score_scene.collection\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"highscore_scene\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/scenes/highscore_scene/highscore_scene.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"entry_highscore_scene\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/scenes/entry_hightscore_scene/entry_highscore_scene.collection\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
 }
 embedded_instances {

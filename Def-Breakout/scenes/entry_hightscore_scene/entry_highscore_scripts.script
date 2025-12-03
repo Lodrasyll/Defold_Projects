@@ -1,0 +1,41 @@
+local BgMovement = require('scenes.shared.BgMovement')
+local game_manager = require('game.managers.game_manager')
+local highscore_manager = require('data.highscore_manager')
+
+---@package
+---@param self level.script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+    highscore_manager.load()
+    label.set_text('/entry_info#final_score', tostring(game_manager.get_score()))
+end
+
+---@package
+---@param self level.script
+---@param dt number
+function update(self, dt)
+    BgMovement.bg_rotate(go.get_id('/bg_deco'), nil, dt)
+
+end
+
+---@package
+---@param self level.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+
+end
+
+---@package
+---@param self entry_highscore_scripts.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    if action_id == hash('start') and action.pressed then
+        highscore_manager.add_score(game_manager.get_score(), 'QYL')
+        game_manager.set_state('title_state')
+        msg.post('main:/game_loader', 'entry_highscore_scene_goto_highscore_scene')
+    end
+end

@@ -11,12 +11,15 @@ local function quit_game()
     sys.exit(0)
 end
 
-local function start_or_quit(self)
+local function start_or_quit_or_highscore(self)
     self.start_button.on_click:subscribe(function()
         start_game()
     end)
     self.quit_button.on_click:subscribe(function()
         quit_game()
+    end)
+    self.highscore_button.on_click:subscribe(function ()
+        msg.post('main:/game_loader', 'goto_highscore_scene')
     end)
 end
 
@@ -43,9 +46,10 @@ function init(self)
     game_manager.set_score(0)
     self.start_button = self.druid:new_button('start_button')
     self.quit_button = self.druid:new_button('quit_button')
+    self.highscore_button = self.druid:new_button('highscore_button')
     self.selected = 1
 
-    start_or_quit(self)
+    start_or_quit_or_highscore(self)
 end
 
 ---@package

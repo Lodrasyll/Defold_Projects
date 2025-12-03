@@ -1,0 +1,51 @@
+local game_manager = require('game.managers.game_manager')
+local highscore_manager = require('data.highscore_manager')
+
+local function update_highscore_list(self)
+	local scores = highscore_manager.get_list()
+
+	for i = 1, 10 do
+		local parent_id = 'score_' .. i
+		local name_id = 'player_name_' .. i
+		local score_id = 'final_score_' .. i
+
+		local parent_node = gui.get_node(parent_id)
+		local name_node = gui.get_node(name_id)
+		local score_node = gui.get_node(score_id)
+
+		local data = scores[i]
+		if data then
+			gui.set_enabled(parent_node, true)
+			gui.set_text(name_node, data.name)
+			gui.set_text(score_node, tostring(data.score))
+		else
+			gui.set_enabled(parent_node, false)
+		end
+	end
+end
+
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	highscore_manager.load()
+	update_highscore_list(self)
+end
+
+function final(self)
+	msg.post(".", "release_input_focus")
+end
+
+function update(self, dt)
+
+end
+
+function on_message(self, message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash('start') and game_manager.get_state() == 'title_state' then
+		msg.post('main:/game_loader', 'highscore_goto_main_menu')
+	end
+end
+
+function on_reload(self)
+end

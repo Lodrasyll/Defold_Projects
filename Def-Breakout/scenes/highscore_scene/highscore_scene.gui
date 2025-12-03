@@ -1,0 +1,551 @@
+script: "/scenes/highscore_scene/highscore_scene_gui.gui_script"
+fonts {
+  name: "font"
+  font: "/assets/fonts/font.font"
+}
+textures {
+  name: "arts"
+  texture: "/assets/textures/arts.atlas"
+}
+nodes {
+  size {
+    x: 1920.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  pivot: PIVOT_SW
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  size {
+    x: 1920.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  texture: "arts/gameframe"
+  id: "bg"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 60.0
+    y: 60.0
+    z: 60.0
+    w: 60.0
+  }
+}
+nodes {
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  scale {
+    x: 1.4
+    y: 1.4
+  }
+  type: TYPE_BOX
+  texture: "arts/neko_infinity_color"
+  id: "bg_deco"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 960.0
+    y: 919.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "HIGHSCORE"
+  font: "font"
+  id: "highscore_title"
+  parent: "root"
+  inherit_alpha: true
+  text_tracking: 0.15
+}
+nodes {
+  position {
+    x: 960.0
+    y: 702.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_1"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_1"
+  parent: "score_1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_1"
+  parent: "score_1"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 652.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_2"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_2"
+  parent: "score_2"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_2"
+  parent: "score_2"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 602.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_3"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_3"
+  parent: "score_3"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_3"
+  parent: "score_3"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 552.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_4"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_4"
+  parent: "score_4"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_4"
+  parent: "score_4"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 502.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_5"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_5"
+  parent: "score_5"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_5"
+  parent: "score_5"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 452.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_6"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_6"
+  parent: "score_6"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_6"
+  parent: "score_6"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 402.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_7"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_7"
+  parent: "score_7"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_7"
+  parent: "score_7"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 352.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_8"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_8"
+  parent: "score_8"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_8"
+  parent: "score_8"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 302.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_9"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_9"
+  parent: "score_9"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_9"
+  parent: "score_9"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 252.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "score_10"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -235.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "AAA"
+  font: "font"
+  id: "player_name_10"
+  parent: "score_10"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 300.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "0\n"
+  ""
+  font: "font"
+  id: "final_score_10"
+  parent: "score_10"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

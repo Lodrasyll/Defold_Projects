@@ -1,0 +1,10 @@
+name: "final_scene"
+scale_along_z: 0
+embedded_instances {
+  id: "gui"
+  data: "components {\n"
+  "  id: \"highscore_scene\"\n"
+  "  component: \"/scenes/highscore_scene/highscore_scene.gui\"\n"
+  "}\n"
+  ""
+}

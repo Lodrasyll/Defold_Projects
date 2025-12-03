@@ -1,5 +1,5 @@
 local game_manager = require('game.managers.game_manager')
-
+local highscore_manager = require('data.highscore_manager')
 
 function init(self)
 	msg.post(".", "acquire_input_focus")
@@ -18,16 +18,21 @@ function update(self, dt)
 end
 
 function on_message(self, message_id, message, sender)
+
 end
 
 function on_input(self, action_id, action)
-	if action_id == hash('start') then
+	if action_id == hash('start') and action.pressed then
 		if game_manager.get_state() == 'next_level_state' then
 			game_manager.set_state('serve_state')
 			msg.post('main:/game_loader', 'goto_next_level')
-		elseif game_manager.get_state() == 'score_state' then
-			game_manager.set_state('title_state')
-			msg.post('main:/game_loader', 'goto_main_menu')
+		elseif game_manager.get_state() == 'game_over' then
+			if highscore_manager.is_new_highscore(game_manager.get_score()) then
+				msg.post('main:/game_loader', 'goto_entry_highscore_scene')
+			else
+				game_manager.set_state('title_state')
+				msg.post('main:/game_loader', 'goto_main_menu')
+			end
 		end
 	end
 end

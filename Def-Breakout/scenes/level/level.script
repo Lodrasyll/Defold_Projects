@@ -1,7 +1,5 @@
 local BgMovement = require('scenes.shared.BgMovement')
 local game_manager = require('game.managers.game_manager')
-local lumiere = require('lumiere.lumiere')
-local scanlines = require('lumiere.effects.scanlines.scanlines')
 
 local function player_init(self)
     local index = game_manager.selected_player or 1
@@ -21,7 +19,6 @@ end
 ---@param self level.script
 function init(self)
     player_init(self)
-    lumiere.use_effects({ scanlines })
 end
 
 ---@package
@@ -50,7 +47,7 @@ end
 ---@param sender url
 function on_message(self, message_id, message, sender)
     if message_id == hash('player_dead') then
-        game_manager.set_state('score_state')
+        game_manager.set_state('game_over')
         msg.post('main:/game_loader', 'goto_score_scene')
     end
 end
