@@ -1,0 +1,30 @@
+name: "main"
+scale_along_z: 0
+embedded_instances {
+  id: "game_scene_loader"
+  data: "components {\n"
+  "  id: \"game_scene_manager\"\n"
+  "  component: \"/game/managers/game_scene_manager.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"main_menu\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/scenes/main_menu/main_menu.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"level\"\n"
+  "  type: \"collectionproxy\"\n"
+  "  data: \"collection: \\\"/scenes/level/level.collection\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "main_script"
+  data: "components {\n"
+  "  id: \"main\"\n"
+  "  component: \"/main.script\"\n"
+  "}\n"
+  ""
+}
