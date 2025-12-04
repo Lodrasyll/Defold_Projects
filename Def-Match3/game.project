@@ -9,8 +9,8 @@ game_binding = /core/systems/game.input_bindingc
 use_accelerometer = 0
 
 [display]
-width = 720
-height = 1280
+width = 1280
+height = 720
 high_dpi = 1
 
 [ios]
@@ -48,4 +48,7 @@ velocity_threshold = 100.0
 
 [html5]
 scale_mode = stretch
+
+[sprite]
+max_count = 1024
 

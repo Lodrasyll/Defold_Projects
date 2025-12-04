@@ -1,0 +1,92 @@
+local block_size = 80
+local edge = 80
+local gap = 2
+local bottom_edge = 80
+local board_width = 6
+local board_height = 8
+
+local function debugger(self)
+	-- === 可视化调试代码 ===
+	-- ✅ 安全检查：如果 board 还没生成好，就不要渲染，防止 crash
+	if not self.board or #self.board == 0 then return end
+
+	for x = 0, board_width - 1 do
+		-- ✅ 安全检查：防止列不存在
+		if self.board[x] then
+			for y = 0, board_height - 1 do
+				local cell = self.board[x][y]
+				if cell then
+					-- 准备调试文本位置（稍微往上偏一点，免得挡住物体）
+					local debug_pos_1 = vmath.vector3(cell.pos.x - 25, cell.pos.y + 25, 0)
+					local debug_pos_2 = vmath.vector3(cell.pos.x - 20, cell.pos.y - 10, 0)
+
+					msg.post('@render:', 'draw_debug_text', {
+						text = string.format("(%d, \n%d)", cell.pos.x, cell.pos.y), -- 格式化字符串更整洁
+						position = debug_pos_1,                   -- ✅ 必须是 vector3
+						color = vmath.vector4(0, 1, 1, 1)
+					})
+
+					msg.post('@render:', 'draw_debug_text', {
+						text = string.format("(%d, %d)", x, y), -- 格式化字符串更整洁
+						position = debug_pos_2, -- ✅ 必须是 vector3
+						color = vmath.vector4(0, 1, 0, 1)
+					})
+				end
+			end
+		end
+	end
+end
+
+local function build_board()
+	local board = {}
+	math.randomseed(os.time())
+	local pos_offset = go.get_position() -- (765, 32, 0)
+	local x = 0
+	local y = 0
+	for x = 0, board_width - 1 do
+		local px = pos_offset.x + block_size / 2 + block_size * x + gap * x
+		board[x] = {}
+		for y = 0, board_height - 1 do
+			local py = pos_offset.y - (block_size / 2 + block_size * y + gap * y)
+			local pos = vmath.vector3(px, py, 1)
+			local id = factory.create('#factory', pos, nil)
+			board[x][y] = {
+				id = id, 
+				x = x, 
+				y = y, 
+				pos = pos 
+			}
+		end
+	end
+	return board
+end
+
+
+---@package
+---@param self board.script
+function init(self)
+	self.board = {}
+	build_board()
+
+	msg.post('#', 'start_level')
+	msg.post('.', 'acquire_input_focus')
+end
+
+
+---@package
+---@param self board.script
+---@param dt number
+function update(self, dt)
+	debugger(self)
+end
+
+---@package
+---@param self board.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('start_level') then
+		self.board = build_board()
+	end
+end

@@ -102,6 +102,8 @@ function on_message(self, message_id, message, sender)
     end
 end
 
-function score(self)
+---@package
+---@param self main.script
+function final(self)
     msg.post(".", "release_input_focus")
 end

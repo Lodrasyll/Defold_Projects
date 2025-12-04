@@ -1,2 +1,89 @@
 name: "level"
 scale_along_z: 0
+embedded_instances {
+  id: "board"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"2\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "slice9 {\\n"
+  "  x: 4.0\\n"
+  "  y: 4.0\\n"
+  "  z: 4.0\\n"
+  "  w: 4.0\\n"
+  "}\\n"
+  "size {\\n"
+  "  x: 500.0\\n"
+  "  y: 680.0\\n"
+  "}\\n"
+  "size_mode: SIZE_MODE_MANUAL\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/textures/main_texture.tilesource\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 1010.0
+    y: 360.0
+    z: 0.1
+  }
+}
+embedded_instances {
+  id: "background"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"2\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "slice9 {\\n"
+  "  x: 4.0\\n"
+  "  y: 4.0\\n"
+  "  z: 4.0\\n"
+  "  w: 4.0\\n"
+  "}\\n"
+  "size {\\n"
+  "  x: 1280.0\\n"
+  "  y: 720.0\\n"
+  "}\\n"
+  "size_mode: SIZE_MODE_MANUAL\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/textures/main_texture.tilesource\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 640.0\n"
+  "    y: 360.0\n"
+  "  }\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "level"
+  data: "components {\n"
+  "  id: \"level\"\n"
+  "  component: \"/scenes/level/level.script\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "board_maker"
+  data: "components {\n"
+  "  id: \"board\"\n"
+  "  component: \"/scenes/level/board.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/eye.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 765.0
+    y: 692.0
+  }
+}
