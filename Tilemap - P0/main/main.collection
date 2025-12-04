@@ -1,4 +1,12 @@
 name: "main"
+instances {
+  id: "cursor"
+  prototype: "/main/cursor.go"
+  position {
+    x: 1709.959
+    y: 510.91644
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "manager"

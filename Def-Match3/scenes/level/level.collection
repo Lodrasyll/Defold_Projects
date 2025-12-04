@@ -1,11 +1,31 @@
 name: "level"
+instances {
+  id: "cursor"
+  prototype: "/game/entities/cursor.go"
+  position {
+    z: 1.0
+  }
+}
+instances {
+  id: "ship"
+  prototype: "/game/entities/ship.go"
+  position {
+    x: 377.53204
+    y: 160.48253
+    z: 1.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "board"
-  data: "embedded_components {\n"
+  data: "components {\n"
+  "  id: \"board\"\n"
+  "  component: \"/scenes/level/board.script\"\n"
+  "}\n"
+  "embedded_components {\n"
   "  id: \"sprite\"\n"
   "  type: \"sprite\"\n"
-  "  data: \"default_animation: \\\"2\\\"\\n"
+  "  data: \"default_animation: \\\"brick_black\\\"\\n"
   "material: \\\"/builtins/materials/sprite.material\\\"\\n"
   "slice9 {\\n"
   "  x: 4.0\\n"
@@ -24,11 +44,16 @@ embedded_instances {
   "}\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"factory_board\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/brick.go\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
   position {
     x: 1010.0
     y: 360.0
-    z: 0.1
   }
 }
 embedded_instances {
@@ -36,7 +61,7 @@ embedded_instances {
   data: "embedded_components {\n"
   "  id: \"sprite\"\n"
   "  type: \"sprite\"\n"
-  "  data: \"default_animation: \\\"2\\\"\\n"
+  "  data: \"default_animation: \\\"brick_black\\\"\\n"
   "material: \\\"/builtins/materials/sprite.material\\\"\\n"
   "slice9 {\\n"
   "  x: 4.0\\n"
@@ -60,9 +85,12 @@ embedded_instances {
   "  }\n"
   "}\n"
   ""
+  position {
+    z: -0.1
+  }
 }
 embedded_instances {
-  id: "level"
+  id: "level_script"
   data: "components {\n"
   "  id: \"level\"\n"
   "  component: \"/scenes/level/level.script\"\n"
@@ -70,20 +98,10 @@ embedded_instances {
   ""
 }
 embedded_instances {
-  id: "board_maker"
-  data: "components {\n"
-  "  id: \"board\"\n"
-  "  component: \"/scenes/level/board.script\"\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"factory\"\n"
-  "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/eye.go\\\"\\n"
-  "\"\n"
-  "}\n"
-  ""
+  id: "board_spawn_pos"
+  data: ""
   position {
-    x: 765.0
-    y: 692.0
+    x: 769.0
+    y: 38.0
   }
 }

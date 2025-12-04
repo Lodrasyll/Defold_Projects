@@ -14,10 +14,12 @@
         "lowercase-global",
         "redefined-local",
         "inject-field",
-        "undefined-field"
+        "undefined-field",
+        "undefined-doc-name"
     ],
     "Lua.workspace.library": [
-        "~\\AppData\\Roaming\\Code\\User\\globalStorage\\astronachos.defold"
+        "~\\AppData\\Roaming\\Code\\User\\globalStorage\\astronachos.defold",
+        "~\\AppData\\Roaming\\Code\\User\\workspaceStorage\\8c45ab639a5bc43942c694ad755d2c43\\astronachos.defold"
     ],
     "glsllint.additionalStageAssociations": {
         ".fp": "frag",

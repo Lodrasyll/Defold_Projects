@@ -1,5 +1,6 @@
 [project]
 title = Def-Match3
+dependencies = 
 
 [bootstrap]
 main_collection = /main.collectionc
@@ -51,4 +52,8 @@ scale_mode = stretch
 
 [sprite]
 max_count = 1024
+
+[graphics]
+default_texture_min_filter = nearest
+default_texture_mag_filter = nearest
 

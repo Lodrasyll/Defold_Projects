@@ -1,6 +1,8 @@
+local game_data = require('data.configs.game_data')
+
 local block_size = 80
 local edge = 80
-local gap = 2
+local gap = 1
 local bottom_edge = 80
 local board_width = 6
 local board_height = 8
@@ -23,13 +25,13 @@ local function debugger(self)
 					msg.post('@render:', 'draw_debug_text', {
 						text = string.format("(%d, \n%d)", cell.pos.x, cell.pos.y), -- 格式化字符串更整洁
 						position = debug_pos_1,                   -- ✅ 必须是 vector3
-						color = vmath.vector4(0, 1, 1, 1)
+						color = vmath.vector4(1, 1, 1, 1)
 					})
 
 					msg.post('@render:', 'draw_debug_text', {
 						text = string.format("(%d, %d)", x, y), -- 格式化字符串更整洁
 						position = debug_pos_2, -- ✅ 必须是 vector3
-						color = vmath.vector4(0, 1, 0, 1)
+						color = vmath.vector4(1, 1, 1, 1)
 					})
 				end
 			end
@@ -37,24 +39,26 @@ local function debugger(self)
 	end
 end
 
+
 local function build_board()
 	local board = {}
-	math.randomseed(os.time())
-	local pos_offset = go.get_position() -- (765, 32, 0)
+	local pos_offset = go.get_position('/board_spawn_pos') -- (765, 32, 0)
 	local x = 0
 	local y = 0
 	for x = 0, board_width - 1 do
-		local px = pos_offset.x + block_size / 2 + block_size * x + gap * x
+		local px = pos_offset.x + block_size / 2 + block_size * x
 		board[x] = {}
 		for y = 0, board_height - 1 do
-			local py = pos_offset.y - (block_size / 2 + block_size * y + gap * y)
-			local pos = vmath.vector3(px, py, 1)
-			local id = factory.create('#factory', pos, nil)
+			local py = pos_offset.y + block_size / 2 + block_size * y
+			local pos = vmath.vector3(px, py, 0.5)
+			local color = game_data.colors_list[math.random(#game_data.colors_list)]
+			local id = factory.create('#factory_board', pos, nil, { color = hash(color) })
 			board[x][y] = {
-				id = id, 
-				x = x, 
-				y = y, 
-				pos = pos 
+				id = id,
+				x = x,
+				y = y,
+				pos = pos,
+				color = hash(color)
 			}
 		end
 	end
@@ -65,6 +69,7 @@ end
 ---@package
 ---@param self board.script
 function init(self)
+	math.randomseed(os.time())
 	self.board = {}
 	build_board()
 

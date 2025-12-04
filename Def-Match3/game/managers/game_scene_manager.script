@@ -1,0 +1,5 @@
+---@package
+---@param self game_scene_manager.script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+end

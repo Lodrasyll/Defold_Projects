@@ -1,0 +1,21 @@
+local game_data = require('data.configs.game_data')
+
+go.property('color', hash('nil'))
+
+---@package
+---@param self brick_script.script
+function init(self)
+    if self.color ~= hash('nil') then
+        local color = game_data.colors_map[self.color]
+        sprite.play_flipbook('#sprite', 'brick_' .. color)
+    end
+end
+
+---@package
+---@param self brick_script.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    
+end

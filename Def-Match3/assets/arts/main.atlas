@@ -1,0 +1,7 @@
+images {
+  image: "/assets/arts/canon.png"
+}
+images {
+  image: "/assets/arts/ship.png"
+}
+extrude_borders: 2

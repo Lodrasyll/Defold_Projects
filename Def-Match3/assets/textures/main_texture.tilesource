@@ -2,13 +2,38 @@ image: "/assets/textures/texture_256x256.png"
 tile_width: 32
 tile_height: 32
 animations {
-  id: "1"
-  start_tile: 1
-  end_tile: 1
-}
-animations {
-  id: "2"
+  id: "brick_black"
   start_tile: 2
   end_tile: 2
+}
+animations {
+  id: "brick_blue"
+  start_tile: 8
+  end_tile: 8
+}
+animations {
+  id: "brick_green"
+  start_tile: 5
+  end_tile: 5
+}
+animations {
+  id: "brick_purple"
+  start_tile: 7
+  end_tile: 7
+}
+animations {
+  id: "brick_red"
+  start_tile: 4
+  end_tile: 4
+}
+animations {
+  id: "brick_yellow"
+  start_tile: 6
+  end_tile: 6
+}
+animations {
+  id: "cursor"
+  start_tile: 3
+  end_tile: 3
 }
 extrude_borders: 2

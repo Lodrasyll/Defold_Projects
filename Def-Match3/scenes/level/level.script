@@ -1,9 +1,8 @@
-local board = require('scenes.shared.match3')
 
 
 ---@package
 ---@param self level.script
 function init(self)
-    msg.post('.', 'acquire_input_focus')
+    
 end
 

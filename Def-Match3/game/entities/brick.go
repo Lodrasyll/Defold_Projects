@@ -1,15 +1,15 @@
 components {
-  id: "eye_script"
-  component: "/game/entities/eye_script.script"
+  id: "brick_script"
+  component: "/game/entities/brick_script.script"
   position {
-    x: -435.4558
-    y: -31.157011
+    x: -39.039707
+    y: -12.208356
   }
 }
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "default_animation: \"2\"\n"
+  data: "default_animation: \"brick_black\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "slice9 {\n"
   "  x: 5.0\n"

@@ -126,7 +126,7 @@ function update(self, dt)
 	end
 
 	-- === 调试模块 ===
-	debugger(self)
+	-- debugger(self)
 	-- print(self.current_speed)
 end
 

@@ -2,7 +2,11 @@ name: "main"
 scale_along_z: 0
 embedded_instances {
   id: "game_scene_loader"
-  data: "embedded_components {\n"
+  data: "components {\n"
+  "  id: \"game_scene_manager\"\n"
+  "  component: \"/game/managers/game_scene_manager.script\"\n"
+  "}\n"
+  "embedded_components {\n"
   "  id: \"main_menu\"\n"
   "  type: \"collectionproxy\"\n"
   "  data: \"collection: \\\"/scenes/main_menu/main_menu.collection\\\"\\n"
@@ -17,14 +21,10 @@ embedded_instances {
   ""
 }
 embedded_instances {
-  id: "managers"
+  id: "main_script"
   data: "components {\n"
-  "  id: \"game_scene_manager\"\n"
-  "  component: \"/game/managers/game_scene_manager.script\"\n"
-  "}\n"
-  "components {\n"
-  "  id: \"main_manager\"\n"
-  "  component: \"/main_manager.script\"\n"
+  "  id: \"main\"\n"
+  "  component: \"/main.script\"\n"
   "}\n"
   ""
 }
