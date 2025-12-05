@@ -1,7 +1,51 @@
+local game_data = require('data.configs.game_data')
+local utils = require('core.utils.utils')
+
+local selected_slot = nil
+
+local function debugger()
+	if selected_slot then
+		local debug_pos = vmath.vector3(100, 50, 1)
+		msg.post('@render:', 'draw_debug_text', {
+			text = string.format('(%d, %d)', selected_slot.x, selected_slot.y),
+			position = debug_pos,
+			color = vmath.vector4(1, 1, 0, 1)
+		})
+	end
+	
+end
+
+local function within_board(position)
+	local slot_index = utils.board_world_to_slot(position)
+	return utils.is_valid_slot(slot_index)
+end
+
+
+local function move_cursor_slot(position)
+	local cursor_slot = utils.board_world_to_slot(position)
+	local cursor_pos = utils.board_slot_to_world(cursor_slot)
+	selected_slot = cursor_slot
+	go.set_position(cursor_pos)
+end
+
 ---@package
 ---@param self cursor_script.script
 function init(self)
 	msg.post('.', 'acquire_input_focus')
+	msg.post('#sprite', 'disable')
+end
+
+---@package
+---@param self cursor_script.script
+---@param dt number
+function update(self, dt)
+
+	if selected_slot then
+		msg.post('#sprite', 'enable')
+	end
+
+	-- === 可视化调试代码 ==
+	debugger()
 end
 
 ---@package
@@ -10,6 +54,11 @@ end
 ---@param action on_input.action
 ---@return boolean|nil
 function on_input(self, action_id, action)
-	local mouse_pos = vmath.vector3(action.x, action.y, 1)
-	go.set_position(mouse_pos)
+	if action_id == hash('touch') and action.pressed then
+		local mouse_pos = vmath.vector3(action.x, action.y, 1)
+		if within_board(mouse_pos) then
+			move_cursor_slot(mouse_pos)
+		end
+		
+	end
 end

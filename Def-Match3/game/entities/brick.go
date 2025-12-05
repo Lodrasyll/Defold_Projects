@@ -1,10 +1,6 @@
 components {
   id: "brick_script"
   component: "/game/entities/brick_script.script"
-  position {
-    x: -39.039707
-    y: -12.208356
-  }
 }
 embedded_components {
   id: "sprite"

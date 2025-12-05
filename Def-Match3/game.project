@@ -1,6 +1,6 @@
 [project]
 title = Def-Match3
-dependencies = 
+dependencies#0 = https://github.com/subsoap/defos/archive/refs/tags/v2.8.3.zip
 
 [bootstrap]
 main_collection = /main.collectionc

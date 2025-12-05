@@ -1,4 +1,11 @@
 name: "main_menu"
+instances {
+  id: "cursor"
+  prototype: "/game/entities/cursor.go"
+  position {
+    x: -46.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "main_menu_gui"

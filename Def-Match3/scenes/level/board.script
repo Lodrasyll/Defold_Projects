@@ -1,22 +1,24 @@
 local game_data = require('data.configs.game_data')
 
-local block_size = 80
+local slot_size = game_data.slot_size
+local board_width = game_data.board_width
+local board_height = game_data.board_height
 local edge = 80
 local gap = 1
 local bottom_edge = 80
-local board_width = 6
-local board_height = 8
 
-local function debugger(self)
+
+local function debugger()
 	-- === 可视化调试代码 ===
 	-- ✅ 安全检查：如果 board 还没生成好，就不要渲染，防止 crash
-	if not self.board or #self.board == 0 then return end
+	local board = game_data.board
+	if not board or #board == 0 then return end
 
 	for x = 0, board_width - 1 do
 		-- ✅ 安全检查：防止列不存在
-		if self.board[x] then
+		if board[x] then
 			for y = 0, board_height - 1 do
-				local cell = self.board[x][y]
+				local cell = board[x][y]
 				if cell then
 					-- 准备调试文本位置（稍微往上偏一点，免得挡住物体）
 					local debug_pos_1 = vmath.vector3(cell.pos.x - 25, cell.pos.y + 25, 0)
@@ -42,14 +44,14 @@ end
 
 local function build_board()
 	local board = {}
-	local pos_offset = go.get_position('/board_spawn_pos') -- (765, 32, 0)
+	local pos_offset = game_data.board_spawn_pos
 	local x = 0
 	local y = 0
 	for x = 0, board_width - 1 do
-		local px = pos_offset.x + block_size / 2 + block_size * x
+		local px = pos_offset.x + slot_size / 2 + slot_size * x
 		board[x] = {}
 		for y = 0, board_height - 1 do
-			local py = pos_offset.y + block_size / 2 + block_size * y
+			local py = pos_offset.y + slot_size / 2 + slot_size * y
 			local pos = vmath.vector3(px, py, 0.5)
 			local color = game_data.colors_list[math.random(#game_data.colors_list)]
 			local id = factory.create('#factory_board', pos, nil, { color = hash(color) })
@@ -70,9 +72,7 @@ end
 ---@param self board.script
 function init(self)
 	math.randomseed(os.time())
-	self.board = {}
 	build_board()
-
 	msg.post('#', 'start_level')
 	msg.post('.', 'acquire_input_focus')
 end
@@ -82,7 +82,7 @@ end
 ---@param self board.script
 ---@param dt number
 function update(self, dt)
-	debugger(self)
+
 end
 
 ---@package
@@ -92,6 +92,17 @@ end
 ---@param sender url
 function on_message(self, message_id, message, sender)
 	if message_id == hash('start_level') then
-		self.board = build_board()
+		game_data.board = build_board()
+	end
+end
+
+---@package
+---@param self board.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+	if action_id == hash('reset') and action.pressed then
+		build_board()
 	end
 end

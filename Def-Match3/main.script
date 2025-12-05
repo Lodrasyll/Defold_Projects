@@ -1,6 +1,5 @@
 local StateMachine = require('core.components.StateMachine')
 
-
 local function load_main_menu()
     msg.post('/game_scene_loader#main_menu', 'load')
 end
@@ -21,6 +20,7 @@ end
 ---@package
 ---@param self main.script
 function init(self)
+    defos.disable_window_resize()
     msg.post('.', 'acquire_input_focus')
     load_main_menu()
 end

@@ -1,5 +1,11 @@
 local M = {}
 
+M.board_spawn_pos = vmath.vector3(769, 38, 0)
+M.slot_size = 80
+M.board_width = 6
+M.board_height = 8
+M.board = {}
+
 -- list用于随机 map用于查找
 M.colors_list = { "black", "yellow", "blue", "purple", "green", "red" }
 M.colors_map = {
