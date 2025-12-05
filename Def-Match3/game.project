@@ -57,3 +57,6 @@ max_count = 1024
 default_texture_min_filter = nearest
 default_texture_mag_filter = nearest
 
+[collection]
+max_instances = 2560
+

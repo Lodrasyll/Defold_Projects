@@ -3,6 +3,8 @@ instances {
   id: "cursor"
   prototype: "/game/entities/cursor.go"
   position {
+    x: -40.0
+    y: 40.0
     z: 1.0
   }
 }
@@ -11,7 +13,16 @@ instances {
   prototype: "/game/entities/ship.go"
   position {
     x: 377.53204
-    y: 160.48253
+    y: 214.48254
+    z: 1.0
+  }
+}
+instances {
+  id: "highlight"
+  prototype: "/game/entities/highlight.go"
+  position {
+    x: -40.0
+    y: 40.0
     z: 1.0
   }
 }
@@ -58,7 +69,16 @@ embedded_instances {
 }
 embedded_instances {
   id: "background"
-  data: "embedded_components {\n"
+  data: "components {\n"
+  "  id: \"stars\"\n"
+  "  component: \"/game/entities/stars.particlefx\"\n"
+  "  position {\n"
+  "    x: 372.0\n"
+  "    y: 779.0\n"
+  "    z: 0.2\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
   "  id: \"sprite\"\n"
   "  type: \"sprite\"\n"
   "  data: \"default_animation: \\\"brick_black\\\"\\n"

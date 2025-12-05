@@ -4,4 +4,7 @@ images {
 images {
   image: "/assets/arts/ship.png"
 }
+images {
+  image: "/assets/arts/star.png"
+}
 extrude_borders: 2
