@@ -1,5 +1,6 @@
 local game_data = require('data.configs.game_data')
 local utils = require('core.utils.utils')
+local match3 = require('scenes.shared.match3')
 
 
 local function within_board(position)
@@ -53,8 +54,10 @@ end
 ---@param self cursor_script.script
 function init(self)
 	msg.post('.', 'acquire_input_focus')
+	msg.post('/highlight#sprite', 'disable')
 
 	self.highlight = false
+	self.highlight_state = false
 	self.selected_slot = nil
 end
 
@@ -73,13 +76,12 @@ end
 ---@package
 ---@param self cursor_script.script
 ---@param dt number
-function update(self, dt)
-	if self.highlight then
-		msg.post('/highlight#sprite', 'enable')
-	else
-		msg.post('/highlight#sprite', 'disable')
+	function update(self, dt)
+	if self.highlight ~= self.highlight_state then
+		local message_id = self.highlight and hash('enable') or hash('disable')
+		msg.post('/highlight#sprite', message_id)
+		self.highlight_state = self.highlight
 	end
-
 	-- === 可视化调试代码 ==
 	debugger(self)
 end
@@ -120,5 +122,4 @@ function on_input(self, action_id, action)
 			end
 		end
 	end
-
 end

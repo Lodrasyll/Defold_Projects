@@ -1,4 +1,5 @@
 local game_data = require('data.configs.game_data')
+local match3 = require('scenes.shared.match3')
 
 local slot_size = game_data.slot_size
 local board_width = game_data.board_width
@@ -40,7 +41,6 @@ local function debugger()
 		end
 	end
 end
-
 
 local function build_board()
 	local board = {}
@@ -93,13 +93,4 @@ function on_message(self, message_id, message, sender)
 	if message_id == hash('start_level') then
 		game_data.board = build_board()
 	end
-end
-
----@package
----@param self board.script
----@param action_id hash
----@param action on_input.action
----@return boolean|nil
-function on_input(self, action_id, action)
-
 end
