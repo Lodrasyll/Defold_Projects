@@ -74,7 +74,7 @@ local function board_init(self)
 
 	-- 2.初始化大脑，教会它怎么造方块
 	match3.init({
-		-- 定义回调函数：on_create_block
+		-- 定义创建棋盘方块回调函数
 		on_create_block = function(x, y, local_pos, color)
 			-- a.准备属性
 			local properties = { color = hash(color) }
@@ -91,7 +91,8 @@ local function board_init(self)
 			return id
 		end,
 
-		on_swap_block = function(block_a, block_b)
+		-- 定义交换棋盘方块回调函数
+		on_swap_block = function(block_a, block_b, on_complete)
 			-- 这里的 block_a 和 block_b 已经是交换过 x,y 数据的了
 			-- 我们只需要让它们移动到对方的“逻辑坐标”对应的“物理位置”去
 			
@@ -99,7 +100,30 @@ local function board_init(self)
 			local pos_b = match3.slot_to_screen(block_b.x, block_b.y)
 
 			go.animate(block_a.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_a, go.EASING_OUTQUAD, 0.3)
-			go.animate(block_b.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_b, go.EASING_OUTQUAD, 0.3)
+			go.animate(block_b.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_b, go.EASING_OUTQUAD, 0.3, 0, function ()
+				local matches_set, has_match = match3.find_match_block()
+				if has_match then
+					match3.remove_match(matches_set)
+				else
+
+				end	
+				if on_complete then on_complete() end
+			end)
+		end,
+
+		-- 定义移除棋盘方块回调函数
+		on_remove_block = function (block)
+			local id = block.id
+			local local_pos = go.get_position(id)
+			local board_world_pos = go.get_position('/board')
+			
+			go.animate(id, 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(1.4, 1.4, 0), go.EASING_INBACK, 0.3, 0, function ()
+				go.animate(id, 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(0, 0, 0), go.EASING_INBACK, 0.2, 0, function ()
+					factory.create("/board#factory_explosion", local_pos + board_world_pos)
+					go.delete(id)
+				end)
+			end)
+			-- particlefx.play("star_explosion")
 		end
 	})
 

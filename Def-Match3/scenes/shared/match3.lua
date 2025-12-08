@@ -98,7 +98,7 @@ function M.is_neighbor(x1, y1, x2, y2)
     return (diff_x + diff_y) == 1
 end
 
-function M.swap_block(x1, y1, x2, y2)
+function M.swap_block(x1, y1, x2, y2, on_complete)
     local board = M.board
 
     local block_1 = board.slot[x1][y1]
@@ -118,14 +118,125 @@ function M.swap_block(x1, y1, x2, y2)
     end
 
     if M.callback.on_swap_block then
-        M.callback.on_swap_block(block_1, block_2)
+        M.callback.on_swap_block(block_1, block_2, on_complete)
     end
 end
 
-function M.find_match_block()
-    
+local function get_horizontal_neighbors(board, x, y)
+    local center_block = board.slot[x][y]
+
+    if not center_block then
+        return {}
+    end
+
+    local neighbors = {}
+
+    -- 向左搜索
+    for i = x - 1, 0, -1 do
+        local neighbor = board.slot[i][y]
+        if neighbor and neighbor.color == center_block.color then
+            table.insert(neighbors, neighbor)
+        else
+            break
+        end
+    end
+
+    -- 向右搜索
+    for i = x + 1, M.board_width - 1 do
+        local neighbor = board.slot[i][y]
+        if neighbor and neighbor.color == center_block.color then
+            table.insert(neighbors, neighbor)
+        else
+            break
+        end
+    end
+
+    return neighbors
 end
 
+local function get_vertical_neighbors(board, x, y)
+    local center_block = board.slot[x][y]
+
+    local neighbors = {}
+
+    -- 向上搜索
+    for j = y + 1, M.board_height - 1 do
+        local neighbor = board.slot[x][j]
+        if neighbor and neighbor.color == center_block.color then
+            table.insert(neighbors, neighbor)
+        else
+            break
+        end
+    end
+
+    -- 向下搜索
+    for j = y - 1, 0, -1 do
+        local neighbor = board.slot[x][j]
+        if neighbor and neighbor.color == center_block.color then
+            table.insert(neighbors, neighbor)
+        else
+            break
+        end
+    end
+
+    return neighbors
+end
+
+function M.find_match_block()
+    local board = M.board
+    local matches_set = {}
+    local has_match = false
+
+    -- 遍历棋盘上每一个方块
+    for x = 0, M.board_width - 1 do
+        for y = 0, M.board_height - 1 do
+            local center_block = board.slot[x][y]
+
+            if center_block then
+                -- 分别获取横竖邻居
+                local h_neighbors = get_horizontal_neighbors(board, x, y)
+                local v_neighbors = get_vertical_neighbors(board, x, y)
+
+                -- 如果邻居数量 >= 2，说明加上自己至少有 3 个，构成消除
+                -- A. 检查水平匹配
+                if #h_neighbors >= 2 then
+                    matches_set[center_block] = true
+                    for _, match_block in ipairs(h_neighbors) do
+                        matches_set[match_block] = true
+                    end
+                    has_match = true
+                end
+
+                -- B. 检查垂直匹配
+                if #v_neighbors >= 2 then
+                    matches_set[center_block] = true
+                    for _, match_block in ipairs(h_neighbors) do
+                        matches_set[match_block] = true
+                    end
+                    has_match = true
+                end
+
+                -- C. 进阶预留：你可以在这里判断 T型/L型
+                if #h_neighbors >= 2 and #v_neighbors >= 2 then
+                   print("发现炸弹生成机会！")
+                end
+            end
+        end
+    end
+
+    return matches_set, has_match
+end
+
+function M.remove_match(matches_set)
+    for block, _ in pairs(matches_set) do
+        -- 数据层置空
+        M.board.slot[block.x][block.y] = nil
+        -- 表现层回调
+        if M.callback.on_remove_block then
+            M.callback.on_remove_block(block)
+        end
+    end
+end
 
 function M.calculated_match()
     local board = game_data.board
@@ -221,23 +332,6 @@ function M.calculated_match()
     end
 
     return #M.matches > 0 and M.matches or false
-end
-
-function M.remove_match()
-    local board = game_data.board
-    if M.matches then
-        for key, match in pairs(M.matches) do
-            for key, brick in pairs(match) do
-                if brick.id then
-                    go.delete(brick.id)
-                end
-
-                board[brick.x][brick.y] = nil
-            end
-        end
-    end
-
-    M.matches = {}
 end
 
 function M.get_falling_brick(factory_url)

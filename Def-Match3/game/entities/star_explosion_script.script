@@ -1,0 +1,9 @@
+---@package
+---@param self star_explosion.script
+function init(self)
+	particlefx.play('#star_explosion')
+	local life_time = 1.0
+	timer.delay(life_time, false, function ()
+		go.delete()
+	end)
+end

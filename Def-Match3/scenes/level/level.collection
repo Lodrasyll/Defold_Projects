@@ -29,6 +29,12 @@ embedded_instances {
   "  data: \"prototype: \\\"/game/entities/brick.go\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"factory_explosion\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/star_explosion.go\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
   position {
     x: 774.0
