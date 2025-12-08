@@ -1,131 +1,125 @@
-local game_data = require('data.configs.game_data')
-local utils = require('core.utils.utils')
-local match3 = require('scenes.shared.match3')
+-- local game_data = require('data.configs.game_data')
+-- local utils = require('core.utils.utils')
+-- local match3 = require('scenes.shared.match3')
 
 
-local function within_board(position)
-	local slot_index = utils.board_world_to_slot(position)
-	return utils.is_valid_slot(slot_index)
-end
+-- local function within_board(position)
+-- 	local slot_index = utils.board_world_to_slot(position)
+-- 	return utils.is_valid_slot(slot_index)
+-- end
 
 
-local function move_cursor_slot(position)
-	local cursor_slot = utils.board_world_to_slot(position)
-	local cursor_pos = utils.board_slot_to_world(cursor_slot)
-	go.set_position(cursor_pos)
-end
+-- local function move_cursor_slot(position)
+-- 	local cursor_slot = utils.board_world_to_slot(position)
+-- 	local cursor_pos = utils.board_slot_to_world(cursor_slot)
+-- 	go.set_position(cursor_pos)
+-- end
 
-local function highlight_slot(position)
-	local cursor_slot = utils.board_world_to_slot(position)
-	local cursor_pos = utils.board_slot_to_world(cursor_slot)
-	go.set_position(cursor_pos, '/highlight')
-end
+-- local function highlight_slot(position)
+-- 	local cursor_slot = utils.board_world_to_slot(position)
+-- 	local cursor_pos = utils.board_slot_to_world(cursor_slot)
+-- 	go.set_position(cursor_pos, '/highlight')
+-- end
 
-local function is_neighbor(slot_a, slot_b)
-	local diff_x = math.abs(slot_b.x - slot_a.x)
-	local diff_y = math.abs(slot_b.y - slot_a.y)
-	return (diff_x + diff_y) == 1
-end
+-- local function is_neighbor(slot_a, slot_b)
+-- 	local diff_x = math.abs(slot_b.x - slot_a.x)
+-- 	local diff_y = math.abs(slot_b.y - slot_a.y)
+-- 	return (diff_x + diff_y) == 1
+-- end
 
-local function swap_slot(slot_a, slot_b)
-	-- 安全检查
-	if not slot_a or not slot_b then return end
-	if slot_a == slot_b then return end
-	-- 数据层交换
-	local board = game_data.board
-	local obj_a = board[slot_a.x][slot_a.y]
-	local obj_b = board[slot_b.x][slot_b.y]
-	board[slot_a.x][slot_a.y], board[slot_b.x][slot_b.y] = obj_b, obj_a
-	-- 属性层更新
-	local temp_x, temp_y = obj_a.x, obj_a.y
-	obj_a.x = obj_b.x
-	obj_a.y = obj_b.y
-	obj_b.x = temp_x
-	obj_b.y = temp_y
-	-- 表现层更新
-	local temp_pos = obj_a.pos
-	obj_a.pos = obj_b.pos
-	obj_b.pos = temp_pos
-	go.animate(obj_a.id, 'position', go.PLAYBACK_ONCE_FORWARD, obj_a.pos, go.EASING_OUTQUAD, 0.3)
-	go.animate(obj_b.id, 'position', go.PLAYBACK_ONCE_FORWARD, obj_b.pos, go.EASING_OUTQUAD, 0.3)
-end
+-- local function swap_slot(slot_a, slot_b)
+-- 	-- 安全检查
+-- 	if not slot_a or not slot_b then return end
+-- 	if slot_a == slot_b then return end
+-- 	-- 数据层交换
+-- 	local board = game_data.board
+-- 	local obj_a = board[slot_a.x][slot_a.y]
+-- 	local obj_b = board[slot_b.x][slot_b.y]
+-- 	board[slot_a.x][slot_a.y], board[slot_b.x][slot_b.y] = obj_b, obj_a
+-- 	-- 属性层更新
+-- 	local temp_x, temp_y = obj_a.x, obj_a.y
+-- 	obj_a.x = obj_b.x
+-- 	obj_a.y = obj_b.y
+-- 	obj_b.x = temp_x
+-- 	obj_b.y = temp_y
+-- 	-- 表现层更新
+-- 	local temp_pos = obj_a.pos
+-- 	obj_a.pos = obj_b.pos
+-- 	obj_b.pos = temp_pos
+-- 	go.animate(obj_a.id, 'position', go.PLAYBACK_ONCE_FORWARD, obj_a.pos, go.EASING_OUTQUAD, 0.3)
+-- 	go.animate(obj_b.id, 'position', go.PLAYBACK_ONCE_FORWARD, obj_b.pos, go.EASING_OUTQUAD, 0.3)
+-- end
 
----@package
----@param self cursor_script.script
-function init(self)
-	msg.post('.', 'acquire_input_focus')
-	msg.post('/highlight#sprite', 'disable')
+-- ---@package
+-- ---@param self cursor_script.script
+-- function init(self)
+-- 	msg.post('.', 'acquire_input_focus')
+-- 	msg.post('/highlight#sprite', 'disable')
 
-	self.highlight = false
-	self.highlight_state = false
-	self.selected_slot = nil
-end
+-- 	self.highlight = false
+-- 	self.highlight_state = false
+-- 	self.selected_slot = nil
+-- end
 
 
-local function debugger(self)
-	if self.selected_slot then
-		local debug_pos = vmath.vector3(1000, 40, 1)
-		msg.post('@render:', 'draw_debug_text', {
-			text = string.format('(%d, %d)', self.selected_slot.x, self.selected_slot.y),
-			position = debug_pos,
-			color = vmath.vector4(1, 1, 0, 1)
-		})
-	end
-end
+-- local function debugger(self)
+-- 	if self.selected_slot then
+-- 		local debug_pos = vmath.vector3(1000, 40, 1)
+-- 		msg.post('@render:', 'draw_debug_text', {
+-- 			text = string.format('(%d, %d)', self.selected_slot.x, self.selected_slot.y),
+-- 			position = debug_pos,
+-- 			color = vmath.vector4(1, 1, 0, 1)
+-- 		})
+-- 	end
+-- end
 
----@package
----@param self cursor_script.script
----@param dt number
-	function update(self, dt)
-	if self.highlight ~= self.highlight_state then
-		local message_id = self.highlight and hash('enable') or hash('disable')
-		msg.post('/highlight#sprite', message_id)
-		self.highlight_state = self.highlight
-	end
-	-- === 可视化调试代码 ==
-	debugger(self)
-end
+-- ---@package
+-- ---@param self cursor_script.script
+-- ---@param dt number
+-- 	function update(self, dt)
+-- 	if self.highlight ~= self.highlight_state then
+-- 		local message_id = self.highlight and hash('enable') or hash('disable')
+-- 		msg.post('/highlight#sprite', message_id)
+-- 		self.highlight_state = self.highlight
+-- 	end
+-- 	-- === 可视化调试代码 ==
+-- 	debugger(self)
+-- end
 
----@package
----@param self cursor_script.script
----@param action_id hash
----@param action on_input.action
----@return boolean|nil
-function on_input(self, action_id, action)
-	local mouse_pos = vmath.vector3(action.x, action.y, 1)
-	if mouse_pos and within_board(mouse_pos) then
-		move_cursor_slot(mouse_pos)
-	end
+-- ---@package
+-- ---@param self cursor_script.script
+-- ---@param action_id hash
+-- ---@param action on_input.action
+-- ---@return boolean|nil
+-- function on_input(self, action_id, action)
+-- 	local mouse_pos = vmath.vector3(action.x, action.y, 1)
+-- 	if mouse_pos and within_board(mouse_pos) then
+-- 		move_cursor_slot(mouse_pos)
+-- 	end
 
-	if action_id == hash('touch') and within_board(mouse_pos) and action.pressed then
-		local current_click_slot = utils.board_world_to_slot(mouse_pos)
-		highlight_slot(mouse_pos)
-		self.highlight = true
+-- 	if action_id == hash('touch') and within_board(mouse_pos) and action.pressed then
+-- 		local current_click_slot = utils.board_world_to_slot(mouse_pos)
+-- 		highlight_slot(mouse_pos)
+-- 		self.highlight = true
 
-		if self.selected_slot == nil then
-			self.selected_slot = current_click_slot
-		else
-			if self.selected_slot.x == current_click_slot.x and self.selected_slot.y == current_click_slot.y then
-				self.selected_slot = nil
-				self.highlight = false
-			elseif is_neighbor(self.selected_slot, current_click_slot) then
-				swap_slot(self.selected_slot, current_click_slot)
-				local match = match3.calculated_match()
-				if match then
-					match3.remove_match()
-				end
-				self.highlight = false
-				self.selected_slot = nil
-			else
-				self.selected_slot = nil
-				self.highlight = false
-			end
-		end
-	end
-end
-
--- 左手是空的
--- 左手已经拿了一个
--- 是同一个么
--- 是邻居么
--- 是离得很远么
+-- 		if self.selected_slot == nil then
+-- 			self.selected_slot = current_click_slot
+-- 		else
+-- 			if self.selected_slot.x == current_click_slot.x and self.selected_slot.y == current_click_slot.y then
+-- 				self.selected_slot = nil
+-- 				self.highlight = false
+-- 			elseif is_neighbor(self.selected_slot, current_click_slot) then
+-- 				swap_slot(self.selected_slot, current_click_slot)
+-- 				local match = match3.calculated_match()
+-- 				if match then
+-- 					match3.remove_match()
+-- 				end
+-- 				self.highlight = false
+-- 				self.selected_slot = nil
+-- 			else
+-- 				self.selected_slot = nil
+-- 				self.highlight = false
+-- 			end
+-- 		end
+-- 	end
+-- end

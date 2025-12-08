@@ -1,11 +1,98 @@
 local M = {}
 
-M.matches = {}
+-- === 1. 模块核心数据 ===
+M.board = {}
+M.board_width = 6
+M.board_height = 6
+M.block_size = 80
+M.callback = {}
 
-local game_data = require('data.configs.game_data')
-local utils = require('core.utils.utils')
-local board_width = game_data.board_width
-local board_height = game_data.board_height
+M.colors_list = { "black", "yellow", "blue", "purple", "green", "red" }
+M.colors_map = {
+    [hash("black")] = "black",
+    [hash("yellow")] = "yellow",
+    [hash("blue")] = "blue",
+    [hash("purple")] = "purple",
+    [hash("green")] = "green",
+    [hash("red")] = "red"
+}
+
+-- === 2. 初始化：握手 ===
+-- board.script 会调用这个，把“怎么造方块”的方法传进来
+function M.init(callbacks)
+    M.callback = callbacks
+end
+
+-- === 3. 创建数据棋盘 ===
+function M.create_board(width, height, block_size)
+    M.board_width = width
+    M.board_height = height
+    M.block_size = block_size
+
+    local board = {
+        width = M.board_width,
+        height = M.board_height,
+        block_size = M.block_size,
+        slot = {}
+    }
+    for x = 0, M.board_width - 1 do
+        board.slot[x] = {}
+        for y = 0, M.board_height - 1 do
+            M.create_block(board, x, y)
+        end
+    end
+
+    
+    M.board = board
+    pprint(board.slot)
+    print('棋盘创建完毕！')
+    return board
+end
+
+-- === 4. 创建单个方块 (逻辑核心) ===
+function M.create_block(board, x, y, color)
+    -- 如果没有特殊指定，则随机颜色
+    if not color then
+        color = M.colors_list[math.random(#M.colors_list)]
+    end
+
+    -- 计算【相对坐标】
+    -- 这样方块永远相对与棋盘原点，不用管棋盘在世界的哪里
+    local local_pos = M.slot_to_screen(x, y)
+
+    -- 【关键】呼叫回调函数
+    local id = nil
+    if M.callback.on_create_block then
+        -- 传递相对坐标
+        id = M.callback.on_create_block(x, y, local_pos, color)
+    end
+
+    -- 存入数据
+    board.slot[x][y] = {
+        id = id,
+        x = x,
+        y = y,
+        color = hash(color),
+        pos = local_pos
+    }
+end
+
+function M.screen_to_slot(screen_x, screen_y, board_origin)
+    local x = math.floor((screen_x - board_origin.x) / M.block_size)
+    local y = math.floor((screen_y - board_origin.y) / M.block_size)
+    return x, y
+end
+
+function M.slot_to_screen(slot_x, slot_y)
+    local x = (M.block_size / 2) + M.block_size * slot_x
+    local y = (M.block_size / 2) + M.block_size * slot_y
+    return vmath.vector3(x, y, 0.5)
+end
+
+function M.is_valid_pos(x, y)
+    return x >= 0 and x < M.board_width and
+        y >= 0 and y < M.board_height
+end
 
 
 function M.calculated_match()
