@@ -68,7 +68,7 @@ local function build_board()
 	return board
 end
 -- 中期重构架构，使用match3模块生成
-local function create_board_block(self)
+local function board_init(self)
 	-- 1.拿到棋盘的id
 	local board_id = go.get_id()
 
@@ -89,6 +89,17 @@ local function create_board_block(self)
 
 			-- d.返回id给大脑存档
 			return id
+		end,
+
+		on_swap_block = function(block_a, block_b)
+			-- 这里的 block_a 和 block_b 已经是交换过 x,y 数据的了
+			-- 我们只需要让它们移动到对方的“逻辑坐标”对应的“物理位置”去
+			
+			local pos_a = match3.slot_to_screen(block_a.x, block_a.y)
+			local pos_b = match3.slot_to_screen(block_b.x, block_b.y)
+
+			go.animate(block_a.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_a, go.EASING_OUTQUAD, 0.3)
+			go.animate(block_b.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_b, go.EASING_OUTQUAD, 0.3)
 		end
 	})
 
@@ -103,9 +114,7 @@ end
 ---@param self board.script
 function init(self)
 	math.randomseed(os.time())
-	msg.post('.', 'acquire_input_focus')
-
-	create_board_block(self)
+	board_init(self)
 end
 
 
@@ -122,21 +131,22 @@ end
 ---@param action on_input.action
 ---@return boolean|nil
 function on_input(self, action_id, action)
-	if action_id == hash('touch') and action.released then
-		-- 1.获取棋盘在世界的绝对位置
-		local board_world_pos = go.get_position()
+	-- if action_id == hash('touch') and action.released then
+	-- 	-- 1.获取棋盘在世界的绝对位置
+	-- 	local board_world_pos = go.get_position()
 
-		-- 2.让match3计算点中了哪个格子
-		local slot_x, slot_y = match3.screen_to_slot(action.x, action.y, board_world_pos)
+	-- 	-- 2.让match3计算点中了哪个格子
+	-- 	local slot_x, slot_y = match3.screen_to_slot(board_world_pos, action.x, action.y, )
 
-		-- 3.验证有效性
-		if match3.is_valid_pos(slot_x, slot_y) then
-			-- 成功！
-			print('命中！格子坐标：[' .. slot_x .. '][' .. slot_y .. ']')
-			-- 获取数据验证正确性
-			local block = match3.board.slot[slot_x][slot_y]
-			print('颜色: ' .. tostring(block.color))
-			print('对象id: ' ..  tostring(block.id))
-		end
-	end
+	-- 	-- 3.验证有效性
+	-- 	if match3.is_valid_pos(slot_x, slot_y) then
+	-- 		-- 成功！
+	-- 		print('命中！格子坐标：[' .. slot_x .. '][' .. slot_y .. ']')
+	-- 		-- 获取数据验证正确性
+	-- 		local block = match3.board.slot[slot_x][slot_y]
+	-- 		print('颜色: ' .. tostring(block.color))
+	-- 		print('对象id: ' ..  tostring(block.id))
+	-- 		go.animate(block.id, 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(1.5, 1.5, 1), go.EASING_OUTBOUNCE, 0.25)
+	-- 	end
+	-- end
 end

@@ -44,7 +44,6 @@ function M.create_board(width, height, block_size)
 
     
     M.board = board
-    pprint(board.slot)
     print('棋盘创建完毕！')
     return board
 end
@@ -72,12 +71,11 @@ function M.create_block(board, x, y, color)
         id = id,
         x = x,
         y = y,
-        color = hash(color),
-        pos = local_pos
+        color = hash(color)
     }
 end
 
-function M.screen_to_slot(screen_x, screen_y, board_origin)
+function M.screen_to_slot(board_origin, screen_x, screen_y)
     local x = math.floor((screen_x - board_origin.x) / M.block_size)
     local y = math.floor((screen_y - board_origin.y) / M.block_size)
     return x, y
@@ -92,6 +90,40 @@ end
 function M.is_valid_pos(x, y)
     return x >= 0 and x < M.board_width and
         y >= 0 and y < M.board_height
+end
+
+function M.is_neighbor(x1, y1, x2, y2)
+    local diff_x = math.abs(x1 - x2)
+    local diff_y = math.abs(y1 - y2)
+    return (diff_x + diff_y) == 1
+end
+
+function M.swap_block(x1, y1, x2, y2)
+    local board = M.board
+
+    local block_1 = board.slot[x1][y1]
+    local block_2 = board.slot[x2][y2]
+
+    board.slot[x1][y1] = block_2
+    board.slot[x2][y2] = block_1
+
+    if block_1 then
+        block_1.x = x2
+        block_1.y = y2
+    end
+
+    if block_2 then
+        block_2.x = x1
+        block_2.y = y1
+    end
+
+    if M.callback.on_swap_block then
+        M.callback.on_swap_block(block_1, block_2)
+    end
+end
+
+function M.find_match_block()
+    
 end
 
 
