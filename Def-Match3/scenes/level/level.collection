@@ -1,14 +1,5 @@
 name: "level"
 instances {
-  id: "cursor"
-  prototype: "/game/entities/cursor.go"
-  position {
-    x: -40.0
-    y: 40.0
-    z: 0.9
-  }
-}
-instances {
   id: "ship"
   prototype: "/game/entities/ship.go"
   position {
@@ -18,12 +9,11 @@ instances {
   }
 }
 instances {
-  id: "highlight"
-  prototype: "/game/entities/highlight.go"
+  id: "player"
+  prototype: "/game/entities/player.go"
   position {
-    x: -40.0
-    y: 40.0
-    z: 1.0
+    x: 640.0
+    y: 360.0
   }
 }
 scale_along_z: 0
@@ -34,37 +24,21 @@ embedded_instances {
   "  component: \"/scenes/level/board.script\"\n"
   "}\n"
   "embedded_components {\n"
-  "  id: \"sprite\"\n"
-  "  type: \"sprite\"\n"
-  "  data: \"default_animation: \\\"brick_black\\\"\\n"
-  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "slice9 {\\n"
-  "  x: 4.0\\n"
-  "  y: 4.0\\n"
-  "  z: 4.0\\n"
-  "  w: 4.0\\n"
-  "}\\n"
-  "size {\\n"
-  "  x: 500.0\\n"
-  "  y: 680.0\\n"
-  "}\\n"
-  "size_mode: SIZE_MODE_MANUAL\\n"
-  "textures {\\n"
-  "  sampler: \\\"texture_sampler\\\"\\n"
-  "  texture: \\\"/assets/textures/main_texture.tilesource\\\"\\n"
-  "}\\n"
-  "\"\n"
-  "}\n"
-  "embedded_components {\n"
   "  id: \"factory_board\"\n"
   "  type: \"factory\"\n"
   "  data: \"prototype: \\\"/game/entities/brick.go\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"factory_explosion\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/star_explosion.go\\\"\\n"
+  "\"\n"
+  "}\n"
   ""
   position {
-    x: 1010.0
-    y: 360.0
+    x: 774.0
+    y: 40.0
   }
 }
 embedded_instances {
@@ -104,6 +78,32 @@ embedded_instances {
   "    y: 360.0\n"
   "  }\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"sprite1\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"brick_black\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "slice9 {\\n"
+  "  x: 4.0\\n"
+  "  y: 4.0\\n"
+  "  z: 4.0\\n"
+  "  w: 4.0\\n"
+  "}\\n"
+  "size {\\n"
+  "  x: 500.0\\n"
+  "  y: 680.0\\n"
+  "}\\n"
+  "size_mode: SIZE_MODE_MANUAL\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/textures/main_texture.tilesource\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 1013.0\n"
+  "    y: 359.0\n"
+  "  }\n"
+  "}\n"
   ""
   position {
     z: -0.1
@@ -116,12 +116,4 @@ embedded_instances {
   "  component: \"/scenes/level/level.script\"\n"
   "}\n"
   ""
-}
-embedded_instances {
-  id: "board_spawn_pos"
-  data: ""
-  position {
-    x: 769.0
-    y: 38.0
-  }
 }

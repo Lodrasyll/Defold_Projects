@@ -1,12 +1,242 @@
 local M = {}
 
-M.matches = {}
+-- === 1. 模块核心数据 ===
+M.board = {}
+M.board_width = 6
+M.board_height = 6
+M.block_size = 80
+M.callback = {}
 
-local game_data = require('data.configs.game_data')
-local utils = require('core.utils.utils')
-local board_width = game_data.board_width
-local board_height = game_data.board_height
+M.colors_list = { "black", "yellow", "blue", "purple", "green", "red" }
+M.colors_map = {
+    [hash("black")] = "black",
+    [hash("yellow")] = "yellow",
+    [hash("blue")] = "blue",
+    [hash("purple")] = "purple",
+    [hash("green")] = "green",
+    [hash("red")] = "red"
+}
 
+-- === 2. 初始化：握手 ===
+-- board.script 会调用这个，把“怎么造方块”的方法传进来
+function M.init(callbacks)
+    M.callback = callbacks
+end
+
+-- === 3. 创建数据棋盘 ===
+function M.create_board(width, height, block_size)
+    M.board_width = width
+    M.board_height = height
+    M.block_size = block_size
+
+    local board = {
+        width = M.board_width,
+        height = M.board_height,
+        block_size = M.block_size,
+        slot = {}
+    }
+    for x = 0, M.board_width - 1 do
+        board.slot[x] = {}
+        for y = 0, M.board_height - 1 do
+            M.create_block(board, x, y)
+        end
+    end
+
+    
+    M.board = board
+    print('棋盘创建完毕！')
+    return board
+end
+
+-- === 4. 创建单个方块 (逻辑核心) ===
+function M.create_block(board, x, y, color)
+    -- 如果没有特殊指定，则随机颜色
+    if not color then
+        color = M.colors_list[math.random(#M.colors_list)]
+    end
+
+    -- 计算【相对坐标】
+    -- 这样方块永远相对与棋盘原点，不用管棋盘在世界的哪里
+    local local_pos = M.slot_to_screen(x, y)
+
+    -- 【关键】呼叫回调函数
+    local id = nil
+    if M.callback.on_create_block then
+        -- 传递相对坐标
+        id = M.callback.on_create_block(x, y, local_pos, color)
+    end
+
+    -- 存入数据
+    board.slot[x][y] = {
+        id = id,
+        x = x,
+        y = y,
+        color = hash(color)
+    }
+end
+
+function M.screen_to_slot(board_origin, screen_x, screen_y)
+    local x = math.floor((screen_x - board_origin.x) / M.block_size)
+    local y = math.floor((screen_y - board_origin.y) / M.block_size)
+    return x, y
+end
+
+function M.slot_to_screen(slot_x, slot_y)
+    local x = (M.block_size / 2) + M.block_size * slot_x
+    local y = (M.block_size / 2) + M.block_size * slot_y
+    return vmath.vector3(x, y, 0.5)
+end
+
+function M.is_valid_pos(x, y)
+    return x >= 0 and x < M.board_width and
+        y >= 0 and y < M.board_height
+end
+
+function M.is_neighbor(x1, y1, x2, y2)
+    local diff_x = math.abs(x1 - x2)
+    local diff_y = math.abs(y1 - y2)
+    return (diff_x + diff_y) == 1
+end
+
+function M.swap_block(x1, y1, x2, y2, on_complete)
+    local board = M.board
+
+    local block_1 = board.slot[x1][y1]
+    local block_2 = board.slot[x2][y2]
+
+    board.slot[x1][y1] = block_2
+    board.slot[x2][y2] = block_1
+
+    if block_1 then
+        block_1.x = x2
+        block_1.y = y2
+    end
+
+    if block_2 then
+        block_2.x = x1
+        block_2.y = y1
+    end
+
+    if M.callback.on_swap_block then
+        M.callback.on_swap_block(block_1, block_2, on_complete)
+    end
+end
+
+local function get_horizontal_neighbors(board, x, y)
+    local center_block = board.slot[x][y]
+
+    if not center_block then
+        return {}
+    end
+
+    local neighbors = {}
+
+    -- 向左搜索
+    for i = x - 1, 0, -1 do
+        local neighbor = board.slot[i][y]
+        if neighbor and neighbor.color == center_block.color then
+            table.insert(neighbors, neighbor)
+        else
+            break
+        end
+    end
+
+    -- 向右搜索
+    for i = x + 1, M.board_width - 1 do
+        local neighbor = board.slot[i][y]
+        if neighbor and neighbor.color == center_block.color then
+            table.insert(neighbors, neighbor)
+        else
+            break
+        end
+    end
+
+    return neighbors
+end
+
+local function get_vertical_neighbors(board, x, y)
+    local center_block = board.slot[x][y]
+
+    local neighbors = {}
+
+    -- 向上搜索
+    for j = y + 1, M.board_height - 1 do
+        local neighbor = board.slot[x][j]
+        if neighbor and neighbor.color == center_block.color then
+            table.insert(neighbors, neighbor)
+        else
+            break
+        end
+    end
+
+    -- 向下搜索
+    for j = y - 1, 0, -1 do
+        local neighbor = board.slot[x][j]
+        if neighbor and neighbor.color == center_block.color then
+            table.insert(neighbors, neighbor)
+        else
+            break
+        end
+    end
+
+    return neighbors
+end
+
+function M.find_match_block()
+    local board = M.board
+    local matches_set = {}
+    local has_match = false
+
+    -- 遍历棋盘上每一个方块
+    for x = 0, M.board_width - 1 do
+        for y = 0, M.board_height - 1 do
+            local center_block = board.slot[x][y]
+
+            if center_block then
+                -- 分别获取横竖邻居
+                local h_neighbors = get_horizontal_neighbors(board, x, y)
+                local v_neighbors = get_vertical_neighbors(board, x, y)
+
+                -- 如果邻居数量 >= 2，说明加上自己至少有 3 个，构成消除
+                -- A. 检查水平匹配
+                if #h_neighbors >= 2 then
+                    matches_set[center_block] = true
+                    for _, match_block in ipairs(h_neighbors) do
+                        matches_set[match_block] = true
+                    end
+                    has_match = true
+                end
+
+                -- B. 检查垂直匹配
+                if #v_neighbors >= 2 then
+                    matches_set[center_block] = true
+                    for _, match_block in ipairs(h_neighbors) do
+                        matches_set[match_block] = true
+                    end
+                    has_match = true
+                end
+
+                -- C. 进阶预留：你可以在这里判断 T型/L型
+                if #h_neighbors >= 2 and #v_neighbors >= 2 then
+                   print("发现炸弹生成机会！")
+                end
+            end
+        end
+    end
+
+    return matches_set, has_match
+end
+
+function M.remove_match(matches_set)
+    for block, _ in pairs(matches_set) do
+        -- 数据层置空
+        M.board.slot[block.x][block.y] = nil
+        -- 表现层回调
+        if M.callback.on_remove_block then
+            M.callback.on_remove_block(block)
+        end
+    end
+end
 
 function M.calculated_match()
     local board = game_data.board
@@ -102,23 +332,6 @@ function M.calculated_match()
     end
 
     return #M.matches > 0 and M.matches or false
-end
-
-function M.remove_match()
-    local board = game_data.board
-    if M.matches then
-        for key, match in pairs(M.matches) do
-            for key, brick in pairs(match) do
-                if brick.id then
-                    go.delete(brick.id)
-                end
-
-                board[brick.x][brick.y] = nil
-            end
-        end
-    end
-
-    M.matches = {}
 end
 
 function M.get_falling_brick(factory_url)

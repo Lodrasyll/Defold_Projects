@@ -123,9 +123,3 @@ function on_input(self, action_id, action)
 		end
 	end
 end
-
--- 左手是空的
--- 左手已经拿了一个
--- 是同一个么
--- 是邻居么
--- 是离得很远么

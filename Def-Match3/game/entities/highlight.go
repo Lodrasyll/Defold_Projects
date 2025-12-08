@@ -1,5 +1,5 @@
 embedded_components {
-  id: "sprite"
+  id: "sprite_highlight"
   type: "sprite"
   data: "default_animation: \"highlight\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
