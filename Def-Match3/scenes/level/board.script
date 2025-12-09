@@ -9,36 +9,90 @@ local gap = 1
 local bottom_edge = 80
 
 
-local function debugger()
-	-- === 可视化调试代码 ===
-	-- ✅ 安全检查：如果 board 还没生成好，就不要渲染，防止 crash
-	local board = game_data.board
-	if not board or #board == 0 then return end
+-- board.script
 
-	for x = 0, board_width - 1 do
-		-- ✅ 安全检查：防止列不存在
-		if board[x] then
-			for y = 0, board_height - 1 do
-				local cell = board[x][y]
-				if cell then
-					-- 准备调试文本位置（稍微往上偏一点，免得挡住物体）
-					local debug_pos_1 = vmath.vector3(cell.pos.x - 25, cell.pos.y + 25, 0)
-					local debug_pos_2 = vmath.vector3(cell.pos.x - 20, cell.pos.y - 10, 0)
+-- 这是一个协程风格的流程控制器，或者用回调链
+local function stabilize(self, on_complete)
+	-- 1. 计算下落
+	local drop_tweens = match3.collapse()
 
-					msg.post('@render:', 'draw_debug_text', {
-						text = string.format("(%d, \n%d)", cell.pos.x, cell.pos.y), -- 格式化字符串更整洁
-						position = debug_pos_1,                   -- ✅ 必须是 vector3
-						color = vmath.vector4(1, 1, 1, 1)
-					})
+	-- 2. 计算填充
+	local spawn_list = match3.fill_board()
 
-					msg.post('@render:', 'draw_debug_text', {
-						text = string.format("(%d, %d)", x, y), -- 格式化字符串更整洁
-						position = debug_pos_2, -- ✅ 必须是 vector3
-						color = vmath.vector4(1, 1, 1, 1)
-					})
-				end
+	-- 如果没有任何东西需要动，直接结束
+	if next(drop_tweens) == nil and #spawn_list == 0 then
+		if on_complete then on_complete() end
+		return
+	end
+
+	local animation_count = 0
+	local finished_count = 0
+
+	-- 内部函数：检查是否所有动画都跑完了
+	local function check_finish()
+		finished_count = finished_count + 1
+		if finished_count >= animation_count then
+			-- 动画全部播完后，【递归】再次检查是否有消除
+			-- 因为新掉下来的方块可能造成新的连击！
+			print("动画完毕，再次检查消除...")
+			
+			local matches_set, has_match = match3.find_match_block()
+
+			if has_match then
+				match3.remove_match_block(matches_set)
+
+				-- 消除动画播完后，触发下落和填充
+				timer.delay(0.3, false, function()
+					stabilize(self)
+				end)
+			else
+				print("棋盘稳定，可以操作了")
+				-- 这里解锁 Player 输入
 			end
 		end
+	end
+
+	-- A. 播放旧方块下落动画
+	for block, info in pairs(drop_tweens) do
+		animation_count = animation_count + 1
+
+		-- 计算目标位置 (Local Pos)
+		local target_pos = match3.slot_to_screen(block.x, block.y)
+
+		-- 播放下落 (比如用 Bounce 效果)
+		go.animate(block.id, "position", go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_OUTBOUNCE, 0.5, 0, check_finish)
+	end
+
+	-- B. 播放新方块入场动画
+	for _, info in ipairs(spawn_list) do
+		animation_count = animation_count + 1
+		local block = info.block
+
+		-- 1. 先把新生成的方块，瞬间移动到天花板上面
+		-- 注意：我们需要算出那个“虚拟高度”的坐标
+		local start_pos = match3.slot_to_screen(block.x, info.from_y)
+		go.set_position(start_pos, block.id)
+
+		-- 2. 再让它掉到正确位置
+		local target_pos = match3.slot_to_screen(block.x, block.y)
+		go.animate(block.id, "position", go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_OUTBOUNCE, 0.5, 0, check_finish)
+	end
+end
+
+-- 将之前的消除逻辑封装成循环
+local function check_matches_loop(self)
+	local matches_set, has_match = match3.find_match_block()
+
+	if has_match then
+		match3.remove_match_block(matches_set)
+
+		-- 消除动画播完后，触发下落和填充
+		timer.delay(0.3, false, function()
+			stabilize(self)
+		end)
+	else
+		print("棋盘稳定，可以操作了")
+		-- 这里解锁 Player 输入
 	end
 end
 
@@ -75,13 +129,13 @@ local function board_init(self)
 	-- 2.初始化大脑，教会它怎么造方块
 	match3.init({
 		-- 定义创建棋盘方块回调函数
-		on_create_block = function(x, y, local_pos, color)
+		on_create_block = function(x, y, color, local_pos)
 			-- a.准备属性
 			local properties = { color = hash(color) }
 
 			-- b.此时local_pos是类似（40,40）这种小数值
 			-- 我们先用这个位置创建出来
-			local id = factory.create('#factory_board', local_pos, nil, properties)
+			local id = factory.create('/board#factory_board', local_pos, nil, properties)
 
 			-- c.【核心魔法】设置父节点，认父归宗
 			-- keep_world_transform = 0 意思是‘把我的坐标当成相对于父节点的坐标’
@@ -102,11 +156,7 @@ local function board_init(self)
 			go.animate(block_a.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_a, go.EASING_OUTQUAD, 0.3)
 			go.animate(block_b.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_b, go.EASING_OUTQUAD, 0.3, 0, function ()
 				local matches_set, has_match = match3.find_match_block()
-				if has_match then
-					match3.remove_match(matches_set)
-				else
-
-				end	
+				check_matches_loop(self)
 				if on_complete then on_complete() end
 			end)
 		end,
@@ -130,6 +180,7 @@ local function board_init(self)
 	-- 3.下令开始创建
 	print('开始构建棋盘，，，')
 	match3.create_board(self.width, self.height, self.block_size)
+	check_matches_loop(self)
 end
 
 
@@ -139,6 +190,7 @@ end
 function init(self)
 	math.randomseed(os.time())
 	board_init(self)
+	
 end
 
 
@@ -149,28 +201,3 @@ function update(self, dt)
 
 end
 
----@package
----@param self board.script
----@param action_id hash
----@param action on_input.action
----@return boolean|nil
-function on_input(self, action_id, action)
-	-- if action_id == hash('touch') and action.released then
-	-- 	-- 1.获取棋盘在世界的绝对位置
-	-- 	local board_world_pos = go.get_position()
-
-	-- 	-- 2.让match3计算点中了哪个格子
-	-- 	local slot_x, slot_y = match3.screen_to_slot(board_world_pos, action.x, action.y, )
-
-	-- 	-- 3.验证有效性
-	-- 	if match3.is_valid_pos(slot_x, slot_y) then
-	-- 		-- 成功！
-	-- 		print('命中！格子坐标：[' .. slot_x .. '][' .. slot_y .. ']')
-	-- 		-- 获取数据验证正确性
-	-- 		local block = match3.board.slot[slot_x][slot_y]
-	-- 		print('颜色: ' .. tostring(block.color))
-	-- 		print('对象id: ' ..  tostring(block.id))
-	-- 		go.animate(block.id, 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(1.5, 1.5, 1), go.EASING_OUTBOUNCE, 0.25)
-	-- 	end
-	-- end
-end

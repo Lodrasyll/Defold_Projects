@@ -50,7 +50,7 @@ end
 local function mouse_update_cursor(self, action_id, action)
 	local board_world_pos = go.get_world_position(BOARD_URL)
 	local click_slot_x, click_slot_y = match3.screen_to_slot(board_world_pos, action.x, action.y)
-	if not match3.is_valid_pos(click_slot_x, click_slot_y) then
+	if not match3.on_board(click_slot_x, click_slot_y) then
 		self.selected = nil
 		update_cursor_view(self)
 		return
@@ -63,9 +63,7 @@ local function mouse_update_cursor(self, action_id, action)
 		local prey_y = self.selected.y
 		if prey_x == click_slot_x and prey_y == click_slot_y then
 			self.selected = nil
-			print('取消选中')
 		elseif match3.is_neighbor(prey_x, prey_y, click_slot_x, click_slot_y) then
-			print('交换！')
 			match3.swap_block(prey_x, prey_y, click_slot_x, click_slot_y)
 			self.selected = nil
 		else

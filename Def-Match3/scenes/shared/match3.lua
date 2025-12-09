@@ -63,7 +63,7 @@ function M.create_block(board, x, y, color)
     local id = nil
     if M.callback.on_create_block then
         -- 传递相对坐标
-        id = M.callback.on_create_block(x, y, local_pos, color)
+        id = M.callback.on_create_block(x, y, color, local_pos)
     end
 
     -- 存入数据
@@ -87,7 +87,7 @@ function M.slot_to_screen(slot_x, slot_y)
     return vmath.vector3(x, y, 0.5)
 end
 
-function M.is_valid_pos(x, y)
+function M.on_board(x, y)
     return x >= 0 and x < M.board_width and
         y >= 0 and y < M.board_height
 end
@@ -96,6 +96,13 @@ function M.is_neighbor(x1, y1, x2, y2)
     local diff_x = math.abs(x1 - x2)
     local diff_y = math.abs(y1 - y2)
     return (diff_x + diff_y) == 1
+end
+
+function M.is_empty(x, y)
+    if M.on_board(x, y) then
+        return M.board.slot[x][y] == nil
+    end
+    return false
 end
 
 function M.swap_block(x1, y1, x2, y2, on_complete)
@@ -227,7 +234,7 @@ function M.find_match_block()
     return matches_set, has_match
 end
 
-function M.remove_match(matches_set)
+function M.remove_match_block(matches_set)
     for block, _ in pairs(matches_set) do
         -- 数据层置空
         M.board.slot[block.x][block.y] = nil
@@ -236,6 +243,66 @@ function M.remove_match(matches_set)
             M.callback.on_remove_block(block)
         end
     end
+end
+
+function M.collapse()
+    local board = M.board
+    local tween = {}        -- 记录谁移动方便做动画
+
+    -- 双指针法
+    for x = 0, M.board_width - 1 do
+        local write_y = 0
+        for read_y = 0, M.board_height - 1 do
+            local block = board.slot[x][read_y]
+
+            if block then
+                -- 如果读取位置 != 写入位置，说明方块下面有空洞，需要下落
+                if read_y ~= write_y then
+                    -- 数据层置换，然后置空
+                    board.slot[x][write_y] = block
+                    board.slot[x][read_y] = nil
+                    -- 记录动画需求
+                    tween[block] = { from_y = read_y, to_y = write_y }
+                    -- 更新方块y轴方向的索引
+                    block.y = write_y
+                end
+                write_y = write_y + 1
+            end   
+        end
+
+        -- 清理残余
+        for y = write_y, M.board_height - 1 do
+            board.slot[x][y] = nil
+        end
+    end
+
+    return tween
+end
+
+function M.fill_board()
+    local board = M.board
+    local spawn_list = {}
+
+    for x = 0, M.board_width - 1 do
+        for y = 0, M.board_height - 1 do
+            if board.slot[x][y] == nil then
+                -- 填充
+                -- 创建方块数据
+                local color = M.colors_list[math.random(#M.colors_list)]
+                M.create_block(board, x, y, color)
+                local new_block = board.slot[x][y]
+                -- 计算动画轨迹 start_y: 为了视觉效果，我们让它从棋盘顶部再往上几格的地方出现
+                local visual_start_y = M.board_height + (y - 0)
+                table.insert(spawn_list, {
+                    block = new_block,
+                    from_y = visual_start_y,
+                    to_y = y
+                })
+            end
+        end
+    end
+
+    return spawn_list
 end
 
 function M.calculated_match()
@@ -383,6 +450,5 @@ function M.get_falling_brick(factory_url)
         end
     end
 end
-
 
 return M
