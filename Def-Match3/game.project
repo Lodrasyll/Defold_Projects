@@ -60,3 +60,6 @@ default_texture_mag_filter = nearest
 [collection]
 max_instances = 2560
 
+[particle_fx]
+max_particle_count = 2560
+
