@@ -187,7 +187,7 @@ function M.find_match_block()
                 -- B. 检查垂直匹配
                 if #v_neighbors >= 2 then
                     matches_set[center_block] = true
-                    for _, match_block in ipairs(h_neighbors) do
+                    for _, match_block in ipairs(v_neighbors) do
                         matches_set[match_block] = true
                     end
                     has_match = true

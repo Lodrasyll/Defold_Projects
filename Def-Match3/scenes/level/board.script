@@ -1,4 +1,6 @@
 local match3 = require('scenes.shared.match3')
+local game_data = require('data.configs.game_data')
+local utils = require('core.utils.utils')
 
 go.property('width', 6)
 go.property('height', 8)
@@ -124,7 +126,11 @@ end
 
 check_matches = function (self)
 	local matches_set, has_match = match3.find_match_block()
+	local count = utils.count_table(matches_set)
+
 	if has_match then
+		msg.post('/level_gui', 'add_score', { matches_num = count })
+
 		match3.remove_match_block(matches_set)
 
 		-- 消除动画播完后，触发下落和填充
@@ -211,7 +217,6 @@ local function board_init(self)
 					go.delete(id)
 				end)
 			end)
-			-- particlefx.play("star_explosion")
 		end
 	})
 
