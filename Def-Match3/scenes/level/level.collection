@@ -21,7 +21,7 @@ embedded_instances {
   id: "board"
   data: "components {\n"
   "  id: \"board\"\n"
-  "  component: \"/scenes/level/board.script\"\n"
+  "  component: \"/scenes/shared/board.script\"\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"factory_board\"\n"
@@ -118,7 +118,7 @@ embedded_instances {
   ""
 }
 embedded_instances {
-  id: "level_gui"
+  id: "monarch"
   data: "components {\n"
   "  id: \"level\"\n"
   "  component: \"/ui/screens/level/level.gui\"\n"

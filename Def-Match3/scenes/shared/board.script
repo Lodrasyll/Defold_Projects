@@ -129,7 +129,7 @@ check_matches = function (self)
 	local count = utils.count_table(matches_set)
 
 	if has_match then
-		msg.post('/level_gui', 'add_score', { matches_num = count })
+		msg.post('/monarch', 'add_score', { matches_num = count })
 
 		match3.remove_match_block(matches_set)
 
