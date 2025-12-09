@@ -1,0 +1,24 @@
+local game_data = require('data.configs.game_data')
+local match3 = require('scenes.shared.match3')
+
+---@package
+---@param self level.gui_script
+function init(self)
+	self.score = 0
+	print(self.sc)
+	self.score_node = gui.get_node('score')
+	gui.set_text(self.score_node, tostring(self.socre))
+end
+
+---@package
+---@param self level.gui_script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('add_score') then
+		local num = message.matches_num
+		self.score = self.score + num * 50
+		gui.set_text(self.score_node, tostring(self.score))
+	end
+end

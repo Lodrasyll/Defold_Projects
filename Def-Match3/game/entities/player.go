@@ -1,10 +1,6 @@
 components {
   id: "player_script"
   component: "/game/entities/player_script.script"
-  position {
-    x: -53.752865
-    y: -8.127389
-  }
 }
 embedded_components {
   id: "sprite_cursor"
