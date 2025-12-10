@@ -5,10 +5,9 @@ local match3 = require('scenes.shared.match3')
 ---@package
 ---@param self level.gui_script
 function init(self)
-	
     self.score = 0
     self.score_node = gui.get_node('score')
-    gui.set_text(self.score_node, tostring(self.socre))
+    gui.set_text(self.score_node, tostring(self.score))
 end
 
 ---@package

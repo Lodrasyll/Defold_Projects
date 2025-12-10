@@ -11,6 +11,7 @@ nodes {
   type: TYPE_BOX
   id: "root"
   pivot: PIVOT_SW
+  adjust_mode: ADJUST_MODE_STRETCH
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
   visible: false

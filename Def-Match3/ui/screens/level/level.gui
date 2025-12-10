@@ -11,27 +11,15 @@ nodes {
   type: TYPE_BOX
   id: "root"
   pivot: PIVOT_SW
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
-}
-nodes {
-  size {
-    x: 1280.0
-    y: 720.0
-  }
-  type: TYPE_BOX
-  id: "transition"
-  pivot: PIVOT_SW
-  parent: "root"
+  adjust_mode: ADJUST_MODE_STRETCH
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
   visible: false
 }
 nodes {
   position {
-    x: 113.0
-    y: 605.0
+    x: 104.0
+    y: 666.0
   }
   size {
     x: 200.0
