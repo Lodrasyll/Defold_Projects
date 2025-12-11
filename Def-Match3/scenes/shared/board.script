@@ -1,0 +1,325 @@
+local match3 = require('scenes.shared.match3')
+local utils = require('core.utils.utils')
+local sound_controller = require('core.components.sound_controller')
+
+go.property('width', 6)
+go.property('height', 8)
+go.property('block_size', 80)
+
+local edge = 80
+local gap = 1
+local bottom_edge = 80
+
+local stabilize
+local check_matches
+
+local function game_loop(self)
+	while true do
+		local matches_set, has_match = match3.find_match_block()
+
+		if not has_match then
+			break
+		end
+
+		-- 1. 执行消除
+		local count = utils.count_table(matches_set)
+		msg.post('/monarch', 'add_score', { matches_num = count })
+
+		match3.remove_match_block(matches_set)
+
+		utils.wait_seconds(0.8)
+
+		-- 2. 获取下落和填充的数据，准备动画列表
+		local drop_tween = match3.collapse()
+		local spawn_list = match3.fill_board()
+		local anims = {}
+		
+		-- a. 处理下落
+		for block, _ in pairs(drop_tween) do
+			local target_pos = match3.slot_to_screen(block.x, block.y)
+			
+			-- [打包动画列表]：把所有 go.animate 需要的参数包成一个表
+			table.insert(anims, {
+				id = block.id,
+				to = target_pos,
+				easing = go.EASING_OUTBOUNCE,
+				duration = 0.5,
+				delay = 0
+			})
+		end
+
+		-- b. 处理填充
+		-- 此时 anims 表可能已经装了下落的订单，我们继续往里装填充的订单
+		-- 这样下落和填充会同时播放（并行）
+		for _, info in ipairs(spawn_list) do
+			local block = info.block
+
+			local start_pos = match3.slot_to_screen(block.x, info.from_y)
+			go.set_position(start_pos, block.id)
+			local target_pos = match3.slot_to_screen(block.x, block.y)
+
+			-- [打包动画列表]：把所有 go.animate 需要的参数包成一个表
+			table.insert(anims, {
+				id = block.id,
+				to = target_pos,
+				easing = go.EASING_OUTBOUNCE,
+				duration = 0.6,
+
+				-- [属性详解：delay]
+				-- block.x * 0.05 意味着：
+				-- 第0列延迟 0秒，第1列延迟 0.05秒，第2列延迟 0.1秒...
+				-- 作用：配合 animate_and_wait，产生波浪式的下落效果
+				delay = block.x * 0.05
+			})
+		end
+		-- c. 执行
+		-- 把所有的订单（下落的 + 填充的）一起交给协程工具
+		-- 协程会暂停，直到这里面耗时最长的那一个动画播完
+		if #anims > 0 then
+			utils.animate_and_wait(anims)
+		end
+	end
+end
+
+-- 中期重构架构，使用match3模块生成
+local function board_init(self)
+	-- 1.拿到棋盘的id
+	local board_id = go.get_id()
+
+	-- 2.初始化大脑，教会它怎么造方块
+	match3.init({
+		-- 定义创建棋盘方块回调函数
+		on_create_block = function(x, y, color, local_pos)
+			-- a.准备属性
+			local properties = { color = hash(color) }
+
+			-- b.此时local_pos是类似（40,40）这种小数值
+			-- 我们先用这个位置创建出来
+			local id = factory.create('/board#factory_board', local_pos, nil, properties)
+
+			-- c.【核心魔法】设置父节点，认父归宗
+			-- keep_world_transform = 0 意思是‘把我的坐标当成相对于父节点的坐标’
+			msg.post(id, 'set_parent', { parent_id = board_id, keep_world_transform = 0 })
+
+			-- d.返回id给大脑存档
+			return id
+		end,
+
+		-- 定义交换棋盘方块回调函数
+		on_swap_block = function(block_a, block_b, on_complete)
+			-- 这里的 block_a 和 block_b 已经是交换过 x,y 数据的了
+			-- 我们只需要让它们移动到对方的“逻辑坐标”对应的“物理位置”去
+			
+			local pos_a = match3.slot_to_screen(block_a.x, block_a.y)
+			local pos_b = match3.slot_to_screen(block_b.x, block_b.y)
+
+			--  播放交换音效
+			sound_controller.play('swap', sound_controller.GROUP_SFX)
+
+			go.animate(block_a.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_a, go.EASING_OUTQUAD, 0.3)
+			go.animate(block_b.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_b, go.EASING_OUTQUAD, 0.3, 0, function ()
+
+				utils.run_async(function()
+					game_loop(self)
+				end)
+
+			end)
+		end,
+
+		-- 定义移除棋盘方块回调函数
+		on_remove_block = function (block)
+			local id = block.id
+			local local_pos = go.get_position(id)
+			local board_world_pos = go.get_position('/board')
+
+			--  播放match音效
+			sound_controller.play('match', sound_controller.GROUP_SFX)
+			
+			go.animate(id, 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(1.1, 1.1, 0), go.EASING_INBACK, 0.3, 0, function ()
+				go.animate(id, 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(0, 0, 0), go.EASING_INBACK, 0.2, 0, function ()
+					factory.create("/board#factory_explosion", local_pos + board_world_pos)
+					go.delete(id)
+				end)
+			end)
+		end
+	})
+
+	-- 3.下令开始创建
+	print('开始构建棋盘，，，')
+	match3.create_board(self.width, self.height, self.block_size)
+end
+
+
+---@package
+---@param self board.script
+function init(self)
+	math.randomseed(os.time())
+	board_init(self)
+	-- 开局检查
+	utils.run_async(function()
+		game_loop(self)
+	end)
+end
+
+
+---@package
+---@param self board.script
+---@param dt number
+function update(self, dt)
+
+end
+
+-- 早期设计架构，直接调用生成棋盘
+-- local function build_board()
+-- 	local board = {}
+-- 	local pos_offset = game_data.board_spawn_pos
+-- 	local x = 0
+-- 	local y = 0
+-- 	for x = 0, board_width - 1 do
+-- 		local px = pos_offset.x + slot_size / 2 + slot_size * x
+-- 		board[x] = {}
+-- 		for y = 0, board_height - 1 do
+-- 			local py = pos_offset.y + slot_size / 2 + slot_size * y
+-- 			local pos = vmath.vector3(px, py, 0.5)
+-- 			local color = game_data.colors_list[math.random(#game_data.colors_list)]
+-- 			local id = factory.create('#factory_board', pos, nil, { color = hash(color) })
+-- 			board[x][y] = {
+-- 				id = id,
+-- 				x = x,
+-- 				y = y,
+-- 				pos = pos,
+-- 				color = hash(color)
+-- 			}
+-- 		end
+-- 	end
+-- 	return board
+-- end
+
+-- 这是一个协程风格的流程控制器，或者用回调链
+-- local function stabilize(self, on_complete)
+-- 	-- 1. 计算下落
+-- 	local drop_tweens = match3.collapse()
+
+-- 	-- 2. 计算填充
+-- 	local spawn_list = match3.fill_board()
+
+-- 	-- 如果没有任何东西需要动，直接结束
+-- 	if next(drop_tweens) == nil and #spawn_list == 0 then
+-- 		if on_complete then on_complete() end
+-- 		return
+-- 	end
+
+-- 	local animation_count = 0
+-- 	local finished_count = 0
+
+-- 	-- 内部函数：检查是否所有动画都跑完了
+-- 	local function check_finish()
+-- 		finished_count = finished_count + 1
+-- 		if finished_count >= animation_count then
+-- 			-- 动画全部播完后，【递归】再次检查是否有消除
+-- 			-- 因为新掉下来的方块可能造成新的连击！
+-- 			print("动画完毕，再次检查消除...")
+
+-- 			local matches_set, has_match = match3.find_match_block()
+
+-- 			if has_match then
+-- 				match3.remove_match_block(matches_set)
+
+-- 				-- 消除动画播完后，触发下落和填充
+-- 				timer.delay(0.3, false, function()
+-- 					stabilize(self)
+-- 				end)
+-- 			else
+-- 				print("棋盘稳定，可以操作了")
+-- 				-- 这里解锁 Player 输入
+-- 			end
+-- 		end
+-- 	end
+
+-- 	-- A. 播放旧方块下落动画
+-- 	for block, info in pairs(drop_tweens) do
+-- 		animation_count = animation_count + 1
+
+-- 		-- 计算目标位置 (Local Pos)
+-- 		local target_pos = match3.slot_to_screen(block.x, block.y)
+
+-- 		-- 播放下落 (比如用 Bounce 效果)
+-- 		go.animate(block.id, "position", go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_OUTBOUNCE, 0.5, 0, check_finish)
+-- 	end
+
+-- 	-- B. 播放新方块入场动画
+-- 	for _, info in ipairs(spawn_list) do
+-- 		animation_count = animation_count + 1
+-- 		local block = info.block
+
+-- 		-- 1. 先把新生成的方块，瞬间移动到天花板上面
+-- 		-- 注意：我们需要算出那个“虚拟高度”的坐标
+-- 		local start_pos = match3.slot_to_screen(block.x, info.from_y)
+-- 		go.set_position(start_pos, block.id)
+
+-- 		-- 2. 再让它掉到正确位置
+-- 		local target_pos = match3.slot_to_screen(block.x, block.y)
+-- 		go.animate(block.id, "position", go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_OUTBOUNCE, 0.5, 0, check_finish)
+-- 	end
+-- end
+
+-- 将消除逻辑封装成循环
+-- local function check_matches_loop(self)
+-- 	local matches_set, has_match = match3.find_match_block()
+
+-- 	if has_match then
+-- 		match3.remove_match_block(matches_set)
+
+-- 		-- 消除动画播完后，触发下落和填充
+-- 		timer.delay(0.3, false, function()
+-- 			stabilize(self)
+-- 		end)
+-- 	else
+-- 		print("棋盘稳定，可以操作了")
+-- 		-- 这里解锁 Player 输入
+-- 	end
+-- end
+
+-- 写的最小最简易的表现层动画逻辑
+-- stabilize = function (self)
+-- 	local drop_tween = match3.collapse()
+-- 	local spawn_list = match3.fill_board()
+-- 	local max_delay = 0 -- 追踪最长的动画时间
+
+-- 	for block, _ in pairs(drop_tween) do
+-- 		local target_pos = match3.slot_to_screen(block.x, block.y)
+-- 		go.animate(block.id, 'position', go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_OUTBOUNCE, 0.6, 0)
+-- 		max_delay = math.max(max_delay, 0.6)
+-- 	end
+
+-- 	for _, info in pairs(spawn_list) do
+-- 		local block = info.block
+-- 		local start_pos = match3.slot_to_screen(block.x, info.from_y)
+-- 		go.set_position(start_pos, block.id)
+
+-- 		local target_pos = match3.slot_to_screen(block.x, block.y)
+-- 		go.animate(block.id, 'position', go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_OUTBOUNCE, 0.5, 0)
+-- 		max_delay = math.max(max_delay, 0.5)
+-- 	end
+
+-- 	timer.delay(max_delay, false, function()
+-- 		check_matches(self)
+-- 	end)
+-- end
+
+-- 检查消除逻辑
+-- check_matches = function (self)
+-- 	local matches_set, has_match = match3.find_match_block()
+-- 	local count = utils.count_table(matches_set)
+
+-- 	if has_match then
+-- 		msg.post('/monarch', 'add_score', { matches_num = count })
+
+-- 		match3.remove_match_block(matches_set)
+
+-- 		-- 消除动画播完后，触发下落和填充
+-- 		timer.delay(0.2, false, function()
+-- 			stabilize(self)
+-- 		end)
+-- 	end
+-- end

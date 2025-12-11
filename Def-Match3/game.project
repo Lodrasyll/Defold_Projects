@@ -2,6 +2,7 @@
 title = Def-Match3
 dependencies#0 = https://github.com/subsoap/defos/archive/refs/tags/v2.8.3.zip
 dependencies#1 = https://github.com/britzl/monarch/archive/refs/tags/5.2.0.zip
+dependencies#2 = https://github.com/paweljarosz/editor-scripts-ui-collection/archive/master.zip
 
 [bootstrap]
 main_collection = /main.collectionc

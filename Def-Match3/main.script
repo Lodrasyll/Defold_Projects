@@ -1,59 +1,12 @@
-local StateMachine = require('core.components.StateMachine')
+local monarch = require('monarch.monarch')
 
-local function load_main_menu()
-    msg.post('/game_scene_loader#main_menu', 'load')
-end
-
-local function unload_main_menu()
-    msg.post('/game_scene_loader#main_menu', 'unload')
-end
-
-local function load_level()
-    msg.post('/game_scene_loader#level', 'load')
-end
-
-local function unload_level()
-    msg.post('/game_scene_loader#level', 'unload')
-end
-
-
----@package
----@param self main.script
 function init(self)
-    defos.disable_window_resize()
-    msg.post('.', 'acquire_input_focus')
-    load_main_menu()
+    msg.post(".", "acquire_input_focus")
+    msg.post("#", "show_main_menu")
 end
 
----@package
----@param self main_manager.script
-function final(self)
-    msg.post(".", "release_input_focus")
-end
-
----@package
----@param self main.script
----@param message_id hash
----@param message table
----@param sender url
 function on_message(self, message_id, message, sender)
-    if message_id == hash('goto_level_scene') then
-        unload_main_menu()
-        load_level()
-    elseif message_id == hash('proxy_loaded') then
-        msg.post(sender, 'init')
-        msg.post(sender, 'enable')
-    end
-end
-
----@package
----@param self main_manager.script
----@param action_id hash
----@param action on_input.action
----@return boolean|nil
-function on_input(self, action_id, action)
-    if action_id == hash('touch') and action.pressed and StateMachine.get_state() == 'main_menu' then
-        StateMachine.set_state('level')
-        msg.post('.', 'goto_level_scene')
+    if message_id == hash("show_main_menu") then
+        monarch.show("main_menu")
     end
 end

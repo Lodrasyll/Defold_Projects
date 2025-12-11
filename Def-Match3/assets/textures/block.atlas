@@ -1,0 +1,19 @@
+images {
+  image: "/assets/textures/brick_blue.png"
+}
+images {
+  image: "/assets/textures/brick_brown.png"
+}
+images {
+  image: "/assets/textures/brick_orange.png"
+}
+images {
+  image: "/assets/textures/brick_purple.png"
+}
+images {
+  image: "/assets/textures/brick_red.png"
+}
+images {
+  image: "/assets/textures/brick_yellow.png"
+}
+extrude_borders: 2

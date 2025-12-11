@@ -3,8 +3,8 @@ scale_along_z: 0
 embedded_instances {
   id: "monarch"
   data: "components {\n"
-  "  id: \"main_menu\"\n"
-  "  component: \"/ui/screens/main_menu/main_menu.gui\"\n"
+  "  id: \"score\"\n"
+  "  component: \"/scenes/score/score.gui\"\n"
   "}\n"
   ""
 }

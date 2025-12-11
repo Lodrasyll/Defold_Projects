@@ -1,9 +1,0 @@
-local match3 = require('scenes.shared.match3')
-
-
-
----@package
----@param self basic.script
-function init(self)
-	
-end
