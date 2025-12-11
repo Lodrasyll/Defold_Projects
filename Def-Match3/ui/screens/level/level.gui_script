@@ -1,6 +1,22 @@
 local monarch = require "monarch.monarch"
-local game_data = require('data.configs.game_data')
-local match3 = require('scenes.shared.match3')
+local game_manager = require('game.managers.game_manager')
+
+local function count_time(self)
+    self.time = 10
+    self.time_node = gui.get_node('time')
+    gui.set_text(self.time_node, 'Time: ' .. self.time)
+    timer.delay(1, true, function(self, handle, time_elapsed)
+        self.time = self.time - 1
+        local text = 'Time: ' .. self.time
+        gui.set_text(self.time_node, text)
+        if self.time <= 0 then
+            timer.cancel(handle)
+            gui.set_text(self.time_node, 'TIME UP')
+            game_manager.player_score = self.score
+            monarch.show('score')
+        end
+    end)
+end
 
 ---@package
 ---@param self level.gui_script
@@ -8,6 +24,8 @@ function init(self)
     self.score = 0
     self.score_node = gui.get_node('score')
     gui.set_text(self.score_node, tostring(self.score))
+    
+    count_time(self)
 end
 
 ---@package
@@ -19,7 +37,8 @@ function on_message(self, message_id, message, sender)
     if message_id == hash('add_score') then
         local num = message.matches_num
         self.score = self.score + num * 50
-        gui.set_text(self.score_node, tostring(self.score))
+        local text = 'Score: ' .. self.score
+        gui.set_text(self.score_node, text)
     end
 end
 

@@ -5,7 +5,7 @@ components {
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "default_animation: \"brick_black\"\n"
+  data: "default_animation: \"brick_blue\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "slice9 {\n"
   "  x: 5.0\n"
@@ -17,10 +17,9 @@ embedded_components {
   "  x: 64.0\n"
   "  y: 64.0\n"
   "}\n"
-  "size_mode: SIZE_MODE_MANUAL\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/textures/main_texture.tilesource\"\n"
+  "  texture: \"/assets/textures/block.atlas\"\n"
   "}\n"
   ""
 }

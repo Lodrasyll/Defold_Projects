@@ -1,8 +1,8 @@
 
-
 ---@package
 ---@param self level.script
 function init(self)
     particlefx.play('/background#stars')
 end
+
 

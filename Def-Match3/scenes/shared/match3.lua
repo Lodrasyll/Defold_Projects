@@ -7,13 +7,13 @@ M.board_height = 6
 M.block_size = 80
 M.callback = {}
 
-M.colors_list = { "black", "yellow", "blue", "purple", "green", "red" }
+M.colors_list = { "blue", "yellow", "brown", "purple", "orange", "red" }
 M.colors_map = {
-    [hash("black")] = "black",
+    [hash("brown")] = "brown",
     [hash("yellow")] = "yellow",
     [hash("blue")] = "blue",
     [hash("purple")] = "purple",
-    [hash("green")] = "green",
+    [hash("orange")] = "orange",
     [hash("red")] = "red"
 }
 

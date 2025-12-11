@@ -3,7 +3,7 @@ instances {
   id: "ship"
   prototype: "/game/entities/ship.go"
   position {
-    x: 377.53204
+    x: 375.53204
     y: 214.48254
     z: 1.0
   }
@@ -14,6 +14,7 @@ instances {
   position {
     x: 640.0
     y: 360.0
+    z: 1.0
   }
 }
 scale_along_z: 0
@@ -124,4 +125,53 @@ embedded_instances {
   "  component: \"/ui/screens/level/level.gui\"\n"
   "}\n"
   ""
+}
+embedded_instances {
+  id: "reseacher"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"reseacher\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/character.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    y: 7.0\n"
+  "    z: 0.9\n"
+  "  }\n"
+  "  scale {\n"
+  "    x: 0.15\n"
+  "    y: 0.15\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"sprite1\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"brick_black\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "slice9 {\\n"
+  "  x: 4.0\\n"
+  "  y: 4.0\\n"
+  "  z: 4.0\\n"
+  "  w: 4.0\\n"
+  "}\\n"
+  "size {\\n"
+  "  x: 250.0\\n"
+  "  y: 250.0\\n"
+  "}\\n"
+  "size_mode: SIZE_MODE_MANUAL\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/textures/main_texture.tilesource\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 619.0
+    y: 574.0
+  }
 }

@@ -1,6 +1,6 @@
 local match3 = require('scenes.shared.match3')
-local game_data = require('data.configs.game_data')
 local utils = require('core.utils.utils')
+local sound_controller = require('core.components.sound_controller')
 
 go.property('width', 6)
 go.property('height', 8)
@@ -37,7 +37,7 @@ local function game_loop(self)
 		-- a. 处理下落
 		for block, _ in pairs(drop_tween) do
 			local target_pos = match3.slot_to_screen(block.x, block.y)
-
+			
 			-- [打包动画列表]：把所有 go.animate 需要的参数包成一个表
 			table.insert(anims, {
 				id = block.id,
@@ -113,6 +113,9 @@ local function board_init(self)
 			local pos_a = match3.slot_to_screen(block_a.x, block_a.y)
 			local pos_b = match3.slot_to_screen(block_b.x, block_b.y)
 
+			--  播放交换音效
+			sound_controller.play('swap', sound_controller.GROUP_SFX)
+
 			go.animate(block_a.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_a, go.EASING_OUTQUAD, 0.3)
 			go.animate(block_b.id, 'position', go.PLAYBACK_ONCE_FORWARD, pos_b, go.EASING_OUTQUAD, 0.3, 0, function ()
 
@@ -128,8 +131,11 @@ local function board_init(self)
 			local id = block.id
 			local local_pos = go.get_position(id)
 			local board_world_pos = go.get_position('/board')
+
+			--  播放match音效
+			sound_controller.play('match', sound_controller.GROUP_SFX)
 			
-			go.animate(id, 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(1.4, 1.4, 0), go.EASING_INBACK, 0.3, 0, function ()
+			go.animate(id, 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(1.1, 1.1, 0), go.EASING_INBACK, 0.3, 0, function ()
 				go.animate(id, 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(0, 0, 0), go.EASING_INBACK, 0.2, 0, function ()
 					factory.create("/board#factory_explosion", local_pos + board_world_pos)
 					go.delete(id)
