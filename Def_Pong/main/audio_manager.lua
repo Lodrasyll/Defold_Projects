@@ -4,7 +4,8 @@ local M = {}
 M.sfx = {
     paddle_hit = 'main:/sounds#paddle_hit',
     score = 'main:/sounds#score',
-    wall_hit = 'main:/sounds#wall_hit'
+    wall_hit = 'main:/sounds#wall_hit',
+    music = 'main:/sounds#music'
 }
 
 ---- 播放音效 ----

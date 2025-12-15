@@ -1,19 +1,19 @@
 images {
-  image: "/assets/textures/brick_blue.png"
+  image: "/assets/textures/block_blue.png"
 }
 images {
-  image: "/assets/textures/brick_brown.png"
+  image: "/assets/textures/block_brown.png"
 }
 images {
-  image: "/assets/textures/brick_orange.png"
+  image: "/assets/textures/block_orange.png"
 }
 images {
-  image: "/assets/textures/brick_purple.png"
+  image: "/assets/textures/block_purple.png"
 }
 images {
-  image: "/assets/textures/brick_red.png"
+  image: "/assets/textures/block_red.png"
 }
 images {
-  image: "/assets/textures/brick_yellow.png"
+  image: "/assets/textures/block_yellow.png"
 }
 extrude_borders: 2

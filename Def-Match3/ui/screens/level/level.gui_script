@@ -2,7 +2,7 @@ local monarch = require "monarch.monarch"
 local game_manager = require('game.managers.game_manager')
 
 local function count_time(self)
-    self.time = 10
+    self.time = 60
     self.time_node = gui.get_node('time')
     gui.set_text(self.time_node, 'Time: ' .. self.time)
     timer.delay(1, true, function(self, handle, time_elapsed)

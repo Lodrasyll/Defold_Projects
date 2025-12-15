@@ -5,7 +5,7 @@
 
 ]]--
 
-local win_score = 100000
+local win_score = 6
 
 ---@package
 ---@param self game.gui_script
@@ -72,12 +72,12 @@ function on_message(self, message_id, message, sender)
 	end
 
 	if message_id == hash('p1_serve') then
-		local text = 'Player_1 Serve!'
+		local text = 'Player 1 Serve!'
 		gui.set_text(self.game_serve_node, text)
 	end
 	
 	if message_id == hash('p2_serve') then
-		local text = 'Player_2 Serve!'
+		local text = 'Player 2 Serve!'
 		gui.set_text(self.game_serve_node, text)
 	end
 end	

@@ -21,9 +21,8 @@ end
 ---@param dt number
 function update(self, dt)
     local pos = go.get_position()
+    
     local ball_pos = go.get_position('/ball')
-    
-    
 
     -- -- 第一种AI：硬追踪，追踪位置，高难度 ----
     -- if game_state == 'play' then
