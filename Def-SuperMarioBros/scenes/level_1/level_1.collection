@@ -1,0 +1,33 @@
+name: "level_1"
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"level_1\"\n"
+  "  component: \"/scenes/level_1/level_1.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "player_test"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"player_test\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "size {\\n"
+  "  x: 16.0\\n"
+  "  y: 16.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/textures/1_bit_texture.tilesource\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 960.0
+    y: 540.0
+  }
+}
