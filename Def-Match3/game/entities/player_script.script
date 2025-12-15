@@ -1,7 +1,8 @@
 local match3 = require('scenes.shared.match3')
 local input = require('core.systems.input')
+local game_manager = require('game.managers.game_manager')
+
 local BOARD_URL = hash('/board')
-local board_width
 
 local function init_cursor_view()
 	msg.post('#sprite_cursor', 'disable')
@@ -17,6 +18,7 @@ local function update_cursor_view(self)
 		local local_pos = match3.slot_to_screen(self.selected.x, self.selected.y)
 		local board_world_pos = go.get_world_position(BOARD_URL)
 		local final_pos = board_world_pos + local_pos
+		final_pos.z = 1
 		go.set_position(final_pos)
 
 		msg.post('#sprite_highlight', 'enable')
@@ -101,6 +103,12 @@ end
 ---@param self player_script.script
 ---@param dt number
 function update(self, dt)
+
+	if game_manager.get_state() == 'remove_state' then
+		msg.post('.', 'release_input_focus')
+	elseif game_manager.get_state() == 'play_state' then
+		msg.post('.', 'acquire_input_focus')
+	end
 
 	-- debug mode
 	-- debugger(self)

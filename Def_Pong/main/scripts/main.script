@@ -45,6 +45,8 @@
 SCREEN_WIDTH = sys.get_config_number('display.width')
 SCREEN_HEIGHT = sys.get_config_number('display.height')
 
+local audio_manager = require('main.audio_manager')
+
 ---- 设置背景滚动速度和方向 ----
 local scroll_speed = 60
 local scroll_dir = -1       ---- 沿着x轴向左（负方向）运动
@@ -59,6 +61,7 @@ game_state = 'start'        ---- 创建一个全局变量让其他游戏对象�
 function init(self)
     msg.post('.', 'acquire_input_focus')
     game_state = 'start'
+    audio_manager.play_sfx('music')
 end
 
 ---@package

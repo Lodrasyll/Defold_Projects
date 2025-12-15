@@ -12,32 +12,6 @@ instances {
     y: 0.5
   }
 }
-instances {
-  id: "paddle"
-  prototype: "/main/paddle.go"
-  position {
-    x: 40.0
-    y: 580.0
-    z: 1.0
-  }
-  scale3 {
-    x: 0.5
-    y: 0.5
-  }
-}
-instances {
-  id: "paddle_ai"
-  prototype: "/main/paddle_ai.go"
-  position {
-    x: 1240.0
-    y: 120.0
-    z: 1.0
-  }
-  scale3 {
-    x: 0.5
-    y: 0.5
-  }
-}
 scale_along_z: 0
 embedded_instances {
   id: "background"
@@ -51,22 +25,6 @@ embedded_instances {
   "  texture: \\\"/assets/arts/arts.atlas\\\"\\n"
   "}\\n"
   "\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
-  id: "gui"
-  data: "components {\n"
-  "  id: \"game\"\n"
-  "  component: \"/main/game.gui\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
-  id: "main_manager"
-  data: "components {\n"
-  "  id: \"main\"\n"
-  "  component: \"/main/scripts/main.script\"\n"
   "}\n"
   ""
 }
@@ -97,22 +55,31 @@ embedded_instances {
   }
 }
 embedded_instances {
-  id: "sounds"
-  data: "components {\n"
-  "  id: \"paddle_hit\"\n"
-  "  component: \"/assets/sounds/paddle_hit.sound\"\n"
-  "}\n"
-  "components {\n"
-  "  id: \"score\"\n"
-  "  component: \"/assets/sounds/score.sound\"\n"
-  "}\n"
-  "components {\n"
-  "  id: \"wall_hit\"\n"
-  "  component: \"/assets/sounds/wall_hit.sound\"\n"
-  "}\n"
-  "components {\n"
-  "  id: \"music\"\n"
-  "  component: \"/assets/sounds/music.sound\"\n"
+  id: "go"
+  data: "embedded_components {\n"
+  "  id: \"label\"\n"
+  "  type: \"label\"\n"
+  "  data: \"size {\\n"
+  "  x: 200.0\\n"
+  "  y: 200.0\\n"
+  "}\\n"
+  "text: \\\"Pong\\\\n"
+  "\\\"\\n"
+  "  \\\"\\\"\\n"
+  "font: \\\"/assets/arts/font.font\\\"\\n"
+  "material: \\\"/builtins/fonts/label-df.material\\\"\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 632.0\n"
+  "    y: 502.0\n"
+  "  }\n"
+  "  scale {\n"
+  "    x: 3.0\n"
+  "    y: 3.0\n"
+  "  }\n"
   "}\n"
   ""
+  position {
+    z: 1.0
+  }
 }

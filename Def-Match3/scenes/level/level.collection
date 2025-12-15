@@ -3,7 +3,7 @@ instances {
   id: "ship"
   prototype: "/game/entities/ship.go"
   position {
-    x: 375.53204
+    x: 215.53204
     y: 214.48254
     z: 1.0
   }
@@ -14,7 +14,6 @@ instances {
   position {
     x: 640.0
     y: 360.0
-    z: 1.0
   }
 }
 scale_along_z: 0
@@ -27,7 +26,7 @@ embedded_instances {
   "embedded_components {\n"
   "  id: \"factory_board\"\n"
   "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/brick.go\\\"\\n"
+  "  data: \"prototype: \\\"/game/entities/block.go\\\"\\n"
   "\"\n"
   "}\n"
   "embedded_components {\n"
@@ -139,12 +138,11 @@ embedded_instances {
   "}\\n"
   "\"\n"
   "  position {\n"
-  "    y: 7.0\n"
   "    z: 0.9\n"
   "  }\n"
   "  scale {\n"
-  "    x: 0.15\n"
-  "    y: 0.15\n"
+  "    x: 0.2\n"
+  "    y: 0.2\n"
   "  }\n"
   "}\n"
   "embedded_components {\n"
@@ -159,8 +157,8 @@ embedded_instances {
   "  w: 4.0\\n"
   "}\\n"
   "size {\\n"
-  "  x: 250.0\\n"
-  "  y: 250.0\\n"
+  "  x: 340.0\\n"
+  "  y: 350.0\\n"
   "}\\n"
   "size_mode: SIZE_MODE_MANUAL\\n"
   "textures {\\n"
@@ -171,7 +169,7 @@ embedded_instances {
   "}\n"
   ""
   position {
-    x: 619.0
-    y: 574.0
+    x: 572.0
+    y: 195.0
   }
 }

@@ -35,11 +35,14 @@ end
 ---@param self ball.script
 function init(self)
     math.randomseed(os.time())
+    
+    self.speed = 400
     self.direction = vmath.vector3()
     self.init_pos = go.get_position()
     self.paddle_bounce_dir = 0
     self.is_p1_serve = false
     self.is_p2_serve = false
+
     set_random_dir(self)
 end
 
@@ -94,6 +97,10 @@ function update(self, dt)
     -- 游戏性改动：改进球的方向
     if math.abs(self.direction.x) < 0.5 then
         self.direction.x = math.random(-1, 1)
+    end
+    
+    if self.speed > 1200 then
+        self.speed = 1200
     end
 
     -- 调试模块 --

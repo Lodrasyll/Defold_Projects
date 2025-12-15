@@ -1,0 +1,26 @@
+[bootstrap]
+main_collection = /main.collectionc
+
+[script]
+shared_state = 1
+
+[display]
+width = 1920
+height = 1080
+high_dpi = 1
+
+[android]
+input_method = HiddenInputField
+
+[html5]
+scale_mode = stretch
+
+[project]
+title = Def-SuperMarioBros
+dependencies#0 = https://github.com/Insality/asset-store/archive/refs/tags/1.zip
+dependencies#1 = https://github.com/britzl/monarch/archive/refs/tags/5.2.0.zip
+dependencies#2 = https://github.com/subsoap/defos/archive/refs/tags/v2.8.4.zip
+
+[input]
+game_binding = /core/systems/game.input_bindingc
+
