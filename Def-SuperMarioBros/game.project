@@ -20,7 +20,12 @@ title = Def-SuperMarioBros
 dependencies#0 = https://github.com/Insality/asset-store/archive/refs/tags/1.zip
 dependencies#1 = https://github.com/britzl/monarch/archive/refs/tags/5.2.0.zip
 dependencies#2 = https://github.com/subsoap/defos/archive/refs/tags/v2.8.4.zip
+dependencies#3 = https://github.com/britzl/defold-orthographic/archive/refs/tags/3.4.1.zip
 
 [input]
 game_binding = /core/systems/game.input_bindingc
+
+[graphics]
+default_texture_min_filter = nearest
+default_texture_mag_filter = nearest
 
