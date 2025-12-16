@@ -1,0 +1,194 @@
+images {
+  image: "/assets/sprites/Enemies/Default/barnacle_attack_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/barnacle_attack_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/barnacle_attack_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/bee_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/bee_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/bee_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/block_fall.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/block_idle.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/block_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fish_blue_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fish_blue_swim_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fish_blue_swim_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fish_purple_down.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fish_purple_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fish_purple_up.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fish_yellow_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fish_yellow_swim_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fish_yellow_swim_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fly_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fly_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/fly_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/frog_idle.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/frog_jump.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/frog_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/ladybug_fly.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/ladybug_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/ladybug_walk_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/ladybug_walk_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/mouse_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/mouse_walk_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/mouse_walk_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/saw_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/saw_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/saw_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_block_jump.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_block_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_block_walk_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_block_walk_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_fire_flat.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_fire_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_fire_walk_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_fire_walk_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_spike_flat.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_spike_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_spike_walk_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/slime_spike_walk_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/snail_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/snail_shell.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/snail_walk_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/snail_walk_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/worm_normal_move_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/worm_normal_move_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/worm_normal_rest.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/worm_ring_move_a.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/worm_ring_move_b.png"
+}
+images {
+  image: "/assets/sprites/Enemies/Default/worm_ring_rest.png"
+}
+animations {
+  id: "slime_walk"
+  images {
+    image: "/assets/sprites/Enemies/Default/slime_normal_walk_a.png"
+  }
+  images {
+    image: "/assets/sprites/Enemies/Default/slime_normal_walk_b.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "slime_rest"
+  images {
+    image: "/assets/sprites/Enemies/Default/slime_normal_rest.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "slime_flat"
+  images {
+    image: "/assets/sprites/Enemies/Default/slime_normal_flat.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+extrude_borders: 2

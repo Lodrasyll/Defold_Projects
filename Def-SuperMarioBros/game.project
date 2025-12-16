@@ -1,5 +1,6 @@
 [bootstrap]
 main_collection = /main.collectionc
+render = /orthographic/render/orthographic.renderc
 
 [script]
 shared_state = 1
@@ -26,6 +27,13 @@ dependencies#3 = https://github.com/britzl/defold-orthographic/archive/refs/tags
 game_binding = /core/systems/game.input_bindingc
 
 [graphics]
-default_texture_min_filter = nearest
-default_texture_mag_filter = nearest
+default_texture_min_filter = linear
+default_texture_mag_filter = linear
+
+[sprite]
+max_count = 2560
+
+[physics]
+max_collision_object_count = 2560
+debug = 0
 

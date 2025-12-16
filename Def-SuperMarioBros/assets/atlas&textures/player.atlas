@@ -1,0 +1,60 @@
+animations {
+  id: "walk"
+  images {
+    image: "/assets/sprites/Characters/Default/character_purple_walk_a.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/sprites/Characters/Default/character_purple_walk_b.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "idle"
+  images {
+    image: "/assets/sprites/Characters/Default/character_purple_idle.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 4
+}
+animations {
+  id: "climb"
+  images {
+    image: "/assets/sprites/Characters/Default/character_purple_climb_a.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/sprites/Characters/Default/character_purple_climb_b.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "jump"
+  images {
+    image: "/assets/sprites/Characters/Default/character_purple_jump.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "duck"
+  images {
+    image: "/assets/sprites/Characters/Default/character_purple_duck.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "hit"
+  images {
+    image: "/assets/sprites/Characters/Default/character_purple_hit.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+extrude_borders: 2

@@ -21,7 +21,7 @@ embedded_instances {
   id: "board"
   data: "components {\n"
   "  id: \"board\"\n"
-  "  component: \"/scenes/shared/board.script\"\n"
+  "  component: \"/game/board.script\"\n"
   "}\n"
   "embedded_components {\n"
   "  id: \"factory_board\"\n"

@@ -1,0 +1,68 @@
+local utils = require('core.utils.utils')
+
+local tile_size = 64
+local bg_size = 256
+local tilemap_width = 100
+local tilemap_height = 6
+
+
+local function create_backgroud()
+    for x = 0, tilemap_width - 1 do
+        local local_pos = utils.tile_to_screen(x, 0, bg_size)
+        local_pos.y, local_pos.z = 460, -0.9
+        local id = factory.create('#factory_level_maker_sky', local_pos, nil)
+    end
+end
+
+local function create_tilemap(self)
+    local tilemap = {
+        tile_size = tile_size,
+        width = tilemap_width,
+        height = tilemap_height,
+        tile = {}
+    }
+
+    for x = 0, tilemap_width - 1 do
+        tilemap.tile[x] = {}
+        local id
+
+        for y = 0, tilemap_height - 1 do
+            local local_pos = utils.tile_to_screen(x, y, tile_size)
+
+            if y >= tilemap_height - 1 then
+                id = factory.create('#factory_level_maker_tile_top', local_pos, nil, { type = 1 })
+            else
+                id = factory.create('#factory_level_maker_tile', local_pos, nil, { type = 0 })
+            end
+
+            tilemap.tile[x][y] = {
+                id = id,
+                x = x,
+                y = y,
+            }
+
+        end
+    end
+    return tilemap
+end
+
+---@package
+---@param self level_maker.script
+function init(self)
+    math.randomseed(os.time())
+    
+    self.tilemap = {}
+    msg.post('#', 'start_level')
+end
+
+---@package
+---@param self level_maker.script
+---@param message_id hash
+---@param message table
+---@param sender 'factory.level_maker'
+function on_message(self, message_id, message, sender)
+    if message_id == hash('start_level') then
+        self.tilemap = create_tilemap(self)
+        create_backgroud()
+    end
+end

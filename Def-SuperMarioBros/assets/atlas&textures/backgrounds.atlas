@@ -1,0 +1,46 @@
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_clouds.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_color_desert.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_color_hills.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_color_mushrooms.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_color_trees.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_fade_desert.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_fade_hills.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_fade_mushrooms.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_fade_trees.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_solid_cloud.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_solid_dirt.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_solid_grass.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_solid_sand.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/Default/background_solid_sky.png"
+}
+images {
+  image: "/assets/sprites/Backgrounds/background.png"
+}
+extrude_borders: 2

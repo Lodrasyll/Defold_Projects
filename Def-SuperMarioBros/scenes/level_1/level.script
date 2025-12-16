@@ -1,0 +1,8 @@
+---@package
+---@param self level.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+	
+end
