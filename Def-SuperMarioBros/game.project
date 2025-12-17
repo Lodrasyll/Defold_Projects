@@ -31,9 +31,13 @@ default_texture_min_filter = linear
 default_texture_mag_filter = linear
 
 [sprite]
-max_count = 2560
+max_count = 5120
 
 [physics]
 max_collision_object_count = 2560
 debug = 0
+max_collisions = 2560
+
+[collection]
+max_instances = 2560
 

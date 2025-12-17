@@ -1,0 +1,36 @@
+local GameData = require('data.config.game_data')
+local utils = require('core.utils.utils')
+
+local tile_size = GameData.tile_size
+
+local function create_reward(self)
+	local pos = go.get_position()
+	local target_pos = pos
+	target_pos.y = pos.y + 64
+	local id = factory.create('#factory_reward', pos)
+	go.animate(id, 'position', go.PLAYBACK_LOOP_FORWARD, target_pos, go.EASING_OUTBOUNCE, 1.0)
+	self.is_create_reward = true
+end
+
+---@package
+---@param self reward_brick.script
+function init(self)
+	self.is_create_reward = false
+end
+
+---@package
+---@param self reward_brick.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('contact_point_response') and message.group == hash('player')then
+		if message.normal.y > 0.7 and not self.is_create_reward then
+			create_reward(self)
+		elseif self.is_create_reward then
+			print('no more reward!')
+		elseif message.normal.y < -0.7 then
+			print('flat!')
+		end
+	end
+end

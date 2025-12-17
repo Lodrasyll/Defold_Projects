@@ -1,0 +1,14 @@
+local ScrollController = require('core.components.scroll_controller')
+
+---@package
+---@param self background.script
+function init(self)
+	
+end
+
+---@package
+---@param self background.script
+---@param dt number
+function update(self, dt)
+	
+end

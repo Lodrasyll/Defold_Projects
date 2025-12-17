@@ -49,6 +49,23 @@ instances {
     }
   }
 }
+instances {
+  id: "slime"
+  prototype: "/game/entities/enemies/slime.go"
+  position {
+    x: 1359.3002
+    y: 459.7261
+    z: 0.9
+  }
+}
+instances {
+  id: "flag"
+  prototype: "/game/entities/others/flag.go"
+  position {
+    x: 633.32715
+    y: 438.1368
+  }
+}
 collection_instances {
   id: "player"
   collection: "/game/entities/player/player.collection"
@@ -74,4 +91,8 @@ embedded_instances {
   "  component: \"/scenes/level_1/level.script\"\n"
   "}\n"
   ""
+}
+embedded_instances {
+  id: "go"
+  data: ""
 }

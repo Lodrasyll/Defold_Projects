@@ -8,8 +8,8 @@ local function update_animation(self)
     local anim = 'idle'
     if self.is_moving then
         anim = 'walk'
-    elseif not self.on_ground then
-        anim = 'jump'
+    -- elseif not self.on_ground then
+    --     anim = 'jump'
     else
         anim = 'idle'
     end
@@ -27,13 +27,15 @@ function init(self)
     self.current_anim = 'idle'
     -- 增加重力
     self.velocity = vmath.vector3()
-    self.jump_force = 400
+    self.jump_force = 600
     self.direction = vmath.vector3()
     self.input = vmath.vector3()
     self.correction = vmath.vector3()
     -- self.speed 已由编辑器注入
     self.is_moving = false
     self.on_ground = false
+
+    self.hp = 3
 end
 
 ---@package
@@ -68,8 +70,20 @@ end
 ---@param sender url
 function on_message(self, message_id, message, sender)
     if message_id == hash('contact_point_response') then
-        if message.group == hash('ground') then
+        if message.group == hash('ground') or message.group == hash('pillars') or message.group == hash('reward_brick')then
             handle_projection(self, message.normal, message.distance)
+        elseif message.group == hash('enemies')  then
+            self.hp = self.hp - 1
+            if self.hp <= 0 then
+                msg.post('/level_manager', 'player_dead')
+            end
+            print('hurt!')
+        end
+    end
+
+    if message_id == hash('trigger_response') then
+        if message.group == hash('flag') then
+            msg.post('/level_manager', 'level_clear')
         end
     end
 end
@@ -82,8 +96,10 @@ end
 function on_input(self, action_id, action)
     if action_id == input.LEFT then
         self.input.x = -1
+        sprite.set_hflip('/player/player#sprite', true)
     elseif action_id == input.RIGHT then
         self.input.x = 1
+        sprite.set_hflip('/player/player#sprite', false)
     end
 
     if action_id == input.JUMP and action.pressed and self.on_ground then
@@ -98,6 +114,10 @@ end
 
 -- --- 这是一个标准的碰撞分离函数 (Defold 圣经) ---
 function handle_projection(self, normal, distance)
+    if distance < 0.00001 then
+        return
+    end
+
     -- 将当前积累的修正向量投影到法线上
     local proj = vmath.project(self.correction, normal * distance)
     if proj < 1 then

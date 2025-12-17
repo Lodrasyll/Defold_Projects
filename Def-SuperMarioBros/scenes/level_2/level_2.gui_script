@@ -2,6 +2,7 @@ local monarch = require "monarch.monarch"
 
 function init(self)
     msg.post(".", "acquire_input_focus")
+    print('This is level 2!')
 end
 
 function final(self)
