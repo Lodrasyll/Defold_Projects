@@ -27,7 +27,7 @@ function init(self)
     self.current_anim = 'idle'
     -- 增加重力
     self.velocity = vmath.vector3()
-    self.jump_force = 600
+    self.jump_force = 700
     self.direction = vmath.vector3()
     self.input = vmath.vector3()
     self.correction = vmath.vector3()
@@ -80,10 +80,13 @@ function on_message(self, message_id, message, sender)
             print('hurt!')
         end
     end
+    
 
     if message_id == hash('trigger_response') then
         if message.group == hash('flag') then
             msg.post('/level_manager', 'level_clear')
+        elseif message.group == hash('reward') then
+            msg.post('/monarch#level_1', 'add_score')
         end
     end
 end

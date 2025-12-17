@@ -1,4 +1,8 @@
 script: "/scenes/level_1/level_1.gui_script"
+fonts {
+  name: "font"
+  font: "/assets/fonts/font.font"
+}
 textures {
   name: "tiles"
   texture: "/assets/atlas_textures_tilemap/tiles.atlas"
@@ -63,6 +67,21 @@ nodes {
   parent: "hud_hp"
   inherit_alpha: true
   size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 337.0
+    y: 1028.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  font: "font"
+  id: "score"
+  parent: "root"
+  inherit_alpha: true
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

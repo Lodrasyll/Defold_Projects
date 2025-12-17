@@ -1,6 +1,10 @@
 components {
-  id: "level_maker"
-  component: "/game/entities/level_maker/level_maker.script"
+  id: "level_maker_second"
+  component: "/game/entities/level_maker/level_maker_second.script"
+  position {
+    x: -0.45103598
+    y: 0.077971645
+  }
 }
 embedded_components {
   id: "factory_level_maker_tile_top"
@@ -30,5 +34,17 @@ embedded_components {
   id: "factory_level_maker_pillar"
   type: "factory"
   data: "prototype: \"/game/entities/tiles/pillar.go\"\n"
+  ""
+}
+embedded_components {
+  id: "factory_level_maker_flag"
+  type: "factory"
+  data: "prototype: \"/game/entities/others/flag.go\"\n"
+  ""
+}
+embedded_components {
+  id: "factory_level_maker_block"
+  type: "factory"
+  data: "prototype: \"/game/entities/tiles/block.go\"\n"
   ""
 }
