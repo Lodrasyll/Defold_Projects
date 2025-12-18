@@ -1,8 +1,4 @@
-name: "level_1"
-instances {
-  id: "level_maker"
-  prototype: "/game/entities/level_maker/level_maker.go"
-}
+name: "level_2"
 instances {
   id: "camera"
   prototype: "/orthographic/camera.go"
@@ -50,20 +46,24 @@ instances {
   }
 }
 instances {
+  id: "key_brick"
+  prototype: "/game/entities/brick/key_brick.go"
+  position {
+    x: 3851.5178
+    y: 571.6684
+  }
+}
+instances {
+  id: "level_maker"
+  prototype: "/game/entities/level_maker/level_maker.go"
+}
+instances {
   id: "slime"
   prototype: "/game/entities/enemies/slime.go"
   position {
     x: 261.30017
     y: 428.7261
     z: 0.9
-  }
-}
-instances {
-  id: "key_brick"
-  prototype: "/game/entities/brick/key_brick.go"
-  position {
-    x: 3851.5178
-    y: 571.6684
   }
 }
 collection_instances {
@@ -79,8 +79,8 @@ scale_along_z: 0
 embedded_instances {
   id: "monarch"
   data: "components {\n"
-  "  id: \"level_1\"\n"
-  "  component: \"/scenes/level_1/level_1.gui\"\n"
+  "  id: \"level_2\"\n"
+  "  component: \"/scenes/level_2/level_2.gui\"\n"
   "}\n"
   ""
 }

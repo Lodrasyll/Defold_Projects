@@ -1,10 +1,6 @@
 components {
   id: "key_brick"
   component: "/game/entities/brick/key_brick.script"
-  position {
-    x: -139.89523
-    y: 12.794882
-  }
 }
 embedded_components {
   id: "sprite"
@@ -13,7 +9,7 @@ embedded_components {
   "material: \"/builtins/materials/sprite.material\"\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/atlas_textures_tilemap/tiles.atlas\"\n"
+  "  texture: \"/assets/atlas_textures_tilesource/tiles.atlas\"\n"
   "}\n"
   ""
 }

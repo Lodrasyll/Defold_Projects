@@ -16,7 +16,7 @@ local settings = {
 local GATE_WINDOW = 0.2
 
 function M.init()
-    
+
 end
 
 -- 播放音乐

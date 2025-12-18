@@ -5,7 +5,7 @@ embedded_components {
   "material: \"/builtins/materials/sprite.material\"\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/atlas_textures_tilemap/tiles.atlas\"\n"
+  "  texture: \"/assets/atlas_textures_tilesource/tiles.atlas\"\n"
   "}\n"
   ""
   position {
@@ -49,7 +49,7 @@ embedded_components {
   "}\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/atlas_textures_tilemap/tiles.atlas\"\n"
+  "  texture: \"/assets/atlas_textures_tilesource/tiles.atlas\"\n"
   "}\n"
   ""
   position {
@@ -68,7 +68,7 @@ embedded_components {
   "}\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/atlas_textures_tilemap/tiles.atlas\"\n"
+  "  texture: \"/assets/atlas_textures_tilesource/tiles.atlas\"\n"
   "}\n"
   ""
   position {
@@ -87,7 +87,7 @@ embedded_components {
   "}\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/atlas_textures_tilemap/tiles.atlas\"\n"
+  "  texture: \"/assets/atlas_textures_tilesource/tiles.atlas\"\n"
   "}\n"
   ""
   position {
@@ -106,7 +106,7 @@ embedded_components {
   "}\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/atlas_textures_tilemap/tiles.atlas\"\n"
+  "  texture: \"/assets/atlas_textures_tilesource/tiles.atlas\"\n"
   "}\n"
   ""
   position {
@@ -125,7 +125,7 @@ embedded_components {
   "}\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/atlas_textures_tilemap/tiles.atlas\"\n"
+  "  texture: \"/assets/atlas_textures_tilesource/tiles.atlas\"\n"
   "}\n"
   ""
   position {
@@ -144,7 +144,7 @@ embedded_components {
   "}\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/atlas_textures_tilemap/tiles.atlas\"\n"
+  "  texture: \"/assets/atlas_textures_tilesource/tiles.atlas\"\n"
   "}\n"
   ""
   position {

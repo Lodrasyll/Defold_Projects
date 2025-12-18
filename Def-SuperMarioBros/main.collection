@@ -59,7 +59,19 @@ embedded_instances {
 }
 embedded_instances {
   id: "sounds"
-  data: ""
+  data: "components {\n"
+  "  id: \"music_bgmusic\"\n"
+  "  component: \"/assets/sounds/bgmusic.sound\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"sound_manager\"\n"
+  "  component: \"/game/managers/sound_manager.script\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"sfx_jump\"\n"
+  "  component: \"/assets/sounds/sfx_jump.sound\"\n"
+  "}\n"
+  ""
 }
 embedded_instances {
   id: "level_2"

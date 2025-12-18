@@ -19,7 +19,7 @@ end
 ---@param dt number
 function update(self, dt)
 	if math.abs(self.direction.x) > 0 then
-		self.velocity.x = self.move_speed * self.direction.x
+		-- self.velocity.x = self.move_speed * self.direction.x
 	else
 		self.velocity.x = 0
 	end
@@ -50,5 +50,9 @@ function on_message(self, message_id, message, sender)
 			self.direction.x = -self.direction.x
 			sprite.set_hflip(go.get_id(), true)
 		end
+	end
+
+	if message_id == hash('enemy_dead') then
+		go.delete()
 	end
 end

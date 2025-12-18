@@ -1,6 +1,10 @@
 components {
-  id: "level_maker_second"
-  component: "/game/entities/level_maker/level_maker_second.script"
+  id: "level_maker"
+  component: "/game/entities/level_maker/level_maker.script"
+  position {
+    x: -1.4367841
+    y: 0.0314978
+  }
 }
 embedded_components {
   id: "factory_level_maker_tile_top"

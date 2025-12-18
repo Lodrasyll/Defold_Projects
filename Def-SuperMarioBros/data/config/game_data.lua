@@ -5,6 +5,7 @@ M.tile_size = 64
 M.bg_size = 256
 M.tilemap_width = 120
 M.tilemap_height = 5
+M.level = 1
 
 M.score = 0
 

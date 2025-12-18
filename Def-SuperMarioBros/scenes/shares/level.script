@@ -1,4 +1,12 @@
 local monarch = require('monarch.monarch')
+local game_data = require('data.config.game_data')
+
+---@package
+---@param self level.script
+function init(self)
+    self.level = game_data.level
+    print(self.level)
+end
 
 ---@package
 ---@param self level.script
@@ -9,6 +17,8 @@ function on_message(self, message_id, message, sender)
     if message_id == hash('player_dead') then
         monarch.show('game_over')
     elseif message_id == hash('level_clear') then
-        monarch.show('level_2')
+        game_data.score = game_data.score + 2000
+        game_data.level = game_data.level + 1
+        monarch.show('level_' .. game_data.level)
     end
 end

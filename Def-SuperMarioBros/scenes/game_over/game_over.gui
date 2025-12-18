@@ -5,7 +5,7 @@ fonts {
 }
 textures {
   name: "backgrounds"
-  texture: "/assets/atlas_textures_tilemap/backgrounds.atlas"
+  texture: "/assets/atlas_textures_tilesource/backgrounds.atlas"
 }
 nodes {
   size {
