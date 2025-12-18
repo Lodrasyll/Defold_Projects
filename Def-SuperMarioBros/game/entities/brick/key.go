@@ -1,15 +1,15 @@
 components {
-  id: "reward"
-  component: "/game/entities/tiles/reward.script"
+  id: "key"
+  component: "/game/entities/brick/key.script"
   position {
-    x: -71.85257
-    y: -32.751904
+    x: -115.33896
+    y: 28.002758
   }
 }
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "default_animation: \"star\"\n"
+  data: "default_animation: \"key_yellow\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
@@ -24,7 +24,7 @@ embedded_components {
   "mass: 0.0\n"
   "friction: 0.1\n"
   "restitution: 0.5\n"
-  "group: \"reward\"\n"
+  "group: \"keys\"\n"
   "mask: \"player\"\n"
   "embedded_collision_shape {\n"
   "  shapes {\n"
@@ -36,8 +36,8 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 13.640007\n"
-  "  data: 13.269113\n"
+  "  data: 24.453543\n"
+  "  data: 15.092431\n"
   "  data: 10.0\n"
   "}\n"
   ""

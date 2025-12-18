@@ -58,6 +58,14 @@ instances {
     z: 0.9
   }
 }
+instances {
+  id: "key_brick"
+  prototype: "/game/entities/brick/key_brick.go"
+  position {
+    x: 3851.5178
+    y: 571.6684
+  }
+}
 collection_instances {
   id: "player"
   collection: "/game/entities/player/player.collection"

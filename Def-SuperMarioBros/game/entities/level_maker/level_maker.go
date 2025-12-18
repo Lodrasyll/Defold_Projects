@@ -1,10 +1,6 @@
 components {
   id: "level_maker_second"
   component: "/game/entities/level_maker/level_maker_second.script"
-  position {
-    x: -0.45103598
-    y: 0.077971645
-  }
 }
 embedded_components {
   id: "factory_level_maker_tile_top"
@@ -27,7 +23,7 @@ embedded_components {
 embedded_components {
   id: "factory_level_maker_reward_brick"
   type: "factory"
-  data: "prototype: \"/game/entities/tiles/reward_brick.go\"\n"
+  data: "prototype: \"/game/entities/brick/reward_brick.go\"\n"
   ""
 }
 embedded_components {
@@ -45,6 +41,6 @@ embedded_components {
 embedded_components {
   id: "factory_level_maker_block"
   type: "factory"
-  data: "prototype: \"/game/entities/tiles/block.go\"\n"
+  data: "prototype: \"/game/entities/brick/pyramid_brick.go\"\n"
   ""
 }

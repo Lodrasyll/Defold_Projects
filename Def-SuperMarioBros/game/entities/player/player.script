@@ -70,7 +70,7 @@ end
 ---@param sender url
 function on_message(self, message_id, message, sender)
     if message_id == hash('contact_point_response') then
-        if message.group == hash('ground') or message.group == hash('pillars') or message.group == hash('reward_brick')then
+        if message.group == hash('ground') or message.group == hash('pillars') or message.group == hash('bricks')then
             handle_projection(self, message.normal, message.distance)
         elseif message.group == hash('enemies')  then
             self.hp = self.hp - 1
@@ -87,6 +87,9 @@ function on_message(self, message_id, message, sender)
             msg.post('/level_manager', 'level_clear')
         elseif message.group == hash('reward') then
             msg.post('/monarch#level_1', 'add_score')
+        elseif message.group == hash('keys') then
+            print('lock opened!')
+            
         end
     end
 end

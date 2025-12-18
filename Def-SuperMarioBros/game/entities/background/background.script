@@ -1,14 +1,40 @@
-local ScrollController = require('core.components.scroll_controller')
+-- parallax_layer.script
+-- 挂载在你的背景层（如远山、云层）上
 
----@package
----@param self background.script
+local camera = require "orthographic.camera"
+
+-- 视差系数：
+-- 0.0 = 跟随摄像机（完全静止的背景，如月亮）
+-- 1.0 = 跟随世界（前景物体）
+-- < 1.0 = 远景（移动较慢）
+go.property("parallax_factor", 0.9)
+
+-- 你的摄像机在 Collection 中的 ID
+go.property("camera_id", hash("/camera"))
+
 function init(self)
-	
+    -- 记录初始位置
+    self.initial_pos = go.get_position()
+
+    -- 获取摄像机初始位置（为了计算相对偏移）
+    -- 注意：这里我们使用 orthographic 提供的 API 或者直接获取 GO 位置
+    self.initial_cam_pos = go.get_position(self.camera_id)
 end
 
----@package
----@param self background.script
----@param dt number
 function update(self, dt)
-	
+    -- 1. 获取摄像机当前位置
+    local cam_pos = go.get_position(self.camera_id)
+
+    -- 2. 计算摄像机移动的增量 (Delta)
+    local delta_x = cam_pos.x - self.initial_cam_pos.x
+    local delta_y = cam_pos.y - self.initial_cam_pos.y
+
+    -- 3. 核心魔法公式
+    -- 目标位置 = 初始位置 + (摄像机位移 * 视差系数)
+    local new_x = self.initial_pos.x + (delta_x * self.parallax_factor)
+    local new_y = self.initial_pos.y + (delta_y * self.parallax_factor)
+
+    -- 4. 保持 Z 轴不变，应用新位置
+    local current_z = go.get_position().z
+    go.set_position(vmath.vector3(new_x, new_y, current_z))
 end

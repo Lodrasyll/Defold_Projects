@@ -1,0 +1,34 @@
+local utils = require('core.utils.utils')
+local game_data = require('data.config.game_data')
+
+local tile_size = game_data.tile_size
+
+
+local function create_key()
+	local match_locked_brick_id = go.get_id()
+	local pos = go.get_position()
+	local x, y = utils.screen_to_tile(pos.x, pos.y, tile_size)
+	local local_pos = utils.tile_to_screen(x - 10, y - 3, tile_size)
+	local id = factory.create('#factory_key', local_pos, nil, {
+		match_locked_brick_id = match_locked_brick_id
+	})
+end
+
+---@package
+---@param self key_brick.script
+function init(self)
+	create_key()
+end
+
+---@package
+---@param self key_brick.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('unlock') then
+		-- 可以在这里加特效：particlefx.play("#explosion")
+		-- 可以在这里加音效：sound.play("#unlock_sound")
+		go.delete()
+	end
+end

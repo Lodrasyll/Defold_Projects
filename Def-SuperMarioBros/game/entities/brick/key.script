@@ -1,0 +1,21 @@
+go.property('match_locked_brick_id', hash(''))
+
+---@package
+---@param self key.script
+function init(self)
+    print("我现在拥有的 lock_brick ID 是:", self.match_locked_brick_id)
+end
+
+---@package
+---@param self key.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('trigger_response') then
+        if message.group == hash('player') then
+            msg.post(self.match_locked_brick_id, 'unlock')
+            go.delete()
+        end
+    end
+end

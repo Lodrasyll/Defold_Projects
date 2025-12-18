@@ -1,0 +1,50 @@
+components {
+  id: "key_brick"
+  component: "/game/entities/brick/key_brick.script"
+  position {
+    x: -139.89523
+    y: 12.794882
+  }
+}
+embedded_components {
+  id: "sprite"
+  type: "sprite"
+  data: "default_animation: \"lock_yellow\"\n"
+  "material: \"/builtins/materials/sprite.material\"\n"
+  "textures {\n"
+  "  sampler: \"texture_sampler\"\n"
+  "  texture: \"/assets/atlas_textures_tilemap/tiles.atlas\"\n"
+  "}\n"
+  ""
+}
+embedded_components {
+  id: "collisionobject"
+  type: "collisionobject"
+  data: "type: COLLISION_OBJECT_TYPE_STATIC\n"
+  "mass: 0.0\n"
+  "friction: 0.1\n"
+  "restitution: 0.5\n"
+  "group: \"bricks\"\n"
+  "mask: \"player\"\n"
+  "embedded_collision_shape {\n"
+  "  shapes {\n"
+  "    shape_type: TYPE_BOX\n"
+  "    position {\n"
+  "    }\n"
+  "    rotation {\n"
+  "    }\n"
+  "    index: 0\n"
+  "    count: 3\n"
+  "  }\n"
+  "  data: 26.54461\n"
+  "  data: 27.027155\n"
+  "  data: 10.0\n"
+  "}\n"
+  ""
+}
+embedded_components {
+  id: "factory_key"
+  type: "factory"
+  data: "prototype: \"/game/entities/brick/key.go\"\n"
+  ""
+}
