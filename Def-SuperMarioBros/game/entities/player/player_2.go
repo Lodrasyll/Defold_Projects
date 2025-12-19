@@ -1,6 +1,6 @@
 components {
-  id: "player"
-  component: "/game/entities/player/player.script"
+  id: "player_fsm"
+  component: "/game/entities/player/player_fsm.script"
 }
 embedded_components {
   id: "sprite"
