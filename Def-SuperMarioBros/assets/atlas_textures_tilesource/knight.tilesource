@@ -11,7 +11,7 @@ animations {
   id: "hurt"
   start_tile: 49
   end_tile: 52
-  fps: 8
+  fps: 12
 }
 animations {
   id: "idle"

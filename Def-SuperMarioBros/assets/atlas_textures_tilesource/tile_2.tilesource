@@ -1,0 +1,9 @@
+image: "/assets/atlas_textures_tilesource/spritesheet-tiles-default.png"
+tile_width: 192
+tile_height: 64
+tile_spacing: 1
+animations {
+  id: "move_platform"
+  start_tile: 79
+  end_tile: 79
+}

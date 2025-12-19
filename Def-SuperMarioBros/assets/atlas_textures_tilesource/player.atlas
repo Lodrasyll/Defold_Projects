@@ -1,3 +1,6 @@
+images {
+  image: "/assets/arts/star.png"
+}
 animations {
   id: "run"
   images {

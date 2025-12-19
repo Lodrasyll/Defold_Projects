@@ -41,8 +41,8 @@ end
 
 -- 停止音乐
 function M.stop(sound_name, group)
-    local url = msg.url('main', 'sound_manager', sound_name)
-    sound.play(url)
+    local url = msg.url('main', '/sounds', sound_name)
+    sound.stop(url)
 end
 
 -- 设置音量接口

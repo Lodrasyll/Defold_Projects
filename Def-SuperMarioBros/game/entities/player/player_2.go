@@ -22,11 +22,12 @@ embedded_components {
   type: "collisionobject"
   data: "type: COLLISION_OBJECT_TYPE_KINEMATIC\n"
   "mass: 0.0\n"
-  "friction: 0.0\n"
+  "friction: 0.5\n"
   "restitution: 0.5\n"
   "group: \"player\"\n"
   "mask: \"flag\"\n"
   "mask: \"ground\"\n"
+  "mask: \"move_platform\"\n"
   "mask: \"pillars\"\n"
   "mask: \"items\"\n"
   "mask: \"bricks\"\n"
@@ -46,5 +47,11 @@ embedded_components {
   "  }\n"
   "  data: 22.72805\n"
   "}\n"
+  ""
+}
+embedded_components {
+  id: "factory"
+  type: "factory"
+  data: "prototype: \"/game/entities/fx/dust.go\"\n"
   ""
 }

@@ -57,6 +57,22 @@ instances {
     y: 485.0
   }
 }
+instances {
+  id: "slime"
+  prototype: "/game/entities/enemies/slime.go"
+  position {
+    x: 529.46045
+    y: 498.44965
+  }
+}
+instances {
+  id: "move_platform"
+  prototype: "/game/entities/platforms/move_platform.go"
+  position {
+    x: 1401.6948
+    y: 504.0671
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "monarch"
@@ -82,10 +98,19 @@ embedded_instances {
   "restitution: 0.5\\n"
   "group: \\\"ground\\\"\\n"
   "mask: \\\"player\\\"\\n"
+  "mask: \\\"enemies\\\"\\n"
   "\"\n"
   "}\n"
   ""
   position {
     y: -183.0
   }
+}
+embedded_instances {
+  id: "level_manager"
+  data: "components {\n"
+  "  id: \"level\"\n"
+  "  component: \"/scenes/shares/level.script\"\n"
+  "}\n"
+  ""
 }

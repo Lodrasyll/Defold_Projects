@@ -35,6 +35,28 @@ function update(self, dt)
 	self.correction = vmath.vector3()
 end
 
+local function handle_projection(self, normal, distance)
+	if distance < 0.00001 then return end
+
+	-- 将当前积累的修正向量投影到法线上
+	local proj = vmath.project(self.correction, normal * distance)
+	if proj < 1 then
+		-- 计算需要把角色“推”出来多少距离
+		local comp = (distance - distance * proj) * normal
+		go.set_position(go.get_position() + comp)
+		self.correction = self.correction + comp
+
+		-- 判断是否撞到了地面 (法线向上)
+		if normal.y > 0.7 then
+			self.on_ground = true
+			self.velocity.y = 0 -- 落地时消除垂直速度
+		end
+
+		-- 判断是否撞到了天花板 (法线向下)
+		if normal.y < -0.7 then self.velocity.y = 0 end
+	end
+end
+
 ---@package
 ---@param self player.script
 ---@param message_id hash
@@ -56,3 +78,4 @@ function on_message(self, message_id, message, sender)
 		go.delete()
 	end
 end
+

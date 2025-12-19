@@ -3503,36 +3503,6 @@ layers {
     tile: 173
   }
   cell {
-    x: 57
-    y: 7
-    tile: 234
-  }
-  cell {
-    x: 58
-    y: 7
-    tile: 235
-  }
-  cell {
-    x: 59
-    y: 7
-    tile: 236
-  }
-  cell {
-    x: 63
-    y: 7
-    tile: 234
-  }
-  cell {
-    x: 64
-    y: 7
-    tile: 235
-  }
-  cell {
-    x: 65
-    y: 7
-    tile: 236
-  }
-  cell {
     x: 69
     y: 7
     tile: 173
