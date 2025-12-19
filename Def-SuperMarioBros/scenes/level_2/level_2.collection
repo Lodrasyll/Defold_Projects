@@ -1,5 +1,26 @@
 name: "level_2"
 instances {
+  id: "key_brick"
+  prototype: "/game/entities/brick/key_brick.go"
+  position {
+    x: 3851.5178
+    y: 571.6684
+  }
+}
+instances {
+  id: "slime"
+  prototype: "/game/entities/enemies/slime.go"
+  position {
+    x: 261.30017
+    y: 428.7261
+    z: 0.9
+  }
+}
+instances {
+  id: "level_maker_2"
+  prototype: "/game/entities/level_maker/level_maker_2.go"
+}
+instances {
   id: "camera"
   prototype: "/orthographic/camera.go"
   position {
@@ -15,7 +36,7 @@ instances {
     }
     properties {
       id: "follow_target"
-      value: "/player/player"
+      value: "/player"
       type: PROPERTY_TYPE_HASH
     }
     properties {
@@ -46,33 +67,11 @@ instances {
   }
 }
 instances {
-  id: "key_brick"
-  prototype: "/game/entities/brick/key_brick.go"
-  position {
-    x: 3851.5178
-    y: 571.6684
-  }
-}
-instances {
-  id: "slime"
-  prototype: "/game/entities/enemies/slime.go"
-  position {
-    x: 261.30017
-    y: 428.7261
-    z: 0.9
-  }
-}
-instances {
-  id: "level_maker_2"
-  prototype: "/game/entities/level_maker/level_maker_2.go"
-}
-collection_instances {
   id: "player"
-  collection: "/game/entities/player/player.collection"
+  prototype: "/game/entities/player/player.go"
   position {
-    x: 400.0
-    y: 451.0
-    z: 1.0
+    x: 436.85114
+    y: 462.9992
   }
 }
 scale_along_z: 0

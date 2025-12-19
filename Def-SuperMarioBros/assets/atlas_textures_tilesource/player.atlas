@@ -1,5 +1,5 @@
 animations {
-  id: "walk"
+  id: "run"
   images {
     image: "/assets/sprites/Characters/Default/character_purple_walk_a.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_8

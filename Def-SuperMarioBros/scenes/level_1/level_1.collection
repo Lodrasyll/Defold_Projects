@@ -19,7 +19,7 @@ instances {
     }
     properties {
       id: "follow_target"
-      value: "/player/player"
+      value: "/player"
       type: PROPERTY_TYPE_HASH
     }
     properties {
@@ -66,13 +66,12 @@ instances {
     y: 571.6684
   }
 }
-collection_instances {
+instances {
   id: "player"
-  collection: "/game/entities/player/player.collection"
+  prototype: "/game/entities/player/player.go"
   position {
-    x: 400.0
-    y: 451.0
-    z: 1.0
+    x: 436.85114
+    y: 462.9992
   }
 }
 scale_along_z: 0

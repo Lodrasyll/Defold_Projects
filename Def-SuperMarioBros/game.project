@@ -27,11 +27,11 @@ dependencies#5 = https://github.com/Insality/panthera/archive/refs/tags/runtime.
 dependencies#6 = https://github.com/paweljarosz/editor-scripts-ui-collection/archive/master.zip
 
 [input]
-game_binding = /core/systems/game.input_bindingc
+game_binding = /game.input_bindingc
 
 [graphics]
-default_texture_min_filter = linear
-default_texture_mag_filter = linear
+default_texture_min_filter = linear_mipmap_nearest
+default_texture_mag_filter = nearest
 
 [sprite]
 max_count = 5120

@@ -1,4 +1,4 @@
-name: "level_2"
+name: "level_3"
 instances {
   id: "camera"
   prototype: "/orthographic/camera.go"
@@ -15,7 +15,7 @@ instances {
     }
     properties {
       id: "follow_target"
-      value: "/player/player"
+      value: "/player"
       type: PROPERTY_TYPE_HASH
     }
     properties {
@@ -46,49 +46,46 @@ instances {
   }
 }
 instances {
-  id: "key_brick"
-  prototype: "/game/entities/brick/key_brick.go"
-  position {
-    x: 3851.5178
-    y: 571.6684
-  }
+  id: "level_maker_3"
+  prototype: "/game/entities/level_maker/level_maker_3.go"
 }
 instances {
-  id: "level_maker"
-  prototype: "/game/entities/level_maker/level_maker.go"
-}
-instances {
-  id: "slime"
-  prototype: "/game/entities/enemies/slime.go"
-  position {
-    x: 261.30017
-    y: 428.7261
-    z: 0.9
-  }
-}
-collection_instances {
   id: "player"
-  collection: "/game/entities/player/player.collection"
+  prototype: "/game/entities/player/player_2.go"
   position {
-    x: 400.0
-    y: 451.0
-    z: 1.0
+    x: 356.0
+    y: 485.0
   }
 }
 scale_along_z: 0
 embedded_instances {
   id: "monarch"
   data: "components {\n"
-  "  id: \"level_2\"\n"
-  "  component: \"/scenes/level_2/level_2.gui\"\n"
+  "  id: \"level_3\"\n"
+  "  component: \"/scenes/level_3/level_3.gui\"\n"
   "}\n"
   ""
 }
 embedded_instances {
-  id: "level_manager"
+  id: "map"
   data: "components {\n"
-  "  id: \"level\"\n"
-  "  component: \"/scenes/shares/level.script\"\n"
+  "  id: \"level_3\"\n"
+  "  component: \"/game/entities/tilemap/level_3.tilemap\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collisionobject\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/game/entities/tilemap/level_3.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"ground\\\"\\n"
+  "mask: \\\"player\\\"\\n"
+  "\"\n"
   "}\n"
   ""
+  position {
+    y: -183.0
+  }
 }

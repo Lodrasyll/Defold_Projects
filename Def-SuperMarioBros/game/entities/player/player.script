@@ -9,9 +9,9 @@ local GRAVITY = -980
 local function update_animation(self)
     local anim = 'idle'
     if self.is_moving then
-        anim = 'walk'
-    -- elseif not self.on_ground then
-    --     anim = 'jump'
+        anim = 'run'
+    elseif not self.on_ground then
+        anim = 'jump'
     else
         anim = 'idle'
     end
@@ -117,10 +117,10 @@ end
 function on_input(self, action_id, action)
     if action_id == input.LEFT then
         self.input.x = -1
-        sprite.set_hflip('/player/player#sprite', true)
+        sprite.set_hflip('/player#sprite', true)
     elseif action_id == input.RIGHT then
         self.input.x = 1
-        sprite.set_hflip('/player/player#sprite', false)
+        sprite.set_hflip('/player#sprite', false)
     end
 
     if action_id == input.JUMP and action.pressed and self.on_ground then

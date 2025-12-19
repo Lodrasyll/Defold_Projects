@@ -159,10 +159,10 @@ end
 ---@param sender 'factory.level_maker'
 function on_message(self, message_id, message, sender)
     if message_id == hash('start_level') then
-        GameData.tilemap = create_tilemap(self)
+        -- GameData.tilemap = create_tilemap(self)
         create_backgroud()
         -- create_pillar(self)
-        create_reward_brick(self)
-        create_flag(self)
+        -- create_reward_brick(self)
+        -- create_flag(self)
     end
 end
