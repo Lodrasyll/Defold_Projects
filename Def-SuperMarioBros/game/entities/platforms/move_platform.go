@@ -1,10 +1,6 @@
 components {
   id: "move_platform_script"
   component: "/game/entities/platforms/move_platform.script"
-  position {
-    x: -235.38094
-    y: 18.712465
-  }
 }
 embedded_components {
   id: "sprite"

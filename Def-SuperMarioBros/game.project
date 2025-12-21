@@ -25,6 +25,8 @@ dependencies#3 = https://github.com/britzl/defold-orthographic/archive/refs/tags
 dependencies#4 = https://github.com/Insality/defold-tweener/archive/refs/tags/6.zip
 dependencies#5 = https://github.com/Insality/panthera/archive/refs/tags/runtime.5.zip
 dependencies#6 = https://github.com/paweljarosz/editor-scripts-ui-collection/archive/master.zip
+dependencies#7 = https://github.com/Insality/defold-event/archive/refs/tags/13.zip
+dependencies#8 = https://github.com/Insality/druid/archive/refs/tags/1.1.6.zip
 
 [input]
 game_binding = /game.input_bindingc
