@@ -38,3 +38,7 @@ gamepad_trigger {
   input: GAMEPAD_LPAD_RIGHT
   action: "right"
 }
+gamepad_trigger {
+  input: GAMEPAD_START
+  action: "start"
+}
