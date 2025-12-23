@@ -1,0 +1,88 @@
+local game_data = require('data.config.game_data')
+local util = require('core.utils.utils')
+
+local MAP_URL = '#room'
+local GROUND = 'ground'
+local WALL = 'wall'
+
+-- 图块尺寸
+local TILE_SIZE = 16 * 4
+
+-- 屏幕大小
+local SCREEN_WIDTH = sys.get_config_number('display.width')
+local SCREEN_HEIGHT = sys.get_config_number('display.height')
+
+-- 地图偏移
+local offset_factor = 4
+
+-- 地图大小
+local MAP_WIDTH = math.ceil(SCREEN_WIDTH / TILE_SIZE) - offset_factor
+local MAP_HEIGHT = math.ceil(SCREEN_HEIGHT / TILE_SIZE) - offset_factor
+
+-- 图块IDs
+local TILE_TOP_LEFT_CORNER = 4
+local TILE_TOP_RIGHT_CORNER = 5
+local TILE_BOTTOM_LEFT_CORNER = 23
+local TILE_BOTTOM_RIGHT_CORNER = 24
+
+local TILE_EMPTY = 19
+
+local TILE_FLOORS = {
+    7, 8, 9, 10, 11, 12, 13,
+    26, 27, 28, 29, 30, 31, 32,
+    45, 46, 47, 48, 49, 50, 51,
+    64, 65, 66, 67, 68, 69, 70,
+    88, 89, 107, 108
+}
+
+TILE_TOP_WALLS = { 58, 59, 60 }
+TILE_BOTTOM_WALLS = { 79, 80, 81 }
+TILE_LEFT_WALLS = { 77, 96, 115 }
+TILE_RIGHT_WALLS = { 78, 97, 116 }
+
+local function room_maker()
+    local tile = game_data.tile
+
+    -- 地图偏移
+    local pos = go.get_position()
+    pos.x = pos.x + offset_factor * TILE_SIZE / 2
+    pos.y = pos.y + offset_factor * TILE_SIZE / 2
+    go.set_position(pos)
+
+    for x = 1, MAP_WIDTH do
+        for y = 1, MAP_HEIGHT do
+            local is_top = (y == MAP_HEIGHT)
+            local is_bottom = (y == 1)
+            local is_left = (x == 1)
+            local is_right = (x == MAP_WIDTH)
+
+            if is_top and is_left then
+                tilemap.set_tile(MAP_URL, WALL, x, y, TILE_TOP_LEFT_CORNER)
+            elseif is_top and is_right then
+                tilemap.set_tile(MAP_URL, WALL, x, y, TILE_TOP_RIGHT_CORNER)
+            elseif is_bottom and is_left then
+                tilemap.set_tile(MAP_URL, WALL, x, y, TILE_BOTTOM_LEFT_CORNER)
+            elseif is_bottom and is_right then
+                tilemap.set_tile(MAP_URL, WALL, x, y, TILE_BOTTOM_RIGHT_CORNER)
+
+            elseif is_top then
+                tilemap.set_tile(MAP_URL, WALL, x, y, TILE_TOP_WALLS[math.random(#TILE_TOP_WALLS)])
+            elseif is_bottom then
+                tilemap.set_tile(MAP_URL, WALL, x, y, TILE_BOTTOM_WALLS[math.random(#TILE_BOTTOM_WALLS)])
+            elseif is_left then
+                tilemap.set_tile(MAP_URL, WALL, x, y, TILE_LEFT_WALLS[math.random(#TILE_LEFT_WALLS)])
+            elseif is_right then
+                tilemap.set_tile(MAP_URL, WALL, x, y, TILE_RIGHT_WALLS[math.random(#TILE_RIGHT_WALLS)])
+            else
+                tilemap.set_tile(MAP_URL, GROUND, x, y, TILE_FLOORS[math.random(#TILE_FLOORS)])
+            end
+        end
+    end
+end
+
+---@package
+---@param self room_maker.script
+function init(self)
+    math.randomseed(os.time())
+    room_maker()
+end

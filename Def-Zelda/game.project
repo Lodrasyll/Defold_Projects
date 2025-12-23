@@ -1,5 +1,6 @@
 [bootstrap]
 main_collection = /main.collectionc
+render = /orthographic/render/orthographic.renderc
 
 [script]
 shared_state = 1
@@ -36,4 +37,13 @@ game_binding = /game.input_bindingc
 [graphics]
 default_texture_min_filter = nearest
 default_texture_mag_filter = nearest
+
+[tilemap]
+max_tile_count = 41960
+
+[sprite]
+max_count = 12800
+
+[physics]
+debug = 1
 

@@ -5,10 +5,55 @@ instances {
   position {
     x: 960.0
     y: 540.0
+    z: 1.0
   }
   scale3 {
     x: 4.0
     y: 4.0
+  }
+}
+instances {
+  id: "room_maker"
+  prototype: "/game/entities/dungeon_maker/room_maker.go"
+  scale3 {
+    x: 4.0
+    y: 4.0
+  }
+}
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  component_properties {
+    id: "script"
+    properties {
+      id: "automatic_zoom"
+      value: "true"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow"
+      value: "true"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow_target"
+      value: "/player"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "bounds_right"
+      value: "1920.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_top"
+      value: "1080.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
   }
 }
 scale_along_z: 0

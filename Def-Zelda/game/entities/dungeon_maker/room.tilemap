@@ -1,0 +1,30 @@
+tile_set: "/assets/arts/textures/tile.tilesource"
+layers {
+  id: "ground"
+  z: -0.1
+  cell {
+    x: 0
+    y: 0
+    tile: 127
+  }
+  cell {
+    x: 119
+    y: 0
+    tile: 127
+  }
+  cell {
+    x: 0
+    y: 119
+    tile: 127
+  }
+  cell {
+    x: 119
+    y: 119
+    tile: 127
+  }
+}
+layers {
+  id: "wall"
+  z: 0.1
+}
+material: "/builtins/materials/tile_map.material"

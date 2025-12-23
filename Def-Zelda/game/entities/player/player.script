@@ -6,11 +6,26 @@ local StateIdle = require('game.entities.player.states.player_idle')
 local StateRun = require('game.entities.player.states.player_run')
 local StateAttack = require('game.entities.player.states.player_attack')
 
+local function setup_and_disable_hitbox(self)
+	self.hitboxes = {
+		up = msg.url('#hitbox_up'),
+		down = msg.url('#hitbox_down'),
+		left = msg.url('#hitbox_left'),
+		right = msg.url('#hitbox_right')
+	}
+	
+	for _, url in pairs(self.hitboxes) do
+		msg.post(url, 'disable')
+	end
+end
+
 
 ---@package
 ---@param self player.script
 function init(self)
 	msg.post('.', 'acquire_input_focus')
+
+	setup_and_disable_hitbox(self)
 
 	self.move_speed = 300
 	self.input = vmath.vector3()
