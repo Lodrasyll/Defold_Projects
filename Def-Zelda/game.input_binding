@@ -18,6 +18,10 @@ key_trigger {
   input: KEY_ENTER
   action: "start"
 }
+key_trigger {
+  input: KEY_J
+  action: "attack"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"
@@ -41,4 +45,8 @@ gamepad_trigger {
 gamepad_trigger {
   input: GAMEPAD_START
   action: "start"
+}
+gamepad_trigger {
+  input: GAMEPAD_RPAD_RIGHT
+  action: "attack"
 }

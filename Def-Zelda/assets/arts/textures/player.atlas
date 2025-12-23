@@ -1,26 +1,6 @@
 animations {
   id: "attack_up"
   images {
-    image: "/assets/arts/graphics/attack/frame_36.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_8
-  }
-  images {
-    image: "/assets/arts/graphics/attack/frame_37.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_8
-  }
-  images {
-    image: "/assets/arts/graphics/attack/frame_38.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_8
-  }
-  images {
-    image: "/assets/arts/graphics/attack/frame_39.png"
-    sprite_trim_mode: SPRITE_TRIM_MODE_8
-  }
-  fps: 12
-}
-animations {
-  id: "attack_down"
-  images {
     image: "/assets/arts/graphics/attack/frame_45.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_8
   }
@@ -34,6 +14,26 @@ animations {
   }
   images {
     image: "/assets/arts/graphics/attack/frame_48.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  fps: 12
+}
+animations {
+  id: "attack_down"
+  images {
+    image: "/assets/arts/graphics/attack/frame_36.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_37.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_38.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_39.png"
     sprite_trim_mode: SPRITE_TRIM_MODE_8
   }
   fps: 12

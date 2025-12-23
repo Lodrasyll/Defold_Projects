@@ -4,6 +4,7 @@ local Input = require('core.systems.input')
 -- 引入状态模块
 local StateIdle = require('game.entities.player.states.player_idle')
 local StateRun = require('game.entities.player.states.player_run')
+local StateAttack = require('game.entities.player.states.player_attack')
 
 
 ---@package
@@ -16,18 +17,21 @@ function init(self)
 	self.direction = vmath.vector3()
 	self.velocity = vmath.vector3()
 	self.facing = vmath.vector3(0, -1, 0)
+	self.input_pressed_attack = false
 
 	-- 建立状态映射表
 	self.states = {
 		idle = StateIdle,
 		running = StateRun,
+		attacking = StateAttack
 	}
 
 	self.fsm = StateMachine.create({
 		initial = 'idle',
 		events = {
-			{ name = 'move', from = 'idle', to = 'running' },
-			{ name = 'stop', from = 'running', to = 'idle'},
+			{ name = 'move', from = { 'idle', 'attacking' }	, to = 'running' },
+			{ name = 'stop',   from = { 'running', 'attacking' }, to = 'idle' },
+			{ name = 'attack', from = { 'idle', 'running'}, to = 'attacking'}
 		},
 		callbacks = {
 			onstatechange = function (fsm, event, from, to)
@@ -66,7 +70,7 @@ function update(self, dt)
 
 	-- 处理朝向
 	if vmath.length(self.direction) > 0 then
-		self.facing = self.direction
+		self.facing = vmath.vector3(self.direction)
 	end
 
 	-- 委托update逻辑给当前状态
@@ -74,9 +78,16 @@ function update(self, dt)
 		self.current_state.update(self, dt)
 	end
 
+	-- 对于 “中断型行为” (Interrupts) 比如攻击、受伤、冲刺
+	-- 我们通常采用 “全局劫持” (Global Interception) 模式。
+	if self.input_pressed_attack and self.fsm:can('attack') then
+		self.fsm:attack()
+		self.input_pressed_attack = false
+	end
+
+	-- 应用物理
 	local pos = go.get_position()
 	pos = pos + self.velocity * dt
-	print(self.velocity)
 	go.set_position(pos)
 
 	self.direction = vmath.vector3()
@@ -89,7 +100,9 @@ end
 ---@param message table
 ---@param sender url
 function on_message(self, message_id, message, sender)
-	
+	if self.current_state and self.current_state.on_message then
+		self.current_state.on_message(self, message_id, message, sender)
+	end
 end
 
 ---@package
@@ -102,5 +115,11 @@ function on_input(self, action_id, action)
 	elseif action_id == Input.DOWN  then self.direction.y = -1
 	elseif action_id == Input.LEFT  then self.direction.x = -1
 	elseif action_id == Input.RIGHT then self.direction.x =  1
+	end
+
+	if action_id == Input.ATTACK then
+		if action.pressed then
+			self.input_pressed_attack = true
+		end
 	end
 end
