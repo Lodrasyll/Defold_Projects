@@ -1,3 +1,87 @@
 script: "/scenes/level_1/level_1.gui_script"
+fonts {
+  name: "font"
+  font: "/assets/fonts/font.font"
+}
+textures {
+  name: "tiles"
+  texture: "/assets/atlas_textures_tilesource/tiles.atlas"
+}
+nodes {
+  size {
+    x: 1920.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  pivot: PIVOT_SW
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: 102.0
+    y: 1029.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_BOX
+  id: "hud_hp"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: -51.0
+  }
+  type: TYPE_BOX
+  texture: "tiles/hud_heart"
+  id: "hp_1"
+  parent: "hud_hp"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 13.0
+  }
+  type: TYPE_BOX
+  texture: "tiles/hud_heart"
+  id: "hp_2"
+  parent: "hud_hp"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 77.0
+  }
+  type: TYPE_BOX
+  texture: "tiles/hud_heart"
+  id: "hp_3"
+  parent: "hud_hp"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 337.0
+    y: 1028.0
+  }
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  font: "font"
+  id: "score"
+  parent: "root"
+  inherit_alpha: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

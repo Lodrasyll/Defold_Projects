@@ -1,0 +1,201 @@
+animations {
+  id: "attack_up"
+  images {
+    image: "/assets/arts/graphics/attack/frame_45.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_46.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_47.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_48.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  fps: 12
+}
+animations {
+  id: "attack_down"
+  images {
+    image: "/assets/arts/graphics/attack/frame_36.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_37.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_38.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_39.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  fps: 12
+}
+animations {
+  id: "attack_left"
+  images {
+    image: "/assets/arts/graphics/attack/frame_63.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_64.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_65.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_66.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  fps: 12
+}
+animations {
+  id: "attack_right"
+  images {
+    image: "/assets/arts/graphics/attack/frame_54.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_55.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_56.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/attack/frame_57.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  fps: 12
+}
+animations {
+  id: "walk_up"
+  images {
+    image: "/assets/arts/graphics/walk/frame_008.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_009.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_010.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_011.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "walk_down"
+  images {
+    image: "/assets/arts/graphics/walk/frame_000.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_001.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_002.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_003.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "walk_left"
+  images {
+    image: "/assets/arts/graphics/walk/frame_012.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_013.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_014.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_015.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "walk_right"
+  images {
+    image: "/assets/arts/graphics/walk/frame_004.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_005.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_006.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  images {
+    image: "/assets/arts/graphics/walk/frame_007.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "idle_up"
+  images {
+    image: "/assets/arts/graphics/walk/frame_008.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "idle_down"
+  images {
+    image: "/assets/arts/graphics/walk/frame_000.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "idle_left"
+  images {
+    image: "/assets/arts/graphics/walk/frame_012.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+animations {
+  id: "idle_right"
+  images {
+    image: "/assets/arts/graphics/walk/frame_004.png"
+    sprite_trim_mode: SPRITE_TRIM_MODE_8
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 8
+}
+extrude_borders: 2

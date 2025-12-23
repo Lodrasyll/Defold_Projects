@@ -1,0 +1,36 @@
+local monarch = require "monarch.monarch"
+local druid = require('druid.druid')
+local hp_widget = require('ui.widgets.hp_bar.hp_bar')
+
+function init(self)
+    self.druid = druid.new(self)
+
+    -- 创建组件：初始三颗心
+    self.hp_bar = self.druid:new_widget(hp_widget, 'player_hp_view', { max_hp = 3 })
+end
+
+function final(self)
+    self.druid:final()
+end
+
+function update(self, dt)
+    self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+
+    if message_id == hash('take_damage') then
+        self.hp_bar:set_hp(message.new_hp)
+    end
+
+    if message_id == hash('upgrade_max_hp') then
+        -- 组件会自动clone一个新的心，grid会自动把它排在第4个位置
+        self.hp_bar:set_max_hp()
+        self.hp_bar:set_hp(4)
+    end
+end
+
+function on_input(self, action_id, action)
+    return self.druid:on_input(action_id, action)
+end

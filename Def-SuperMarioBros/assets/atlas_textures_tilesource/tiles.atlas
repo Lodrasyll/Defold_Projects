@@ -1,0 +1,943 @@
+images {
+  image: "/assets/sprites/Tiles/Default/block_blue.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_coin.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_coin_active.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_empty.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_empty_warning.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_exclamation.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_exclamation_active.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_green.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_plank.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_planks.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_red.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_spikes.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_strong_coin.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_strong_coin_active.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_strong_danger.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_strong_danger_active.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_strong_empty.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_strong_empty_active.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_strong_exclamation.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_strong_exclamation_active.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/block_yellow.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/bomb.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/bomb_active.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/brick_brown.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/brick_brown_diagonal.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/brick_grey.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/brick_grey_diagonal.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/bricks_brown.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/bricks_grey.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/bridge.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/bridge_logs.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/bush.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/cactus.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/chain.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/coin_bronze.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/coin_bronze_side.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/coin_gold.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/coin_gold_side.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/coin_silver.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/coin_silver_side.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/conveyor.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/door_closed.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/door_closed_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/door_open.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/door_open_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/fence.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/fence_broken.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/fireball.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/flag_blue_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/flag_blue_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/flag_green_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/flag_green_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/flag_off.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/flag_red_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/flag_red_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/flag_yellow_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/flag_yellow_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/gem_blue.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/gem_green.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/gem_red.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/gem_yellow.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/grass.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/grass_purple.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/heart.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hill.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hill_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hill_top_smile.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_0.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_1.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_2.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_3.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_4.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_5.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_6.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_7.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_8.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_9.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_multiply.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_character_percent.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_coin.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_heart.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_heart_empty.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_heart_half.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_key_blue.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_key_green.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_key_red.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_key_yellow.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_beige.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_green.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_helmet_beige.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_helmet_green.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_helmet_pink.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_helmet_purple.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_helmet_yellow.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_pink.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_purple.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/hud_player_yellow.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/key_blue.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/key_green.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/key_red.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/key_yellow.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/ladder_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/ladder_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/ladder_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lava.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lava_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lava_top_low.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lever.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lever_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lever_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lock_blue.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lock_green.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lock_red.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/lock_yellow.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/mushroom_brown.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/mushroom_red.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/ramp.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/rock.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/rop_attached.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/rope.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/saw.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/sign.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/sign_exit.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/sign_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/sign_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/snow.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/spikes.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/spring.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/spring_out.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/star.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/switch_blue.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/switch_blue_pressed.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/switch_green.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/switch_green_pressed.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/switch_red.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/switch_red_pressed.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/switch_yellow.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/switch_yellow_pressed.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block_bottom_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block_bottom_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block_center.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block_top_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_block_top_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_cloud.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_cloud_background.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_cloud_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_cloud_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_cloud_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_horizontal_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_horizontal_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_horizontal_overhang_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_horizontal_overhang_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_horizontal_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_ramp_long_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_ramp_long_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_ramp_long_c.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_ramp_short_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_ramp_short_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_vertical_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_vertical_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_dirt_vertical_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block_bottom_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block_bottom_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block_center.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block_top_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_block_top_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_cloud.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_cloud_background.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_cloud_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_cloud_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_cloud_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_horizontal_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_horizontal_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_horizontal_overhang_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_horizontal_overhang_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_horizontal_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_ramp_long_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_ramp_long_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_ramp_long_c.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_ramp_short_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_ramp_short_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_vertical_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_vertical_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_grass_vertical_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block_bottom_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block_bottom_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block_center.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block_top_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_block_top_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_cloud.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_cloud_background.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_cloud_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_cloud_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_cloud_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_horizontal_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_horizontal_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_horizontal_overhang_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_horizontal_overhang_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_horizontal_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_ramp_long_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_ramp_long_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_ramp_long_c.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_ramp_short_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_ramp_short_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_vertical_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_vertical_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_purple_vertical_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block_bottom_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block_bottom_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block_center.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block_top_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_block_top_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_cloud.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_cloud_background.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_cloud_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_cloud_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_cloud_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_horizontal_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_horizontal_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_horizontal_overhang_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_horizontal_overhang_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_horizontal_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_ramp_long_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_ramp_long_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_ramp_long_c.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_ramp_short_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_ramp_short_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_vertical_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_vertical_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_sand_vertical_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block_bottom_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block_bottom_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block_center.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block_top_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_block_top_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_cloud.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_cloud_background.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_cloud_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_cloud_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_cloud_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_horizontal_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_horizontal_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_horizontal_overhang_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_horizontal_overhang_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_horizontal_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_ramp_long_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_ramp_long_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_ramp_long_c.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_ramp_short_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_ramp_short_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_vertical_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_vertical_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_snow_vertical_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block_bottom_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block_bottom_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block_center.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block_top_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_block_top_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_cloud.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_cloud_background.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_cloud_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_cloud_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_cloud_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_horizontal_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_horizontal_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_horizontal_overhang_left.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_horizontal_overhang_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_horizontal_right.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_ramp_long_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_ramp_long_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_ramp_long_c.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_ramp_short_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_ramp_short_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_vertical_bottom.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_vertical_middle.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/terrain_stone_vertical_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/torch_off.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/torch_on_a.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/torch_on_b.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/water.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/water_top.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/water_top_low.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/weight.png"
+}
+images {
+  image: "/assets/sprites/Tiles/Default/window.png"
+}
+extrude_borders: 2

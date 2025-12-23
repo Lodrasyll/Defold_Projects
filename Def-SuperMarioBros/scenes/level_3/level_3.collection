@@ -1,0 +1,116 @@
+name: "level_3"
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  component_properties {
+    id: "script"
+    properties {
+      id: "follow"
+      value: "true"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow_target"
+      value: "/player"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "follow_lerp"
+      value: "0.1"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "follow_offset"
+      value: "600.0, 100.0, 0.0"
+      type: PROPERTY_TYPE_VECTOR3
+    }
+    properties {
+      id: "bounds_bottom"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_right"
+      value: "7680.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_top"
+      value: "1080.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+}
+instances {
+  id: "level_maker_3"
+  prototype: "/game/entities/level_maker/level_maker_3.go"
+}
+instances {
+  id: "player"
+  prototype: "/game/entities/player/player_2.go"
+  position {
+    x: 356.0
+    y: 485.0
+  }
+}
+instances {
+  id: "slime"
+  prototype: "/game/entities/enemies/slime.go"
+  position {
+    x: 529.46045
+    y: 498.44965
+  }
+}
+instances {
+  id: "move_platform"
+  prototype: "/game/entities/platforms/move_platform.go"
+  position {
+    x: 1401.6948
+    y: 504.0671
+  }
+}
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"level_3\"\n"
+  "  component: \"/scenes/level_3/level_3.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "map"
+  data: "components {\n"
+  "  id: \"level_3\"\n"
+  "  component: \"/game/entities/tilemap/level_3.tilemap\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"collisionobject\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"collision_shape: \\\"/game/entities/tilemap/level_3.tilemap\\\"\\n"
+  "type: COLLISION_OBJECT_TYPE_STATIC\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"ground\\\"\\n"
+  "mask: \\\"player\\\"\\n"
+  "mask: \\\"enemies\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    y: -183.0
+  }
+}
+embedded_instances {
+  id: "level_manager"
+  data: "components {\n"
+  "  id: \"level\"\n"
+  "  component: \"/scenes/shares/level.script\"\n"
+  "}\n"
+  ""
+}

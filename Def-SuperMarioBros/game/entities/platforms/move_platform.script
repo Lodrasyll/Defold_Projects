@@ -1,0 +1,30 @@
+go.property('move_speed', 150)
+go.property('max_distance', 300)
+go.property('delta_pos', vmath.vector3())
+
+
+---@package
+---@param self move_platform.script
+function init(self)
+	self.start_pos = go.get_position()
+	self.dir = -1
+	self.current_distance = 0
+end
+
+---@package
+---@param self move_platform.script
+---@param dt number
+function update(self, dt)
+	local move_amout = self.move_speed * dt * self.dir
+
+	self.current_distance = self.current_distance + move_amout
+	if math.abs(self.current_distance) >= self.max_distance then
+		self.dir = -self.dir
+		self.current_distance = self.current_distance + (self.move_speed * dt * self.dir)
+	end
+
+	local target_delta = vmath.vector3(move_amout, 0, 0)
+	self.delta_pos = target_delta
+	local current_pos = go.get_position()
+	go.set_position(current_pos + target_delta)
+end

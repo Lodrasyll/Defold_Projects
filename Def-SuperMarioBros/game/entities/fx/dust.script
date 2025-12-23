@@ -1,0 +1,5 @@
+---@package
+---@param self dust.script
+function init(self)
+	particlefx.play('#particlefx_dust')
+end

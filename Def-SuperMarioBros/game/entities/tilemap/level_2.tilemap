@@ -1,0 +1,26 @@
+tile_set: "/assets/atlas_textures_tilesource/tile.tilesource"
+layers {
+  id: "ground"
+  z: 0.0
+  cell {
+    x: 0
+    y: 0
+    tile: 0
+  }
+  cell {
+    x: 119
+    y: 0
+    tile: 0
+  }
+  cell {
+    x: 0
+    y: 31
+    tile: 0
+  }
+  cell {
+    x: 119
+    y: 31
+    tile: 0
+  }
+}
+material: "/builtins/materials/tile_map.material"

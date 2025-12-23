@@ -1,0 +1,8 @@
+local SoundController = require('core.components.sound_controller')
+
+---@package
+---@param self sound_manager.script
+function init(self)
+	SoundController.init()
+	SoundController.play('music_bgmusic', SoundController.GROUP_MUSIC)
+end

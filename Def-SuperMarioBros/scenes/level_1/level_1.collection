@@ -1,4 +1,79 @@
 name: "level_1"
+instances {
+  id: "level_maker"
+  prototype: "/game/entities/level_maker/level_maker.go"
+}
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  component_properties {
+    id: "script"
+    properties {
+      id: "follow"
+      value: "true"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow_target"
+      value: "/player"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "follow_lerp"
+      value: "0.1"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "follow_offset"
+      value: "600.0, 100.0, 0.0"
+      type: PROPERTY_TYPE_VECTOR3
+    }
+    properties {
+      id: "bounds_bottom"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_right"
+      value: "7680.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_top"
+      value: "1080.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+}
+instances {
+  id: "slime"
+  prototype: "/game/entities/enemies/slime.go"
+  position {
+    x: 261.30017
+    y: 428.7261
+    z: 0.9
+  }
+}
+instances {
+  id: "key_brick"
+  prototype: "/game/entities/brick/key_brick.go"
+  position {
+    x: 3851.5178
+    y: 571.6684
+  }
+}
+instances {
+  id: "player"
+  prototype: "/game/entities/player/player.go"
+  position {
+    x: 436.85114
+    y: 462.9992
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "monarch"
@@ -9,25 +84,10 @@ embedded_instances {
   ""
 }
 embedded_instances {
-  id: "player_test"
-  data: "embedded_components {\n"
-  "  id: \"sprite\"\n"
-  "  type: \"sprite\"\n"
-  "  data: \"default_animation: \\\"player_test\\\"\\n"
-  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "size {\\n"
-  "  x: 16.0\\n"
-  "  y: 16.0\\n"
-  "}\\n"
-  "textures {\\n"
-  "  sampler: \\\"texture_sampler\\\"\\n"
-  "  texture: \\\"/assets/textures/1_bit_texture.tilesource\\\"\\n"
-  "}\\n"
-  "\"\n"
+  id: "level_manager"
+  data: "components {\n"
+  "  id: \"level\"\n"
+  "  component: \"/scenes/shares/level.script\"\n"
   "}\n"
   ""
-  position {
-    x: 960.0
-    y: 540.0
-  }
 }

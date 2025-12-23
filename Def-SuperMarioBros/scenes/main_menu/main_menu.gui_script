@@ -23,12 +23,20 @@ function on_message(self, message_id, message, sender)
     
     if message_id == hash('show_level_1') then
         monarch.show('level_1')
+    elseif message_id == hash('show_level_2') then
+        monarch.show('level_2')
+    elseif message_id == hash('show_level_3') then
+        monarch.show('level_3')
     end
 end
 
 function on_input(self, action_id, action)
-    if action_id == input.CLICK and action.pressed then
+    if action_id == input.ONE and action.pressed then
         msg.post('#', 'show_level_1')
+    elseif action_id == input.TWO and action.pressed then
+        msg.post('#', 'show_level_2')
+    elseif action_id == input.THREE and action.pressed then
+        msg.post('#', 'show_level_3')
     end
 end
 

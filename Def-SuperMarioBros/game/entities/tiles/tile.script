@@ -1,0 +1,14 @@
+---@package
+---@param self tile.script
+function init(self)
+    
+end
+
+---@package
+---@param self tile.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+
+end
