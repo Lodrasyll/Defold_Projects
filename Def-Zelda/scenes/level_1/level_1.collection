@@ -14,7 +14,7 @@ instances {
 }
 instances {
   id: "room_maker"
-  prototype: "/game/entities/dungeon_maker/room_maker.go"
+  prototype: "/game/entities/world/room_maker.go"
   scale3 {
     x: 4.0
     y: 4.0
@@ -54,6 +54,42 @@ instances {
       value: "1080.0"
       type: PROPERTY_TYPE_NUMBER
     }
+  }
+}
+instances {
+  id: "skeleton"
+  prototype: "/game/entities/enemies/skeleton.go"
+  position {
+    x: 283.17508
+    y: 483.17877
+  }
+  scale3 {
+    x: 4.0
+    y: 4.0
+  }
+}
+instances {
+  id: "slime"
+  prototype: "/game/entities/enemies/slime.go"
+  position {
+    x: 1637.3606
+    y: 179.21188
+  }
+  scale3 {
+    x: 4.0
+    y: 4.0
+  }
+}
+instances {
+  id: "ghost"
+  prototype: "/game/entities/enemies/ghost.go"
+  position {
+    x: 1363.5776
+    y: 800.12634
+  }
+  scale3 {
+    x: 4.0
+    y: 4.0
   }
 }
 scale_along_z: 0

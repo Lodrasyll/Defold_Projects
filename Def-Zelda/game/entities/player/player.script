@@ -32,7 +32,9 @@ function init(self)
 	self.direction = vmath.vector3()
 	self.velocity = vmath.vector3()
 	self.facing = vmath.vector3(0, -1, 0)
+	
 	self.input_pressed_attack = false
+	self.invincible = false
 
 	-- 建立状态映射表
 	self.states = {
@@ -46,7 +48,8 @@ function init(self)
 		events = {
 			{ name = 'move', from = { 'idle', 'attacking' }	, to = 'running' },
 			{ name = 'stop',   from = { 'running', 'attacking' }, to = 'idle' },
-			{ name = 'attack', from = { 'idle', 'running'}, to = 'attacking'}
+			{ name = 'attack', from = { 'idle', 'running'}, to = 'attacking'},
+			{ name = 'hurt', from = '*', to = 'hurting'},
 		},
 		callbacks = {
 			onstatechange = function (fsm, event, from, to)
@@ -117,6 +120,12 @@ end
 function on_message(self, message_id, message, sender)
 	if self.current_state and self.current_state.on_message then
 		self.current_state.on_message(self, message_id, message, sender)
+	end
+
+	if message_id == hash('collision_response') and message.group == hash('enemies') then
+		print('hurt!')
+		print('camera shake')
+		print('player flash and bounced')
 	end
 end
 

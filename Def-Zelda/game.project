@@ -45,5 +45,5 @@ max_tile_count = 41960
 max_count = 12800
 
 [physics]
-debug = 1
+debug = 0
 

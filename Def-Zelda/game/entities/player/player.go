@@ -1,10 +1,6 @@
 components {
   id: "player"
   component: "/game/entities/player/player.script"
-  position {
-    x: -11.561506
-    y: -8.100418
-  }
 }
 embedded_components {
   id: "sprite"
@@ -31,7 +27,7 @@ embedded_components {
   "  shapes {\n"
   "    shape_type: TYPE_BOX\n"
   "    position {\n"
-  "      y: -1.0\n"
+  "      y: -2.0\n"
   "    }\n"
   "    rotation {\n"
   "    }\n"
@@ -39,7 +35,7 @@ embedded_components {
   "    count: 3\n"
   "  }\n"
   "  data: 5.32743\n"
-  "  data: 7.802825\n"
+  "  data: 8.264562\n"
   "  data: 10.0\n"
   "}\n"
   ""

@@ -1,0 +1,95 @@
+go.property('enemy_type', hash(''))
+
+local StateMachine = require('lib.thirdparty.statemachine')
+local EnemyPatrol = require('game.entities.enemies.states.enemy_patrol')
+local EnemyIdle = require('game.entities.enemies.states.enemy_idle')
+
+
+
+local function start_patrol(self)
+    local DIRECTIONS = {
+        vmath.vector3(0, 1, 0),
+        vmath.vector3(0, -1, 0),
+        vmath.vector3(-1, 0, 0),
+        vmath.vector3(1, 0, 0)
+    }
+    self.direction = DIRECTIONS[math.random(#DIRECTIONS)]
+end
+
+---@package
+---@param self enemy.script
+function init(self)
+    math.randomseed(os.time())
+    self.move_speed = 70
+    self.direction = vmath.vector3()
+    self.velocity = vmath.vector3()
+    self.patrol_scope = nil
+
+    self.states = {
+        idle = EnemyIdle,
+        patroling = EnemyPatrol
+    }
+
+    self.fsm = StateMachine.create({
+        initial = 'idle',
+        events = {
+            { name = 'move', from = 'idle', to = 'patroling' },
+            { name = 'stop', from = 'patroling', to = 'idle'}
+        },
+        callbacks = {
+            onstatechange = function (fsm, event, from, to)
+                print('State Change: ' .. '[' .. event .. ']' .. from .. '-->' .. to)
+
+                -- 退出旧状态
+                local old_state = self.states[from]
+                if old_state and old_state.exit then
+                    old_state.exit(self)
+                end
+                -- 切换当前状态指针
+                self.current_state = self.states[to]
+                -- 进入新状态
+                if self.current_state and self.current_state.enter then
+                    self.current_state.enter(self)
+                end
+            end,
+        }
+    })
+
+    self.current_state = self.states['idle']
+    self.current_state.enter(self)
+    start_patrol(self)
+end
+
+---@package
+---@param self enemy.script
+---@param dt number
+function update(self, dt)
+    if self.current_state and self.current_state.update then
+        self.current_state.update(self, dt)
+    end
+
+    local pos = go.get_position()
+    pos = pos + self.velocity * dt
+    go.set_position(pos)
+end
+
+---@package
+---@param self enemy.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('collision_response') then
+        if message.group == hash('sword') then
+            go.delete()
+        end
+    end
+
+    if message_id == hash('contact_point_response') and message.group == hash('wall')then
+        local new_pos = go.get_position() + message.normal * message.distance
+        go.set_position(new_pos)
+
+        -- 通过法线反转方向
+        self.direction = message.normal
+    end
+end
