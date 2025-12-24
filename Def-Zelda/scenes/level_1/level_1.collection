@@ -92,6 +92,18 @@ instances {
     y: 4.0
   }
 }
+instances {
+  id: "switch"
+  prototype: "/game/entities/world/switch.go"
+  position {
+    x: 1327.8569
+    y: 276.86127
+  }
+  scale3 {
+    x: 4.0
+    y: 4.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "monarch"
@@ -100,4 +112,8 @@ embedded_instances {
   "  component: \"/scenes/level_1/level_1.gui\"\n"
   "}\n"
   ""
+}
+embedded_instances {
+  id: "level_manager"
+  data: ""
 }

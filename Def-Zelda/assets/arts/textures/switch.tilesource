@@ -1,0 +1,14 @@
+image: "/assets/arts/graphics/switches.png"
+tile_width: 16
+tile_height: 16
+animations {
+  id: "off"
+  start_tile: 2
+  end_tile: 2
+}
+animations {
+  id: "on"
+  start_tile: 1
+  end_tile: 1
+}
+extrude_borders: 2

@@ -4,6 +4,10 @@ local util = require('core.utils.utils')
 local MAP_URL = '#room'
 local GROUND = 'ground'
 local WALL = 'wall'
+local DOOR = 'door'
+local DOORWAY = 'doorway'
+local VOID = 'void'
+local SWITCH = 'switch'
 
 -- 图块尺寸
 local TILE_SIZE = 16 * 4
@@ -13,11 +17,14 @@ local SCREEN_WIDTH = sys.get_config_number('display.width')
 local SCREEN_HEIGHT = sys.get_config_number('display.height')
 
 -- 地图偏移
-local offset_factor = 4
+local PADDING = 2
 
 -- 地图大小
-local MAP_WIDTH = math.ceil(SCREEN_WIDTH / TILE_SIZE) - offset_factor
-local MAP_HEIGHT = math.ceil(SCREEN_HEIGHT / TILE_SIZE) - offset_factor
+local MAP_WIDTH = math.ceil(SCREEN_WIDTH / TILE_SIZE)
+local MAP_HEIGHT = math.ceil(SCREEN_HEIGHT / TILE_SIZE)
+if MAP_WIDTH % 2 ~= 0 then
+    MAP_WIDTH = MAP_WIDTH - 1
+end
 
 -- 图块IDs
 local TILE_TOP_LEFT_CORNER = 4
@@ -35,28 +42,60 @@ local TILE_FLOORS = {
     88, 89, 107, 108
 }
 
-TILE_TOP_WALLS = { 58, 59, 60 }
-TILE_BOTTOM_WALLS = { 79, 80, 81 }
-TILE_LEFT_WALLS = { 77, 96, 115 }
-TILE_RIGHT_WALLS = { 78, 97, 116 }
+local TILE_TOP_WALLS = { 58, 59, 60 }
+local TILE_BOTTOM_WALLS = { 79, 80, 81 }
+local TILE_LEFT_WALLS = { 77, 96, 115 }
+local TILE_RIGHT_WALLS = { 78, 97, 116 }
 
-local function room_maker()
+local TILE_DOOR_TL = 134
+local TILE_DOOR_TR = 135
+local TILE_DOOR_BL = 153
+local TILE_DOOR_BR = 154
+local TILE_DOOR_OPEN_L = 117
+local TILE_DOOR_OPEN_R = 118
+
+local TILE_SWITCH = 128
+
+local function room_maker(self)
     local tile = game_data.tile
 
-    -- 地图偏移
-    local pos = go.get_position()
-    pos.x = pos.x + offset_factor * TILE_SIZE / 2
-    pos.y = pos.y + offset_factor * TILE_SIZE / 2
-    go.set_position(pos)
+    local TOTAL_WIDTH = MAP_WIDTH
+    local TOTAL_HRIGHT = MAP_HEIGHT
+
+    -- 房间的实际边界
+    local room_start_x = 1 + PADDING
+    local room_end_x = TOTAL_WIDTH - PADDING
+    local room_start_y = 1 + PADDING
+    local room_end_y = TOTAL_HRIGHT - PADDING
+
+    local door_base_x = math.floor((room_start_x + room_end_x) / 2)
+    local door_base_y = room_end_y
+
+    self.door_location = {
+        x = door_base_x,
+        y = door_base_y
+    }
 
     for x = 1, MAP_WIDTH do
         for y = 1, MAP_HEIGHT do
-            local is_top = (y == MAP_HEIGHT)
-            local is_bottom = (y == 1)
-            local is_left = (x == 1)
-            local is_right = (x == MAP_WIDTH)
+            local is_top = (y == room_end_y)
+            local is_bottom = (y == room_start_y)
+            local is_left = (x == room_start_x)
+            local is_right = (x == room_end_x)
 
-            if is_top and is_left then
+            local is_void = (x < room_start_x) or (x > room_end_x) or (y < room_start_y) or (y > room_end_y)
+
+            if x == door_base_x and y == door_base_y then
+                tilemap.set_tile(MAP_URL, DOORWAY, x, y, TILE_DOOR_BL)
+            elseif x == door_base_x + 1 and y == door_base_y then
+                tilemap.set_tile(MAP_URL, DOORWAY, x, y, TILE_DOOR_BR)
+            elseif x == door_base_x and y == door_base_y + 1 then
+                tilemap.set_tile(MAP_URL, DOORWAY, x, y, TILE_DOOR_TL)
+            elseif x == door_base_x + 1 and y == door_base_y + 1 then
+                tilemap.set_tile(MAP_URL, DOORWAY, x, y, TILE_DOOR_TR)
+            elseif is_void then
+                tilemap.set_tile(MAP_URL, VOID, x, y, TILE_EMPTY)
+            elseif is_top and is_left then
                 tilemap.set_tile(MAP_URL, WALL, x, y, TILE_TOP_LEFT_CORNER)
             elseif is_top and is_right then
                 tilemap.set_tile(MAP_URL, WALL, x, y, TILE_TOP_RIGHT_CORNER)
@@ -80,9 +119,30 @@ local function room_maker()
     end
 end
 
+local function open_door(self)
+    local door = self.door_location
+    tilemap.set_tile(MAP_URL, DOORWAY, door.x, door.y, TILE_DOOR_OPEN_L)
+    tilemap.set_tile(MAP_URL, DOORWAY, door.x + 1, door.y, TILE_DOOR_OPEN_R)
+end
+
 ---@package
 ---@param self room_maker.script
 function init(self)
     math.randomseed(os.time())
-    room_maker()
+    msg.post('#', 'start_level')
+end
+
+---@package
+---@param self room_maker.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('start_level') then
+        room_maker(self)
+    end
+
+    if message_id == hash('open_dungeon_door') then
+        open_door(self)
+    end
 end

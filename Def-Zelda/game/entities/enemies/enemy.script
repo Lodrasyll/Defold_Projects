@@ -82,6 +82,7 @@ function on_message(self, message_id, message, sender)
     if message_id == hash('collision_response') then
         if message.group == hash('sword') then
             go.delete()
+            msg.post("camera", "shake", { intensity = 0.01, duration = 0.1, direction = "both" })
         end
     end
 
