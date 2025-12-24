@@ -24,9 +24,6 @@ function Idle.enter(player)
 
     -- 确保待机时没有速度
     player.velocity = vmath.vector3()
-
-    print('player facing: ' .. player.facing)
-    print('player anim: ' .. anim)
 end
 
 function Idle.update(player, dt)

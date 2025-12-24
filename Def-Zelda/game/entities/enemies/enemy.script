@@ -38,7 +38,7 @@ function init(self)
         },
         callbacks = {
             onstatechange = function (fsm, event, from, to)
-                print('State Change: ' .. '[' .. event .. ']' .. from .. '-->' .. to)
+                -- print('State Change: ' .. '[' .. event .. ']' .. from .. '-->' .. to)
 
                 -- 退出旧状态
                 local old_state = self.states[from]

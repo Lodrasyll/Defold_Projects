@@ -22,9 +22,6 @@ function Run.enter(player)
     sprite.play_flipbook('#sprite', anim)
     player.current_anim = anim
     player.run_timer = 0
-
-
-    print('player anim: ' .. anim)
 end
 
 function Run.update(player, dt)
@@ -47,14 +44,6 @@ function Run.update(player, dt)
         if player.run_timer > MIN_RUN_TIME then
             player.fsm:stop()
         end
-    end
-end
-
-function Run.on_message(player, message_id, message, sender)
-    if message_id == hash('contact_point_response') then
-        local pos = go.get_position()
-        local new_pos = pos + message.normal * message.distance
-        go.set_position(new_pos)
     end
 end
 

@@ -4,6 +4,7 @@ local ANIMS = {
 }
 
 function Idle.enter(enemy)
+
     -- 停止移动，等待时间，然后开始移动
     enemy.direction = vmath.vector3()
     local wait_time = math.random(0.5, 1)

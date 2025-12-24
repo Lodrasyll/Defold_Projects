@@ -1,4 +1,5 @@
 local monarch = require "monarch.monarch"
+local Input = require('core.systems.input')
 
 function init(self)
     msg.post(".", "acquire_input_focus")
@@ -14,6 +15,9 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
+    if action_id == Input.START then
+        monarch.show('main_menu')
+    end
 end
 
 function on_reload(self)

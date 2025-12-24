@@ -1,5 +1,6 @@
 local StateMachine = require('lib.thirdparty.statemachine')
 local Input = require('core.systems.input')
+local game_data = require('data.config.game_data')
 
 -- 引入状态模块
 local StateIdle = require('game.entities.player.states.player_idle')
@@ -26,6 +27,8 @@ function init(self)
 	msg.post('.', 'acquire_input_focus')
 
 	setup_and_disable_hitbox(self)
+
+	self.hp = game_data.player_hp
 
 	self.move_speed = 300
 	self.input = vmath.vector3()
@@ -110,6 +113,10 @@ function update(self, dt)
 
 	self.direction = vmath.vector3()
 	self.velocity = vmath.vector3()
+
+	if self.hp <= 0 then
+		msg.post('/monarch', 'player_dead')
+	end
 end
 
 ---@package
@@ -123,9 +130,20 @@ function on_message(self, message_id, message, sender)
 	end
 
 	if message_id == hash('collision_response') and message.group == hash('enemies') then
-		print('hurt!')
-		print('camera shake')
-		print('player flash and bounced')
+		if not self.invincible then
+			self.hp = self.hp - 1
+		end
+		self.invincible = true
+		timer.delay(2, false, function ()
+			self.invincible = false
+		end)
+		print(self.hp)
+	end
+
+	if message_id == hash('contact_point_response') and message.group == hash('wall') then
+		local pos = go.get_position()
+		local new_pos = pos + message.normal * message.distance
+		go.set_position(new_pos)
 	end
 end
 
