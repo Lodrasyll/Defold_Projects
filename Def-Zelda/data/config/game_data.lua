@@ -1,7 +1,6 @@
 local M = {}
 
-M.tile = {}
-M.room = {}
+M.dungeon = {}
 M.player_hp = 3
 
 return M

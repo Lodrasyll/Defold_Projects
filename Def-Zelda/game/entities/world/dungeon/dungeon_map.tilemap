@@ -34,8 +34,4 @@ layers {
   id: "doorway"
   z: 0.0
 }
-layers {
-  id: "switch"
-  z: 0.2
-}
 material: "/builtins/materials/tile_map.material"

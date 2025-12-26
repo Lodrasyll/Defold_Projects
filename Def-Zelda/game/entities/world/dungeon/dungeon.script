@@ -1,0 +1,36 @@
+local DunMaker = require('game.entities.world.dungeon.dungeon_maker')
+local GameData = require('data.config.game_data')
+local Config = require('data.config.config')
+
+local MAP_URL = '#dungeon_map'
+go.property('dungeon_map_width', 5)
+go.property('dungeon_map_height', 5)
+local roommap_width = Config.DunConst.ROOMMAP_WIDTH
+local roommap_height = Config.DunConst.ROOMMAP_HEIGHT
+
+
+local function dungeon_init(self)
+	-- 准备配置包/表
+	local dungeon_config = {
+		dungeon_width = self.dungeon_map_width,
+		dungeon_height = self.dungeon_map_height,
+		room_width = roommap_width,
+		room_height = roommap_height,
+		padding = Config.DunConst.PADDING,
+	}
+
+	local tile_config = Config.DunConst.TileConfig
+
+	-- 调用地牢生成器
+	GameData.dungeon = DunMaker.generate_dungeon(MAP_URL, dungeon_config, tile_config)
+	pprint(GameData.dungeon)
+end
+
+---@package
+---@param self dungeon.script
+function init(self)
+	math.random(os.time())
+
+	dungeon_init(self)
+end
+

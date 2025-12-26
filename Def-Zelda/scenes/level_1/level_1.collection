@@ -13,14 +13,6 @@ instances {
   }
 }
 instances {
-  id: "room_maker"
-  prototype: "/game/entities/world/room_maker.go"
-  scale3 {
-    x: 4.0
-    y: 4.0
-  }
-}
-instances {
   id: "camera"
   prototype: "/orthographic/camera.go"
   position {
@@ -93,12 +85,8 @@ instances {
   }
 }
 instances {
-  id: "switch"
-  prototype: "/game/entities/world/switch.go"
-  position {
-    x: 1327.8569
-    y: 276.86127
-  }
+  id: "dungeon"
+  prototype: "/game/entities/world/dungeon/dungeon.go"
   scale3 {
     x: 4.0
     y: 4.0

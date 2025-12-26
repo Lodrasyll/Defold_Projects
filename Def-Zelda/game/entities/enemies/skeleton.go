@@ -1,10 +1,6 @@
 components {
   id: "enemy"
   component: "/game/entities/enemies/enemy.script"
-  position {
-    x: -28.696463
-    y: -1.7244734
-  }
   properties {
     id: "enemy_type"
     value: "skeleton"

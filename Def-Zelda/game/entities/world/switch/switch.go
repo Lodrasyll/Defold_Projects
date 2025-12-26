@@ -1,10 +1,6 @@
 components {
   id: "switch"
-  component: "/game/entities/world/switch.script"
-  position {
-    x: -101.939026
-    y: -16.474255
-  }
+  component: "/game/entities/world/switch/switch.script"
 }
 embedded_components {
   id: "sprite"

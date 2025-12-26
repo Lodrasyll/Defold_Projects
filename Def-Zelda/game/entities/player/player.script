@@ -153,10 +153,11 @@ end
 ---@param action on_input.action
 ---@return boolean|nil
 function on_input(self, action_id, action)
-	if 	   action_id == Input.UP    then self.direction.y =  1
-	elseif action_id == Input.DOWN  then self.direction.y = -1
-	elseif action_id == Input.LEFT  then self.direction.x = -1
-	elseif action_id == Input.RIGHT then self.direction.x =  1
+	local deadzone = 0.2
+	if action_id == Input.UP and action.value > deadzone then self.direction.y = 1
+	elseif action_id == Input.DOWN and action.value > deadzone then self.direction.y = -1
+	elseif action_id == Input.LEFT and action.value > deadzone then self.direction.x = -1
+	elseif action_id == Input.RIGHT and action.value > deadzone then self.direction.x =  1
 	end
 
 	if action_id == Input.ATTACK then
