@@ -137,13 +137,18 @@ function on_message(self, message_id, message, sender)
 		timer.delay(2, false, function ()
 			self.invincible = false
 		end)
-		print(self.hp)
 	end
 
 	if message_id == hash('contact_point_response') and message.group == hash('wall') then
 		local pos = go.get_position()
 		local new_pos = pos + message.normal * message.distance
 		go.set_position(new_pos)
+	end
+
+	if message_id == hash('trigger_response') and message.group == hash('test') then
+		if message.enter then
+			msg.post('/camera_controller', 'move_camera_to_next_room')
+		end
 	end
 end
 

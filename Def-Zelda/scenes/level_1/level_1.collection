@@ -1,54 +1,5 @@
 name: "level_1"
 instances {
-  id: "player"
-  prototype: "/game/entities/player/player.go"
-  position {
-    x: 960.0
-    y: 540.0
-    z: 1.0
-  }
-  scale3 {
-    x: 4.0
-    y: 4.0
-  }
-}
-instances {
-  id: "camera"
-  prototype: "/orthographic/camera.go"
-  position {
-    x: 960.0
-    y: 540.0
-  }
-  component_properties {
-    id: "script"
-    properties {
-      id: "automatic_zoom"
-      value: "true"
-      type: PROPERTY_TYPE_BOOLEAN
-    }
-    properties {
-      id: "follow"
-      value: "true"
-      type: PROPERTY_TYPE_BOOLEAN
-    }
-    properties {
-      id: "follow_target"
-      value: "/player"
-      type: PROPERTY_TYPE_HASH
-    }
-    properties {
-      id: "bounds_right"
-      value: "1920.0"
-      type: PROPERTY_TYPE_NUMBER
-    }
-    properties {
-      id: "bounds_top"
-      value: "1080.0"
-      type: PROPERTY_TYPE_NUMBER
-    }
-  }
-}
-instances {
   id: "skeleton"
   prototype: "/game/entities/enemies/skeleton.go"
   position {
@@ -92,6 +43,42 @@ instances {
     y: 4.0
   }
 }
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  component_properties {
+    id: "script"
+    properties {
+      id: "automatic_zoom"
+      value: "false"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow"
+      value: "false"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow_target"
+      value: "/player"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "bounds_right"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_top"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "monarch"
@@ -102,6 +89,83 @@ embedded_instances {
   ""
 }
 embedded_instances {
-  id: "level_manager"
-  data: ""
+  id: "camera_controller"
+  data: "components {\n"
+  "  id: \"camera\"\n"
+  "  component: \"/scenes/shares/camera.script\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "go"
+  data: "embedded_components {\n"
+  "  id: \"collisionobject\"\n"
+  "  type: \"collisionobject\"\n"
+  "  data: \"type: COLLISION_OBJECT_TYPE_TRIGGER\\n"
+  "mass: 0.0\\n"
+  "friction: 0.1\\n"
+  "restitution: 0.5\\n"
+  "group: \\\"test\\\"\\n"
+  "mask: \\\"player\\\"\\n"
+  "embedded_collision_shape {\\n"
+  "  shapes {\\n"
+  "    shape_type: TYPE_BOX\\n"
+  "    position {\\n"
+  "      x: 67.0\\n"
+  "      y: 539.0\\n"
+  "    }\\n"
+  "    rotation {\\n"
+  "    }\\n"
+  "    index: 0\\n"
+  "    count: 3\\n"
+  "  }\\n"
+  "  shapes {\\n"
+  "    shape_type: TYPE_BOX\\n"
+  "    position {\\n"
+  "      x: 967.0\\n"
+  "      y: 67.0\\n"
+  "    }\\n"
+  "    rotation {\\n"
+  "    }\\n"
+  "    index: 3\\n"
+  "    count: 3\\n"
+  "  }\\n"
+  "  shapes {\\n"
+  "    shape_type: TYPE_BOX\\n"
+  "    position {\\n"
+  "      x: 967.0\\n"
+  "      y: 1013.0\\n"
+  "    }\\n"
+  "    rotation {\\n"
+  "    }\\n"
+  "    index: 6\\n"
+  "    count: 3\\n"
+  "  }\\n"
+  "  shapes {\\n"
+  "    shape_type: TYPE_BOX\\n"
+  "    position {\\n"
+  "      x: 1715.0\\n"
+  "      y: 539.0\\n"
+  "    }\\n"
+  "    rotation {\\n"
+  "    }\\n"
+  "    index: 9\\n"
+  "    count: 3\\n"
+  "  }\\n"
+  "  data: 64.21773\\n"
+  "  data: 45.1819\\n"
+  "  data: 10.0\\n"
+  "  data: 54.02155\\n"
+  "  data: 67.64242\\n"
+  "  data: 10.0\\n"
+  "  data: 54.02155\\n"
+  "  data: 67.64242\\n"
+  "  data: 10.0\\n"
+  "  data: 64.21773\\n"
+  "  data: 45.1819\\n"
+  "  data: 10.0\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
 }

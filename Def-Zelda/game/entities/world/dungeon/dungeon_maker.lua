@@ -1,5 +1,13 @@
 local M = {}
 
+-- 定义移动的四个方向
+local DIRECTIONS = {
+    { x = 0, y = 1 },
+    { x = 0, y = -1 },
+    { x = -1, y = 0},
+    { x = 1, y = 0}
+}
+
 -- 私有辅助函数
 local function get_random_tile(tile_or_table)
     -- 情况 1：如果它是一个表（列表）
@@ -10,6 +18,47 @@ local function get_random_tile(tile_or_table)
     elseif type(tile_or_table) == "number" then
         return tile_or_table
     end
+end
+
+local function generate_random_walk_grid(width, height, max_rooms)
+    math.randomseed(os.time())
+    -- 初始化全空的网格
+    local grid = {}
+    for x = 1, width do
+        grid[x] = {}
+        for y = 1, height do
+            grid[x][y] = 0
+        end
+    end
+    -- 设定起点
+    local walker_x = math.random(math.ceil(width / 2))
+    local walker_y = math.random(math.ceil(height / 2))
+    local start_room = { x = walker_x, y = walker_y }
+    -- 标记起点房间
+    grid[walker_x][walker_y] = 1
+    local room_count = 1 -- 当前生成的起点刚房间
+    -- 开始游走循环
+    while room_count < max_rooms do
+        -- 随机选取一个方向
+        local direction = DIRECTIONS[math.random(#DIRECTIONS)]
+        -- 计算下一步的坐标
+        local next_x = walker_x + direction.x
+        local next_y = walker_y + direction.y
+        -- 边界检查 检测下一步坐标是否超出地图边界
+        if next_x > 1 and next_x < width and next_y > 1 and next_y < height then
+            -- 移动指针/移动旷工
+            walker_x = next_x
+            walker_y = next_y
+
+            -- 决定是否挖掘/生成房间
+            if grid[walker_x][walker_y] == 0 then
+                grid[walker_x][walker_y] = 1
+                room_count = room_count + 1
+            end
+        end
+    end
+
+    return grid, start_room
 end
 
 local function generate_dungeon_data(width, height)
@@ -26,11 +75,10 @@ local function generate_dungeon_data(width, height)
         end
     end
 
-    M.dungeon = dungeon
     return dungeon
 end
 
-local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_config)
+local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_config, door_config)
     -- 解构配置
     local padding = dungeon_config.padding
     local room_width = dungeon_config.room_width
@@ -68,6 +116,7 @@ local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_co
             -- 所有的图块：包括地板、墙、门、透明层等等
             if is_void then
                 tilemap.set_tile(map_url, layer_names.void, world_x, world_y, ids.empty)
+                local info = tilemap.get_tile(map_url, layer_names.void, world_x, world_y)
             else
                 -- 房间内部绘制逻辑
                 local is_top = (y == room_end_y)
@@ -115,13 +164,35 @@ function M.generate_dungeon(map_url, dungeon_config, tile_config)
     -- 内部解构数据
     local dungeon_width = dungeon_config.dungeon_width
     local dungeon_height = dungeon_config.dungeon_height
-    local dungeon = generate_dungeon_data(dungeon_width, dungeon_height)
+    local max_rooms = dungeon_config.max_rooms
+
+    local grid_data , start_room = generate_random_walk_grid(dungeon_width, dungeon_height, max_rooms)
+    pprint(start_room)
+    local dungeon = {
+        width = dungeon_width,
+        height = dungeon_height,
+        grid = grid_data,
+        start_room = start_room
+    }
 
     -- 遍历数据并渲染
     for grid_x = 1, dungeon_width do
         for grid_y = 1, dungeon_height do
-            if dungeon.grid[grid_x][grid_y] == 0 then
-                draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_config)
+            if dungeon.grid[grid_x][grid_y] == 1 then
+                -- 检查每一间生成房间的上下左右有没有邻居
+                local has_top = (grid_y < dungeon_height) and (dungeon.grid[grid_x][grid_y + 1] == 1)
+                local has_bottom = (grid_y > 1) and (dungeon.grid[grid_x][grid_y - 1] == 1)
+                local has_left = (grid_x < dungeon_width) and (dungeon.grid[grid_x + 1][grid_y] == 1)
+                local has_right = (grid_x > 1) and (dungeon.grid[grid_x - 1][grid_y] == 1)
+
+                local door_config = {
+                    top = has_top,
+                    bottom = has_bottom,
+                    left = has_left,
+                    right = has_right
+                }
+                
+                draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_config, door_config)
             end
         end
     end
@@ -131,6 +202,7 @@ function M.generate_dungeon(map_url, dungeon_config, tile_config)
         dungeon = dungeon,
         width = dungeon_width,
         height = dungeon_height,
+        dungeon_config = dungeon_config,
     }
 end
 

@@ -1,0 +1,70 @@
+local Camera = require('orthographic.camera')
+local CAMERA_ID = hash("/camera")
+local GameData = require('data.config.game_data')
+
+
+local function move_camera_to_next_room(self)
+	local camera_pos = go.get_position(CAMERA_ID)
+	local target_pos = camera_pos + vmath.vector3(GameData.dungeon.dungeon_config.room_width * GameData.dungeon.dungeon_config.tile_size, 0, 0)
+	self.current_pos = target_pos
+	go.animate(CAMERA_ID, 'position', go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_INOUTQUAD, 1.5)
+end
+
+---@package
+---@param self camera.script
+function init(self)
+	msg.post(".", "acquire_input_focus")
+	
+	self.start_pos = go.get_position()
+	self.current_pos = self.start_pos
+end
+
+---@package
+---@param self camera.script
+---@param dt number
+function update(self, dt)
+
+end
+
+---@package
+---@param self camera.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('move_camera_to_next_room') then
+		move_camera_to_next_room(self)
+	end
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("touch") then
+		-- store the position where the pressed action happened
+		-- also store the camera position at that time
+		if action.pressed then
+			print("pressed")
+			self.pressed_pos = vmath.vector3(action.x, action.y, 0)
+			self.camera_pos = go.get_position(CAMERA_ID)
+		elseif action.released then
+			self.pressed_pos = nil
+		end
+	elseif action_id == hash("zoom_in") then
+		local zoom = Camera.get_zoom(CAMERA_ID)
+		zoom = math.min(10, zoom + 0.05)
+		Camera.set_zoom(CAMERA_ID, zoom)
+	elseif action_id == hash("zoom_out") then
+		local zoom = Camera.get_zoom(CAMERA_ID)
+		zoom = math.max(0.05, zoom - 0.05)
+		Camera.set_zoom(CAMERA_ID, zoom)
+	elseif action_id == nil and self.pressed_pos then
+		-- drag the camera
+		-- base all calculations on the current mouse/touch position
+		-- relative to the position when the pressed action happens
+		-- also take the zoom into account
+		local zoom = Camera.get_zoom(CAMERA_ID)
+		local action_pos = vmath.vector3(action.x, action.y, 0)
+		local diff = (action_pos - self.pressed_pos) / zoom
+		local camera_pos = self.camera_pos - diff
+		go.set_position(camera_pos, CAMERA_ID)
+	end
+end

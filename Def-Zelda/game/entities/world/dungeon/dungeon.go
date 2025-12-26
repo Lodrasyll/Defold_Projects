@@ -19,7 +19,24 @@ embedded_components {
   "friction: 0.1\n"
   "restitution: 0.5\n"
   "group: \"wall\"\n"
-  "mask: \"player\"\n"
   "mask: \"enemies\"\n"
+  ""
+}
+embedded_components {
+  id: "player_factory"
+  type: "factory"
+  data: "prototype: \"/game/entities/player/player.go\"\n"
+  ""
+}
+embedded_components {
+  id: "door_factory"
+  type: "factory"
+  data: "prototype: \"/game/entities/player/player.go\"\n"
+  ""
+}
+embedded_components {
+  id: "switch_factory"
+  type: "factory"
+  data: "prototype: \"/game/entities/world/dungeon/switch.go\"\n"
   ""
 }

@@ -1,29 +1,56 @@
 local DunMaker = require('game.entities.world.dungeon.dungeon_maker')
 local GameData = require('data.config.game_data')
 local Config = require('data.config.config')
+local utils = require('core.utils.utils')
 
 local MAP_URL = '#dungeon_map'
-go.property('dungeon_map_width', 5)
-go.property('dungeon_map_height', 5)
+go.property('dungeon_map_width', 10)
+go.property('dungeon_map_height', 10)
 local roommap_width = Config.DunConst.ROOMMAP_WIDTH
 local roommap_height = Config.DunConst.ROOMMAP_HEIGHT
 
 
+local function spawn_enemies(self)
+	
+end
+
+
+local function spawn_player_and_set_camera(self)
+	local dungeon = self.dungeon
+	local config = Config.DunConst
+
+	local start_grid_x = self.dungeon.dungeon.start_room.x
+	local start_grid_y = self.dungeon.dungeon.start_room.y
+
+	local center_local_x = math.ceil(config.ROOMMAP_WIDTH / 2)
+	local center_local_y = math.ceil(config.ROOMMAP_HEIGHT / 2)
+
+	local spawn_pos = utils.get_world_position(start_grid_x, start_grid_y, center_local_x, center_local_y, config)
+	
+	local camera_spawn_pos = spawn_pos
+	camera_spawn_pos.z = 0
+	go.set_position(spawn_pos, '/camera')
+
+	local player_id = factory.create('#player_factory', spawn_pos, nil)
+end
+
 local function dungeon_init(self)
 	-- 准备配置包/表
-	local dungeon_config = {
+	self.dungeon_config = {
 		dungeon_width = self.dungeon_map_width,
 		dungeon_height = self.dungeon_map_height,
 		room_width = roommap_width,
 		room_height = roommap_height,
+		max_rooms = Config.DunConst.MAX_ROOMS,
 		padding = Config.DunConst.PADDING,
+		tile_size = Config.DunConst.TILE_SIZE
 	}
 
 	local tile_config = Config.DunConst.TileConfig
 
 	-- 调用地牢生成器
-	GameData.dungeon = DunMaker.generate_dungeon(MAP_URL, dungeon_config, tile_config)
-	pprint(GameData.dungeon)
+	self.dungeon = DunMaker.generate_dungeon(MAP_URL, self.dungeon_config, tile_config)
+	GameData.dungeon = self.dungeon
 end
 
 ---@package
@@ -32,5 +59,7 @@ function init(self)
 	math.random(os.time())
 
 	dungeon_init(self)
+	spawn_player_and_set_camera(self)
+	spawn_enemies(self)
 end
 

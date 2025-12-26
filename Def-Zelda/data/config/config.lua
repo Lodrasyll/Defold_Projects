@@ -23,6 +23,7 @@ M.DunConst = {
     SCREEN_WIDTH = SCREEN_WIDTH,
     SCREEN_HEIGHT = SCREEN_HEIGHT,
     PADDING = PADDING,
+    MAX_ROOMS = 25,
 
     -- 计算后的结果
     ROOMMAP_WIDTH = map_width,

@@ -1,6 +1,6 @@
 components {
   id: "switch"
-  component: "/game/entities/world/switch/switch.script"
+  component: "/game/entities/world/dungeon/switch.script"
 }
 embedded_components {
   id: "sprite"

@@ -3,19 +3,19 @@ layers {
   id: "ground"
   z: -0.1
   cell {
-    x: 119
+    x: 299
     y: 0
-    tile: 127
+    tile: 13
   }
   cell {
     x: 0
-    y: 119
-    tile: 127
+    y: 299
+    tile: 13
   }
   cell {
-    x: 119
-    y: 119
-    tile: 127
+    x: 299
+    y: 299
+    tile: 13
   }
 }
 layers {
