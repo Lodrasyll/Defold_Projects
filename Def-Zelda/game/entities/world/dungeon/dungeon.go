@@ -1,10 +1,6 @@
 components {
   id: "dungeon"
   component: "/game/entities/world/dungeon/dungeon.script"
-  position {
-    x: -0.7810364
-    y: -0.5493936
-  }
 }
 components {
   id: "dungeon_map"
@@ -20,6 +16,7 @@ embedded_components {
   "restitution: 0.5\n"
   "group: \"wall\"\n"
   "mask: \"enemies\"\n"
+  "mask: \"player\"\n"
   ""
 }
 embedded_components {
@@ -38,5 +35,23 @@ embedded_components {
   id: "switch_factory"
   type: "factory"
   data: "prototype: \"/game/entities/world/dungeon/switch.go\"\n"
+  ""
+}
+embedded_components {
+  id: "ghost_factory"
+  type: "factory"
+  data: "prototype: \"/game/entities/enemies/ghost.go\"\n"
+  ""
+}
+embedded_components {
+  id: "slime_factory"
+  type: "factory"
+  data: "prototype: \"/game/entities/enemies/slime.go\"\n"
+  ""
+}
+embedded_components {
+  id: "skeleton_factory"
+  type: "factory"
+  data: "prototype: \"/game/entities/enemies/skeleton.go\"\n"
   ""
 }

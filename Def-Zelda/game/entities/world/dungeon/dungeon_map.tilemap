@@ -1,7 +1,7 @@
 tile_set: "/assets/arts/textures/tile.tilesource"
 layers {
   id: "ground"
-  z: -0.1
+  z: -0.2
   cell {
     x: 299
     y: 0

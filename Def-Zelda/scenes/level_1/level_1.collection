@@ -1,41 +1,5 @@
 name: "level_1"
 instances {
-  id: "skeleton"
-  prototype: "/game/entities/enemies/skeleton.go"
-  position {
-    x: 283.17508
-    y: 483.17877
-  }
-  scale3 {
-    x: 4.0
-    y: 4.0
-  }
-}
-instances {
-  id: "slime"
-  prototype: "/game/entities/enemies/slime.go"
-  position {
-    x: 1637.3606
-    y: 179.21188
-  }
-  scale3 {
-    x: 4.0
-    y: 4.0
-  }
-}
-instances {
-  id: "ghost"
-  prototype: "/game/entities/enemies/ghost.go"
-  position {
-    x: 1363.5776
-    y: 800.12634
-  }
-  scale3 {
-    x: 4.0
-    y: 4.0
-  }
-}
-instances {
   id: "dungeon"
   prototype: "/game/entities/world/dungeon/dungeon.go"
   scale3 {
@@ -93,79 +57,6 @@ embedded_instances {
   data: "components {\n"
   "  id: \"camera\"\n"
   "  component: \"/scenes/shares/camera.script\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
-  id: "go"
-  data: "embedded_components {\n"
-  "  id: \"collisionobject\"\n"
-  "  type: \"collisionobject\"\n"
-  "  data: \"type: COLLISION_OBJECT_TYPE_TRIGGER\\n"
-  "mass: 0.0\\n"
-  "friction: 0.1\\n"
-  "restitution: 0.5\\n"
-  "group: \\\"test\\\"\\n"
-  "mask: \\\"player\\\"\\n"
-  "embedded_collision_shape {\\n"
-  "  shapes {\\n"
-  "    shape_type: TYPE_BOX\\n"
-  "    position {\\n"
-  "      x: 67.0\\n"
-  "      y: 539.0\\n"
-  "    }\\n"
-  "    rotation {\\n"
-  "    }\\n"
-  "    index: 0\\n"
-  "    count: 3\\n"
-  "  }\\n"
-  "  shapes {\\n"
-  "    shape_type: TYPE_BOX\\n"
-  "    position {\\n"
-  "      x: 967.0\\n"
-  "      y: 67.0\\n"
-  "    }\\n"
-  "    rotation {\\n"
-  "    }\\n"
-  "    index: 3\\n"
-  "    count: 3\\n"
-  "  }\\n"
-  "  shapes {\\n"
-  "    shape_type: TYPE_BOX\\n"
-  "    position {\\n"
-  "      x: 967.0\\n"
-  "      y: 1013.0\\n"
-  "    }\\n"
-  "    rotation {\\n"
-  "    }\\n"
-  "    index: 6\\n"
-  "    count: 3\\n"
-  "  }\\n"
-  "  shapes {\\n"
-  "    shape_type: TYPE_BOX\\n"
-  "    position {\\n"
-  "      x: 1715.0\\n"
-  "      y: 539.0\\n"
-  "    }\\n"
-  "    rotation {\\n"
-  "    }\\n"
-  "    index: 9\\n"
-  "    count: 3\\n"
-  "  }\\n"
-  "  data: 64.21773\\n"
-  "  data: 45.1819\\n"
-  "  data: 10.0\\n"
-  "  data: 54.02155\\n"
-  "  data: 67.64242\\n"
-  "  data: 10.0\\n"
-  "  data: 54.02155\\n"
-  "  data: 67.64242\\n"
-  "  data: 10.0\\n"
-  "  data: 64.21773\\n"
-  "  data: 45.1819\\n"
-  "  data: 10.0\\n"
-  "}\\n"
-  "\"\n"
   "}\n"
   ""
 }

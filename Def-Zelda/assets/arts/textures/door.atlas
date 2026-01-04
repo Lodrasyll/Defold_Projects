@@ -1,0 +1,57 @@
+animations {
+  id: "bottom_locked"
+  images {
+    image: "/assets/arts/graphics/door/bottom_locked.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "bottom_opened"
+  images {
+    image: "/assets/arts/graphics/door/bottom_opened.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "left_locked"
+  images {
+    image: "/assets/arts/graphics/door/left_locked.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "left_opened"
+  images {
+    image: "/assets/arts/graphics/door/left_opened.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "right_locked"
+  images {
+    image: "/assets/arts/graphics/door/right_locked.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "right_opened"
+  images {
+    image: "/assets/arts/graphics/door/right_opened.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "top_locked"
+  images {
+    image: "/assets/arts/graphics/door/top_locked.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+animations {
+  id: "top_opened"
+  images {
+    image: "/assets/arts/graphics/door/top_opened.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+}
+extrude_borders: 2

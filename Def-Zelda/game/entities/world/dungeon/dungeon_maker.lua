@@ -8,7 +8,6 @@ local DIRECTIONS = {
     { x = 1, y = 0}
 }
 
--- 私有辅助函数
 local function get_random_tile(tile_or_table)
     -- 情况 1：如果它是一个表（列表）
     if type(tile_or_table) == "table" then
@@ -61,21 +60,58 @@ local function generate_random_walk_grid(width, height, max_rooms)
     return grid, start_room
 end
 
-local function generate_dungeon_data(width, height)
-    -- 数据层：创建地牢数据
-    local dungeon = {
-        width = width,
-        height = height,
-        grid = {}
-    }
-    for x = 1, width do
-        dungeon.grid[x] = {}
-        for y = 0, height do
-            dungeon.grid[x][y] = 0
-        end
+function resolve_tile_type(context)
+    local x, y = context.x, context.y
+    local bounds = context.bounds
+    local door_pos = context.door_pos
+    local active = context.door_active
+
+    if (x < bounds.room_start_x) or (x > bounds.room_end_x) or (y < bounds.room_start_y) or (y > bounds.room_end_y) then
+        return 'void'
     end
 
-    return dungeon
+    -- 房间内部边界标记
+    local is_top = (y == bounds.room_end_y)
+    local is_bottom = (y == bounds.room_start_y)
+    local is_left = (x == bounds.room_start_x)
+    local is_right = (x == bounds.room_end_x)
+
+    -- === 🚪 核心：门的连通逻辑 ===
+    -- 只有当 active.top 为 true 时，才在墙上“挖”出门
+
+    -- 上门
+    if is_top and active.top then
+        if x == door_pos.x_left then return 'door_top_L' end
+        if x == door_pos.x_right then return 'door_top_R' end
+    end
+    --下门
+    if is_bottom and active.bottom then
+        if x == door_pos.x_left then return 'door_bottom_L' end
+        if x == door_pos.x_right then return 'door_bottom_R' end
+    end
+    -- 左门
+    if is_left and active.left then
+        if y == door_pos.y_side_top then return 'door_left_T' end
+        if y == door_pos.y_side_bottom then return 'door_right_B' end
+    end
+    -- 右门
+    if is_right and active.right then
+        if y == door_pos.y_side_top then return 'door_right_T' end
+        if y == door_pos.y_side_bottom then return 'door_right_B' end
+    end
+
+    -- === 墙壁与角落 ===
+    if is_top and is_left then return 'corner_tl' end
+    if is_top and is_right then return 'corner_tr' end
+    if is_bottom and is_left then return 'corner_bl' end
+    if is_bottom and is_right then return 'corner_br' end
+
+    if is_top then return 'wall_top' end
+    if is_bottom then return 'wall_bottom' end
+    if is_left then return 'wall_left' end
+    if is_right then return 'wall_right' end
+
+    return 'floor'
 end
 
 local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_config, door_config)
@@ -83,7 +119,7 @@ local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_co
     local padding = dungeon_config.padding
     local room_width = dungeon_config.room_width
     local room_height = dungeon_config.room_height
-    local layer_names = tile_config.layers
+    local layers = tile_config.layers
     local ids = tile_config.ids
     
     -- 计算绘制偏移
@@ -98,9 +134,38 @@ local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_co
     local room_end_y = room_height - padding
 
     -- 计算门的基准位置
-    local door_base_x = math.floor((room_start_x + room_end_x) / 2)
-    local top_door_base_y = room_end_y
-    local bottom_door_base_y = room_start_y
+    local door_x_left = math.floor((room_start_x + room_end_x) / 2)
+    local door_x_right = door_x_left + 1
+    local door_y_top = room_end_y
+    local door_y_bottom = room_start_y
+    local door_y_mid_top = math.floor((room_start_y + room_end_y) / 2)
+    local door_y_mid_bottom = door_y_mid_top - 1
+
+    -- 准备渲染规则映射
+    local render_rules = {
+        ['void'] = { layer = layers.void, id = ids.empty },
+        ['floor'] = { layer = layers.ground, list = ids.floors },
+
+        ['wall_top'] = { layer = layers.wall, list = ids.walls.top },
+        ['wall_bottom'] = { layer = layers.wall, list = ids.walls.bottom },
+        ['wall_left'] = { layer = layers.wall, list = ids.walls.left },
+        ['wall_right'] = { layer = layers.wall, list = ids.walls.right },
+
+        ['corner_tl'] = { layer = layers.wall, id = ids.corners.tl },
+        ['corner_tr'] = { layer = layers.wall, id = ids.corners.tr },
+        ['corner_bl'] = { layer = layers.wall, id = ids.corners.bl },
+        ['corner_br'] = { layer = layers.wall, id = ids.corners.br },
+
+        ['door_top_L'] = { layer = layers.door, id = ids.empty },
+        ['door_top_R'] = { layer = layers.door, id = ids.empty },
+        ['door_botom_L'] = { layer = layers.door, id = ids.empty },
+        ['door_bottom_R'] = { layer = layers.door, id = ids.empty },
+
+        ["door_left_B"]   = { layer = layers.ground, id = ids.empty },
+        ["door_left_T"]   = { layer = layers.ground, id = ids.empty },
+        ["door_right_B"]  = { layer = layers.ground, id = ids.empty },
+        ["door_right_T"]  = { layer = layers.ground, id = ids.empty },
+    }
 
     -- === 渲染绘制循环 ===
     for x = 1, room_width do
@@ -109,49 +174,37 @@ local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_co
             local world_x = offset_x + x
             local world_y = offset_y + y
 
+            -- 准备上下文数据
+            local context = {
+                x = x, y = y,
+                bounds = {
+                    room_start_x = room_start_x,
+                    room_end_x = room_end_x,
+                    room_start_y = room_start_y,
+                    room_end_y = room_end_y
+                },
+                door_pos = {
+                    x_left = door_x_left, x_right = door_x_right,
+                    y_top = door_y_top, y_bottom = door_y_bottom,
+                    y_side_top = door_y_mid_top, y_side_bottom = door_y_mid_bottom
+                },
+                door_active = door_config
+            }
+
             -- == 阶段A：身份判定
-            local is_void = (x < room_start_x) or (x > room_end_x) or (y < room_start_y) or (y > room_end_y)
+            -- == 阶段B：执行绘制 所有的图块：包括地板、墙、门、透明层
+            local type_key = resolve_tile_type(context)
+            local rule = render_rules[type_key]
 
-
-            -- 所有的图块：包括地板、墙、门、透明层等等
-            if is_void then
-                tilemap.set_tile(map_url, layer_names.void, world_x, world_y, ids.empty)
-                local info = tilemap.get_tile(map_url, layer_names.void, world_x, world_y)
-            else
-                -- 房间内部绘制逻辑
-                local is_top = (y == room_end_y)
-                local is_bottom = (y == room_start_y)
-                local is_left = (x == room_start_x)
-                local is_right = (x == room_end_x)
-
-                -- === 阶段 B: 绘制决策 (Rendering Decision) ===
-                -- 优先级：角落 > 墙壁 > 地板
-                if is_top and is_left then
-                    tilemap.set_tile(map_url, layer_names.wall, world_x, world_y, get_random_tile(ids.corners.tl))
-                
-                elseif is_top and is_right then
-                    tilemap.set_tile(map_url, layer_names.wall, world_x, world_y, get_random_tile(ids.corners.tr))
-                
-                elseif is_bottom and is_left then
-                    tilemap.set_tile(map_url, layer_names.wall, world_x, world_y, get_random_tile(ids.corners.bl))
-
-                elseif is_bottom and is_right then
-                    tilemap.set_tile(map_url, layer_names.wall, world_x, world_y, get_random_tile(ids.corners.br))
-
-                elseif is_top then
-                    tilemap.set_tile(map_url, layer_names.wall, world_x, world_y, get_random_tile(ids.walls.top))
-
-                elseif is_bottom then
-                    tilemap.set_tile(map_url, layer_names.wall, world_x, world_y, get_random_tile(ids.walls.bottom))
-
-                elseif is_left then
-                    tilemap.set_tile(map_url, layer_names.wall, world_x, world_y, get_random_tile(ids.walls.left))
-
-                elseif is_right then
-                    tilemap.set_tile(map_url, layer_names.wall, world_x, world_y, get_random_tile(ids.walls.right))
-
-                else
-                    tilemap.set_tile(map_url, layer_names.ground, world_x, world_y, get_random_tile(ids.floors))
+            if rule then
+                -- 需要ID
+                local final_id = rule.id
+                if rule.list then
+                    final_id = rule.list[math.random(#rule.list)]
+                end
+                -- 绘制
+                if final_id then
+                    tilemap.set_tile(map_url, rule.layer, world_x, world_y, final_id)
                 end
             end
         end
@@ -167,7 +220,7 @@ function M.generate_dungeon(map_url, dungeon_config, tile_config)
     local max_rooms = dungeon_config.max_rooms
 
     local grid_data , start_room = generate_random_walk_grid(dungeon_width, dungeon_height, max_rooms)
-    pprint(start_room)
+
     local dungeon = {
         width = dungeon_width,
         height = dungeon_height,
@@ -179,12 +232,13 @@ function M.generate_dungeon(map_url, dungeon_config, tile_config)
     for grid_x = 1, dungeon_width do
         for grid_y = 1, dungeon_height do
             if dungeon.grid[grid_x][grid_y] == 1 then
+                
                 -- 检查每一间生成房间的上下左右有没有邻居
-                local has_top = (grid_y < dungeon_height) and (dungeon.grid[grid_x][grid_y + 1] == 1)
-                local has_bottom = (grid_y > 1) and (dungeon.grid[grid_x][grid_y - 1] == 1)
-                local has_left = (grid_x < dungeon_width) and (dungeon.grid[grid_x + 1][grid_y] == 1)
-                local has_right = (grid_x > 1) and (dungeon.grid[grid_x - 1][grid_y] == 1)
-
+                local has_top =    (grid_y < dungeon_height) and (dungeon.grid[grid_x][grid_y + 1] == 1)
+                local has_bottom = (grid_y > 1) and              (dungeon.grid[grid_x][grid_y - 1] == 1)
+                local has_left =   (grid_x < dungeon_width) and  (dungeon.grid[grid_x - 1][grid_y] == 1)
+                local has_right =  (grid_x > 1) and              (dungeon.grid[grid_x + 1][grid_y] == 1)
+                -- 打包房间门的信息配置
                 local door_config = {
                     top = has_top,
                     bottom = has_bottom,

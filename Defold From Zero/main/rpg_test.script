@@ -1,0 +1,27 @@
+---@package
+---@param character table
+local function calculated_damage(character)
+	-- 在返回需要安全检查
+	if character.weapon == nil then
+		return character.base_attack
+	end
+	local total = character.base_attack + character.weapon.damage
+	return total
+end
+
+
+---@package
+---@param self rpg_test.script
+function init(self)
+	local sword = { name = 'Excalibur', damage = 15 }
+	local hero = {
+		name = 'Arthur',
+		base_attack = 100,
+		weapon = sword -- 表的引用
+	}
+
+	local damage = calculated_damage(hero)
+	print(hero.name .. ' attacks with ' .. hero.weapon.name)
+	print('Total damage: ' .. damage)
+end
+

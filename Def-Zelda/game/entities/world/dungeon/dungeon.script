@@ -26,12 +26,14 @@ local function spawn_player_and_set_camera(self)
 	local center_local_y = math.ceil(config.ROOMMAP_HEIGHT / 2)
 
 	local spawn_pos = utils.get_world_position(start_grid_x, start_grid_y, center_local_x, center_local_y, config)
+
+	local player_id = factory.create('#player_factory', spawn_pos, nil)
 	
 	local camera_spawn_pos = spawn_pos
 	camera_spawn_pos.z = 0
 	go.set_position(spawn_pos, '/camera')
 
-	local player_id = factory.create('#player_factory', spawn_pos, nil)
+	
 end
 
 local function dungeon_init(self)
