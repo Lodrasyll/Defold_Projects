@@ -9,6 +9,14 @@ go.property('dungeon_map_height', 10)
 local roommap_width = Config.DunConst.ROOMMAP_WIDTH
 local roommap_height = Config.DunConst.ROOMMAP_HEIGHT
 
+local function get_room_data(self, grid_x, grid_y)
+	local key = grid_x .. '_' .. grid_y
+	if not self.room_registry[key] then
+		self.room_registry[key] = { doors = {}, switches = {} }
+	end
+	return self.room_registry[key]
+end
+
 
 local function spawn_enemies(self)
 	
@@ -26,7 +34,12 @@ local function spawn_switch(self)
 			if has_room and room_floor_list then
 				local floor_pos = room_floor_list[math.random(1, #room_floor_list)]
 				local spawn_pos = utils.get_world_position(grid_x, grid_y, floor_pos.x, floor_pos.y, config)
-				local switch_id = factory.create('#switch_factory', spawn_pos)
+				spawn_pos.z = 0
+				local switch_id = factory.create('#switch_factory', spawn_pos, nil, { grid_x = grid_x, grid_y = grid_y })
+
+				-- ✨ 登记到注册表
+				local room_data = get_room_data(self, grid_x, grid_y)
+				table.insert(room_data.switches, switch_id)
 			end
 		end
 	end
@@ -37,6 +50,10 @@ local function spawn_door(self)
 	for _, door_data in pairs(room_door_list) do
 		if door_data.type == 'door' then
 			local door_id = factory.create('#door_factory', door_data.pos, nil, { direction = door_data.dir })
+
+			-- ✨ 登记到注册表
+			local room_data = get_room_data(self, door_data.grid_x, door_data.grid_y)
+			table.insert(room_data.doors, door_id)
 		end
 	end
 end
@@ -84,6 +101,8 @@ local function dungeon_init(self)
 	-- 调用地牢生成器
 	self.dungeon = DunMaker.generate_dungeon(MAP_URL, self.dungeon_config, tile_config)
 	GameData.dungeon = self.dungeon
+
+	self.room_registry = {}
 end
 
 ---@package
@@ -91,11 +110,39 @@ end
 function init(self)
 	self.player_id = nil
 
-	math.random(os.time())
+	math.randomseed(os.time())
 
 	dungeon_init(self)
 	spawn_player_and_set_camera(self)
 	spawn_enemies(self)
 	spawn_switch(self)
 	spawn_door(self)
+
+
+	-- 在 dungeon.script 的 init 底部
+	print("=== 🛠️ 地牢注册表检查 ===")
+	for key, data in pairs(self.room_registry) do
+		print("房间 [" .. key .. "] 拥有:")
+		print("   - 开关数量: " .. #data.switches)
+		print("   - 门数量: " .. #data.doors)
+	end
+	print("===========================")
+end
+
+---@package
+---@param self dungeon.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('switch_activated') then
+		local key = message.gx .. '_' .. message.gy
+		local room_data = self.room_registry[key]
+
+		if room_data then
+			for _, door_id in pairs(room_data.doors) do
+				msg.post(door_id, 'open')
+			end
+		end
+	end
 end

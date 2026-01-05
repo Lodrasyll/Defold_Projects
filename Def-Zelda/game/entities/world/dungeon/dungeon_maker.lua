@@ -2,6 +2,7 @@ local M = {}
 
 M.room_floor_list = {}
 M.room_door_list = {}
+M.room_registry = {}
 
 -- 定义移动的四个方向
 local DIRECTIONS = {
@@ -252,7 +253,9 @@ local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_co
                     table.insert(M.room_door_list, {
                         pos = final_pos,
                         dir = door_dir,
-                        type = "door"
+                        type = "door",
+                        grid_x = grid_x,
+                        grid_y = grid_y
                     })
                 end
 

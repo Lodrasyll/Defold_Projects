@@ -84,7 +84,7 @@ function init(self)
 		},
 		callbacks = {
 			onstatechange = function (fsm, event, from, to)
-				print('State Change: [' .. event .. ']' .. from .. '-->' .. to)
+				-- print('State Change: [' .. event .. ']' .. from .. '-->' .. to)
 
 				-- A.退出旧状态
 				local old_state = self.states[from]
@@ -177,9 +177,9 @@ function on_message(self, message_id, message, sender)
 		go.set_position(new_pos)
 	end
 
-	if message_id == hash('transion_camera_start') then
+	if message_id == hash('transition_camera_start') then
 		self.input_enabled = false
-	elseif message_id == hash('transion_camera_end') then
+	elseif message_id == hash('transition_camera_end') then
 		self.input_enabled = true
 		msg.post('#collision', 'enable')
 	end

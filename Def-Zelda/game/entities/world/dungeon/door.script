@@ -8,11 +8,14 @@ local DIR_TO_STRING = {
     [hash('right')] = 'right'
 }
 
+
+
 ---@package
 ---@param self door.script
 function init(self)
     msg.post('#trigger', 'disable')
-    self.opened = true
+
+    self.is_open = false
 
     local dir_str = DIR_TO_STRING[self.direction]
     if dir_str then
@@ -23,22 +26,6 @@ end
 
 ---@package
 ---@param self door.script
----@param dt number
-function update(self, dt)
-    if self.opened then
-        local dir_str = DIR_TO_STRING[self.direction]
-        if dir_str then
-            local anim_name = dir_str .. '_opened'
-            sprite.play_flipbook('#sprite', anim_name)
-            msg.post('#collisionobject', 'disable')
-            msg.post('#trigger', 'enable')
-        end
-    end
-end
-
-
----@package
----@param self door.script
 ---@param message_id hash
 ---@param message table
 ---@param sender url
@@ -46,8 +33,27 @@ function on_message(self, message_id, message, sender)
     if message_id == hash('trigger_response') and message.enter then
         if message.group == hash('player') then
             msg.post('/camera_controller', 'move_camera_to_next_room', { camera_direction = self.direction })
-            msg.post(GameData.player_id, 'transion_camera_start')
+            msg.post(GameData.player_id, 'transition_camera_start')
             msg.post('#trigger', 'disable')
+        end
+    end
+
+    if message_id == hash("open") then
+        if not self.is_open then
+            self.is_open = true
+            -- 播放开门动画
+            local dir_str = DIR_TO_STRING[self.direction]
+            if dir_str then
+                local anim_name = dir_str .. '_opened'
+                sprite.play_flipbook('#sprite', anim_name)
+                msg.post('#collisionobject', 'disable')
+                msg.post('#trigger', 'enable')
+            end
+
+            -- 🚪 关键：处理碰撞
+            -- 方案A：如果是 Trigger，不需要 disable，因为玩家本来就能穿过 Trigger
+            -- 方案B：如果是 Static (阻挡)，需要 disable
+            -- msg.post("#collisionobject", "disable")
         end
     end
 end

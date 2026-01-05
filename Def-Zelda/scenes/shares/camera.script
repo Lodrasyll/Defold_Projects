@@ -22,7 +22,7 @@ local function move_camera_to_next_room(self, message)
 		self.current_pos = target_pos
 
 		go.animate(CAMERA_ID, 'position', go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_INOUTQUAD, 1.5, 0, function ()
-			msg.post(GameData.player_id, 'transion_camera_end')
+			msg.post(GameData.player_id, 'transition_camera_end')
 		end)
 		msg.post(GameData.player_id, "auto_walk", { direction = move_dir })
 	end
