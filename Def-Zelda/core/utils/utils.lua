@@ -1,4 +1,5 @@
 local M = {}
+local tile_size = require('data.config.config')
 
 function M.position_to_index(pos_x, pos_y, size)
     local x = math.floor(pos_x / size.x)

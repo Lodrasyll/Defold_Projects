@@ -58,8 +58,8 @@ M.DunConst = {
             doors = {
                 top = { left = 134, right = 135 },
                 bottom = { left = 153, right = 154 }
-            }
-
+            },
+            door_test = 120
         }
     },
 

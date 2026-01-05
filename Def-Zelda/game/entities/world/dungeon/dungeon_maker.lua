@@ -1,5 +1,8 @@
 local M = {}
 
+M.room_floor_list = {}
+M.room_door_list = {}
+
 -- 定义移动的四个方向
 local DIRECTIONS = {
     { x = 0, y = 1 },
@@ -7,6 +10,7 @@ local DIRECTIONS = {
     { x = -1, y = 0},
     { x = 1, y = 0}
 }
+
 
 local function get_random_tile(tile_or_table)
     -- 情况 1：如果它是一个表（列表）
@@ -60,7 +64,7 @@ local function generate_random_walk_grid(width, height, max_rooms)
     return grid, start_room
 end
 
-function resolve_tile_type(context)
+local function resolve_tile_type(context)
     local x, y = context.x, context.y
     local bounds = context.bounds
     local door_pos = context.door_pos
@@ -92,7 +96,7 @@ function resolve_tile_type(context)
     -- 左门
     if is_left and active.left then
         if y == door_pos.y_side_top then return 'door_left_T' end
-        if y == door_pos.y_side_bottom then return 'door_right_B' end
+        if y == door_pos.y_side_bottom then return 'door_left_B' end
     end
     -- 右门
     if is_right and active.right then
@@ -137,7 +141,7 @@ local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_co
     local door_x_left = math.floor((room_start_x + room_end_x) / 2)
     local door_x_right = door_x_left + 1
     local door_y_top = room_end_y
-    local door_y_bottom = room_start_y
+    local door_y_bottom = room_start_y  
     local door_y_mid_top = math.floor((room_start_y + room_end_y) / 2)
     local door_y_mid_bottom = door_y_mid_top - 1
 
@@ -156,15 +160,15 @@ local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_co
         ['corner_bl'] = { layer = layers.wall, id = ids.corners.bl },
         ['corner_br'] = { layer = layers.wall, id = ids.corners.br },
 
-        ['door_top_L'] = { layer = layers.door, id = ids.empty },
-        ['door_top_R'] = { layer = layers.door, id = ids.empty },
-        ['door_botom_L'] = { layer = layers.door, id = ids.empty },
-        ['door_bottom_R'] = { layer = layers.door, id = ids.empty },
+        ['door_top_L'] = { layer = layers.door, id = ids.door_test },
+        ['door_top_R'] = { layer = layers.door, id = ids.door_test },
+        ['door_bottom_L'] = { layer = layers.door, id = ids.door_test },
+        ['door_bottom_R'] = { layer = layers.door, id = ids.door_test },
 
-        ["door_left_B"]   = { layer = layers.ground, id = ids.empty },
-        ["door_left_T"]   = { layer = layers.ground, id = ids.empty },
-        ["door_right_B"]  = { layer = layers.ground, id = ids.empty },
-        ["door_right_T"]  = { layer = layers.ground, id = ids.empty },
+        ["door_left_B"]   = { layer = layers.door, id = ids.door_test },
+        ["door_left_T"]   = { layer = layers.door, id = ids.door_test },
+        ["door_right_B"]  = { layer = layers.door, id = ids.door_test },
+        ["door_right_T"]  = { layer = layers.door, id = ids.door_test },
     }
 
     -- === 渲染绘制循环 ===
@@ -206,6 +210,57 @@ local function draw_single_room(map_url, grid_x, grid_y, dungeon_config, tile_co
                 if final_id then
                     tilemap.set_tile(map_url, rule.layer, world_x, world_y, final_id)
                 end
+
+                -- 2. ✨ 收集门的数据 (这里是关键修改)
+                -- 我们只在检测到特定的 Key 时收集数据
+                local door_dir = nil
+
+                if type_key == 'door_top_L' then
+                    door_dir = hash("top")
+                elseif type_key == 'door_bottom_L' then
+                    door_dir = hash("bottom")
+                elseif type_key == 'door_left_B' then
+                    door_dir = hash("left")
+                elseif type_key == 'door_right_B' then
+                    door_dir = hash("right")
+                end
+
+                if door_dir then
+                    -- 计算出世界像素坐标!
+                    local tile_size = dungeon_config.tile_size
+                    local door_x = (world_x * tile_size) - (tile_size / 2)
+                    local door_y = (world_y * tile_size) - (tile_size / 2)
+
+                    -- 2. 根据方向应用偏移 (Offset)
+                    local final_pos = vmath.vector3(vmath.vector3(door_x, door_y, 0.5))
+
+                    if door_dir == hash("top") then
+                        final_pos.x = final_pos.x + tile_size / 2
+                        final_pos.y = final_pos.y + tile_size / 2
+                    elseif door_dir == hash("bottom") then
+                        final_pos.x = final_pos.x + tile_size / 2
+                        final_pos.y = final_pos.y - tile_size / 2
+                    elseif door_dir == hash("left") then
+                        final_pos.x = final_pos.x - tile_size / 2
+                        final_pos.y = final_pos.y + tile_size / 2
+                    elseif door_dir == hash("right") then
+                        final_pos.x = final_pos.x + tile_size / 2
+                        final_pos.y = final_pos.y + tile_size / 2
+                    end
+
+                    -- 存入列表：包含位置、方向、类型
+                    table.insert(M.room_door_list, {
+                        pos = final_pos,
+                        dir = door_dir,
+                        type = "door"
+                    })
+                end
+
+                -- 收集地板数据 (如果你需要生成随机怪物)
+                if type_key == 'floor' then
+                    -- table.insert(M.room_floor_list, { type = "floor", grid_x = grid_x, grid_y = grid_y, lx = x, ly = y })
+                    table.insert(M.room_floor_list, { type = "floor", x = x, y = y }) -- 注意：地板数据量巨大，建议谨慎收集，或者只收集特定随机点的
+                end
             end
         end
     end
@@ -236,8 +291,8 @@ function M.generate_dungeon(map_url, dungeon_config, tile_config)
                 -- 检查每一间生成房间的上下左右有没有邻居
                 local has_top =    (grid_y < dungeon_height) and (dungeon.grid[grid_x][grid_y + 1] == 1)
                 local has_bottom = (grid_y > 1) and              (dungeon.grid[grid_x][grid_y - 1] == 1)
-                local has_left =   (grid_x < dungeon_width) and  (dungeon.grid[grid_x - 1][grid_y] == 1)
-                local has_right =  (grid_x > 1) and              (dungeon.grid[grid_x + 1][grid_y] == 1)
+                local has_left =   (grid_x > 1) and              (dungeon.grid[grid_x - 1][grid_y] == 1)
+                local has_right =  (grid_x < dungeon_width) and  (dungeon.grid[grid_x + 1][grid_y] == 1)
                 -- 打包房间门的信息配置
                 local door_config = {
                     top = has_top,

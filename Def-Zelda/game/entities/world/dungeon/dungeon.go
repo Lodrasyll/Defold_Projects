@@ -28,7 +28,7 @@ embedded_components {
 embedded_components {
   id: "door_factory"
   type: "factory"
-  data: "prototype: \"/game/entities/player/player.go\"\n"
+  data: "prototype: \"/game/entities/world/dungeon/door.go\"\n"
   ""
 }
 embedded_components {

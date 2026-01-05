@@ -4,7 +4,7 @@
 ---@param message table
 ---@param sender url
 function on_message(self, message_id, message, sender)
-    if message_id == hash('trigger_response') and message.group == hash('player') then
-        msg.post('/room_maker', 'open_dungeon_door')
+    if message_id == hash('trigger_response') and message.group == hash('player') and message.enter then
+        print('open!')
     end
 end
