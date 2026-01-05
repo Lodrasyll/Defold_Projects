@@ -36,7 +36,7 @@ function Attack.enter(player)
                 msg.post(player.current_hitbox, 'enable')
             end
         end)
-        print('enable hitbox')
+        -- print('enable hitbox')
     end 
 end
 
@@ -56,7 +56,7 @@ function Attack.exit(player)
     if player.current_hitbox then
         msg.post(player.current_hitbox, 'disable')
         player.current_hitbox = nil
-        print('disable hitbox')
+        -- print('disable hitbox')
     end
 end
 

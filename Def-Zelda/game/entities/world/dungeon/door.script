@@ -1,2 +1,53 @@
 go.property('direction', hash('top'))
+local GameData = require('data.config.game_data')
 
+local DIR_TO_STRING = {
+    [hash('top')] = 'top',
+    [hash('bottom')] = 'bottom',
+    [hash('left')] = 'left',
+    [hash('right')] = 'right'
+}
+
+---@package
+---@param self door.script
+function init(self)
+    msg.post('#trigger', 'disable')
+    self.opened = true
+
+    local dir_str = DIR_TO_STRING[self.direction]
+    if dir_str then
+        local anim_name = dir_str .. '_locked'
+        sprite.play_flipbook('#sprite', anim_name)
+    end
+end
+
+---@package
+---@param self door.script
+---@param dt number
+function update(self, dt)
+    if self.opened then
+        local dir_str = DIR_TO_STRING[self.direction]
+        if dir_str then
+            local anim_name = dir_str .. '_opened'
+            sprite.play_flipbook('#sprite', anim_name)
+            msg.post('#collisionobject', 'disable')
+            msg.post('#trigger', 'enable')
+        end
+    end
+end
+
+
+---@package
+---@param self door.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('trigger_response') and message.enter then
+        if message.group == hash('player') then
+            msg.post('/camera_controller', 'move_camera_to_next_room', { camera_direction = self.direction })
+            msg.post(GameData.player_id, 'transion_camera_start')
+            msg.post('#trigger', 'disable')
+        end
+    end
+end

@@ -23,7 +23,6 @@ animations {
   id: "left_opened"
   images {
     image: "/assets/arts/graphics/door/left_opened.png"
-    pivot_y: 1.0
   }
   playback: PLAYBACK_LOOP_FORWARD
 }

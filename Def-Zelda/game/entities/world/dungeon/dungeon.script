@@ -26,7 +26,7 @@ local function spawn_switch(self)
 			if has_room and room_floor_list then
 				local floor_pos = room_floor_list[math.random(1, #room_floor_list)]
 				local spawn_pos = utils.get_world_position(grid_x, grid_y, floor_pos.x, floor_pos.y, config)
-				factory.create('#switch_factory', spawn_pos)
+				local switch_id = factory.create('#switch_factory', spawn_pos)
 			end
 		end
 	end
@@ -36,7 +36,7 @@ local function spawn_door(self)
 	local room_door_list = DunMaker.room_door_list
 	for _, door_data in pairs(room_door_list) do
 		if door_data.type == 'door' then
-			local door_id = factory.create('#door_factory', door_data.pos, nil, { dir = door_data.dir })
+			local door_id = factory.create('#door_factory', door_data.pos, nil, { direction = door_data.dir })
 		end
 	end
 end
@@ -55,6 +55,10 @@ local function spawn_player_and_set_camera(self)
 	local spawn_pos = utils.get_world_position(start_grid_x, start_grid_y, center_local_x, center_local_y, config)
 
 	local player_id = factory.create('#player_factory', spawn_pos)
+	GameData.player_id = player_id
+
+	-- 顺便把自己的地址也登记上去，方便别人找我
+	GameData.dungeon_script_url = msg.url()
 	
 	local camera_spawn_pos = spawn_pos
 	camera_spawn_pos.z = 0
@@ -85,6 +89,8 @@ end
 ---@package
 ---@param self dungeon.script
 function init(self)
+	self.player_id = nil
+
 	math.random(os.time())
 
 	dungeon_init(self)

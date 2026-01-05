@@ -2,12 +2,31 @@ local Camera = require('orthographic.camera')
 local CAMERA_ID = hash("/camera")
 local GameData = require('data.config.game_data')
 
+local CAMERA_DIRECTION = {
+	[hash("top")]    = vmath.vector3(0, 1, 0),
+	[hash("bottom")] = vmath.vector3(0, -1, 0),
+	[hash("left")]   = vmath.vector3(-1, 0, 0),
+	[hash("right")]  = vmath.vector3(1, 0, 0)
+}
 
-local function move_camera_to_next_room(self)
-	local camera_pos = go.get_position(CAMERA_ID)
-	local target_pos = camera_pos + vmath.vector3(GameData.dungeon.dungeon_config.room_width * GameData.dungeon.dungeon_config.tile_size, 0, 0)
-	self.current_pos = target_pos
-	go.animate(CAMERA_ID, 'position', go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_INOUTQUAD, 1.5)
+
+local function move_camera_to_next_room(self, message)
+	local move_dir = CAMERA_DIRECTION[message.camera_direction]
+	if move_dir then
+		local room_width = GameData.dungeon.dungeon_config.room_width * GameData.dungeon.dungeon_config.tile_size
+		local room_height = GameData.dungeon.dungeon_config.room_height * GameData.dungeon.dungeon_config.tile_size
+		
+		local offset = vmath.vector3(move_dir.x * room_width, move_dir.y * room_height, 0)
+		local camera_pos = go.get_position(CAMERA_ID)
+		local target_pos = camera_pos + offset
+		self.current_pos = target_pos
+
+		go.animate(CAMERA_ID, 'position', go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_INOUTQUAD, 1.5, 0, function ()
+			msg.post(GameData.player_id, 'transion_camera_end')
+		end)
+		msg.post(GameData.player_id, "auto_walk", { direction = move_dir })
+	end
+	
 end
 
 ---@package
@@ -33,7 +52,7 @@ end
 ---@param sender url
 function on_message(self, message_id, message, sender)
 	if message_id == hash('move_camera_to_next_room') then
-		move_camera_to_next_room(self)
+		move_camera_to_next_room(self, message)
 	end
 end
 

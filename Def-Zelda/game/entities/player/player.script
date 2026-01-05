@@ -20,11 +20,39 @@ local function setup_and_disable_hitbox(self)
 	end
 end
 
+local function auto_walk(self, message)
+	msg.post('#collision', 'disable')
+	local move_dir = message.direction -- 这是一个 vector3，例如 (0, 1, 0)
+        
+	-- 1. 进入托管模式
+	self.input_enabled = false
+	
+	-- 2. 播放走路动画 (视觉上不能滑步)
+	-- 假设你有一个根据方向播放动画的辅助函数 play_walk_anim(dir)
+	-- 或者简单的写：
+	if move_dir.y > 0 then sprite.play_flipbook("#sprite", "walk_up")
+	elseif move_dir.y < 0 then sprite.play_flipbook("#sprite", "walk_down")
+	elseif move_dir.x > 0 then sprite.play_flipbook("#sprite", "walk_right")
+	elseif move_dir.x < 0 then sprite.play_flipbook("#sprite", "walk_left")
+	end
+	
+	-- 3. 计算目标位置
+	-- 比如让玩家往门里走 48 个像素 (约 1.5 格)
+	local distance = 48 * 9
+	local current_pos = go.get_position()
+	local target_pos = current_pos + (move_dir * distance)
+	
+	-- 4. 执行位移
+	-- 时间建议和相机移动时间保持一致，或者稍微短一点
+	go.animate(".", "position", go.PLAYBACK_ONCE_FORWARD, target_pos, go.EASING_LINEAR, 1.5, 0, function()  end)
+end
+
 
 ---@package
 ---@param self player.script
 function init(self)
 	msg.post('.', 'acquire_input_focus')
+	self.input_enabled = true
 
 	setup_and_disable_hitbox(self)
 
@@ -84,6 +112,10 @@ end
 ---@param self player.script
 ---@param dt number
 function update(self, dt)
+	if not self.input_enabled then
+		return
+	end
+
 	-- 处理输入向量归一化
 	if vmath.length(self.direction) > 1 then
 		self.direction = vmath.normalize(self.direction)
@@ -145,10 +177,15 @@ function on_message(self, message_id, message, sender)
 		go.set_position(new_pos)
 	end
 
-	if message_id == hash('trigger_response') and message.group == hash('test') then
-		if message.enter then
-			msg.post('/camera_controller', 'move_camera_to_next_room')
-		end
+	if message_id == hash('transion_camera_start') then
+		self.input_enabled = false
+	elseif message_id == hash('transion_camera_end') then
+		self.input_enabled = true
+		msg.post('#collision', 'enable')
+	end
+
+	if message_id == hash('auto_walk') then
+		auto_walk(self, message)
 	end
 end
 
