@@ -1,0 +1,23 @@
+go.property("pattern_size", 256.0)
+-- 我们可以直接在编辑器里调整颜色
+go.property("bg_color", vmath.vector4(0.98, 0.94, 0.76, 1.0))
+go.property("pattern_color", vmath.vector4(0.2, 0.2, 0.2, 1.0))
+
+function init(self)
+	self.time = 0
+	-- 初始化颜色，防止 Material 里的默认值不对
+	sprite.set_constant("#sprite", "bg_color", self.bg_color)
+	sprite.set_constant("#sprite", "pattern_color", self.pattern_color)
+end
+
+function update(self, dt)
+	-- 1. 累加时间
+	self.time = self.time + dt
+
+	-- 2. 构造 settings 向量 (x=time, y=size)
+	local settings = vmath.vector4(self.time, self.pattern_size, 0, 0)
+
+	-- 3. 传递给 Shader
+	-- 假设你的组件叫 "sprite"，如果是 model 就写 "#model"
+	sprite.set_constant("#sprite", "settings", settings)
+end

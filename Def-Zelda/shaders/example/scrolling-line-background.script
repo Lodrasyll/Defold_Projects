@@ -1,0 +1,8 @@
+function init(self)
+	self.t = 0 -- <1>
+end
+
+function update(self, dt)
+	self.t = self.t + dt * 0.5 -- <2>
+	go.set("#model", "time", vmath.vector4(self.t, 0, 0, 0)) -- <3>
+end

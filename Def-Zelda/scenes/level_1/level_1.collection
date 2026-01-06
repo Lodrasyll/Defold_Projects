@@ -10,6 +10,7 @@ instances {
 instances {
   id: "camera"
   prototype: "/orthographic/camera.go"
+  children: "scrolling-line-background"
   position {
     x: 960.0
     y: 540.0
@@ -59,4 +60,31 @@ embedded_instances {
   "  component: \"/scenes/shares/camera.script\"\n"
   "}\n"
   ""
+}
+embedded_instances {
+  id: "scrolling-line-background"
+  data: "components {\n"
+  "  id: \"scrolling-line-background\"\n"
+  "  component: \"/shaders/example/scrolling-line-background.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"model\"\n"
+  "  type: \"model\"\n"
+  "  data: \"mesh: \\\"/builtins/assets/meshes/quad.dae\\\"\\n"
+  "name: \\\"{{NAME}}\\\"\\n"
+  "materials {\\n"
+  "  name: \\\"default\\\"\\n"
+  "  material: \\\"/shaders/example/scrolling-line-background.material\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    z: -0.9
+  }
+  scale3 {
+    x: 1920.0
+    y: 1080.0
+    z: 6.38
+  }
 }
