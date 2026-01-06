@@ -1,0 +1,37 @@
+tile_set: "/assets/arts/textures/tile.tilesource"
+layers {
+  id: "ground"
+  z: -0.2
+  cell {
+    x: 299
+    y: 0
+    tile: 13
+  }
+  cell {
+    x: 0
+    y: 299
+    tile: 13
+  }
+  cell {
+    x: 299
+    y: 299
+    tile: 13
+  }
+}
+layers {
+  id: "wall"
+  z: 0.0
+}
+layers {
+  id: "void"
+  z: 0.0
+}
+layers {
+  id: "doorway"
+  z: 0.0
+}
+layers {
+  id: "door"
+  z: 0.1
+}
+material: "/builtins/materials/tile_map.material"

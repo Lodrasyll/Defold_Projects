@@ -22,9 +22,21 @@ key_trigger {
   input: KEY_J
   action: "attack"
 }
+key_trigger {
+  input: KEY_K
+  action: "roll"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"
+}
+mouse_trigger {
+  input: MOUSE_WHEEL_UP
+  action: "zoom_in"
+}
+mouse_trigger {
+  input: MOUSE_WHEEL_DOWN
+  action: "zoom_out"
 }
 gamepad_trigger {
   input: GAMEPAD_LPAD_UP
@@ -49,4 +61,24 @@ gamepad_trigger {
 gamepad_trigger {
   input: GAMEPAD_RPAD_RIGHT
   action: "attack"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_UP
+  action: "up"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_DOWN
+  action: "down"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_LEFT
+  action: "left"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_RIGHT
+  action: "right"
+}
+gamepad_trigger {
+  input: GAMEPAD_RPAD_DOWN
+  action: "roll"
 }

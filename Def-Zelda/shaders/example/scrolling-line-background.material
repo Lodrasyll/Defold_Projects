@@ -1,0 +1,41 @@
+name: "scrolling-line-background"
+tags: "tile"
+tags: ""
+vertex_program: "/shaders/example/scrolling-line-background.vp"
+fragment_program: "/shaders/example/scrolling-line-background.fp"
+vertex_constants {
+  name: "view_proj"
+  type: CONSTANT_TYPE_VIEWPROJ
+}
+fragment_constants {
+  name: "resolution"
+  type: CONSTANT_TYPE_USER
+  value {
+    x: 960.0
+    y: 640.0
+  }
+}
+fragment_constants {
+  name: "color_one"
+  type: CONSTANT_TYPE_USER
+  value {
+    x: 0.301961
+    y: 0.231373
+    z: 0.34902
+  }
+}
+fragment_constants {
+  name: "color_two"
+  type: CONSTANT_TYPE_USER
+  value {
+    x: 0.701961
+    y: 0.533333
+    z: 0.635294
+  }
+}
+fragment_constants {
+  name: "time"
+  type: CONSTANT_TYPE_USER
+  value {
+  }
+}

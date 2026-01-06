@@ -1,14 +1,47 @@
 name: "level_1"
 instances {
-  id: "player"
-  prototype: "/game/entities/player/player.go"
+  id: "dungeon"
+  prototype: "/game/entities/world/dungeon/dungeon.go"
+  scale3 {
+    x: 4.0
+    y: 4.0
+  }
+}
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  children: "scrolling-line-background"
   position {
     x: 960.0
     y: 540.0
   }
-  scale3 {
-    x: 4.0
-    y: 4.0
+  component_properties {
+    id: "script"
+    properties {
+      id: "automatic_zoom"
+      value: "false"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow"
+      value: "false"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow_target"
+      value: "/player"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "bounds_right"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_top"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
   }
 }
 scale_along_z: 0
@@ -19,4 +52,39 @@ embedded_instances {
   "  component: \"/scenes/level_1/level_1.gui\"\n"
   "}\n"
   ""
+}
+embedded_instances {
+  id: "camera_controller"
+  data: "components {\n"
+  "  id: \"camera\"\n"
+  "  component: \"/scenes/shares/camera.script\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "scrolling-line-background"
+  data: "components {\n"
+  "  id: \"scrolling-line-background\"\n"
+  "  component: \"/shaders/example/scrolling-line-background.script\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"model\"\n"
+  "  type: \"model\"\n"
+  "  data: \"mesh: \\\"/builtins/assets/meshes/quad.dae\\\"\\n"
+  "name: \\\"{{NAME}}\\\"\\n"
+  "materials {\\n"
+  "  name: \\\"default\\\"\\n"
+  "  material: \\\"/shaders/example/scrolling-line-background.material\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    z: -0.9
+  }
+  scale3 {
+    x: 1920.0
+    y: 1080.0
+    z: 6.38
+  }
 }

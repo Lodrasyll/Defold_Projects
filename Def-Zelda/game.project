@@ -1,5 +1,6 @@
 [bootstrap]
 main_collection = /main.collectionc
+render = /orthographic/render/orthographic.renderc
 
 [script]
 shared_state = 1
@@ -36,4 +37,16 @@ game_binding = /game.input_bindingc
 [graphics]
 default_texture_min_filter = nearest
 default_texture_mag_filter = nearest
+max_debug_vertices = 100000
+
+[tilemap]
+max_tile_count = 100000
+
+[sprite]
+max_count = 12800
+
+[physics]
+debug = 0
+max_collision_object_count = 5120
+max_collisions = 512
 

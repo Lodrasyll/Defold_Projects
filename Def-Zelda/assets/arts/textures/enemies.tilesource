@@ -1,0 +1,88 @@
+image: "/assets/arts/graphics/entities.png"
+tile_width: 16
+tile_height: 16
+animations {
+  id: "ghost_down"
+  start_tile: 55
+  end_tile: 57
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "ghost_left"
+  start_tile: 67
+  end_tile: 69
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "ghost_right"
+  start_tile: 79
+  end_tile: 81
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "ghost_up"
+  start_tile: 91
+  end_tile: 93
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "skeleton_down"
+  start_tile: 10
+  end_tile: 12
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "skeleton_left"
+  start_tile: 22
+  end_tile: 24
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "skeleton_right"
+  start_tile: 34
+  end_tile: 36
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "skeleton_up"
+  start_tile: 46
+  end_tile: 48
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "slime_down"
+  start_tile: 49
+  end_tile: 51
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "slime_left"
+  start_tile: 61
+  end_tile: 63
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "slime_right"
+  start_tile: 73
+  end_tile: 75
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+animations {
+  id: "slime_up"
+  start_tile: 85
+  end_tile: 87
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 6
+}
+extrude_borders: 2

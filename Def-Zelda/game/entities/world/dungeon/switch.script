@@ -1,0 +1,29 @@
+-- 增加坐标属性，生成时传入
+go.property("grid_x", 0)
+go.property("grid_y", 0)
+
+
+---@package
+---@param self switch.script
+function init(self)
+    -- 增加一个状态锁，防止重复触发
+    self.activated = false
+    label.set_text('#label', self.grid_x .. ',' .. self.grid_y)
+end
+
+function on_message(self, message_id, message, sender)
+    if message_id == hash("trigger_response") and message.enter then
+        -- 使用 self.activated
+        if not self.activated then
+            self.activated = true -- 锁定当前这一个开关
+
+            print("开关触发: ", self.grid_x, self.grid_y) -- 调试打印
+            msg.post("/dungeon#dungeon", "switch_activated", {
+                gx = self.grid_x,
+                gy = self.grid_y
+            })
+
+            msg.post("#collisionobject", "disable")
+        end
+    end
+end

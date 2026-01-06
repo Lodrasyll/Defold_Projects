@@ -11,9 +11,9 @@ local MIN_RUN_TIME = 0.2
 -- 辅助函数
 local function get_run_anim(direction)
     if math.abs(direction.x) > math.abs(direction.y) then
-        if direction.x > 0 then return ANIMS.RUN_RIGHT else return ANIMS.RUN_LEFT end
+        return (direction.x > 0) and ANIMS.RUN_RIGHT or ANIMS.RUN_LEFT
     else
-        if direction.y > 0 then return ANIMS.RUN_UP else return ANIMS.RUN_DOWN end
+        return (direction.y > 0) and ANIMS.RUN_UP or ANIMS.RUN_DOWN
     end
 end
 
@@ -22,9 +22,6 @@ function Run.enter(player)
     sprite.play_flipbook('#sprite', anim)
     player.current_anim = anim
     player.run_timer = 0
-
-
-    print('player anim: ' .. anim)
 end
 
 function Run.update(player, dt)

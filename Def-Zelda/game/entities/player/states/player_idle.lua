@@ -15,7 +15,7 @@ function Idle.enter(player)
     local anim = ANIMS.IDLE_DOWN
     local is_horizontal = math.abs(player.facing.x) > math.abs(player.facing.y)
     if is_horizontal then
-        if player.facing.x > 0 then anim = ANIMS.IDLE_RIGHT else anim = ANIMS.IDLE_LEFT end
+        if (player.facing.x > 0) then anim = ANIMS.IDLE_RIGHT else anim = ANIMS.IDLE_LEFT end
     else
         if player.facing.y > 0 then anim = ANIMS.IDLE_UP else anim = ANIMS.IDLE_DOWN end
     end
@@ -24,9 +24,6 @@ function Idle.enter(player)
 
     -- 确保待机时没有速度
     player.velocity = vmath.vector3()
-
-    print('player facing: ' .. player.facing)
-    print('player anim: ' .. anim)
 end
 
 function Idle.update(player, dt)

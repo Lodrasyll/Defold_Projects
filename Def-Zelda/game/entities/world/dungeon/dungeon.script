@@ -1,0 +1,148 @@
+local DunMaker = require('game.entities.world.dungeon.dungeon_maker')
+local GameData = require('data.config.game_data')
+local Config = require('data.config.config')
+local utils = require('core.utils.utils')
+
+local MAP_URL = '#dungeon_map'
+go.property('dungeon_map_width', 10)
+go.property('dungeon_map_height', 10)
+local roommap_width = Config.DunConst.ROOMMAP_WIDTH
+local roommap_height = Config.DunConst.ROOMMAP_HEIGHT
+
+local function get_room_data(self, grid_x, grid_y)
+	local key = grid_x .. '_' .. grid_y
+	if not self.room_registry[key] then
+		self.room_registry[key] = { doors = {}, switches = {} }
+	end
+	return self.room_registry[key]
+end
+
+
+local function spawn_enemies(self)
+	
+end
+
+local function spawn_switch(self)
+	local room = self.dungeon.dungeon.grid
+	local dungeon_width, dungeon_height = self.dungeon_config.dungeon_width, self.dungeon_config.dungeon_height
+	local config = Config.DunConst
+	for grid_x = 1, dungeon_width do
+		for grid_y = 1, dungeon_height do
+			local has_room = room[grid_x][grid_y] == 1
+			local room_floor_list = DunMaker.room_floor_list
+
+			if has_room and room_floor_list then
+				local floor_pos = room_floor_list[math.random(1, #room_floor_list)]
+				local spawn_pos = utils.get_world_position(grid_x, grid_y, floor_pos.x, floor_pos.y, config)
+				spawn_pos.z = 0
+				local switch_id = factory.create('#switch_factory', spawn_pos, nil, { grid_x = grid_x, grid_y = grid_y })
+
+				-- ✨ 登记到注册表
+				local room_data = get_room_data(self, grid_x, grid_y)
+				table.insert(room_data.switches, switch_id)
+			end
+		end
+	end
+end
+
+local function spawn_door(self)
+	local room_door_list = DunMaker.room_door_list
+	for _, door_data in pairs(room_door_list) do
+		if door_data.type == 'door' then
+			local door_id = factory.create('#door_factory', door_data.pos, nil, { direction = door_data.dir })
+
+			-- ✨ 登记到注册表
+			local room_data = get_room_data(self, door_data.grid_x, door_data.grid_y)
+			table.insert(room_data.doors, door_id)
+		end
+	end
+end
+
+
+local function spawn_player_and_set_camera(self)
+	local dungeon = self.dungeon
+	local config = Config.DunConst
+
+	local start_grid_x = self.dungeon.dungeon.start_room.x
+	local start_grid_y = self.dungeon.dungeon.start_room.y
+
+	local center_local_x = math.ceil(config.ROOMMAP_WIDTH / 2)
+	local center_local_y = math.ceil(config.ROOMMAP_HEIGHT / 2)
+
+	local spawn_pos = utils.get_world_position(start_grid_x, start_grid_y, center_local_x, center_local_y, config)
+
+	local player_id = factory.create('#player_factory', spawn_pos)
+	GameData.player_id = player_id
+
+	-- 顺便把自己的地址也登记上去，方便别人找我
+	GameData.dungeon_script_url = msg.url()
+	
+	local camera_spawn_pos = spawn_pos
+	camera_spawn_pos.z = 0
+	go.set_position(spawn_pos, '/camera')
+
+	
+end
+
+local function dungeon_init(self)
+	-- 准备配置包/表
+	self.dungeon_config = {
+		dungeon_width = self.dungeon_map_width,
+		dungeon_height = self.dungeon_map_height,
+		room_width = roommap_width,
+		room_height = roommap_height,
+		max_rooms = Config.DunConst.MAX_ROOMS,
+		padding = Config.DunConst.PADDING,
+		tile_size = Config.DunConst.TILE_SIZE
+	}
+
+	local tile_config = Config.DunConst.TileConfig
+
+	-- 调用地牢生成器
+	self.dungeon = DunMaker.generate_dungeon(MAP_URL, self.dungeon_config, tile_config)
+	GameData.dungeon = self.dungeon
+
+	self.room_registry = {}
+end
+
+---@package
+---@param self dungeon.script
+function init(self)
+	self.player_id = nil
+
+	math.randomseed(os.time())
+
+	dungeon_init(self)
+	spawn_player_and_set_camera(self)
+	spawn_enemies(self)
+	spawn_switch(self)
+	spawn_door(self)
+
+
+	-- 在 dungeon.script 的 init 底部
+	print("=== 🛠️ 地牢注册表检查 ===")
+	for key, data in pairs(self.room_registry) do
+		print("房间 [" .. key .. "] 拥有:")
+		print("   - 开关数量: " .. #data.switches)
+		print("   - 门数量: " .. #data.doors)
+	end
+	print("===========================")
+end
+
+---@package
+---@param self dungeon.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('switch_activated') then
+		local key = message.gx .. '_' .. message.gy
+		local room_data = self.room_registry[key]
+
+		if room_data then
+			for _, door_id in pairs(room_data.doors) do
+				msg.post(door_id, 'open')
+			end
+		end
+	end
+end
