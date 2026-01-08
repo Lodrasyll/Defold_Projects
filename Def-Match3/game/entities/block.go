@@ -1,10 +1,6 @@
 components {
   id: "block_script"
   component: "/game/entities/block_script.script"
-  position {
-    x: -233.89229
-    y: -36.22984
-  }
 }
 embedded_components {
   id: "sprite"

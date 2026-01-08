@@ -3,6 +3,8 @@ local monarch = require('monarch.monarch')
 function init(self)
     msg.post(".", "acquire_input_focus")
     msg.post("#", "show_main_menu")
+    
+    defos.disable_window_resize()
 end
 
 function on_message(self, message_id, message, sender)
