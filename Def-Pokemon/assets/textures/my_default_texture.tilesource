@@ -6,4 +6,9 @@ animations {
   start_tile: 2
   end_tile: 2
 }
+animations {
+  id: "box_2"
+  start_tile: 1
+  end_tile: 1
+}
 extrude_borders: 2
