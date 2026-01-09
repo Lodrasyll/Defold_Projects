@@ -21,7 +21,15 @@ embedded_instances {
 }
 embedded_instances {
   id: "sounds"
-  data: ""
+  data: "components {\n"
+  "  id: \"Thip\"\n"
+  "  component: \"/assets/sounds/Thip.sound\"\n"
+  "}\n"
+  "components {\n"
+  "  id: \"confirm\"\n"
+  "  component: \"/assets/sounds/confirm.sound\"\n"
+  "}\n"
+  ""
 }
 embedded_instances {
   id: "main_script"

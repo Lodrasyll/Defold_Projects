@@ -46,7 +46,7 @@ nodes {
     z: 0.0
   }
   type: TYPE_TEXT
-  text: "Def-Project Template"
+  text: "Def-Pokemon"
   font: "font"
   id: "game_title"
   parent: "root"

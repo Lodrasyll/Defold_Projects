@@ -18,9 +18,41 @@ key_trigger {
   input: KEY_ENTER
   action: "start"
 }
+key_trigger {
+  input: KEY_J
+  action: "attack"
+}
+key_trigger {
+  input: KEY_K
+  action: "roll"
+}
+key_trigger {
+  input: KEY_UP
+  action: "up"
+}
+key_trigger {
+  input: KEY_DOWN
+  action: "down"
+}
+key_trigger {
+  input: KEY_LEFT
+  action: "left"
+}
+key_trigger {
+  input: KEY_RIGHT
+  action: "right"
+}
 mouse_trigger {
   input: MOUSE_BUTTON_1
   action: "touch"
+}
+mouse_trigger {
+  input: MOUSE_WHEEL_UP
+  action: "zoom_in"
+}
+mouse_trigger {
+  input: MOUSE_WHEEL_DOWN
+  action: "zoom_out"
 }
 gamepad_trigger {
   input: GAMEPAD_LPAD_UP
@@ -37,4 +69,32 @@ gamepad_trigger {
 gamepad_trigger {
   input: GAMEPAD_LPAD_RIGHT
   action: "right"
+}
+gamepad_trigger {
+  input: GAMEPAD_START
+  action: "start"
+}
+gamepad_trigger {
+  input: GAMEPAD_RPAD_RIGHT
+  action: "attack"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_UP
+  action: "up"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_DOWN
+  action: "down"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_LEFT
+  action: "left"
+}
+gamepad_trigger {
+  input: GAMEPAD_LSTICK_RIGHT
+  action: "right"
+}
+gamepad_trigger {
+  input: GAMEPAD_RPAD_DOWN
+  action: "roll"
 }
