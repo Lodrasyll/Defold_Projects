@@ -1,0 +1,17 @@
+
+
+
+
+---@package
+---@param self encounter.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	if message_id == hash('trigger_response') then
+		if message.group == hash('grass') and math.random(10) == 1 then
+			print('Encounter!')
+			msg.post('/game_controller', 'encounter')
+		end
+	end
+end

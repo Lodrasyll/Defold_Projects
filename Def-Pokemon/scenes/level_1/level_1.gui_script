@@ -43,6 +43,11 @@ end
 
 local function view_update_progress(self)
     local precent = self.current_progress / self.max_progress
+
+    if precent == 1 then
+        monarch.show('level_2')
+        SoundController.play('confirm', SoundController.GROUP_SFX)
+    end
     
     local new_width = precent * self.max_progress_bar_width
     local size = gui.get_size(self.progress_fill_node)
@@ -108,7 +113,7 @@ local function setup_game_data(self)
     }
 
     self.max_progress = 100
-    self.current_progress = 50
+    self.current_progress = 0
     self.max_progress_bar_width = gui.get_size(self.progress_fill_node).x
     set_options(self)
 end
@@ -182,7 +187,10 @@ function on_input(self, action_id, action)
         -- 3. 最后统一更新视图
         -- 只有按下了左右键才需要更新，不仅性能好，逻辑也对
         if action_id == Input.LEFT or action_id == Input.RIGHT then
-            view_update_progress(self)
+            if action.pressed then
+                view_update_progress(self)
+                SoundController.play('Thip', SoundController.GROUP_SFX)
+            end
         end
     end
 

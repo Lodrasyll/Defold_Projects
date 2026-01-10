@@ -1,0 +1,10 @@
+name: "level_3"
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"level_3\"\n"
+  "  component: \"/scenes/level_3/level_3.gui\"\n"
+  "}\n"
+  ""
+}

@@ -1,4 +1,4 @@
-script: "/scenes/level_1/level_1.gui_script"
+script: "/scenes/level_3/level_3.gui_script"
 fonts {
   name: "Koulen"
   font: "/assets/fonts/Koulen.font"
@@ -28,30 +28,10 @@ nodes {
     x: 1920.0
     y: 1080.0
   }
-  color {
-    x: 0.0
-    y: 0.0
-    z: 0.0
-  }
-  type: TYPE_BOX
-  id: "bg"
-  pivot: PIVOT_SW
-  parent: "root"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-}
-nodes {
-  position {
-    x: 960.0
-    y: 540.0
-  }
-  size {
-    x: 1280.0
-    y: 720.0
-  }
   type: TYPE_BOX
   texture: "my_default_texture/box"
-  id: "panel"
+  id: "bg"
+  pivot: PIVOT_SW
   parent: "root"
   inherit_alpha: true
   slice9 {
@@ -62,91 +42,17 @@ nodes {
   }
 }
 nodes {
-  size {
-    x: 1200.0
-    y: 700.0
-  }
-  type: TYPE_TEXT
-  font: "Koulen"
-  id: "text"
-  line_break: true
-  parent: "panel"
-  inherit_alpha: true
-}
-nodes {
-  size {
-    x: 300.0
-    y: 500.0
-  }
-  type: TYPE_BOX
-  id: "selection"
-  parent: "panel"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
-}
-nodes {
   position {
-    y: 120.0
+    x: 960.0
+    y: 540.0
   }
-  size {
-    x: 200.0
-    y: 100.0
-  }
-  type: TYPE_TEXT
-  font: "Koulen"
-  id: "option_1"
-  parent: "selection"
-  inherit_alpha: true
-}
-nodes {
-  size {
-    x: 200.0
-    y: 100.0
-  }
-  type: TYPE_TEXT
-  font: "Koulen"
-  id: "option_2"
-  parent: "selection"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    y: -120.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-  }
-  type: TYPE_TEXT
-  font: "Koulen"
-  id: "option_3"
-  parent: "selection"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    x: -180.0
-    y: 120.0
-  }
-  size {
-    x: 32.0
-    y: 32.0
-  }
-  type: TYPE_BOX
-  texture: "ui/cursor"
-  id: "cursor"
-  parent: "selection"
-  inherit_alpha: true
-}
-nodes {
   size {
     x: 920.0
     y: 45.0
   }
   type: TYPE_BOX
   id: "progress_bar"
-  parent: "panel"
+  parent: "root"
   inherit_alpha: true
   slice9 {
     x: 10.0
