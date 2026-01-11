@@ -1,0 +1,49 @@
+script: "/ui/scenes/level_2/wild_menu.gui_script"
+nodes {
+  position {
+    x: 1670.0
+    y: 930.0
+  }
+  type: TYPE_TEMPLATE
+  id: "wild_menu"
+  inherit_alpha: true
+  template: "/ui/widgets/battle_box/battle_menu.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "wild_menu/root"
+  parent: "wild_menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "wild_menu/selection"
+  parent: "wild_menu/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "wild_menu/option_1"
+  parent: "wild_menu/selection"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "wild_menu/option_2"
+  parent: "wild_menu/selection"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "wild_menu/option_3"
+  parent: "wild_menu/selection"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "wild_menu/cursor"
+  parent: "wild_menu/selection"
+  template_node_child: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

@@ -22,7 +22,5 @@ end
 ---@param message table
 ---@param sender url
 function on_message(self, message_id, message, sender)
-	if message_id == hash('encounter_started') then
-		monarch.show('level_3')
-	end
+
 end

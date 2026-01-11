@@ -1,5 +1,5 @@
-go.property('min_step', 300)
-go.property('max_step', 750)
+go.property('min_step', 400)
+go.property('max_step', 1000)
 
 
 local MAP_URL = '/wild_map#wild'
@@ -34,7 +34,7 @@ local function check_encounter(self, pos, dist)
 
 			-- 发送全局消息切换场景
 			-- 建议：传递当前玩家位置，以便战斗结束后回来还能站在原地
-			msg.post('/game_controller', 'encounter_started')
+			msg.post('/monarch', 'encounter_started', { player_pos = pos })
 
 			-- 可选：暂停玩家移动输入，防止在转场时还在走
 			msg.post("#", "disable_movement") -- 假设你有处理这个消息的逻辑

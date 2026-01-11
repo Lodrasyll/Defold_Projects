@@ -1,0 +1,8 @@
+go.property('name', hash(''))
+
+
+---@package
+---@param self pokemon.script
+function init(self)
+	msg.post('#sprite_back', 'disable')
+end

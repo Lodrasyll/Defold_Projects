@@ -5,10 +5,6 @@ components {
 components {
   id: "encounter"
   component: "/game/entities/player/encounter.script"
-  position {
-    x: -6.009756
-    y: -5.6213703
-  }
 }
 embedded_components {
   id: "sprite"

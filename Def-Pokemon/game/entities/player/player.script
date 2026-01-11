@@ -81,7 +81,7 @@ function init(self)
 
 	self.hp = 3
 
-	self.move_speed = 300
+	self.move_speed = 250
 	self.input = vmath.vector3()
 	self.direction = vmath.vector3()
 	self.velocity = vmath.vector3()

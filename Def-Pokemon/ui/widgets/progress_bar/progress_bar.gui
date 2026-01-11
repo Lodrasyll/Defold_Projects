@@ -1,0 +1,43 @@
+textures {
+  name: "my_default_texture"
+  texture: "/assets/arts/textures/my_default_texture.tilesource"
+}
+nodes {
+  size {
+    x: 900.0
+    y: 30.0
+  }
+  type: TYPE_BOX
+  texture: "my_default_texture/box"
+  id: "progress_bar"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: -446.0
+  }
+  size {
+    x: 892.0
+    y: 22.0
+  }
+  type: TYPE_BOX
+  texture: "my_default_texture/box_2"
+  id: "fill"
+  pivot: PIVOT_W
+  parent: "progress_bar"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

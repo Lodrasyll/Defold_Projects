@@ -1,10 +1,62 @@
 name: "level_3"
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+}
+instances {
+  id: "cardiwing"
+  prototype: "/game/entities/pokemon/cardiwing.go"
+  position {
+    x: 393.0
+    y: 459.0
+  }
+  scale3 {
+    x: 5.0
+    y: 5.0
+  }
+}
+instances {
+  id: "cardiwing1"
+  prototype: "/game/entities/pokemon/cardiwing.go"
+  position {
+    x: 1528.0
+    y: 859.0
+  }
+  scale3 {
+    x: 5.0
+    y: 5.0
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "monarch"
   data: "components {\n"
   "  id: \"level_3\"\n"
   "  component: \"/scenes/level_3/level_3.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "pokemon_factories"
+  data: "embedded_components {\n"
+  "  id: \"cardiwing\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/pokemon/cardiwing.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "enemy_pokemon_factories"
+  data: "embedded_components {\n"
+  "  id: \"cardiwing\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/pokemon/cardiwing.go\\\"\\n"
+  "\"\n"
   "}\n"
   ""
 }

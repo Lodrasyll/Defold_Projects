@@ -1,0 +1,10 @@
+name: "wild_menu"
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"wild_menu\"\n"
+  "  component: \"/ui/scenes/level_2/wild_menu.gui\"\n"
+  "}\n"
+  ""
+}

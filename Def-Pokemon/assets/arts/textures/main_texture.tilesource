@@ -205,12 +205,12 @@ convex_hulls {
 convex_hulls {
   index: 160
   count: 9
-  collision_group: "grass"
+  collision_group: ""
 }
 convex_hulls {
   index: 169
   count: 9
-  collision_group: "grass"
+  collision_group: ""
 }
 convex_hulls {
   index: 178
@@ -522,6 +522,5 @@ convex_hulls {
   count: 0
   collision_group: ""
 }
-collision_groups: "grass"
 collision_groups: "wall"
 extrude_borders: 2

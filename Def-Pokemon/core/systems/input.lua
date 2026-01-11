@@ -8,5 +8,7 @@ M.RIGHT = hash('right')
 M.START = hash('start')
 M.ATTACK = hash('attack')
 M.ROLL = hash('roll')
+M.BACK = hash('back')
+M.MENU = hash('menu')
 
 return M

@@ -1,0 +1,86 @@
+name: "select_menu"
+instances {
+  id: "aardart"
+  prototype: "/game/entities/pokemon/aardart.go"
+  position {
+    x: -115.0
+    y: 540.0
+  }
+  scale3 {
+    x: 3.0
+    y: 3.0
+  }
+}
+instances {
+  id: "agnite"
+  prototype: "/game/entities/pokemon/agnite.go"
+  position {
+    x: -137.0
+    y: 540.0
+  }
+  scale3 {
+    x: 3.0
+    y: 3.0
+  }
+}
+instances {
+  id: "bamboon"
+  prototype: "/game/entities/pokemon/bamboon.go"
+  position {
+    x: 2025.0
+    y: 540.0
+  }
+  scale3 {
+    x: 3.0
+    y: 3.0
+  }
+}
+instances {
+  id: "cardiwing"
+  prototype: "/game/entities/pokemon/cardiwing.go"
+  position {
+    x: 955.0
+    y: 474.0
+    z: 1.0
+  }
+  scale3 {
+    x: 3.0
+    y: 3.0
+  }
+}
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+}
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"select_menu\"\n"
+  "  component: \"/scenes/select_meun/select_menu.gui\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"shadow\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/textures/pokemon.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 961.0\n"
+  "    y: 423.0\n"
+  "  }\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "shadow"
+  data: ""
+}
