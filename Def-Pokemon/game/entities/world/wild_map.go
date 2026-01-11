@@ -14,15 +14,3 @@ embedded_components {
   "mask: \"player\"\n"
   ""
 }
-embedded_components {
-  id: "grass_collisionobject"
-  type: "collisionobject"
-  data: "collision_shape: \"/assets/arts/tilemap/wild.tilemap\"\n"
-  "type: COLLISION_OBJECT_TYPE_TRIGGER\n"
-  "mass: 0.0\n"
-  "friction: 0.1\n"
-  "restitution: 0.5\n"
-  "group: \"grass\"\n"
-  "mask: \"player\"\n"
-  ""
-}

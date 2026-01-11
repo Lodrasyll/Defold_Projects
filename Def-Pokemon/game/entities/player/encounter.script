@@ -1,17 +1,67 @@
+go.property('min_step', 300)
+go.property('max_step', 750)
 
 
+local MAP_URL = '/wild_map#wild'
+local TILE_SIZE = 16 * 3
+local GRASS_TILE_ID = 42
+local GRASS_LAYER = hash("grass")
 
+local function check_encounter(self, pos, dist)
+	-- 1. 坐标转换：世界坐标 -> Tilemap 坐标 (1-based index)
+	-- 公式通常是: floor(pixel / size) + 1
+	local tile_x = math.floor(pos.x / TILE_SIZE) + 1
+	local tile_y = math.floor(pos.y / TILE_SIZE) + 1
+
+	-- 2. 获取 Tile ID
+	-- 注意：我们需要使用 pcall (protected call) 或者确保 url 正确，
+	-- 否则如果地图没加载完，这里可能会报错。
+	local tile = tilemap.get_tile(MAP_URL, GRASS_LAYER, tile_x, tile_y)
+
+	-- 3. 只有在草丛里才扣除步数
+	if tile == GRASS_TILE_ID then
+		self.steps_until_encounter = self.steps_until_encounter - dist
+
+		-- 调试信息 (可选，开发时很有用)
+		print("Walking in grass... Steps left: " .. math.floor(self.steps_until_encounter))
+
+		-- 4. 触发战斗
+		if self.steps_until_encounter <= 0 then
+			print(">>> ENCOUNTER TRIGGERED! <<<")
+
+			-- 重置计数器
+			self.steps_until_encounter = math.random(self.min_step, self.max_step)
+
+			-- 发送全局消息切换场景
+			-- 建议：传递当前玩家位置，以便战斗结束后回来还能站在原地
+			msg.post('/game_controller', 'encounter_started')
+
+			-- 可选：暂停玩家移动输入，防止在转场时还在走
+			msg.post("#", "disable_movement") -- 假设你有处理这个消息的逻辑
+		end
+	end
+end
 
 ---@package
 ---@param self encounter.script
----@param message_id hash
----@param message table
----@param sender url
-function on_message(self, message_id, message, sender)
-	if message_id == hash('trigger_response') then
-		if message.group == hash('grass') and math.random(10) == 1 then
-			print('Encounter!')
-			msg.post('/game_controller', 'encounter')
-		end
+function init(self)
+	self.last_pos = go.get_position()
+	self.steps_until_encounter = math.random(self.min_step, self.max_step)
+
+	-- 调试用：看看初始需要走多少步
+	print("DEBUG: Next encounter in " .. self.steps_until_encounter .. " pixels.")
+end
+
+---@package
+---@param self encounter.script
+---@param dt number
+function update(self, dt)
+	local current_pos = go.get_position()
+	local distance = vmath.length(current_pos - self.last_pos)
+	if distance > 0 then
+		-- 核心修复：必须更新 last_pos，为下一帧做准备！
+		self.last_pos = current_pos
+
+		check_encounter(self, current_pos, distance)
 	end
 end
