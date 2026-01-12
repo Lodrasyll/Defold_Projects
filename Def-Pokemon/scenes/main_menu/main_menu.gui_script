@@ -2,9 +2,12 @@ local monarch = require "monarch.monarch"
 local transitions = require('monarch.transitions.gui')
 local Input = require('core.systems.input')
 local SoundController = require('core.components.sound_controller')
+local druid = require('druid.druid')
 
 function init(self)
     msg.post(".", "acquire_input_focus")
+    self.druid = druid.new(self)
+    
     local transition = transitions.create(gui.get_node('root'))
         .show_in(transitions.fade_in, gui.EASING_OUTQUAD, 0.4, 0)
         .show_out(transitions.fade_out, gui.EASING_INQUAD, 0.6, 0)
@@ -23,22 +26,26 @@ function init(self)
 end
 
 function final(self)
+    self.druid:final()
 end
 
 function update(self, dt)
+    self.druid:update(dt)
 end
 
 function on_message(self, message_id, message, sender)
     monarch.on_message(message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-    if action_id == Input.CLICK or action_id == Input.START then
+    if action_id == Input.START then
         if action.pressed then
             monarch.show('select_menu')
             SoundController.play('confirm', SoundController.GROUP_SFX)
         end
     end
+    return self.druid:on_input(action_id, action)
 end
 
 function on_reload(self)

@@ -75,32 +75,50 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  id: "battle_menu/selection"
+  id: "battle_menu/menu"
   parent: "battle_menu/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "battle_menu/option_1"
-  parent: "battle_menu/selection"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "battle_menu/option_2"
-  parent: "battle_menu/selection"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "battle_menu/option_3"
-  parent: "battle_menu/selection"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
   id: "battle_menu/cursor"
-  parent: "battle_menu/selection"
+  parent: "battle_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "battle_menu/option_1"
+  parent: "battle_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "battle_menu/text_1"
+  parent: "battle_menu/option_1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "battle_menu/option_2"
+  parent: "battle_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "battle_menu/text_2"
+  parent: "battle_menu/option_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "battle_menu/option_3"
+  parent: "battle_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "battle_menu/text_3"
+  parent: "battle_menu/option_3"
   template_node_child: true
 }
 nodes {

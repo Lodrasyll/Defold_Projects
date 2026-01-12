@@ -17,32 +17,50 @@ nodes {
 }
 nodes {
   type: TYPE_BOX
-  id: "wild_menu/selection"
+  id: "wild_menu/menu"
   parent: "wild_menu/root"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "wild_menu/option_1"
-  parent: "wild_menu/selection"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "wild_menu/option_2"
-  parent: "wild_menu/selection"
-  template_node_child: true
-}
-nodes {
-  type: TYPE_TEXT
-  id: "wild_menu/option_3"
-  parent: "wild_menu/selection"
   template_node_child: true
 }
 nodes {
   type: TYPE_BOX
   id: "wild_menu/cursor"
-  parent: "wild_menu/selection"
+  parent: "wild_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "wild_menu/option_1"
+  parent: "wild_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "wild_menu/text_1"
+  parent: "wild_menu/option_1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "wild_menu/option_2"
+  parent: "wild_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "wild_menu/text_2"
+  parent: "wild_menu/option_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "wild_menu/option_3"
+  parent: "wild_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "wild_menu/text_3"
+  parent: "wild_menu/option_3"
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"

@@ -16,8 +16,20 @@ nodes {
     y: 300.0
   }
   type: TYPE_BOX
-  texture: "my_default_texture/box"
   id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 500.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  texture: "my_default_texture/box"
+  id: "menu"
+  parent: "root"
   inherit_alpha: true
   slice9 {
     x: 10.0
@@ -25,60 +37,6 @@ nodes {
     z: 10.0
     w: 10.0
   }
-}
-nodes {
-  size {
-    x: 300.0
-    y: 250.0
-  }
-  type: TYPE_BOX
-  id: "selection"
-  parent: "root"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
-}
-nodes {
-  position {
-    y: 67.0
-  }
-  size {
-    x: 200.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  font: "Koulen"
-  id: "option_1"
-  parent: "selection"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    y: -6.0
-  }
-  size {
-    x: 200.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  font: "Koulen"
-  id: "option_2"
-  parent: "selection"
-  inherit_alpha: true
-}
-nodes {
-  position {
-    y: -77.0
-  }
-  size {
-    x: 200.0
-    y: 50.0
-  }
-  type: TYPE_TEXT
-  font: "Koulen"
-  id: "option_3"
-  parent: "selection"
-  inherit_alpha: true
 }
 nodes {
   position {
@@ -92,7 +50,100 @@ nodes {
   type: TYPE_BOX
   texture: "ui/cursor"
   id: "cursor"
-  parent: "selection"
+  parent: "menu"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 75.0
+  }
+  size {
+    x: 200.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  texture: "my_default_texture/box"
+  id: "option_1"
+  parent: "menu"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "1"
+  font: "Koulen"
+  id: "text_1"
+  parent: "option_1"
+  inherit_alpha: true
+}
+nodes {
+  size {
+    x: 200.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  texture: "my_default_texture/box"
+  id: "option_2"
+  parent: "menu"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "2"
+  font: "Koulen"
+  id: "text_2"
+  parent: "option_2"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: -75.0
+  }
+  size {
+    x: 200.0
+    y: 50.0
+  }
+  type: TYPE_BOX
+  texture: "my_default_texture/box"
+  id: "option_3"
+  parent: "menu"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  size {
+    x: 200.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "3"
+  font: "Koulen"
+  id: "text_3"
+  parent: "option_3"
   inherit_alpha: true
 }
 material: "/builtins/materials/gui.material"

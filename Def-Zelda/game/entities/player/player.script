@@ -75,7 +75,6 @@ end
 ---@package
 ---@param self player.script
 function init(self)
-	msg.post('.', 'acquire_input_focus')
 	self.input_enabled = true
 
 	setup_and_disable_hitbox(self)
@@ -100,6 +99,14 @@ function init(self)
 		rolling = StateRoll
 	}
 
+	-- 【必须最先执行】初始化数据容器
+	-- 只有先有了这个表，后面的回调函数才能往里面存数据，否则就会报 nil 错误
+	self.debug_fsm = {
+		last_event = "Init",
+		last_from = "None",
+		last_to = "idle"
+	}
+
 	self.fsm = StateMachine.create({
 		initial = 'idle',
 		events = {
@@ -111,7 +118,12 @@ function init(self)
 		},
 		callbacks = {
 			onstatechange = function (fsm, event, from, to)
-				print('State Change: [' .. event .. ']' .. from .. '-->' .. to)
+				-- print('State Change: [' .. event .. ']' .. from .. '-->' .. to)
+
+				-- imgui 所需调试参数 [关键步骤] 将瞬时数据持久化到 self 中 ===
+				self.debug_fsm.last_event = event
+				self.debug_fsm.last_from = from
+				self.debug_fsm.last_to = to
 
 				-- A.退出旧状态
 				local old_state = self.states[from]
@@ -133,6 +145,8 @@ function init(self)
 	-- 手动初始化第一个状态
 	self.current_state = self.states['idle']
 	self.current_state.enter(self)
+
+	msg.post('.', 'acquire_input_focus')
 end
 
 ---@package
@@ -183,6 +197,30 @@ function update(self, dt)
 	if self.hp <= 0 then
 		msg.post('/monarch', 'player_dead')
 	end
+
+
+	-- === ImGui 调试 ===
+	-- 开始一个窗口 (记得要 begin/end)
+	imgui.set_next_window_size(200, 200, imgui.COND_FIRST_USE_EVER)
+	imgui.begin_window("State Machine Debugger")
+
+	-- 显示当前状态 (高亮显示)
+	imgui.text("Current State:")
+	imgui.same_line()
+	imgui.text_colored(self.debug_fsm.last_to, 0, 1, 0, 1) -- 绿色显示当前状态
+
+	-- 显示上一次的转换记录
+	-- 这里的 .. 连接符不会报错，因为我们在 init 里给了默认字符串
+	local debug_text = string.format("[%s] %s --> %s",
+		self.debug_fsm.last_event,
+		self.debug_fsm.last_from,
+		self.debug_fsm.last_to
+	)
+
+	imgui.text("Last Transition:")
+	imgui.text_colored(debug_text, 1, 1, 0, 1) -- 黄色文字
+
+	imgui.end_window()
 end
 
 ---@package
