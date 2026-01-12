@@ -1,5 +1,7 @@
 local StateMachine = require('lib.thirdparty.statemachine')
 local Input = require('core.systems.input')
+local GameData = require('data.game_data')
+local PokeonData =require('data.pokemon_data')
 
 -- 引入状态模块
 local StateIdle = require('game.entities.player.states.player_idle')
@@ -78,8 +80,6 @@ function init(self)
 	self.input_enabled = true
 
 	setup_and_disable_hitbox(self)
-
-	self.hp = 3
 
 	self.move_speed = 250
 	self.input = vmath.vector3()
@@ -179,9 +179,6 @@ function update(self, dt)
 	self.input_pressed_roll = false
 	self.input_pressed_attack = false
 
-	if self.hp <= 0 then
-		msg.post('/monarch', 'player_dead')
-	end
 end
 
 ---@package
@@ -192,16 +189,6 @@ end
 function on_message(self, message_id, message, sender)
 	if self.current_state and self.current_state.on_message then
 		self.current_state.on_message(self, message_id, message, sender)
-	end
-
-	if message_id == hash('collision_response') and message.group == hash('enemies') then
-		if not self.invincible then
-			self.hp = self.hp - 1
-		end
-		self.invincible = true
-		timer.delay(2, false, function ()
-			self.invincible = false
-		end)
 	end
 
 	if message_id == hash('contact_point_response') and message.group == hash('wall') then

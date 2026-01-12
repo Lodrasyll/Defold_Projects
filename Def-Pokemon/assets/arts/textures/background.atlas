@@ -1,0 +1,7 @@
+images {
+  image: "/assets/arts/graphics/battle_background.png"
+}
+images {
+  image: "/assets/arts/graphics/battle_shadow.png"
+}
+extrude_borders: 2

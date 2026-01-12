@@ -1,5 +1,6 @@
 local monarch = require "monarch.monarch"
 local transitions = require('monarch.transitions.gui')
+local GameData = require('GameData')
 
 function init(self)
     msg.post(".", "acquire_input_focus")
@@ -7,8 +8,6 @@ function init(self)
     local transition = transitions.create(gui.get_node('root'))
         .show_in(transitions.fade_in, gui.EASING_OUTQUAD, 0.4, 0)
         .show_out(transitions.fade_out, gui.EASING_INQUAD, 0.6, 0)
-        .back_in(transitions.fade_in, gui.EASING_OUTQUAD, 0.4, 0)
-        .back_out(transitions.fade_out, gui.EASING_INQUAD, 0.6, 0)
     monarch.on_transition('select_menu', transition)
 end
 

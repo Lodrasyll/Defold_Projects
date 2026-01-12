@@ -38,4 +38,35 @@ function M.tile_id(inst, x, y) --inst is self
     return tilemap.get_tile(inst.TILEMAP, inst.TILEMAP_LAYER, math.ceil(x / TILE_SIZE), math.ceil(y / TILE_SIZE)) --TILEMAP & TILEMAP_LAYER is saved as layer on object
 end
 
+--- 从任意字典（非连续 Key 的表）中随机获取一个元素
+-- @param dictionary (table): 你的源数据表
+-- @return key (any): 被选中的 Key
+-- @return value (any): 被选中的 Value
+-- @return nil: 如果表是空的，返回 nil
+function M.random_from_dict(dictionary)
+    -- 防御性编程：如果传入的不是表，直接返回
+    if type(dictionary) ~= "table" then
+        print("[Error] random_from_dict: Input is not a table")
+        return nil, nil
+    end
+
+    -- 1. 提取所有的 Key
+    local keys = {}
+    for k, _ in pairs(dictionary) do
+        table.insert(keys, k)
+    end
+
+    -- 2. 检查表是否为空
+    if #keys == 0 then
+        return nil, nil
+    end
+
+    -- 3. 随机选择一个索引
+    local random_index = math.random(#keys)
+    local random_key = keys[random_index]
+
+    -- 4. 返回 Key 和 Value (双返回值在 Lua 中非常有用)
+    return random_key, dictionary[random_key]
+end
+
 return  M

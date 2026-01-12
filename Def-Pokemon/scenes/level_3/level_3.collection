@@ -11,7 +11,7 @@ instances {
   id: "cardiwing"
   prototype: "/game/entities/pokemon/cardiwing.go"
   position {
-    x: 393.0
+    x: 473.0
     y: 459.0
   }
   scale3 {
@@ -23,8 +23,8 @@ instances {
   id: "cardiwing1"
   prototype: "/game/entities/pokemon/cardiwing.go"
   position {
-    x: 1528.0
-    y: 859.0
+    x: 1445.0
+    y: 852.0
   }
   scale3 {
     x: 5.0
@@ -58,5 +58,76 @@ embedded_instances {
   "  data: \"prototype: \\\"/game/entities/pokemon/cardiwing.go\\\"\\n"
   "\"\n"
   "}\n"
+  "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"box\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/textures/my_default_texture.tilesource\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
   ""
+}
+embedded_instances {
+  id: "background"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"battle_background\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/textures/background.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 960.0\n"
+  "    y: 540.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"shadow_1\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"battle_shadow\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "size {\\n"
+  "  x: 1920.0\\n"
+  "  y: 1080.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/textures/background.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 490.0\n"
+  "    y: 273.0\n"
+  "  }\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"shadow_2\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"battle_shadow\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "size {\\n"
+  "  x: 1920.0\\n"
+  "  y: 1080.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/textures/background.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 1459.0\n"
+  "    y: 744.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    z: -0.1
+  }
 }

@@ -1,7 +1,7 @@
 local SoundController = require('core.components.sound_controller')
 local Input = require('core.systems.input')
 
----@class widget.battle_menu: druid.widget
+---@class widget.selection_menu: druid.widget
 local M = {}
 
 local CURSOR_OFFSET = 180
@@ -32,12 +32,12 @@ function M:init()
 
 	self.options = {}
 	for i = 1, 3 do
-		local node = 'wild_menu/option_' .. i
+		local node = 'selection_menu/option_' .. i
 		local option = self.druid:new_button(node)
 		self.options[i] = option
 	end
 	
-	self.cursor_node = gui.get_node('wild_menu/cursor')
+	self.cursor_node = gui.get_node('selection_menu/cursor')
 end
 
 function M:on_input(action_id, action)

@@ -1,19 +1,28 @@
 local monarch = require "monarch.monarch"
+local druid = require("druid.druid")
 local Input = require('core.systems.input')
 local SoundController = require('core.components.sound_controller')
+local ui_widget_battle_menu = require('ui.widgets.selection_menu.selection_menu')
+
+
+
 
 function init(self)
     msg.post(".", "acquire_input_focus")
-
+    self.druid = druid.new(self)
+    self.druid:new_widget(ui_widget_battle_menu)
 end
 
 function final(self)
+    self.druid:final()
 end
 
 function update(self, dt)
+    self.druid:update(dt)
 end
 
 function on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
@@ -21,7 +30,5 @@ function on_input(self, action_id, action)
         monarch.back()
         print('won!')
     end
-end
-
-function on_reload(self)
+    return self.druid:on_input(action_id, action)
 end

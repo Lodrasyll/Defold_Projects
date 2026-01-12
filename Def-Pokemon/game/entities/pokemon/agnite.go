@@ -1,10 +1,6 @@
 components {
   id: "pokemon"
   component: "/game/entities/pokemon/pokemon.script"
-  position {
-    x: -24.431877
-    y: -17.192802
-  }
   properties {
     id: "name"
     value: "y"

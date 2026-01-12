@@ -44,7 +44,7 @@ max_debug_vertices = 300000
 max_tile_count = 10480
 
 [physics]
-debug = 1
+debug = 0
 max_collision_object_count = 10240
 max_collisions = 256
 debug_alpha = 0.5

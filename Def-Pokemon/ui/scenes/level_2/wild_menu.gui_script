@@ -1,6 +1,6 @@
 local druid = require("druid.druid")
 local monarch = require "monarch.monarch"
-local wild_menu = require('ui.widgets.battle_box.battle_menu')
+local wild_menu = require('ui.widgets.selection_menu.selection_menu')
 
 function init(self)
     self.druid = druid.new(self)

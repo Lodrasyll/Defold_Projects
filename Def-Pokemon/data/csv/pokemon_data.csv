@@ -1,5 +1,6 @@
-key,ids,hp,xp,level,atk,def,speed
-x,1,10,10,10,10,10,10
-y,2,15,15,15,15,15,15
-z,3,20,20,20,20,20,12
-w,4,25,25,25,25,25,14
+key,name,baseHP,baseAttack, baseDefense, baseSpeed,HPIV,attackIV,defenseIV,speedIV,BattleSpriteFront,BattleSpriteBack
+['aardart'],aardart',14,9,5,6,3,4,2,3,aardart-front',aardart-back'
+['agnite'],agnite',12,7,3,7,3,4,2,4,agnite-back',agnite-front'
+['anoleaf'],anoleaf',11,5,5,6,3,3,3,4,anoleaf-back',anoleaf-front'
+['bamboon'],bamboon',12,6,4,7,3,3,2,5,bamboon-back',bamboon-front'
+['cardiwing'],cardiwing',14,7,3,7,3,4,2,4,cardiwing-front',cardiwing-back'
