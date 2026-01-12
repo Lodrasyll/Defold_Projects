@@ -8,7 +8,7 @@ components {
   }
 }
 embedded_components {
-  id: "sprite"
+  id: "sprite_front"
   type: "sprite"
   data: "default_animation: \"aardart-front\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"

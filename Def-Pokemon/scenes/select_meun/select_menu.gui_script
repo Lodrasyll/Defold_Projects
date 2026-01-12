@@ -1,6 +1,5 @@
 local monarch = require "monarch.monarch"
 local transitions = require('monarch.transitions.gui')
-local GameData = require('GameData')
 
 function init(self)
     msg.post(".", "acquire_input_focus")

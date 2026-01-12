@@ -1,13 +1,16 @@
 local StateMachine = require('lib.thirdparty.statemachine')
 local Input = require('core.systems.input')
 local GameData = require('data.game_data')
-local PokeonData =require('data.pokemon_data')
+local PokemonData = require('data.pokemon_data')
+local pokemon = require('game.entities.pokemon.pokemon')
 
 -- 引入状态模块
 local StateIdle = require('game.entities.player.states.player_idle')
 local StateRun = require('game.entities.player.states.player_run')
 local StateAttack = require('game.entities.player.states.player_attack')
 local StateRoll = require('game.entities.player.states.player_roll')
+
+local offset = vmath.vector3(0, 50, 0)
 
 local function setup_and_disable_hitbox(self)
 	self.hitboxes = {
@@ -132,6 +135,15 @@ function init(self)
 	-- 手动初始化第一个状态
 	self.current_state = self.states['idle']
 	self.current_state.enter(self)
+
+	-- 准备宝可梦
+	GameData.player_first_pokomon = pokemon.get_random_pokemon(PokemonData)
+	local factory_url = '/factory_pokemon#factory' .. '_' .. GameData.player_first_pokomon.name
+	local spawn_pos = go.get_position()
+	self.pokemon_id = factory.create(factory_url, spawn_pos - offset)
+	GameData.pokemon_id = self.pokemon_id
+	
+	pprint(GameData.player_first_pokomon)
 end
 
 ---@package
@@ -172,6 +184,7 @@ function update(self, dt)
 	local pos = go.get_position()
 	pos = pos + self.velocity * dt
 	go.set_position(pos)
+	go.set_position(pos - offset, self.pokemon_id)
 
 	self.direction = vmath.vector3()
 	self.velocity = vmath.vector3()
