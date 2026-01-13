@@ -144,8 +144,10 @@ function init(self)
 	-- 手动初始化第一个状态
 	self.current_state = self.states['idle']
 	self.current_state.enter(self)
-
-	setup_initial_pokemon(self)
+	
+	if GameData.player_first_pokemon == nil then
+		setup_initial_pokemon(self)
+	end
 end
 
 ---@package
@@ -186,7 +188,6 @@ function update(self, dt)
 	local pos = go.get_position()
 	pos = pos + self.velocity * dt
 	go.set_position(pos)
-	go.set_position(pos - offset, self.pokemon_id)
 
 	self.direction = vmath.vector3()
 	self.velocity = vmath.vector3()

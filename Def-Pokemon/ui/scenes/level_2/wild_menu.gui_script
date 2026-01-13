@@ -3,10 +3,10 @@ local monarch = require "monarch.monarch"
 local wild_menu = require('ui.widgets.selection_menu.selection_menu')
 
 function init(self)
+    msg.post('.', 'acquire_input_focus')
     self.druid = druid.new(self)
     self.druid:new_widget(wild_menu)
 
-    msg.post('.', 'acquire_input_focus')
 end
 
 function final(self)

@@ -1,7 +1,7 @@
 local M = {}
 
-M.player_first_pokomon = {}
+M.player_first_pokemon = nil
 M.pokemon_id = nil
-M.party = {}
+M.party = nil
 
 return M

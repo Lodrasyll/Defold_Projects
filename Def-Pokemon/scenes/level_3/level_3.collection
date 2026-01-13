@@ -7,67 +7,12 @@ instances {
     y: 540.0
   }
 }
-instances {
-  id: "cardiwing"
-  prototype: "/game/entities/pokemon/1003_cardiwing.go"
-  position {
-    x: 473.0
-    y: 459.0
-  }
-  scale3 {
-    x: 5.0
-    y: 5.0
-  }
-}
-instances {
-  id: "cardiwing1"
-  prototype: "/game/entities/pokemon/1003_cardiwing.go"
-  position {
-    x: 1445.0
-    y: 852.0
-  }
-  scale3 {
-    x: 5.0
-    y: 5.0
-  }
-}
 scale_along_z: 0
 embedded_instances {
   id: "monarch"
   data: "components {\n"
   "  id: \"level_3\"\n"
   "  component: \"/scenes/level_3/level_3.gui\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
-  id: "pokemon_factories"
-  data: "embedded_components {\n"
-  "  id: \"cardiwing\"\n"
-  "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/pokemon/1003_cardiwing.go\\\"\\n"
-  "\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
-  id: "enemy_pokemon_factories"
-  data: "embedded_components {\n"
-  "  id: \"cardiwing\"\n"
-  "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/pokemon/1003_cardiwing.go\\\"\\n"
-  "\"\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"sprite\"\n"
-  "  type: \"sprite\"\n"
-  "  data: \"default_animation: \\\"box\\\"\\n"
-  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
-  "textures {\\n"
-  "  sampler: \\\"texture_sampler\\\"\\n"
-  "  texture: \\\"/assets/arts/textures/my_default_texture.tilesource\\\"\\n"
-  "}\\n"
-  "\"\n"
   "}\n"
   ""
 }

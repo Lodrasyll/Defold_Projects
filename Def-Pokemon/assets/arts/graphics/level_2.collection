@@ -1,36 +1,10 @@
 name: "level_2"
 instances {
-  id: "camera"
-  prototype: "/orthographic/camera.go"
-  position {
-    x: 1756.0
-    y: 584.0
-  }
-  component_properties {
-    id: "script"
-    properties {
-      id: "zoom"
-      value: "1.5"
-      type: PROPERTY_TYPE_NUMBER
-    }
-    properties {
-      id: "follow"
-      value: "true"
-      type: PROPERTY_TYPE_BOOLEAN
-    }
-    properties {
-      id: "follow_target"
-      value: "/player"
-      type: PROPERTY_TYPE_HASH
-    }
-  }
-}
-instances {
   id: "player"
   prototype: "/game/entities/player/player.go"
   position {
-    x: 1756.0
-    y: 593.0
+    x: 431.0
+    y: 373.0
     z: 1.0
   }
   scale3 {
@@ -52,14 +26,6 @@ embedded_instances {
   data: "components {\n"
   "  id: \"level_2\"\n"
   "  component: \"/scenes/level_2/level_2.gui\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
-  id: "camera_controller"
-  data: "components {\n"
-  "  id: \"camera_controller\"\n"
-  "  component: \"/core/components/camera_controller.script\"\n"
   "}\n"
   ""
 }
