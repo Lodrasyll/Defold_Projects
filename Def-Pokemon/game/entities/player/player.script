@@ -2,7 +2,7 @@ local StateMachine = require('lib.thirdparty.statemachine')
 local Input = require('core.systems.input')
 local GameData = require('data.game_data')
 local PokemonData = require('data.pokemon_data')
-local pokemon = require('game.entities.pokemon.pokemon')
+local Pokemon = require('game.entities.pokemon.pokemon')
 
 -- 引入状态模块
 local StateIdle = require('game.entities.player.states.player_idle')
@@ -75,6 +75,17 @@ local function auto_walk(self, message)
 	end)
 end
 
+local function setup_initial_pokemon(self)
+	-- 准备宝可梦
+	-- GameData.player_first_pokomon = Pokemon
+	GameData.player_first_pokomon = Pokemon:get_random_pokemon(PokemonData)
+	local factory_url = '/factory_pokemon#factory' .. '_' .. GameData.player_first_pokomon.name
+	local spawn_pos = go.get_position()
+	self.pokemon_id = factory.create(factory_url, spawn_pos - offset, nil, nil, 0.7)
+	GameData.pokemon_id = self.pokemon_id
+	
+	pprint(GameData.player_first_pokomon.baseAttack)
+end
 
 ---@package
 ---@param self player.script
@@ -136,14 +147,7 @@ function init(self)
 	self.current_state = self.states['idle']
 	self.current_state.enter(self)
 
-	-- 准备宝可梦
-	GameData.player_first_pokomon = pokemon.get_random_pokemon(PokemonData)
-	local factory_url = '/factory_pokemon#factory' .. '_' .. GameData.player_first_pokomon.name
-	local spawn_pos = go.get_position()
-	self.pokemon_id = factory.create(factory_url, spawn_pos - offset)
-	GameData.pokemon_id = self.pokemon_id
-	
-	pprint(GameData.player_first_pokomon)
+	setup_initial_pokemon(self)
 end
 
 ---@package
