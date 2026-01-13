@@ -13,10 +13,27 @@ local function check_encounter(self, pos, dist)
 	local tile_x = math.floor(pos.x / TILE_SIZE) + 1
 	local tile_y = math.floor(pos.y / TILE_SIZE) + 1
 
+	-- 【核心修复】获取地图边界
+	-- x, y: 地图左下角的起始索引（通常是 1，但也可能是负数，取决于你在编辑器里怎么画）
+	-- w, h: 地图的宽度和高度（格子数量）
+	local x, y, w, h = tilemap.get_bounds(MAP_URL)
+
+	-- 【核心修复】检查是否越界
+	-- 我们必须确保 tile_x 在 [x, x+w-1] 之间，tile_y 在 [y, y+h-1] 之间
+	local is_inside_map = (tile_x >= x) and (tile_x < x + w) and
+		(tile_y >= y) and (tile_y < y + h)
+
+	if not is_inside_map then
+		-- 玩家在地图外，直接忽略，不处理遇敌，也不报错
+		-- print("Player out of bounds:", tile_x, tile_y)
+		return
+	end
+
 	-- 2. 获取 Tile ID
 	-- 注意：我们需要使用 pcall (protected call) 或者确保 url 正确，
 	-- 否则如果地图没加载完，这里可能会报错。
 	local tile = tilemap.get_tile(MAP_URL, GRASS_LAYER, tile_x, tile_y)
+	
 
 	-- 3. 只有在草丛里才扣除步数
 	if tile == GRASS_TILE_ID then
@@ -49,8 +66,7 @@ function init(self)
 	self.steps_until_encounter = math.random(self.min_step, self.max_step)
 
 	-- 调试用：看看初始需要走多少步
-	-- print("DEBUG: Next encounter in " .. self.steps_until_encounter .. " pixels.")
-	print('init!')
+	print("DEBUG: Next encounter in " .. self.steps_until_encounter .. " pixels.")
 end
 
 ---@package

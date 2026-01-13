@@ -1,6 +1,7 @@
+local Class = require('lib.thirdparty.class')
 local utils = require('core.utils.utils')
 
-local Pokemon = {}
+local Pokemon = Class{}
 
 function Pokemon:init(data, level)
     self.name = data.name
@@ -16,7 +17,7 @@ function Pokemon:init(data, level)
     self.HP_IV = data.HPIV
     self.attack_IV = data.attackIV
     self.defense_IV = data.defenseIV
-    self.speed_IV = data.speedTIV
+    self.speed_IV = data.speedIV
 
     self.HP = self.base_hp
     self.attack = self.base_attack
@@ -30,8 +31,6 @@ function Pokemon:init(data, level)
     self:calculate_stats()
 
     self.current_HP = self.HP
-    
-    return self
 end
 
 function Pokemon:calculate_stats()
@@ -40,7 +39,7 @@ function Pokemon:calculate_stats()
     end
 end
 
-function Pokemon:get_random_pokemon(data)
+function Pokemon.get_random_pokemon(data)
     local pokemon_key, pokemon = utils.random_from_dict(data)
     return pokemon_key and pokemon
 end
