@@ -1,8 +1,31 @@
-go.property('name', hash(''))
+local utils = require('core.utils.utils')
+local PokemonData = require('data.pokemon_data')
+local PokemonEngine = require('game.entities.pokemon.pokemon_engine')
 
+go.property('pokemon_id', 0)
 
 ---@package
 ---@param self pokemon.script
 function init(self)
 	msg.post('#sprite_back', 'disable')
+
+	local pokemon_data = nil
+	if self.pokemon_id ~= 0 then
+		print('正在生成指定ID的宝可梦 ' .. self.pokemon_id)
+		pokemon_data = utils.get_data_by_id(self.pokemon_id, PokemonData)
+	else
+		print('正在随机生成野生宝可梦')
+		local _, ramndom_data = PokemonEngine.get_random_pokemon(PokemonData)
+		pokemon_data = ramndom_data
+	end
+
+	self.inti_level = math.random(2, 5)
+	self.pokemon = PokemonEngine(pokemon_data, self.inti_level)
+
+	local sprite_id = self.pokemon.battle_sprite_front
+	if sprite_id then
+		sprite.play_flipbook("#sprite_front", sprite_id)
+	end
+
+	pprint(self.pokemon)
 end

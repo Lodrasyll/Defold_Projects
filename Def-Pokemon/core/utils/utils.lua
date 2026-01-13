@@ -69,4 +69,15 @@ function M.random_from_dict(dictionary)
     return random_key, dictionary[random_key]
 end
 
+-- 【新增】反向查找器：通过 ID 找数据
+function M.get_data_by_id(target_id, data)
+    for key, data in pairs(data) do
+        if data.id == target_id then
+            return data
+        end
+    end
+    print("WARNING: 找不到 ID 为 " .. tostring(target_id) .. " 的宝可梦！")
+    return nil
+end
+
 return  M

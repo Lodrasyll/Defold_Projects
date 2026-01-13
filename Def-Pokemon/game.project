@@ -41,7 +41,7 @@ default_texture_mag_filter = nearest
 max_debug_vertices = 300000
 
 [tilemap]
-max_tile_count = 10480
+max_tile_count = 20000
 
 [physics]
 debug = 0

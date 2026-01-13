@@ -9,7 +9,7 @@ instances {
 }
 instances {
   id: "cardiwing"
-  prototype: "/game/entities/pokemon/cardiwing.go"
+  prototype: "/game/entities/pokemon/1003_cardiwing.go"
   position {
     x: 473.0
     y: 459.0
@@ -21,7 +21,7 @@ instances {
 }
 instances {
   id: "cardiwing1"
-  prototype: "/game/entities/pokemon/cardiwing.go"
+  prototype: "/game/entities/pokemon/1003_cardiwing.go"
   position {
     x: 1445.0
     y: 852.0
@@ -45,7 +45,7 @@ embedded_instances {
   data: "embedded_components {\n"
   "  id: \"cardiwing\"\n"
   "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/pokemon/cardiwing.go\\\"\\n"
+  "  data: \"prototype: \\\"/game/entities/pokemon/1003_cardiwing.go\\\"\\n"
   "\"\n"
   "}\n"
   ""
@@ -55,7 +55,7 @@ embedded_instances {
   data: "embedded_components {\n"
   "  id: \"cardiwing\"\n"
   "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/pokemon/cardiwing.go\\\"\\n"
+  "  data: \"prototype: \\\"/game/entities/pokemon/1003_cardiwing.go\\\"\\n"
   "\"\n"
   "}\n"
   "embedded_components {\n"
