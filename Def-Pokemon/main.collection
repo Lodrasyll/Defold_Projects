@@ -111,7 +111,7 @@ embedded_instances {
   "embedded_components {\n"
   "  id: \"collectionproxy\"\n"
   "  type: \"collectionproxy\"\n"
-  "  data: \"collection: \\\"/assets/arts/graphics/level_2.collection\\\"\\n"
+  "  data: \"collection: \\\"/scenes/level_2/level_2.collection\\\"\\n"
   "\"\n"
   "}\n"
   ""

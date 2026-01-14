@@ -20,6 +20,42 @@ instances {
     y: 3.0
   }
 }
+instances {
+  id: "camera_level_2"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  component_properties {
+    id: "script"
+    properties {
+      id: "follow"
+      value: "true"
+      type: PROPERTY_TYPE_BOOLEAN
+    }
+    properties {
+      id: "follow_target"
+      value: "/player"
+      type: PROPERTY_TYPE_HASH
+    }
+    properties {
+      id: "bounds_bottom"
+      value: "0.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_right"
+      value: "3840.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bounds_top"
+      value: "2376.0"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "monarch"

@@ -1,6 +1,6 @@
 name: "level_3"
 instances {
-  id: "camera"
+  id: "camera_level_3"
   prototype: "/orthographic/camera.go"
   position {
     x: 960.0
@@ -75,4 +75,12 @@ embedded_instances {
   position {
     z: -0.1
   }
+}
+embedded_instances {
+  id: "test"
+  data: "components {\n"
+  "  id: \"test\"\n"
+  "  component: \"/test.script\"\n"
+  "}\n"
+  ""
 }

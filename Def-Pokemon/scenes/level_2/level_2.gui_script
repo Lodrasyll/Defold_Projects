@@ -3,6 +3,7 @@ local event = require('event.event')
 
 function init(self)
     msg.post(".", "acquire_input_focus")
+    print('new!')
 end
 
 function final(self)

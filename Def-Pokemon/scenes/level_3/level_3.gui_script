@@ -10,7 +10,6 @@ local ui_widget_battle_menu = require('ui.widgets.selection_menu.selection_menu'
 function init(self)
     msg.post(".", "acquire_input_focus")
     self.druid = druid.new(self)
-    
 end
 
 function final(self)

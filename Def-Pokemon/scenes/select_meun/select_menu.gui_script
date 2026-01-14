@@ -23,7 +23,8 @@ end
 function on_input(self, action_id, action)
     if action_id == hash('start') then
         gui.set_enabled(gui.get_node('bg'), true)
-        monarch.show('level_2', { sequential = true })
+        -- monarch.show('level_2', { sequential = true })
+        monarch.show('level_2')
     end
 end
 

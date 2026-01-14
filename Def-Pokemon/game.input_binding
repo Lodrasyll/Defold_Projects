@@ -28,19 +28,19 @@ key_trigger {
 }
 key_trigger {
   input: KEY_UP
-  action: "up"
+  action: "key_up"
 }
 key_trigger {
   input: KEY_DOWN
-  action: "down"
+  action: "key_down"
 }
 key_trigger {
   input: KEY_LEFT
-  action: "left"
+  action: "key_left"
 }
 key_trigger {
   input: KEY_RIGHT
-  action: "right"
+  action: "key_right"
 }
 key_trigger {
   input: KEY_BACKSPACE
@@ -49,6 +49,10 @@ key_trigger {
 key_trigger {
   input: KEY_I
   action: "menu"
+}
+key_trigger {
+  input: KEY_SPACE
+  action: "key_space"
 }
 mouse_trigger {
   input: MOUSE_BUTTON_1
