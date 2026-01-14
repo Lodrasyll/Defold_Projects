@@ -1,0 +1,37 @@
+script: "/ui/scenes/level_2/dialogue/dialogue.gui_script"
+nodes {
+  position {
+    x: 960.0
+    y: 931.0
+  }
+  type: TYPE_TEMPLATE
+  id: "dialogue_box"
+  inherit_alpha: true
+  template: "/ui/widgets/dialogue_box/dialogue_box.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "dialogue_box/root"
+  parent: "dialogue_box"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "dialogue_box/dialogue_box"
+  parent: "dialogue_box/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "dialogue_box/text"
+  parent: "dialogue_box/dialogue_box"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "dialogue_box/dialogue_zone"
+  parent: "dialogue_box/root"
+  template_node_child: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

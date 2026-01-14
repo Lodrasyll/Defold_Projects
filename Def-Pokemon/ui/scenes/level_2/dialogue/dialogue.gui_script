@@ -1,0 +1,39 @@
+local monarch = require "monarch.monarch"
+local druid = require('druid.druid')
+local event = require('event.event')
+local texts = require('data.text')
+local dialogue_widget = require('ui.widgets.dialogue_box.dialogue_box')
+
+local on_dialogue_finished
+
+function init(self)
+    msg.post(".", "acquire_input_focus")
+    self.druid = druid.new(self)
+    self.dialogue_widget = self.druid:new_widget(dialogue_widget)
+    self.dialogue_widget:set_texts_data(texts)
+
+    self.dialogue_widget.on_dialogue_end:subscribe(on_dialogue_finished, self)
+end
+
+function final(self)
+    self.druid:final()
+end
+
+function update(self, dt)
+    self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+end
+
+function on_input(self, action_id, action)
+    return self.druid:on_input(action_id, action)
+end
+
+function on_reload(self)
+end
+
+on_dialogue_finished = function(self)
+    monarch.back()
+end

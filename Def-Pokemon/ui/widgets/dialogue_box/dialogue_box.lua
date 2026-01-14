@@ -1,27 +1,44 @@
----This is a template for a DialogueBox Druid widget.
----Instantiate this template with `druid.new_widget(widget_module, [template_id], [nodes])`.
----Read more about Druid Widgets here: ...
+local SoundController = require('core.components.sound_controller')
+local event = require('event.event')
 
 ---@class widget.dialogue_box: druid.widget
 local M = {}
 
 
 function M:init()
-	-- Now we have next functions to use here:
-	-- self:get_node([node_id]) -- Get node inside widget by id
-	-- self.druid to access Druid Instance API, like:
-	-- self.druid:new_button([node_id], [callback])
-	-- self.druid:new_text([node_id], [text])
-	-- And all functions from component.lua file
+	self.dialogue_box = self.druid:new_button('dialogue_box/dialogue_zone', self.on_click)
+	self.text_node = self:get_node('dialogue_box/text')
+	self.on_dialogue_end = event.create()
 
-	self.root = self:get_node("root")
-	self.button = self.druid:new_button("button", self.on_button, self)
+	self.current_count = 1
+
 end
 
-
-function M:on_button()
-	print("Root node", self.root)
+function M:set_texts_data(texts)
+	self.texts = texts
+	self.text_node = self:get_node('dialogue_box/text')
+	self.druid:new_text(self.text_node, self.texts[1].text)
 end
 
+function M:on_click()
+	SoundController.play('Thip', SoundController.GROUP_SFX)
+	self:next_text()
+end
+
+function M:next_text()
+	-- 先增加计数
+	self.current_count = self.current_count + 1
+	-- 边界检查
+	if self.current_count > #self.texts then
+		print('close dialogue')
+		self.on_dialogue_end:trigger()
+		return
+	end
+	-- 负责实际更新
+	self.druid:new_text(self.text_node, self.texts[self.current_count].text)
+end
 
 return M
+
+
+

@@ -28,7 +28,7 @@ function init(self)
 		sprite.play_flipbook("#sprite_front", sprite_id)
 	end
 
-	pprint(self.pokemon)
+	-- pprint(self.pokemon)
 
 	if GameData.player_first_pokemon == nil then
 		GameData.player_first_pokemon = self.pokemon

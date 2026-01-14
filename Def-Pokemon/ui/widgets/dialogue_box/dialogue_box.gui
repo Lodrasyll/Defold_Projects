@@ -2,6 +2,10 @@ fonts {
   name: "Koulen"
   font: "/assets/fonts/Koulen.font"
 }
+fonts {
+  name: "ChillBitmap_7px"
+  font: "/assets/fonts/ChillBitmap_7px.font"
+}
 textures {
   name: "my_default_texture"
   texture: "/assets/arts/textures/my_default_texture.tilesource"
@@ -36,14 +40,29 @@ nodes {
 }
 nodes {
   size {
-    x: 1000.0
-    y: 250.0
+    x: 1920.0
+    y: 280.0
   }
   type: TYPE_TEXT
-  font: "Koulen"
+  text: "\n"
+  ""
+  font: "ChillBitmap_7px"
   id: "text"
+  line_break: true
   parent: "dialogue_box"
   inherit_alpha: true
+}
+nodes {
+  size {
+    x: 1920.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  id: "dialogue_zone"
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
 }
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

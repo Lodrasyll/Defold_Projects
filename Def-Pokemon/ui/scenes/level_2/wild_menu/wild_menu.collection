@@ -4,7 +4,7 @@ embedded_instances {
   id: "monarch"
   data: "components {\n"
   "  id: \"wild_menu\"\n"
-  "  component: \"/ui/scenes/level_2/wild_menu.gui\"\n"
+  "  component: \"/ui/scenes/level_2/wild_menu/wild_menu.gui\"\n"
   "}\n"
   ""
 }

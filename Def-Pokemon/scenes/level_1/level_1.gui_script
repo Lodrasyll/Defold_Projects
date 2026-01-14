@@ -120,7 +120,6 @@ end
 
 function init(self)
     msg.post(".", "acquire_input_focus")
-    self.druid = druid.new(self)
 
     self.text_node = gui.get_node('text')
     self.selection_node = gui.get_node('selection')
@@ -197,15 +196,4 @@ function on_input(self, action_id, action)
     return self.druid:on_input(action_id, action)
 end
 
--- function final(self)
---     self.druid:final()
--- end
-
--- function update(self, dt)
---     self.druid:update(dt)
--- end
-
--- function on_message(self, message_id, message, sender)
---     self.druid:on_message(message_id, message, sender)
--- end
 

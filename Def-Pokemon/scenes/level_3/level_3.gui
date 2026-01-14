@@ -57,6 +57,12 @@ nodes {
   template_node_child: true
 }
 nodes {
+  type: TYPE_BOX
+  id: "battle_message/dialogue_zone"
+  parent: "battle_message/root"
+  template_node_child: true
+}
+nodes {
   position {
     x: 467.0
     y: 1002.0
