@@ -1,6 +1,7 @@
 local utils = require('core.utils.utils')
 local PokemonData = require('data.pokemon_data')
 local PokemonEngine = require('game.entities.pokemon.pokemon_engine')
+local GameData = require('data.game_data')
 
 go.property('pokemon_id', 0)
 
@@ -28,4 +29,8 @@ function init(self)
 	end
 
 	pprint(self.pokemon)
+
+	if GameData.player_first_pokemon == nil then
+		GameData.player_first_pokemon = self.pokemon
+	end
 end

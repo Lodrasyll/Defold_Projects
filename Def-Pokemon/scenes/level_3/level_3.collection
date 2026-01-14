@@ -84,3 +84,11 @@ embedded_instances {
   "}\n"
   ""
 }
+embedded_instances {
+  id: "battle_controller"
+  data: "components {\n"
+  "  id: \"battle_controller\"\n"
+  "  component: \"/core/components/battle_controller.script\"\n"
+  "}\n"
+  ""
+}

@@ -1,0 +1,21 @@
+local GameData = require('data.game_data')
+local utils = require('core.utils.utils')
+local PokemonData = require('data.pokemon_data')
+local PokemonEngine = require('game.entities.pokemon.pokemon_engine')
+
+local spawn_opponent_pokemon
+
+---@package
+---@param self battle_controller.script
+function init(self)
+    spawn_opponent_pokemon(self)
+
+    pprint(GameData.player_first_pokemon)
+    pprint(self.opponent_pokemon)
+end
+
+
+spawn_opponent_pokemon = function (self)
+    local random_pokemon = PokemonEngine.get_random_pokemon(PokemonData)
+    self.opponent_pokemon = PokemonEngine(random_pokemon, math.random(2, 6))
+end
