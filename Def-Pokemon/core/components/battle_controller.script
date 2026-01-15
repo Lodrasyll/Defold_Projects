@@ -1,12 +1,16 @@
 local GameData = require('data.game_data')
+local Input = require('core.systems.input')
 local utils = require('core.utils.utils')
 local PokemonData = require('data.pokemon_data')
 local PokemonEngine = require('game.entities.pokemon.pokemon_engine')
+local Flow = require('core.systems.flow')
 
 local spawn_player_pokemon
 local spawn_opponent_pokemon
 local spawn_factory
 local battle_opening
+local battle_flow
+local set_init_data
 local debugger
 
 local player_pokemon_start_pos = vmath.vector3(-300, 456, 1)
@@ -16,13 +20,41 @@ local opponent_pokemon_start_pos = vmath.vector3(2200, 861, 1)
 ---@package
 ---@param self battle_controller.script
 function init(self)
-    
+    msg.post('.', 'acquire_input_focus')
+    set_init_data(self)
+
     spawn_player_pokemon(self)
     spawn_opponent_pokemon(self)
 
     battle_opening(self)
 
+    battle_flow(self)
+
     debugger(self)
+end
+
+set_init_data = function (self)
+    self.is_loop = true
+end
+
+---@package
+---@param self battle_controller.script
+---@param dt number
+function update(self, dt)
+    Flow.update(dt)
+end
+
+---@package
+---@param self battle_controller.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    if action_id == Input.BACK and action.pressed then
+        Flow.stop()
+        self.is_loop = false
+        print("收到停止指令！")
+    end
 end
 
 spawn_player_pokemon = function (self)
@@ -84,4 +116,25 @@ end
 debugger = function (self)
     pprint(GameData.player_first_pokemon.id)
     pprint(self.opponent_pokemon.id)
+end
+
+battle_flow = function (self)
+    Flow.start(function ()
+        print('战斗开始！')
+        -- while self.is_loop do
+        --     Flow.wait(1)
+        --     print('玩家攻击！')
+
+        --     if not self.is_loop then break end
+
+        --     Flow.wait(1)
+        --     print('敌人攻击')
+        -- end
+        Flow.wait(4)
+        print('敌人攻击！')
+        print('开始扣血')
+        msg.post('/monarch#level_3', 'animate_hp')
+        Flow.wait_for_signal('hp_anim_finshed')
+        print('血条动画播放完毕，继续后续逻辑')
+    end)
 end

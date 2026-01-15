@@ -58,9 +58,14 @@ nodes {
   template_node_child: true
 }
 nodes {
+  color {
+    x: 0.0
+    z: 0.0
+  }
   type: TYPE_BOX
   id: "hp_bar/fill"
   parent: "hp_bar/progress_bar"
+  overridden_fields: 5
   template_node_child: true
 }
 nodes {
@@ -96,9 +101,14 @@ nodes {
   template_node_child: true
 }
 nodes {
+  color {
+    x: 0.0
+    y: 0.0
+  }
   type: TYPE_BOX
   id: "exp_bar/fill"
   parent: "exp_bar/progress_bar"
+  overridden_fields: 5
   template_node_child: true
 }
 nodes {
