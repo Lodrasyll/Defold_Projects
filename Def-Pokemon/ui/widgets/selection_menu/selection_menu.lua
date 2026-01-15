@@ -23,9 +23,9 @@ function M:next_option(self)
 	SoundController.play('Thip', SoundController.GROUP_SFX)
 end
 
-function M:on_select(index)
-	print('selected ' .. self.current_cursor)
-end
+-- function M:on_select(index)
+-- 	print('selected ' .. self.current_cursor)
+-- end
 
 function M:set_data(data)
 	self.data = data
@@ -58,6 +58,7 @@ function M:init()
 end
 function M:on_click(index)
 	self.on_option_select:trigger(index)
+	SoundController.play('Thip', SoundController.GROUP_SFX)
 end
 
 function M:on_input(action_id, action)

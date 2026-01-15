@@ -5,6 +5,7 @@ local texts = require('data.text')
 local dialogue_widget = require('ui.widgets.dialogue_box.dialogue_box')
 
 local on_dialogue_finished
+local appear
 
 function init(self)
     msg.post(".", "acquire_input_focus")
@@ -13,6 +14,9 @@ function init(self)
     self.dialogue_widget:set_texts_data(texts)
 
     self.dialogue_widget.on_dialogue_end:subscribe(on_dialogue_finished, self)
+    self.root_node = gui.get_node('root')
+
+    appear(self)
 end
 
 function final(self)
@@ -36,4 +40,10 @@ end
 
 on_dialogue_finished = function(self)
     monarch.back()
+end
+
+appear = function (self)
+    local appear_target_pos = gui.get_position(self.root_node)
+    gui.set_position(self.root_node, vmath.vector3(960, 1500, 0))
+    gui.animate(self.root_node, 'position', appear_target_pos, go.EASING_LINEAR, 0.4)
 end

@@ -23,10 +23,10 @@ function init(self)
 	self.inti_level = math.random(2, 5)
 	self.pokemon = PokemonEngine(pokemon_data, self.inti_level)
 
-	local sprite_id = self.pokemon.battle_sprite_front
-	if sprite_id then
-		sprite.play_flipbook("#sprite_front", sprite_id)
-	end
+	-- local sprite_id = self.pokemon.battle_sprite_front
+	-- if sprite_id then
+	-- 	sprite.play_flipbook("#sprite_front", sprite_id)
+	-- end
 
 	-- pprint(self.pokemon)
 

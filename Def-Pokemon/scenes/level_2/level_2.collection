@@ -61,6 +61,10 @@ instances {
     }
   }
 }
+collection_instances {
+  id: "pokemon_factory"
+  collection: "/game/entities/pokemon/pokemon_factory.collection"
+}
 scale_along_z: 0
 embedded_instances {
   id: "monarch"
@@ -75,34 +79,6 @@ embedded_instances {
   data: "components {\n"
   "  id: \"game_controller\"\n"
   "  component: \"/core/components/game_controller.script\"\n"
-  "}\n"
-  ""
-}
-embedded_instances {
-  id: "factory_pokemon"
-  data: "embedded_components {\n"
-  "  id: \"factory_1003\"\n"
-  "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/pokemon/1003_cardiwing.go\\\"\\n"
-  "\"\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"factory_1004\"\n"
-  "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/pokemon/1004_bamboon.go\\\"\\n"
-  "\"\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"factory_1002\"\n"
-  "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/pokemon/1002_agnite.go\\\"\\n"
-  "\"\n"
-  "}\n"
-  "embedded_components {\n"
-  "  id: \"factory_1001\"\n"
-  "  type: \"factory\"\n"
-  "  data: \"prototype: \\\"/game/entities/pokemon/1001_aardart.go\\\"\\n"
-  "\"\n"
   "}\n"
   ""
 }

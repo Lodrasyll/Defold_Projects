@@ -64,151 +64,6 @@ nodes {
 }
 nodes {
   position {
-    x: 467.0
-    y: 1002.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-  }
-  type: TYPE_BOX
-  id: "enemy_bar"
-  parent: "root"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
-}
-nodes {
-  position {
-    y: 23.0
-  }
-  type: TYPE_TEMPLATE
-  id: "enemy_hp_bar"
-  parent: "enemy_bar"
-  inherit_alpha: true
-  template: "/ui/widgets/progress_bar/progress_bar.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "enemy_hp_bar/progress_bar"
-  parent: "enemy_hp_bar"
-  template_node_child: true
-}
-nodes {
-  color {
-    x: 0.0
-    y: 0.502
-    z: 0.0
-  }
-  type: TYPE_BOX
-  id: "enemy_hp_bar/fill"
-  parent: "enemy_hp_bar/progress_bar"
-  overridden_fields: 5
-  template_node_child: true
-}
-nodes {
-  position {
-    y: -21.0
-  }
-  type: TYPE_TEMPLATE
-  id: "enemy_xp_bar"
-  parent: "enemy_bar"
-  inherit_alpha: true
-  template: "/ui/widgets/progress_bar/progress_bar.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "enemy_xp_bar/progress_bar"
-  parent: "enemy_xp_bar"
-  template_node_child: true
-}
-nodes {
-  color {
-    x: 0.2
-    y: 0.302
-    z: 0.702
-  }
-  type: TYPE_BOX
-  id: "enemy_xp_bar/fill"
-  parent: "enemy_xp_bar/progress_bar"
-  overridden_fields: 5
-  template_node_child: true
-}
-nodes {
-  position {
-    x: 1451.0
-    y: 366.0
-  }
-  size {
-    x: 200.0
-    y: 100.0
-  }
-  type: TYPE_BOX
-  id: "player_bar"
-  parent: "root"
-  inherit_alpha: true
-  size_mode: SIZE_MODE_AUTO
-  visible: false
-}
-nodes {
-  position {
-    y: 31.0
-  }
-  type: TYPE_TEMPLATE
-  id: "player_hp_bar"
-  parent: "player_bar"
-  inherit_alpha: true
-  template: "/ui/widgets/progress_bar/progress_bar.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "player_hp_bar/progress_bar"
-  parent: "player_hp_bar"
-  overridden_fields: 1
-  template_node_child: true
-}
-nodes {
-  color {
-    x: 0.0
-    y: 0.502
-    z: 0.0
-  }
-  type: TYPE_BOX
-  id: "player_hp_bar/fill"
-  parent: "player_hp_bar/progress_bar"
-  overridden_fields: 5
-  template_node_child: true
-}
-nodes {
-  position {
-    y: -27.0
-  }
-  type: TYPE_TEMPLATE
-  id: "player_xp_bar"
-  parent: "player_bar"
-  inherit_alpha: true
-  template: "/ui/widgets/progress_bar/progress_bar.gui"
-}
-nodes {
-  type: TYPE_BOX
-  id: "player_xp_bar/progress_bar"
-  parent: "player_xp_bar"
-  template_node_child: true
-}
-nodes {
-  color {
-    x: 0.2
-    y: 0.302
-    z: 0.702
-  }
-  type: TYPE_BOX
-  id: "player_xp_bar/fill"
-  parent: "player_xp_bar/progress_bar"
-  overridden_fields: 5
-  template_node_child: true
-}
-nodes {
-  position {
     x: 1670.0
     y: 150.0
   }
@@ -270,6 +125,185 @@ nodes {
   type: TYPE_TEXT
   id: "selection_menu/option_text_3"
   parent: "selection_menu/option_3"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 252.0
+    y: 978.0
+  }
+  type: TYPE_TEMPLATE
+  id: "enemy_battle_bar"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/battle_bar/battle_bar.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/root"
+  parent: "enemy_battle_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/bg"
+  parent: "enemy_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "enemy_battle_bar/hp_bar"
+  parent: "enemy_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/hp_bar/root"
+  parent: "enemy_battle_bar/hp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/hp_bar/progress_bar"
+  parent: "enemy_battle_bar/hp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/hp_bar/fill"
+  parent: "enemy_battle_bar/hp_bar/progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "enemy_battle_bar/hp_bar/text"
+  parent: "enemy_battle_bar/hp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "enemy_battle_bar/exp_bar"
+  parent: "enemy_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/exp_bar/root"
+  parent: "enemy_battle_bar/exp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/exp_bar/progress_bar"
+  parent: "enemy_battle_bar/exp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/exp_bar/fill"
+  parent: "enemy_battle_bar/exp_bar/progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "enemy_battle_bar/exp_bar/text"
+  parent: "enemy_battle_bar/exp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "enemy_battle_bar/level"
+  parent: "enemy_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 1669.0
+    y: 402.0
+  }
+  type: TYPE_TEMPLATE
+  id: "player_battle_bar"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/battle_bar/battle_bar.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/root"
+  parent: "player_battle_bar"
+  overridden_fields: 1
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/bg"
+  parent: "player_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "player_battle_bar/hp_bar"
+  parent: "player_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/hp_bar/root"
+  parent: "player_battle_bar/hp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/hp_bar/progress_bar"
+  parent: "player_battle_bar/hp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/hp_bar/fill"
+  parent: "player_battle_bar/hp_bar/progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "player_battle_bar/hp_bar/text"
+  parent: "player_battle_bar/hp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "player_battle_bar/exp_bar"
+  parent: "player_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/exp_bar/root"
+  parent: "player_battle_bar/exp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/exp_bar/progress_bar"
+  parent: "player_battle_bar/exp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/exp_bar/fill"
+  parent: "player_battle_bar/exp_bar/progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "player_battle_bar/exp_bar/text"
+  parent: "player_battle_bar/exp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "player_battle_bar/level"
+  parent: "player_battle_bar/root"
   template_node_child: true
 }
 material: "/builtins/materials/gui.material"

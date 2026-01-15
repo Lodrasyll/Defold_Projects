@@ -77,7 +77,8 @@ local function setup_initial_pokemon(self)
 	-- 准备宝可梦
 	local pokemon_id = math.random(1001, 1004)
 	
-	local factory_url = '/factory_pokemon#factory_' .. pokemon_id
+	-- local factory_url = '/factory_pokemon#factory_' .. pokemon_id
+	local factory_url = '/pokemon_factory/factory_pokemon#factory_' .. pokemon_id
 	local position = go.get_position() + offset
 	local properties = { pokemon_id = pokemon_id }
 

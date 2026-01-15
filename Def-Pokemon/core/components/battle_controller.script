@@ -3,19 +3,85 @@ local utils = require('core.utils.utils')
 local PokemonData = require('data.pokemon_data')
 local PokemonEngine = require('game.entities.pokemon.pokemon_engine')
 
+local spawn_player_pokemon
 local spawn_opponent_pokemon
+local spawn_factory
+local battle_opening
+local debugger
+
+local player_pokemon_start_pos = vmath.vector3(-300, 456, 1)
+local opponent_pokemon_start_pos = vmath.vector3(2200, 861, 1)
+
 
 ---@package
 ---@param self battle_controller.script
 function init(self)
+    
+    spawn_player_pokemon(self)
     spawn_opponent_pokemon(self)
 
-    pprint(GameData.player_first_pokemon)
-    pprint(self.opponent_pokemon)
+    battle_opening(self)
+
+    debugger(self)
 end
 
+spawn_player_pokemon = function (self)
+    self.player_pokemon_pos = go.get_position('/player_pokemon_pos')
+    print(self.player_pokemon_pos)
+
+
+    local id = GameData.player_first_pokemon.id
+    self.player_pokemon_id = spawn_factory(self, id, player_pokemon_start_pos)
+    local sprite_front_url = msg.url(nil, self.player_pokemon_id, 'sprite_front')
+    local sprite_back_url = msg.url(nil, self.player_pokemon_id, 'sprite_back')
+    msg.post(sprite_front_url, 'disable')
+    msg.post(sprite_back_url, 'enable')
+    print('spawn player pokemon')
+end
 
 spawn_opponent_pokemon = function (self)
+    self.opponent_pokemon_pos = go.get_position('/opponent_pokemon_pos')
+    print(self.opponent_pokemon_pos)
     local random_pokemon = PokemonEngine.get_random_pokemon(PokemonData)
     self.opponent_pokemon = PokemonEngine(random_pokemon, math.random(2, 6))
+
+    self.opponent_pokemon_id = spawn_factory(self, self.opponent_pokemon.id, opponent_pokemon_start_pos)
+    print('spawn opponent pokemon')
+end
+
+spawn_factory = function (self, id, pos)
+    local url = '/pokemon_factory/factory_pokemon#factory_' .. id
+    local position = pos
+    local properties = { pokemon_id = id }
+    local scale = 5.0
+
+    local id = factory.create(url, position, nil, properties, scale)
+    return id
+end
+
+battle_opening = function (self)
+    -- shadow
+    local player_shadow_target_pos = go.get_position('/shadow_1')
+    go.set_position(vmath.vector3(-430, 273, 0), '/shadow_1')
+    go.animate('/shadow_1', 'position', go.PLAYBACK_ONCE_FORWARD, player_shadow_target_pos, go.EASING_LINEAR, 1, 0, function ()
+            --pokemon
+            go.set_position(vmath.vector3(-300, 456, 1), self.player_pokemon_id)
+            go.animate(self.player_pokemon_id, 'position', go.PLAYBACK_ONCE_FORWARD, self.player_pokemon_pos,
+            go.EASING_LINEAR, 1)
+    end)
+
+    -- shadow
+    local opponent_shadow_target_pos = go.get_position('/shadow_2')
+    go.set_position(vmath.vector3(2300, 744, 0), '/shadow_2')
+    go.animate('/shadow_2', 'position', go.PLAYBACK_ONCE_FORWARD, opponent_shadow_target_pos, go.EASING_LINEAR, 1, 0, function ()
+            --pokemon
+            go.set_position(vmath.vector3(2000, 861, 1), self.opponent_pokemon_id)
+            go.animate(self.opponent_pokemon_id, 'position', go.PLAYBACK_ONCE_FORWARD, self.opponent_pokemon_pos,
+            go.EASING_LINEAR, 1)
+    end)
+end
+
+debugger = function (self)
+    pprint(GameData.player_first_pokemon.id)
+    pprint(self.opponent_pokemon.id)
 end

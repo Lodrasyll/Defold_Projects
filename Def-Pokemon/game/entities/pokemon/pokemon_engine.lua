@@ -5,6 +5,7 @@ local Pokemon = Class{}
 
 function Pokemon:init(data, level)
     self.name = data.name
+    self.id = data.id
 
     self.battle_sprite_front = data.BattleSpriteFront
     self.battle_sprite_back = data.BattleSpriteBack

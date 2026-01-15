@@ -1,0 +1,130 @@
+fonts {
+  name: "Koulen"
+  font: "/assets/fonts/Koulen.font"
+}
+textures {
+  name: "my_default_texture"
+  texture: "/assets/arts/textures/my_default_texture.tilesource"
+}
+nodes {
+  size {
+    x: 500.0
+    y: 200.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 500.0
+    y: 200.0
+  }
+  type: TYPE_BOX
+  texture: "my_default_texture/box"
+  id: "bg"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: 20.0
+    y: 7.0
+  }
+  type: TYPE_TEMPLATE
+  id: "hp_bar"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/progress_bar/progress_bar.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "hp_bar/root"
+  parent: "hp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hp_bar/progress_bar"
+  parent: "hp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "hp_bar/fill"
+  parent: "hp_bar/progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Hp\n"
+  ""
+  id: "hp_bar/text"
+  parent: "hp_bar/root"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 20.0
+    y: -43.0
+  }
+  type: TYPE_TEMPLATE
+  id: "exp_bar"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/progress_bar/progress_bar.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "exp_bar/root"
+  parent: "exp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "exp_bar/progress_bar"
+  parent: "exp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "exp_bar/fill"
+  parent: "exp_bar/progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  text: "Exp\n"
+  ""
+  id: "exp_bar/text"
+  parent: "exp_bar/root"
+  overridden_fields: 8
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -166.0
+    y: 65.0
+  }
+  size {
+    x: 150.0
+    y: 40.0
+  }
+  type: TYPE_TEXT
+  text: "level 30"
+  font: "Koulen"
+  id: "level"
+  parent: "root"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

@@ -1,6 +1,7 @@
 local monarch = require "monarch.monarch"
 local event = require('event.event')
 local Input = require('core.systems.input')
+local SoundController =require('core.components.sound_controller')
 
 
 function init(self)
@@ -26,6 +27,7 @@ end
 function on_input(self, action_id, action)
     if action_id == Input.MENU then
         monarch.show('wild_menu')
+        SoundController.play('Thip', SoundController.GROUP_SFX)
     end
 end
 
