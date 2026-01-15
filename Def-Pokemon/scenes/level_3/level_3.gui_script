@@ -4,9 +4,6 @@ local Input = require('core.systems.input')
 local SoundController = require('core.components.sound_controller')
 local selection_menu_widget = require('ui.widgets.selection_menu.selection_menu')
 
--- 回调函数
-local on_menu_option_select
-
 function init(self)
     msg.post(".", "acquire_input_focus")
     self.druid = druid.new(self)
@@ -43,4 +40,9 @@ on_menu_option_select = function (self, index)
         print("逃跑！")
         monarch.back()
     end
+end
+
+appear = function(self)
+    gui.set_scale(self.root_node, vmath.vector3())
+    gui.animate(self.root_node, 'scale', vmath.vector3(1), go.EASING_OUTBACK, 0.2)
 end

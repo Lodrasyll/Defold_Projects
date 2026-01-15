@@ -4,16 +4,21 @@ local wild_menu_widget = require('ui.widgets.selection_menu.selection_menu')
 
 -- 回调函数
 local on_menu_option_select
+local appear
+local on_close
 
 function init(self)
     msg.post('.', 'acquire_input_focus')
     self.druid = druid.new(self)
+    self.root_node = gui.get_node('root')
     self.wild_menu_widget = self.druid:new_widget(wild_menu_widget)
 
     local data = { 'bag', 'atlas', 'exit' }
     self.wild_menu_widget:set_data(data)
 
     self.wild_menu_widget.on_option_select:subscribe(on_menu_option_select, self)
+
+    appear(self)
 end
 
 function final(self)
@@ -42,6 +47,17 @@ on_menu_option_select = function(self, index)
     elseif index == 2 then
         print("打开设置...")
     elseif index == 3 then
-        monarch.back()
+       on_close(self)
     end
+end
+
+appear = function(self)
+    gui.set_scale(self.root_node, vmath.vector3())
+    gui.animate(self.root_node, 'scale', vmath.vector3(1), go.EASING_OUTBACK, 0.2)
+end
+
+on_close = function (self)
+    gui.animate(self.root_node, 'scale', vmath.vector3(0), go.EASING_INBACK, 0.2, 0, function ()
+        monarch.back()
+    end)
 end
