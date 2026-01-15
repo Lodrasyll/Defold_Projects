@@ -1,5 +1,6 @@
 local SoundController = require('core.components.sound_controller')
 local event = require('event.event')
+local Input = require('core.systems.input')
 
 ---@class widget.dialogue_box: druid.widget
 local M = {}
@@ -36,6 +37,12 @@ function M:next_text()
 	end
 	-- 负责实际更新
 	self.druid:new_text(self.text_node, self.texts[self.current_count].text)
+end
+
+function M:on_input(action_id, action)
+	if action_id == Input.CONFIRM and action.pressed then
+		self:on_click()
+	end
 end
 
 return M

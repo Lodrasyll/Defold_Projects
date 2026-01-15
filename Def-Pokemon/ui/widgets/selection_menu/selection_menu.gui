@@ -81,7 +81,7 @@ nodes {
   type: TYPE_TEXT
   text: "1"
   font: "Koulen"
-  id: "text_1"
+  id: "option_text_1"
   parent: "option_1"
   inherit_alpha: true
 }
@@ -110,7 +110,7 @@ nodes {
   type: TYPE_TEXT
   text: "2"
   font: "Koulen"
-  id: "text_2"
+  id: "option_text_2"
   parent: "option_2"
   inherit_alpha: true
 }
@@ -142,7 +142,7 @@ nodes {
   type: TYPE_TEXT
   text: "3"
   font: "Koulen"
-  id: "text_3"
+  id: "option_text_3"
   parent: "option_3"
   inherit_alpha: true
 }

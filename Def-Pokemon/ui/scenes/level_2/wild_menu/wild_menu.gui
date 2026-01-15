@@ -35,7 +35,7 @@ nodes {
 }
 nodes {
   type: TYPE_TEXT
-  id: "selection_menu/text_1"
+  id: "selection_menu/option_text_1"
   parent: "selection_menu/option_1"
   template_node_child: true
 }
@@ -47,7 +47,7 @@ nodes {
 }
 nodes {
   type: TYPE_TEXT
-  id: "selection_menu/text_2"
+  id: "selection_menu/option_text_2"
   parent: "selection_menu/option_2"
   template_node_child: true
 }
@@ -59,7 +59,7 @@ nodes {
 }
 nodes {
   type: TYPE_TEXT
-  id: "selection_menu/text_3"
+  id: "selection_menu/option_text_3"
   parent: "selection_menu/option_3"
   template_node_child: true
 }

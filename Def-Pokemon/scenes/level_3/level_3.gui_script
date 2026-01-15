@@ -2,14 +2,18 @@ local monarch = require "monarch.monarch"
 local druid = require("druid.druid")
 local Input = require('core.systems.input')
 local SoundController = require('core.components.sound_controller')
-local ui_widget_battle_menu = require('ui.widgets.selection_menu.selection_menu')
+local selection_menu_widget = require('ui.widgets.selection_menu.selection_menu')
 
-
-
+-- 回调函数
+local on_menu_option_select
 
 function init(self)
     msg.post(".", "acquire_input_focus")
     self.druid = druid.new(self)
+    self.selection_menu_widget = self.druid:new_widget(selection_menu_widget)
+    local data = {'fight', 'ability', 'run'}
+    self.selection_menu_widget:set_data(data)
+    self.selection_menu_widget.on_option_select:subscribe(on_menu_option_select, self)
 end
 
 function final(self)
@@ -26,9 +30,17 @@ function on_message(self, message_id, message, sender)
 end
 
 function on_input(self, action_id, action)
-    if action_id == Input.BACK and action.pressed then
-        monarch.back()
-        print('won!')
-    end
     return self.druid:on_input(action_id, action)
+end
+
+on_menu_option_select = function (self, index)
+    print("GUI Script 收到：用户选择了索引 " .. index)
+    if index == 1 then
+        print("攻击！")
+    elseif index == 2 then
+        print("能力！")
+    elseif index == 3 then
+        print("逃跑！")
+        monarch.back()
+    end
 end

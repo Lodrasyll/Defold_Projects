@@ -1,12 +1,19 @@
 local druid = require("druid.druid")
 local monarch = require "monarch.monarch"
-local wild_menu = require('ui.widgets.selection_menu.selection_menu')
+local wild_menu_widget = require('ui.widgets.selection_menu.selection_menu')
+
+-- 回调函数
+local on_menu_option_select
 
 function init(self)
     msg.post('.', 'acquire_input_focus')
     self.druid = druid.new(self)
-    self.druid:new_widget(wild_menu)
+    self.wild_menu_widget = self.druid:new_widget(wild_menu_widget)
 
+    local data = { 'bag', 'atlas', 'exit' }
+    self.wild_menu_widget:set_data(data)
+
+    self.wild_menu_widget.on_option_select:subscribe(on_menu_option_select, self)
 end
 
 function final(self)
@@ -26,4 +33,15 @@ function on_input(self, action_id, action)
         monarch.back()
     end
     return self.druid:on_input(action_id, action)
+end
+
+on_menu_option_select = function(self, index)
+    print("GUI Script 收到：用户选择了索引 " .. index)
+    if index == 1 then
+        print("开始游戏逻辑...")
+    elseif index == 2 then
+        print("打开设置...")
+    elseif index == 3 then
+        monarch.back()
+    end
 end
