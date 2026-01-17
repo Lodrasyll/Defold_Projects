@@ -38,10 +38,14 @@ function Flow.update(dt)
 
     if wait_timer > 0 then
         wait_timer = wait_timer - dt
-        safe_resume()
-    elseif wait_for_signal == nil then
-        -- 如果既不等等时间也不等信号，尝试运行
-        safe_resume()
+        if wait_timer <= 0 then
+            wait_timer = 0
+            safe_resume()
+        end
+
+    -- elseif wait_for_signal == nil then
+    --     -- 如果既不等等时间也不等信号，尝试运行
+    --     safe_resume()
     end
 end
 
@@ -55,6 +59,9 @@ function Flow.signal(signal_name)
     if current_coroutine and wait_for_signal == signal_name then
         wait_for_signal = nil -- 清除信号灯
         safe_resume()
+    else
+        -- 这行能帮你发现信号丢失
+        print("Flow 警告：收到信号 " .. signal_name .. " 但当前协程正在等待 " .. tostring(wait_for_signal))
     end
 end
 

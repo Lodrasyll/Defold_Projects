@@ -7,9 +7,9 @@ function M.create(owner)
     }
 
     -- 压入新状态
-    function self.push(state)
+    function self.push(state, ...)
         table.insert(self.stack, state)
-        if state.on_enter then state.on_enter(self.owner) end
+        if state.on_enter then state.on_enter(self.owner, ...) end
     end
 
     -- 弹出状态

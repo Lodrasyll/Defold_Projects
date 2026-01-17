@@ -11,6 +11,7 @@ states.ActionMenu = {
     on_input = function(owner, action_id, action)
         -- 这里不需要写 UP/DOWN 了，Druid 在 GUI 里处理
         -- 返回 false，允许输入流向下传递给 GUI 系统
+        msg.post("/monarch#level_3", "set_menu_active", { active = true })
         return false
     end,
 
@@ -53,6 +54,26 @@ states.Resolution = {
     on_input = function(owner, action_id, action)
         -- 关键：在这里返回 true，拦截所有试图传给 GO 的输入
         return true
+    end
+}
+
+states.Message = {
+    on_enter = function (owner, text)
+        msg.post('/monarch#level_3', 'show_dialog', { text = text })
+        print('Message: 显示文字 ->' .. text)
+    end,
+    on_input = function (owner, action_id, action)
+        if action_id == hash('confirm') and action.pressed then
+            print('MessageState: 玩家确认，关闭消息' )
+            owner.stack.pop()
+
+            Flow.signal('message_closed')
+            return true
+        end
+        return true
+    end,
+    on_exit = function (owner)
+        msg.post('/monarch#level_3', 'hide_dialog')
     end
 }
 

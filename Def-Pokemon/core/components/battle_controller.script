@@ -11,7 +11,8 @@ local spawn_player_pokemon
 local spawn_opponent_pokemon
 local spawn_factory
 local battle_opening
-local battle_flow
+local execute_battle_flow
+local show_message
 
 local debugger
 
@@ -19,7 +20,8 @@ local player_pokemon_start_pos = vmath.vector3(-300, 456, 1)
 local opponent_pokemon_start_pos = vmath.vector3(2200, 861, 1)
 
 local function set_init_data(self)
-    
+    self.execute_battle_flow = execute_battle_flow
+    self.show_message = show_message
 end
 
 debugger = function(self)
@@ -168,31 +170,14 @@ battle_opening = function (self)
     end)
 end
 
-battle_flow = function (self)
-    Flow.start(function ()
-        print('战斗开始！')
-
-        Flow.wait(4)
-
-        print('敌人攻击！')
-
-        print('开始扣血')
-
-        msg.post('/monarch#level_3', 'animate_hp')
-
-        Flow.wait_for_signal('hp_anim_finished')
-
-        print('血条动画播放完毕，继续后续逻辑')
-        
-    end)
-end
-
 -- 修改：执行具体的回合剧本
-function execute_battle_flow(self)
+execute_battle_flow = function (self)
     print("【剧本开始】")
 
     -- 1. 玩家攻击表现
-    msg.post("gui#battle_ui", "set_text", { text = self.player_data.name .. " 发动了撞击！" })
+    local text = self.player_data.name .. '发动了攻击！'
+    self:show_message(text)
+
     Flow.wait(1.0)
 
     -- 2. 假设这里有一个 GO 的攻击动画
@@ -203,10 +188,16 @@ function execute_battle_flow(self)
     -- 3. 敌人受击表现与扣血
     print("敌人掉血...")
     -- 通知 GUI 播血条动画
-    msg.post("gui#battle_ui", "animate_hp", { target = "enemy", amount = -20 })
+    msg.post("/monarch#level_3", "animate_hp", { target = "enemy", amount = -20 })
 
     -- 【关键】等待 GUI 传回信号
     Flow.wait_for_signal("hp_anim_finished")
+
+    Flow.wait(1.0)
+
+    -- 计算伤害后显示第二条信息
+    local text = '这非常有效！'
+    self:show_message(text)
 
     -- 4. 检查是否结束
     if self.enemy_data.hp <= 0 then
@@ -216,4 +207,11 @@ function execute_battle_flow(self)
     -- 5. 【极其重要】剧本演完了，告诉状态栈：我们可以回菜单了
     print("【剧本结束】")
     self.stack.pop() -- 弹出 Resolution 状态，回到 MoveMenu 或 ActionMenu
+end
+
+show_message = function (self, text)
+    -- 1. 压入消息状态
+    self.stack.push(States.Message, text)
+    -- 2. 利用Flow系统，阻塞，直到收到信号
+    Flow.wait_for_signal('message_closed')
 end

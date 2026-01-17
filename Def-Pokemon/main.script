@@ -23,5 +23,4 @@ end
 ---@param self main.script
 ---@param dt number
 function update(self, dt)
-    monarch.get_stack()
 end

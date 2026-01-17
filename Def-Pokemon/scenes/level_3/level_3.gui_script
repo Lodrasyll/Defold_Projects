@@ -51,8 +51,15 @@ function on_message(self, message_id, message, sender)
         end
     end
 
+    if message_id == hash('show_dialog') then
+        gui.set_text(gui.get_node('battle_message/text'), message.text)
+        SoundController.play('confirm', SoundController.GROUP_SFX)
+    -- elseif message_id == hash('hide_dialog') then
+    --     gui.set_enabled(gui.get_node('battle_message/text'), false)
+    end
+
     if message_id == hash('animate_hp') then
-        decrease_hp_bar(self)
+        decrease_hp_bar(self, message)
     end
 end
 
@@ -81,8 +88,13 @@ appear = function(self)
     gui.animate(self.root_node, 'scale', vmath.vector3(1), go.EASING_OUTBACK, 0.2)
 end
 
-decrease_hp_bar = function (self)
-    gui.animate(gui.get_node('player_battle_bar/hp_bar/fill'), 'size.x', 10, go.EASING_LINEAR, 2, 0, function ()
-        Flow.signal('hp_anim_finished')
-    end)
+decrease_hp_bar = function (self, message)
+    if message.target == 'enemy' then
+        gui.animate(gui.get_node('enemy_battle_bar/hp_bar/fill'), 'size.x', 10, go.EASING_LINEAR, 2, 0, function()
+            Flow.signal('hp_anim_finished')
+        end)
+    elseif message.target == 'player' then
+        print('角色扣血动画！')
+    end
+    
 end
