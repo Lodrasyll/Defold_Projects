@@ -134,7 +134,7 @@ battle_flow = function (self)
         print('敌人攻击！')
         print('开始扣血')
         msg.post('/monarch#level_3', 'animate_hp')
-        Flow.wait_for_signal('hp_anim_finshed')
+        Flow.wait_for_signal('hp_anim_finished')
         print('血条动画播放完毕，继续后续逻辑')
     end)
 end

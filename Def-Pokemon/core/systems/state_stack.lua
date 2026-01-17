@@ -1,5 +1,9 @@
 local StateStack = {}
 
+function StateStack.create(self)
+    
+end
+
 function StateStack.push(self, state)
     table.insert(self.stack, state)
     state:on_enter()

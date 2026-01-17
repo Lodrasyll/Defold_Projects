@@ -64,6 +64,6 @@ end
 
 decrease_hp_bar = function (self)
     gui.animate(gui.get_node('player_battle_bar/hp_bar/fill'), 'size.x', 10, go.EASING_LINEAR, 2, 0, function ()
-        Flow.signal('hp_anim_finshed')
+        Flow.signal('hp_anim_finished')
     end)
 end

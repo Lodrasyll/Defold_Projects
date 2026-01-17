@@ -1,14 +1,14 @@
 local Flow = {}
 
-local current_coroutine = nil
-local wait_timer = 0
-local wait_for_signal = nil --记录当前的正在等待的信号名称
+Flow.current_coroutine = nil
+Flow.wait_timer = 0
+Flow.wait_for_signal = nil --记录当前的正在等待的信号名称
 
 function Flow.start(func)
     -- 创建一个协程
-    current_coroutine = coroutine.create(func)
+    Flow.current_coroutine = coroutine.create(func)
     -- 开始运行协程，添加调试
-    local ok, error = coroutine.resume(current_coroutine)
+    local ok, error = coroutine.resume(Flow.current_coroutine)
     if not ok then print('Coroutine Error: ', error) end
 end
 
@@ -19,20 +19,20 @@ function Flow.wait(second)
 end
 
 function Flow.stop()
-    current_coroutine = nil
+    Flow.current_coroutine = nil
     wait_timer = 0
 end
 
 function Flow.update(dt)
-    if not current_coroutine then return end
+    if not Flow.current_coroutine then return end
 
     if wait_timer > 0 then
         wait_timer = wait_timer - dt
     elseif wait_for_signal == nil then
-        if coroutine.status(current_coroutine) ~= "dead" then
-            coroutine.resume(current_coroutine)
+        if coroutine.status(Flow.current_coroutine) ~= "dead" then
+            coroutine.resume(Flow.current_coroutine)
         else
-            current_coroutine = nil
+            Flow.current_coroutine = nil
         end
     end
 end
@@ -44,9 +44,9 @@ function Flow.wait_for_signal(signal_name)
 end
 -- 当动画结束时，由外部调用此函数
 function Flow.signal(signal_name)
-    if current_coroutine and wait_for_signal == signal_name then
+    if Flow.current_coroutine and wait_for_signal == signal_name then
         wait_for_signal = nil
-        coroutine.resume(current_coroutine)
+        coroutine.resume(Flow.current_coroutine)
     end
 end
 
