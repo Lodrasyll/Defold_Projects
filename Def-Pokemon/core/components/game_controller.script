@@ -1,4 +1,3 @@
-local StateStack = require('game.statestack.state_stack')
 local monarch = require('monarch.monarch')
 
 

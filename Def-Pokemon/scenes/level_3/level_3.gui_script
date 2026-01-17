@@ -21,6 +21,9 @@ function init(self)
     self.root_node = gui.get_node('root')
 
     self.player_choice = {}
+
+    self.is_input_enabled = false -- 默认关闭，等待 StateStack 的指令
+
     appear(self)
 
 end
@@ -35,21 +38,37 @@ end
 
 function on_message(self, message_id, message, sender)
     self.druid:on_message(message_id, message, sender)
+
+    -- 响应来自 StateStack 的指令
+    if message_id == hash("set_menu_active") then
+        self.is_input_enabled = message.active
+        if message.active then
+            -- 可以根据需要播放显示菜单的动画
+            gui.set_enabled(self.root_node, true)
+        else
+            -- 禁用时不一定隐藏，但一定不能点
+            -- gui.set_enabled(self.root_node, false)
+        end
+    end
+
     if message_id == hash('animate_hp') then
         decrease_hp_bar(self)
     end
 end
 
 function on_input(self, action_id, action)
-    return self.druid:on_input(action_id, action)
+    if self.is_input_enabled then
+        return self.druid:on_input(action_id, action)
+    end
+    -- 否则，GUI 就像死了一样，不响应任何 Druid 操作
+    return false
 end
 
 on_menu_option_select = function (self, index)
     if index == 1 then
-        print("攻击！")
-        self.player_choice = { move = 'fight', target = 'opponent'}
+        msg.post('/battle_controller#battle_controller', 'command_fight')
     elseif index == 2 then
-        print("能力！")
+        msg.post('/battle_controller#battle_controller', 'command_ability')
     elseif index == 3 then
         print("逃跑！")
         monarch.back()

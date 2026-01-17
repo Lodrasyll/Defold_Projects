@@ -4,23 +4,39 @@ local utils = require('core.utils.utils')
 local PokemonData = require('data.pokemon_data')
 local PokemonEngine = require('game.entities.pokemon.pokemon_engine')
 local Flow = require('core.systems.flow')
+local StateStack = require('core.systems.state_stack')
+local States = require('core.systems.battle_states.battle_states')
 
 local spawn_player_pokemon
 local spawn_opponent_pokemon
 local spawn_factory
 local battle_opening
 local battle_flow
-local set_init_data
+
 local debugger
 
 local player_pokemon_start_pos = vmath.vector3(-300, 456, 1)
 local opponent_pokemon_start_pos = vmath.vector3(2200, 861, 1)
+
+local function set_init_data(self)
+    
+end
+
+debugger = function(self)
+    pprint(GameData.player_first_pokemon.id)
+    pprint(self.opponent_pokemon.id)
+
+    -- 调试：看看引用的到底是个什么东西
+    print("--- 调试 StateStack 模块 ---")
+    pprint(StateStack)
+end
 
 
 ---@package
 ---@param self battle_controller.script
 function init(self)
     msg.post('.', 'acquire_input_focus')
+
     set_init_data(self)
 
     spawn_player_pokemon(self)
@@ -28,20 +44,52 @@ function init(self)
 
     battle_opening(self)
 
-    battle_flow(self)
+    -- battle_flow(self)
 
     debugger(self)
-end
+    
 
-set_init_data = function (self)
-    self.is_loop = true
+    -- 创建状态栈，并将 self 作为 owner 传入
+    self.stack = StateStack.create(self)
+
+    -- 初始状态：主菜单
+    self.stack.push(States.ActionMenu)
+
+    -- 准备一些模拟数据
+    self.player_data = { name = "皮卡丘", hp = 100 }
+    self.enemy_data = { name = "小拉达", hp = 50 }
 end
 
 ---@package
 ---@param self battle_controller.script
 ---@param dt number
 function update(self, dt)
+    self.stack.update(dt)
     Flow.update(dt)
+end
+
+---@package
+---@param self battle_controller.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('command_fight') then
+        -- 1. 记录玩家的指令数据
+        print("攻击！")
+        self.current_turn_data = {
+            player_action = "Tackle",  -- 撞击
+            enemy_action = "Tail Whip" -- 摇尾巴
+        }
+
+        -- 2. 切换到结算状态
+        -- 一旦 push，控制权就到了 ResolutionState 手里，玩家点不了菜单了
+        self.stack.push(States.Resolution)
+
+    elseif message_id == hash('command_ability') then
+        -- 处理能力逻辑...
+        print("能力！")
+    end
 end
 
 ---@package
@@ -50,11 +98,18 @@ end
 ---@param action on_input.action
 ---@return boolean|nil
 function on_input(self, action_id, action)
-    if action_id == Input.BACK and action.pressed then
-        Flow.stop()
-        self.is_loop = false
-        print("收到停止指令！")
+    -- 1. 先把输入喂给状态栈
+    local handled = self.stack.on_input(action_id, action)
+
+    -- 2. 如果状态栈（比如 Resolution）返回了 true，
+    --    那么这个输入就被“吞”掉了，不会传给 GUI
+    if handled then
+        return true
     end
+
+    -- 3. 如果状态栈返回 false（比如 ActionMenu），
+    --    Defold 会自动把输入继续传给 GUI 脚本。
+    return false
 end
 
 spawn_player_pokemon = function (self)
@@ -113,28 +168,52 @@ battle_opening = function (self)
     end)
 end
 
-debugger = function (self)
-    pprint(GameData.player_first_pokemon.id)
-    pprint(self.opponent_pokemon.id)
-end
-
 battle_flow = function (self)
     Flow.start(function ()
         print('战斗开始！')
-        -- while self.is_loop do
-        --     Flow.wait(1)
-        --     print('玩家攻击！')
 
-        --     if not self.is_loop then break end
-
-        --     Flow.wait(1)
-        --     print('敌人攻击')
-        -- end
         Flow.wait(4)
+
         print('敌人攻击！')
+
         print('开始扣血')
+
         msg.post('/monarch#level_3', 'animate_hp')
+
         Flow.wait_for_signal('hp_anim_finished')
+
         print('血条动画播放完毕，继续后续逻辑')
+        
     end)
+end
+
+-- 修改：执行具体的回合剧本
+function execute_battle_flow(self)
+    print("【剧本开始】")
+
+    -- 1. 玩家攻击表现
+    msg.post("gui#battle_ui", "set_text", { text = self.player_data.name .. " 发动了撞击！" })
+    Flow.wait(1.0)
+
+    -- 2. 假设这里有一个 GO 的攻击动画
+    -- go.animate(self.player_pokemon_id, ...)
+    -- 如果有回调，就用 Flow.wait_for_signal，这里我们先用等待模拟
+    Flow.wait(0.5)
+
+    -- 3. 敌人受击表现与扣血
+    print("敌人掉血...")
+    -- 通知 GUI 播血条动画
+    msg.post("gui#battle_ui", "animate_hp", { target = "enemy", amount = -20 })
+
+    -- 【关键】等待 GUI 传回信号
+    Flow.wait_for_signal("hp_anim_finished")
+
+    -- 4. 检查是否结束
+    if self.enemy_data.hp <= 0 then
+        -- 胜负逻辑...
+    end
+
+    -- 5. 【极其重要】剧本演完了，告诉状态栈：我们可以回菜单了
+    print("【剧本结束】")
+    self.stack.pop() -- 弹出 Resolution 状态，回到 MoveMenu 或 ActionMenu
 end
