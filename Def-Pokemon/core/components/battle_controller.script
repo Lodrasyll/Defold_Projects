@@ -6,33 +6,26 @@ local PokemonEngine = require('game.entities.pokemon.pokemon_engine')
 local Flow = require('core.systems.flow')
 local StateStack = require('core.systems.state_stack')
 local States = require('core.systems.battle_states.battle_states')
+local BattleMechanics = require('core.systems.battle_mechanics')
 
 local spawn_player_pokemon
 local spawn_opponent_pokemon
 local spawn_factory
 local battle_opening
 local execute_battle_flow
+local set_init_data
 local show_message
+local get_battle_data
 
 local debugger
 
 local player_pokemon_start_pos = vmath.vector3(-300, 456, 1)
 local opponent_pokemon_start_pos = vmath.vector3(2200, 861, 1)
 
-local function set_init_data(self)
+set_init_data = function (self)
     self.execute_battle_flow = execute_battle_flow
     self.show_message = show_message
 end
-
-debugger = function(self)
-    pprint(GameData.player_first_pokemon.id)
-    pprint(self.opponent_pokemon.id)
-
-    -- 调试：看看引用的到底是个什么东西
-    print("--- 调试 StateStack 模块 ---")
-    pprint(StateStack)
-end
-
 
 ---@package
 ---@param self battle_controller.script
@@ -44,22 +37,17 @@ function init(self)
     spawn_player_pokemon(self)
     spawn_opponent_pokemon(self)
 
-    battle_opening(self)
+    get_battle_data(self)
 
-    -- battle_flow(self)
+    battle_opening(self)
 
     debugger(self)
     
-
     -- 创建状态栈，并将 self 作为 owner 传入
     self.stack = StateStack.create(self)
 
     -- 初始状态：主菜单
     self.stack.push(States.ActionMenu)
-
-    -- 准备一些模拟数据
-    self.player_data = { name = "皮卡丘", hp = 100 }
-    self.enemy_data = { name = "小拉达", hp = 50 }
 end
 
 ---@package
@@ -114,10 +102,15 @@ function on_input(self, action_id, action)
     return false
 end
 
+
+get_battle_data = function (self)
+    self.player_data = GameData.player_first_pokemon
+    self.opponent_data = self.opponent_pokemon
+end
+
+
 spawn_player_pokemon = function (self)
     self.player_pokemon_pos = go.get_position('/player_pokemon_pos')
-    print(self.player_pokemon_pos)
-
 
     local id = GameData.player_first_pokemon.id
     self.player_pokemon_id = spawn_factory(self, id, player_pokemon_start_pos)
@@ -130,7 +123,6 @@ end
 
 spawn_opponent_pokemon = function (self)
     self.opponent_pokemon_pos = go.get_position('/opponent_pokemon_pos')
-    print(self.opponent_pokemon_pos)
     local random_pokemon = PokemonEngine.get_random_pokemon(PokemonData)
     self.opponent_pokemon = PokemonEngine(random_pokemon, math.random(2, 6))
 
@@ -172,41 +164,101 @@ end
 
 -- 修改：执行具体的回合剧本
 execute_battle_flow = function (self)
-    print("【剧本开始】")
+    print("【剧本开始，数据驱动】")
 
-    -- 1. 玩家攻击表现
-    local text = self.player_data.name .. '发动了攻击！'
-    self:show_message(text)
+    -- 1.定义攻防双方
+    local attacker = self.player_data -- 暂定玩家永远先手（以后再加速度判断）
+    local defender = self.opponent_data
 
-    Flow.wait(1.0)
-
-    -- 2. 假设这里有一个 GO 的攻击动画
-    -- go.animate(self.player_pokemon_id, ...)
-    -- 如果有回调，就用 Flow.wait_for_signal，这里我们先用等待模拟
-    Flow.wait(0.5)
-
-    -- 3. 敌人受击表现与扣血
-    print("敌人掉血...")
-    -- 通知 GUI 播血条动画
-    msg.post("/monarch#level_3", "animate_hp", { target = "enemy", amount = -20 })
-
-    -- 【关键】等待 GUI 传回信号
-    Flow.wait_for_signal("hp_anim_finished")
-
-    Flow.wait(1.0)
-
-    -- 计算伤害后显示第二条信息
-    local text = '这非常有效！'
-    self:show_message(text)
-
-    -- 4. 检查是否结束
-    if self.enemy_data.hp <= 0 then
-        -- 胜负逻辑...
+    -- A.玩家回合
+    local move_name = '撞击'
+    -- 显示消息
+    self:show_message(attacker.name .. '使用了' .. move_name)
+    -- 播放攻击动画
+    msg.post(self.player_pokemon_id, 'play_attack_anim', { id = 'attack'})
+    Flow.wait(1.0) -- 模拟动画时间
+    -- 核心：计算伤害
+    local damage = BattleMechanics.calculate_damege(attacker, defender, 40)
+    print('计算伤害：' .. damage)
+    -- 核心：更新数据模型
+    defender:take_damage(damage)
+    -- 核心；通知UI进行更新（传入百分比）
+    local target_percent = defender:get_hp_percent()
+    print('目标剩余血量百分比；' .. target_percent)
+    local message = { target = 'enemy' , to_percent = target_percent }
+    msg.post('/monarch#level_3', 'animate_hp', message)
+    -- 等待UI动画完成
+    Flow.wait_for_signal('animate_hp_done')
+    --  显示伤害评价
+    self:show_message('造成了' .. damage .. '点伤害')
+    -- 检查是否战斗结束
+    if defender:is_fainted() then
+        self:show_message(defender.name .. '倒下了！')
+        -- 胜利逻辑
+        msg.post('/monarch#level_3', 'won')
+        return
     end
 
-    -- 5. 【极其重要】剧本演完了，告诉状态栈：我们可以回菜单了
-    print("【剧本结束】")
-    self.stack.pop() -- 弹出 Resolution 状态，回到 MoveMenu 或 ActionMenu
+    -- B.敌人回合
+    attacker, defender = defender, attacker
+    local move_name = '撞击'
+    -- 显示消息
+    self:show_message(attacker.name .. '使用了' .. move_name)
+    -- 播放攻击动画
+    msg.post(self.player_pokemon_id, 'play_attack_anim', { id = 'attack'})
+    Flow.wait(1.0) -- 模拟动画时间
+    -- 核心：计算伤害
+    local damage = BattleMechanics.calculate_damege(attacker, defender, 40)
+    print('计算伤害：' .. damage)
+    -- 核心：更新数据模型
+    defender:take_damage(damage)
+    -- 核心；通知UI进行更新（传入百分比）
+    local target_percent = defender:get_hp_percent()
+    print('目标剩余血量百分比；' .. target_percent)
+    local message = { target = 'player' , to_percent = target_percent }
+    msg.post('/monarch#level_3', 'animate_hp', message)
+    -- 等待UI动画完成
+    Flow.wait_for_signal('animate_hp_done')
+    --  显示伤害评价
+    self:show_message('造成了' .. damage .. '点伤害')
+    -- 检查是否战斗结束
+    if defender:is_fainted() then
+        self:show_message(defender.name .. '倒下了！')
+        -- 胜利逻辑
+        msg.post('/monarch#level_3', 'won')
+        return
+    end
+
+    print("【回合结束】")
+    self.stack.pop()
+
+    -- -- 1. 玩家攻击表现
+    -- local text = self.player_data.name .. '发动了攻击！'
+    -- self:show_message(text)
+    -- Flow.wait(1.0)
+    -- -- 2. 假设这里有一个 GO 的攻击动画
+    -- -- go.animate(self.player_pokemon_id, ...)
+    -- -- 如果有回调，就用 Flow.wait_for_signal，这里我们先用等待模拟
+    -- Flow.wait(0.5)
+    -- -- 3. 敌人受击表现与扣血
+    -- print("敌人掉血...")
+    -- -- 通知 GUI 播血条动画
+    -- msg.post("/monarch#level_3", "animate_hp", { target = "enemy", amount = -20 })
+    -- -- 【关键】等待 GUI 传回信号
+    -- Flow.wait_for_signal("hp_anim_finished")
+    -- Flow.wait(1.0)
+    -- -- 计算伤害后显示第二条信息
+    -- local text = '这非常有效！'
+    -- self:show_message(text)
+    -- -- 4. 检查是否结束
+    -- if self.enemy_data.hp <= 0 then
+    --     -- 胜负逻辑...
+    -- end
+    -- -- 5. 【极其重要】剧本演完了，告诉状态栈：我们可以回菜单了
+    -- print("【剧本结束】")
+    -- self.stack.pop() -- 弹出 Resolution 状态，回到 MoveMenu 或 ActionMenu
+    -- -- -- 6.对战胜利
+    -- -- msg.post('/monarch#level_3', 'won')
 end
 
 show_message = function (self, text)
@@ -214,4 +266,14 @@ show_message = function (self, text)
     self.stack.push(States.Message, text)
     -- 2. 利用Flow系统，阻塞，直到收到信号
     Flow.wait_for_signal('message_closed')
+end
+
+
+debugger = function(self)
+    pprint(GameData.player_first_pokemon.id)
+    pprint(self.opponent_pokemon.id)
+
+    -- 调试：看看引用的到底是个什么东西
+    print("--- 调试 StateStack 模块 ---")
+    pprint(StateStack)
 end

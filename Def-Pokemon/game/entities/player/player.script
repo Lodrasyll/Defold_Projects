@@ -82,8 +82,7 @@ local function setup_initial_pokemon(self)
 	local position = go.get_position() + offset
 	local properties = { pokemon_id = pokemon_id }
 
-	self.first_pokemon = factory.create(factory_url, position, nil, properties, 0.7)
-	GameData.player_first_pokomon = self.first_pokemon
+	factory.create(factory_url, position, nil, properties, 0.7)
 end
 
 ---@package
@@ -196,6 +195,7 @@ function update(self, dt)
 	self.input_pressed_roll = false
 	self.input_pressed_attack = false
 
+	print(GameData.player_first_pokemon.current_HP)
 end
 
 ---@package

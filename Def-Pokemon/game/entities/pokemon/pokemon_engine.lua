@@ -92,4 +92,20 @@ function Pokemon:level_up()
     return self:stats_level_up()
 end
 
+function Pokemon:take_damage(amount)
+    self.current_HP = self.current_HP - amount
+    if self.current_HP < 0 then
+        self.current_HP = 0
+    end
+    return self.current_HP
+end
+
+function Pokemon:get_hp_percent()
+    return self.current_HP / self.HP
+end
+
+function Pokemon:is_fainted()
+    return self.current_HP <= 0
+end
+
 return Pokemon
