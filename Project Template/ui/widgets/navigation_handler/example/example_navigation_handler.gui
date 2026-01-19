@@ -1,0 +1,134 @@
+script: "/ui/widgets/navigation_handler/example/example_navigation_handler.gui_script"
+fonts {
+  name: "druid_text_bold"
+  font: "/druid/fonts/druid_text_bold.font"
+}
+nodes {
+  position {
+    x: 450.0
+    y: 700.0
+  }
+  size {
+    x: 200.0
+    y: 200.0
+  }
+  color {
+    x: 0.8
+    y: 0.702
+  }
+  type: TYPE_BOX
+  id: "button_1"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 960.0
+    y: 700.0
+  }
+  size {
+    x: 200.0
+    y: 200.0
+  }
+  color {
+    x: 0.8
+    y: 0.702
+  }
+  type: TYPE_BOX
+  id: "button_2"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 1470.0
+    y: 700.0
+  }
+  size {
+    x: 200.0
+    y: 200.0
+  }
+  color {
+    x: 0.8
+    y: 0.702
+  }
+  type: TYPE_BOX
+  id: "button_3"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 450.0
+    y: 300.0
+  }
+  size {
+    x: 200.0
+    y: 200.0
+  }
+  color {
+    x: 0.8
+    y: 0.702
+  }
+  type: TYPE_BOX
+  id: "button_4"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 960.0
+    y: 300.0
+  }
+  size {
+    x: 200.0
+    y: 200.0
+  }
+  color {
+    x: 0.8
+    y: 0.702
+  }
+  type: TYPE_BOX
+  id: "button_5"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 1470.0
+    y: 300.0
+  }
+  size {
+    x: 200.0
+    y: 200.0
+  }
+  color {
+    x: 0.8
+    y: 0.702
+  }
+  type: TYPE_BOX
+  id: "button_6"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 960.0
+    y: 915.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  size {
+    x: 700.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "Use Arrows and space"
+  font: "druid_text_bold"
+  id: "text"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT
