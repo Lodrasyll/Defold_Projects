@@ -1,4 +1,4 @@
-font: "/assets/Kenney Pixel.ttf"
+font: "/assets/fonts/Kenney Pixel.ttf"
 material: "/builtins/fonts/font-df.material"
 size: 60
 outline_alpha: 1.0

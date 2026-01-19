@@ -1,0 +1,10 @@
+name: "select_menu"
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"select_menu\"\n"
+  "  component: \"/scenes/select_meun/select_menu.gui\"\n"
+  "}\n"
+  ""
+}

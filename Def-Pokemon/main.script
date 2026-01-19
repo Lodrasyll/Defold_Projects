@@ -3,6 +3,7 @@ local monarch = require('monarch.monarch')
 ---@package
 ---@param self main.script
 function init(self)
+    math.randomseed(os.time())
     msg.post('.', 'acquire_input_focus')
     msg.post('#', 'show_main_menu')
 end
@@ -16,4 +17,10 @@ function on_message(self, message_id, message, sender)
     if message_id == hash('show_main_menu') then
         monarch.show('main_menu')
     end
+end
+
+---@package
+---@param self main.script
+---@param dt number
+function update(self, dt)
 end

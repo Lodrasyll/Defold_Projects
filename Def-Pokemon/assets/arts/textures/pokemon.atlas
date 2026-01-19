@@ -1,0 +1,31 @@
+images {
+  image: "/assets/arts/graphics/aardart-back.png"
+}
+images {
+  image: "/assets/arts/graphics/aardart-front.png"
+}
+images {
+  image: "/assets/arts/graphics/agnite-back.png"
+}
+images {
+  image: "/assets/arts/graphics/agnite-front.png"
+}
+images {
+  image: "/assets/arts/graphics/anoleaf-back.png"
+}
+images {
+  image: "/assets/arts/graphics/anoleaf-front.png"
+}
+images {
+  image: "/assets/arts/graphics/bamboon-back.png"
+}
+images {
+  image: "/assets/arts/graphics/bamboon-front.png"
+}
+images {
+  image: "/assets/arts/graphics/cardiwing-front.png"
+}
+images {
+  image: "/assets/arts/graphics/cardiwing-back.png"
+}
+extrude_borders: 2

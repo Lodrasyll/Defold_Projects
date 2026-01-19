@@ -1,0 +1,315 @@
+script: "/scenes/level_3/level_3.gui_script"
+fonts {
+  name: "Koulen"
+  font: "/assets/fonts/Koulen.font"
+}
+textures {
+  name: "my_default_texture"
+  texture: "/assets/arts/textures/my_default_texture.tilesource"
+}
+textures {
+  name: "ui"
+  texture: "/assets/arts/textures/ui.tilesource"
+}
+nodes {
+  size {
+    x: 1920.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  pivot: PIVOT_SW
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    x: 960.0
+    y: 150.0
+  }
+  type: TYPE_TEMPLATE
+  id: "battle_message"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/dialogue_box/dialogue_box.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "battle_message/root"
+  parent: "battle_message"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "battle_message/dialogue_box"
+  parent: "battle_message/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: -238.0
+  }
+  type: TYPE_TEXT
+  id: "battle_message/text"
+  parent: "battle_message/dialogue_box"
+  overridden_fields: 1
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "battle_message/dialogue_zone"
+  parent: "battle_message/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 252.0
+    y: 978.0
+  }
+  type: TYPE_TEMPLATE
+  id: "enemy_battle_bar"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/battle_bar/battle_bar.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/root"
+  parent: "enemy_battle_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/bg"
+  parent: "enemy_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "enemy_battle_bar/hp_bar"
+  parent: "enemy_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/hp_bar/root"
+  parent: "enemy_battle_bar/hp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/hp_bar/progress_bar"
+  parent: "enemy_battle_bar/hp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/hp_bar/fill"
+  parent: "enemy_battle_bar/hp_bar/progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "enemy_battle_bar/hp_bar/text"
+  parent: "enemy_battle_bar/hp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "enemy_battle_bar/exp_bar"
+  parent: "enemy_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/exp_bar/root"
+  parent: "enemy_battle_bar/exp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/exp_bar/progress_bar"
+  parent: "enemy_battle_bar/exp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "enemy_battle_bar/exp_bar/fill"
+  parent: "enemy_battle_bar/exp_bar/progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "enemy_battle_bar/exp_bar/text"
+  parent: "enemy_battle_bar/exp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "enemy_battle_bar/level"
+  parent: "enemy_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 1669.0
+    y: 402.0
+  }
+  type: TYPE_TEMPLATE
+  id: "player_battle_bar"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/battle_bar/battle_bar.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/root"
+  parent: "player_battle_bar"
+  overridden_fields: 1
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/bg"
+  parent: "player_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "player_battle_bar/hp_bar"
+  parent: "player_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/hp_bar/root"
+  parent: "player_battle_bar/hp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/hp_bar/progress_bar"
+  parent: "player_battle_bar/hp_bar/root"
+  template_node_child: true
+}
+nodes {
+  size {
+    x: 342.0
+    y: 22.0
+  }
+  type: TYPE_BOX
+  id: "player_battle_bar/hp_bar/fill"
+  parent: "player_battle_bar/hp_bar/progress_bar"
+  overridden_fields: 4
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "player_battle_bar/hp_bar/text"
+  parent: "player_battle_bar/hp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "player_battle_bar/exp_bar"
+  parent: "player_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/exp_bar/root"
+  parent: "player_battle_bar/exp_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/exp_bar/progress_bar"
+  parent: "player_battle_bar/exp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "player_battle_bar/exp_bar/fill"
+  parent: "player_battle_bar/exp_bar/progress_bar"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "player_battle_bar/exp_bar/text"
+  parent: "player_battle_bar/exp_bar/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "player_battle_bar/level"
+  parent: "player_battle_bar/root"
+  template_node_child: true
+}
+nodes {
+  position {
+    x: 1670.0
+    y: 150.0
+  }
+  type: TYPE_TEMPLATE
+  id: "selection_menu"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/selection_menu/selection_menu.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/root"
+  parent: "selection_menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/menu"
+  parent: "selection_menu/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/cursor"
+  parent: "selection_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/option_1"
+  parent: "selection_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "selection_menu/option_text_1"
+  parent: "selection_menu/option_1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/option_2"
+  parent: "selection_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "selection_menu/option_text_2"
+  parent: "selection_menu/option_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/option_3"
+  parent: "selection_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "selection_menu/option_text_3"
+  parent: "selection_menu/option_3"
+  template_node_child: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

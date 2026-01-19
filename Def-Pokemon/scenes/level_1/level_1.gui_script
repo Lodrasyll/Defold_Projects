@@ -1,20 +1,199 @@
 local monarch = require "monarch.monarch"
+local Input = require('core.systems.input')
+local SoundController = require('core.components.sound_controller')
+local druid = require("druid.druid")
+
+local states = {
+    READING = hash('reading'),
+    CHOOSING = hash('choosing'),
+    PROGRESSING = hash('PROGRESSING')
+}
+
+local CURSOR_OFFSET = 180
+
+-- local options_text = {'red', 'green', 'blue'}
+-- local COLORS = {
+--     vmath.vector4(1, 0, 0, 0.6),
+--     vmath.vector4(0, 1, 0, 0.6),
+--     vmath.vector4(0, 0, 1, 0.6),
+-- }
+
+-- local function check_state(self)
+--     local function hide_all_node(self)
+--         gui.set_enabled(self.text_node, false)
+--         gui.set_enabled(self.selection_node, false)
+--     end
+
+--     hide_all_node(self)
+
+--     if self.state == states.READING then
+--         gui.set_enabled(self.text_node, true)
+--     elseif self.state == states.CHOOSING then
+--         gui.set_enabled(self.selection_node, true)
+--     end
+-- end
+
+local function set_options(self)
+    for i = 1, #self.options_data do
+        local node = gui.get_node('option_' .. i)
+        gui.set_text(node, self.options_data[i].text)
+        table.insert(self.option_nodes, node)
+    end
+end
+
+local function view_update_progress(self)
+    local precent = self.current_progress / self.max_progress
+
+    if precent == 1 then
+        monarch.show('level_2')
+        SoundController.play('confirm', SoundController.GROUP_SFX)
+    end
+    
+    local new_width = precent * self.max_progress_bar_width
+    local size = gui.get_size(self.progress_fill_node)
+    size.x = new_width
+    gui.set_size(self.progress_fill_node, size)
+end
+
+local function view_update_cursor(self)
+    local node_pos = gui.get_position(self.option_nodes[self.current_cursor])
+    node_pos.x = node_pos.x - CURSOR_OFFSET
+    gui.set_position(self.cursor_node, node_pos)
+end
+
+local function view_update_ui(self)
+    gui.set_enabled(self.text_node, false)
+    gui.set_enabled(self.selection_node, false)
+    gui.set_enabled(self.progress_bar_node, false)
+
+    if self.state == states.READING then
+        gui.set_enabled(self.text_node, true)
+    elseif self.state == states.CHOOSING then
+        gui.set_enabled(self.selection_node, true)
+    elseif self.state == states.PROGRESSING then
+        gui.set_enabled(self.progress_bar_node, true)
+    end
+end
+
+local function next_option(self)
+    if self.current_cursor < 1 then
+        self.current_cursor = #self.options_data
+    elseif self.current_cursor > #self.options_data then
+        self.current_cursor = 1
+    end
+    print(self.current_cursor)
+    view_update_cursor(self)
+    SoundController.play('Thip', SoundController.GROUP_SFX)
+end
+
+local function next_text(self)
+    -- 先增加计数
+    self.current_count = self.current_count + 1
+
+    -- 边界检查
+    if self.current_count > #self.texts then
+        self.state = states.CHOOSING
+        view_update_ui(self)
+        return
+    end
+    -- 负责实际更新
+    gui.set_text(self.text_node, self.texts[self.current_count])
+end
+
+local function setup_game_data(self)
+    self.texts = {
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        'Morem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        'Norem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    }
+    self.options_data = {
+        { text = 'red',   on_select = function() gui.set_color(self.bg_node, vmath.vector4(1, 0, 0, 0.5)) end },
+        { text = 'green', on_select = function() gui.set_color(self.bg_node, vmath.vector4(0, 1, 0, 0.5)) end },
+        { text = 'blue',  on_select = function() gui.set_color(self.bg_node, vmath.vector4(0, 0, 1, 0.5)) end },
+    }
+
+    self.max_progress = 100
+    self.current_progress = 0
+    self.max_progress_bar_width = gui.get_size(self.progress_fill_node).x
+    set_options(self)
+end
 
 function init(self)
     msg.post(".", "acquire_input_focus")
-end
 
-function final(self)
-end
+    self.text_node = gui.get_node('text')
+    self.selection_node = gui.get_node('selection')
+    self.option_nodes = {}
+    self.cursor_node = gui.get_node('cursor')
+    self.bg_node = gui.get_node('bg')
+    
+    self.progress_bar_node = gui.get_node('progress_bar')
+    self.progress_fill_node = gui.get_node('bar_in')
 
-function update(self, dt)
-end
+    -- druid progress ui
+    -- self.progress = self.druid:new_progress('progress_bar', 'x')
 
-function on_message(self, message_id, message, sender)
+    self.state = states.READING
+    self.current_count = 1
+    self.current_cursor = 1
+    self.selected = nil
+
+    setup_game_data(self)
+
+    gui.set_text(gui.get_node('text'), self.texts[self.current_count])
+    set_options(self)
+    view_update_ui(self)
+    view_update_progress(self)
 end
 
 function on_input(self, action_id, action)
+    
+    if self.state == states.READING then
+        if action_id == Input.CLICK or action_id == Input.START then
+            if action.pressed then
+                next_text(self)
+                SoundController.play('Thip', SoundController.GROUP_SFX)
+            end
+        end
+    elseif self.state == states.CHOOSING then
+        if action_id == Input.UP and action.pressed then
+            self.current_cursor = self.current_cursor - 1
+            next_option(self)
+        elseif action_id == Input.DOWN and action.pressed then
+            self.current_cursor = self.current_cursor + 1
+            next_option(self)
+        elseif action_id == Input.START and action.pressed then
+            self.selected = self.options_data[self.current_cursor]
+            if self.selected and self.selected.on_select then
+                self.selected.on_select()
+                self.state = states.PROGRESSING
+                view_update_ui(self)
+            end
+            SoundController.play('confirm', SoundController.GROUP_SFX)
+        end
+    elseif self.state == states.PROGRESSING then
+        -- 1. 只管改数值
+        if action_id == Input.LEFT and action.pressed then
+            self.current_progress = self.current_progress - 10
+        elseif action_id == Input.RIGHT and action.pressed then
+            self.current_progress = self.current_progress + 10
+        end
+
+        -- 2. 数据清洗 (Clamping) - 必须在画图之前做！
+        if self.current_progress < 0 then self.current_progress = 0 end
+        if self.current_progress > self.max_progress then self.current_progress = self.max_progress end
+
+        -- 3. 最后统一更新视图
+        -- 只有按下了左右键才需要更新，不仅性能好，逻辑也对
+        if action_id == Input.LEFT or action_id == Input.RIGHT then
+            if action.pressed then
+                view_update_progress(self)
+                SoundController.play('Thip', SoundController.GROUP_SFX)
+            end
+        end
+    end
+
+    return self.druid:on_input(action_id, action)
 end
 
-function on_reload(self)
-end
+

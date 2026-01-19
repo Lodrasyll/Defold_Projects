@@ -1,0 +1,25 @@
+local monarch = require('monarch.monarch')
+
+
+
+---@package
+---@param self game_controller.script
+function init(self)
+	msg.post('.', 'acquire_input_focus')
+end
+
+---@package
+---@param self game_controller.script
+---@param dt number
+function update(self, dt)
+	
+end
+
+---@package
+---@param self game_controller.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+
+end

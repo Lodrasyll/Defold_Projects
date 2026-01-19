@@ -1,0 +1,108 @@
+local monarch = require "monarch.monarch"
+local druid = require("druid.druid")
+local Input = require('core.systems.input')
+local SoundController = require('core.components.sound_controller')
+local selection_menu_widget = require('ui.widgets.selection_menu.selection_menu')
+local Flow = require('core.systems.flow')
+
+local on_menu_option_select
+local appear
+local decrease_hp_bar
+
+function init(self)
+    msg.post(".", "acquire_input_focus")
+    self.druid = druid.new(self)
+    self.selection_menu_widget = self.druid:new_widget(selection_menu_widget)
+    local data = {'fight', 'ability', 'run'}
+    self.selection_menu_widget:set_data(data)
+    self.selection_menu_widget.on_option_select:subscribe(on_menu_option_select, self)
+    
+
+    self.root_node = gui.get_node('root')
+
+    self.player_choice = {}
+
+    self.is_input_enabled = false -- 默认关闭，等待 StateStack 的指令
+
+    appear(self)
+
+end
+
+function final(self)
+    self.druid:final()
+end
+
+function update(self, dt)
+    self.druid:update(dt)
+end
+
+function on_message(self, message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+
+    -- 响应来自 StateStack 的指令
+    if message_id == hash("set_menu_active") then
+        self.is_input_enabled = message.active
+        if message.active then
+            -- 可以根据需要播放显示菜单的动画
+            gui.set_enabled(self.root_node, true)
+        else
+            -- 禁用时不一定隐藏，但一定不能点
+            -- gui.set_enabled(self.root_node, false)
+        end
+    end
+
+    if message_id == hash('show_dialog') then
+        gui.set_text(gui.get_node('battle_message/text'), message.text)
+        SoundController.play('confirm', SoundController.GROUP_SFX)
+    -- elseif message_id == hash('hide_dialog') then
+    --     gui.set_enabled(gui.get_node('battle_message/text'), false)
+    end
+
+    if message_id == hash('animate_hp') then
+        decrease_hp_bar(self, message)
+    end
+
+    if message_id == hash('won') then
+        monarch.back()
+    end
+end
+
+function on_input(self, action_id, action)
+    if self.is_input_enabled then
+        return self.druid:on_input(action_id, action)
+    end
+    -- 否则，GUI 就像死了一样，不响应任何 Druid 操作
+    return false
+end
+
+on_menu_option_select = function (self, index)
+    if index == 1 then
+        msg.post('/battle_controller#battle_controller', 'command_fight')
+    elseif index == 2 then
+        msg.post('/battle_controller#battle_controller', 'command_ability')
+    elseif index == 3 then
+        print("逃跑！")
+        monarch.back()
+    end
+end
+
+appear = function(self)
+    print('animate!')
+    gui.set_scale(self.root_node, vmath.vector3())
+    gui.animate(self.root_node, 'scale', vmath.vector3(1), go.EASING_OUTBACK, 0.2)
+end
+
+decrease_hp_bar = function (self, message)
+    if message.target == 'enemy' then
+        local to = gui.get_size(gui.get_node('enemy_battle_bar/hp_bar/fill')).x * message.to_percent
+        gui.animate(gui.get_node('enemy_battle_bar/hp_bar/fill'), 'size.x', to, go.EASING_LINEAR, 2, 0, function()
+            Flow.signal('animate_hp_done')
+        end)
+    elseif message.target == 'player' then
+        local to = gui.get_size(gui.get_node('player_battle_bar/hp_bar/fill')).x * message.to_percent
+        gui.animate(gui.get_node('player_battle_bar/hp_bar/fill'), 'size.x', to, go.EASING_LINEAR, 2, 0, function()
+            Flow.signal('animate_hp_done')
+        end)
+    end
+    
+end

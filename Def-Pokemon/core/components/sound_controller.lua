@@ -13,7 +13,7 @@ local settings = {
 }
 
 -- 门控时间窗口
-local GATE_WINDOW = 0.2
+local GATE_WINDOW = 0.1
 
 function M.init()
     

@@ -1,0 +1,37 @@
+local utils = require('core.utils.utils')
+local PokemonData = require('data.pokemon_data')
+local PokemonEngine = require('game.entities.pokemon.pokemon_engine')
+local GameData = require('data.game_data')
+
+local function show_pokemon(self, first_pokemon)
+	local factory_url = '/factory_pokemon#factory_' .. self.first_pokemon_id
+	local position = go.get_position()
+	local properties = { pokemon_id = self.first_pokemon_id }
+
+	local first_pokemon_id = factory.create(factory_url, position, nil, properties, 0.7)
+	msg.post(first_pokemon_id, "inject_data", { pokemon_instance = first_pokemon })
+	GameData.pokemon_id = first_pokemon_id
+end
+
+
+local function setup_initial_pokemon(self)
+	-- 准备宝可梦
+	self.first_pokemon_data_id = math.random(1001, 1004)
+	self.inti_level = math.random(2, 5)
+
+	local pokemon_data = utils.get_data_by_id(self.first_pokemon_data_id, PokemonData)
+	local first_pokemon = PokemonEngine(pokemon_data, self.inti_level)
+	GameData.player_first_pokemon = first_pokemon
+	print("存档完毕，玩家拥有了: " .. first_pokemon.name .. " 攻击力: " .. first_pokemon.attack)
+	pprint(GameData.player_first_pokemon)
+	
+	show_pokemon(self, first_pokemon)
+end
+
+---@package
+---@param self first_pokemon.script
+function init(self)
+	if GameData.player_first_pokemon == nil then
+		setup_initial_pokemon(self)
+	end
+end

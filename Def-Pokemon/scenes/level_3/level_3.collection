@@ -1,0 +1,119 @@
+name: "level_3"
+instances {
+  id: "camera_level_3"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+}
+collection_instances {
+  id: "pokemon_factory"
+  collection: "/game/entities/pokemon/pokemon_factory.collection"
+}
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"level_3\"\n"
+  "  component: \"/scenes/level_3/level_3.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "background"
+  children: "shadow_1"
+  children: "shadow_2"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"battle_background\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/textures/background.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "  position {\n"
+  "    x: 960.0\n"
+  "    y: 540.0\n"
+  "  }\n"
+  "}\n"
+  ""
+  position {
+    z: -0.1
+  }
+}
+embedded_instances {
+  id: "battle_controller"
+  data: "components {\n"
+  "  id: \"battle_controller\"\n"
+  "  component: \"/core/components/battle_controller.script\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "opponent_pokemon_pos"
+  data: ""
+  position {
+    x: 1464.0
+    y: 861.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "player_pokemon_pos"
+  data: ""
+  position {
+    x: 493.0
+    y: 456.0
+    z: 1.0
+  }
+}
+embedded_instances {
+  id: "shadow_1"
+  data: "embedded_components {\n"
+  "  id: \"shadow\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"battle_shadow\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "size {\\n"
+  "  x: 872.0\\n"
+  "  y: 188.0\\n"
+  "}\\n"
+  "offset: 0.44\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/textures/background.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 490.0
+    y: 273.0
+  }
+}
+embedded_instances {
+  id: "shadow_2"
+  data: "embedded_components {\n"
+  "  id: \"shadow\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"battle_shadow\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "size {\\n"
+  "  x: 872.0\\n"
+  "  y: 188.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/arts/textures/background.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 1459.0
+    y: 744.0
+  }
+}

@@ -1,0 +1,75 @@
+fonts {
+  name: "Koulen"
+  font: "/assets/fonts/Koulen.font"
+}
+textures {
+  name: "my_default_texture"
+  texture: "/assets/textures/generated/my_default.tilesource"
+}
+nodes {
+  size {
+    x: 350.0
+    y: 30.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 350.0
+    y: 30.0
+  }
+  type: TYPE_BOX
+  texture: "my_default_texture/2"
+  id: "progress_bar"
+  parent: "root"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: -171.0
+  }
+  size {
+    x: 342.0
+    y: 22.0
+  }
+  type: TYPE_BOX
+  texture: "my_default_texture/2"
+  id: "fill"
+  pivot: PIVOT_W
+  parent: "progress_bar"
+  inherit_alpha: true
+  slice9 {
+    x: 10.0
+    y: 10.0
+    z: 10.0
+    w: 10.0
+  }
+}
+nodes {
+  position {
+    x: -200.0
+  }
+  size {
+    x: 50.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "???\n"
+  ""
+  font: "Koulen"
+  id: "text"
+  parent: "root"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

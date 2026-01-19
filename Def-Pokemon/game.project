@@ -29,7 +29,26 @@ dependencies#8 = https://github.com/Insality/panthera/archive/refs/tags/runtime.
 dependencies#9 = https://github.com/subsoap/defsave/archive/refs/tags/v1.2.6.zip
 dependencies#10 = https://github.com/Insality/defold-lang/archive/refs/tags/4.zip
 dependencies#11 = https://github.com/britzl/monarch/archive/refs/tags/5.2.0.zip
+dependencies#12 = https://github.com/britzl/ludobits/archive/refs/tags/7.5.0.zip
+dependencies#13 = https://github.com/Insality/defold-printer/archive/refs/tags/1.2.0.zip
 
 [input]
 game_binding = /game.input_bindingc
+
+[graphics]
+default_texture_min_filter = nearest
+default_texture_mag_filter = nearest
+max_debug_vertices = 300000
+
+[tilemap]
+max_tile_count = 20000
+
+[physics]
+debug = 0
+max_collision_object_count = 10240
+max_collisions = 256
+debug_alpha = 0.5
+
+[collection]
+max_instances = 10240
 
