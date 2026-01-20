@@ -1,20 +1,43 @@
 local monarch = require "monarch.monarch"
+local druid = require('druid.druid')
+local texts = require('game.entities.gameobj.texts')
+
+local set_init_data
 
 function init(self)
+    self.druid = druid.new(self)
     msg.post(".", "acquire_input_focus")
+    msg.post('#', 'show_pop_dialogue')
+
+    -- set_init_data(self)
 end
 
 function final(self)
+    self.druid:final()
 end
 
 function update(self, dt)
+    self.druid:update(dt)
 end
 
 function on_message(self, message_id, message, sender)
+    monarch.on_message(message_id, message, sender)
+    self.druid:on_message(message_id, message, sender)
+    if message_id == hash("show_end") then
+        monarch.show('pop_dialogue')
+    elseif message_id == hash("show_pop_dialogue") then
+        monarch.show('pop_dialogue')
+    elseif message_id == hash("show_level_2") then
+        monarch.show('level_2')
+    end
 end
 
 function on_input(self, action_id, action)
+    return self.druid:on_input(action_id, action)
 end
 
 function on_reload(self)
+end
+
+set_init_data = function(self)
 end

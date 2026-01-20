@@ -10,14 +10,22 @@ embedded_instances {
 }
 embedded_instances {
   id: "factories"
-  data: "components {\n"
-  "  id: \"cursor_factory\"\n"
-  "  component: \"/game/entities/gameobj/cursor_factory.factory\"\n"
-  "}\n"
-  "embedded_components {\n"
+  data: "embedded_components {\n"
   "  id: \"piece_factory\"\n"
   "  type: \"factory\"\n"
   "  data: \"prototype: \\\"/game/entities/gameobj/piece.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"slot_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/gameobj/slot.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"cursor_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/gameobj/cursor.go\\\"\\n"
   "\"\n"
   "}\n"
   ""
@@ -29,4 +37,32 @@ embedded_instances {
   "  component: \"/game/entities/gameobj/game_controller.script\"\n"
   "}\n"
   ""
+}
+embedded_instances {
+  id: "end"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"scene_1_large\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "size {\\n"
+  "  x: 1920.0\\n"
+  "  y: 1080.0\\n"
+  "}\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/textures/generated/puzzle_1.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 960.0
+    y: 681.0
+    z: 0.1
+  }
+  scale3 {
+    x: 0.6
+    y: 0.6
+  }
 }

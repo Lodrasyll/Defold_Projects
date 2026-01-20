@@ -22,12 +22,12 @@ embedded_instances {
 embedded_instances {
   id: "sounds"
   data: "components {\n"
-  "  id: \"Thip\"\n"
-  "  component: \"/assets/sounds/Thip.sound\"\n"
+  "  id: \"sfx_thip\"\n"
+  "  component: \"/assets/sounds/sfx/sfx_thip.sound\"\n"
   "}\n"
   "components {\n"
-  "  id: \"confirm\"\n"
-  "  component: \"/assets/sounds/confirm.sound\"\n"
+  "  id: \"sfx_confirm\"\n"
+  "  component: \"/assets/sounds/sfx/sfx_confirm.sound\"\n"
   "}\n"
   ""
 }

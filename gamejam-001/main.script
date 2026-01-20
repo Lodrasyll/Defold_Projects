@@ -1,4 +1,5 @@
 local monarch = require('monarch.monarch')
+local SoundController =require('core.components.sound_controller')
 
 ---@package
 ---@param self main.script
@@ -7,6 +8,8 @@ function init(self)
     msg.post('#', 'show_main_menu')
     defos.disable_window_resize()
     defos.set_cursor_visible(false)
+    msg.post("@render:", "use_fixed_projection", { near = -1, far = 1, zoom = 1 })
+    -- monarch.debug()
 end
 
 ---@package
@@ -17,5 +20,20 @@ end
 function on_message(self, message_id, message, sender)
     if message_id == hash('show_main_menu') then
         monarch.show('main_menu')
+    end
+end
+
+---@package
+---@param self main.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+    if action.x and action.y then
+        local pos = vmath.vector3(action.x, action.y, 1)
+        go.set_position(pos, '/cursor')
+    end
+    if action_id == hash('touch') and action.pressed then
+        SoundController.play('sfx_thip', SoundController.GROUP_SFX)
     end
 end

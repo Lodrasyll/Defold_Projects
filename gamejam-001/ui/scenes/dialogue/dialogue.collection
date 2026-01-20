@@ -4,7 +4,7 @@ embedded_instances {
   id: "monarch"
   data: "components {\n"
   "  id: \"dialogue\"\n"
-  "  component: \"/ui/scenes/level_2/dialogue/dialogue.gui\"\n"
+  "  component: \"/ui/scenes/dialogue/dialogue.gui\"\n"
   "}\n"
   ""
 }

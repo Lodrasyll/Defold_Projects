@@ -22,7 +22,7 @@ function M:set_texts_data(texts)
 end
 
 function M:on_click()
-	SoundController.play('Thip', SoundController.GROUP_SFX)
+	SoundController.play('sfx_thip', SoundController.GROUP_SFX)
 	self:next_text()
 end
 

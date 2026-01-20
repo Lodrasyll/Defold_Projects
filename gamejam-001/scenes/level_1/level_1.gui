@@ -11,5 +11,44 @@ nodes {
   size_mode: SIZE_MODE_AUTO
   visible: false
 }
+nodes {
+  position {
+    x: 124.0
+    y: 975.0
+  }
+  scale {
+    x: 0.75
+    y: 0.75
+  }
+  type: TYPE_TEMPLATE
+  id: "common_1_text"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/default/common_1_text.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "common_1_text/title"
+  parent: "common_1_text"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "common_1_text/character_text"
+  parent: "common_1_text/title"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "common_1_text/level_text"
+  parent: "common_1_text/title"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "common_1_text/progress_text"
+  parent: "common_1_text/title"
+  template_node_child: true
+}
 material: "/builtins/materials/gui.material"
 adjust_reference: ADJUST_REFERENCE_PARENT

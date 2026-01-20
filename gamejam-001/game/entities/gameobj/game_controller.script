@@ -1,19 +1,24 @@
 local GameData = require('game.entities.gameobj.game_data')
 local cursor = require('in.cursor')
 local SoundController = require('core.components.sound_controller')
+local panthera = require('panthera.panthera')
+local end_animation = require('scenes.level_1.level_1_panthera')
 
 local set_init_data
 local cursor_generate
 local piece_generate
-local check_snap
-local draw_grid
+local slot_generate
+local show_end
+local next_scene
 
-local PIECE_SIZE = 200
-local GRID_COLS = 3
-local GRID_ROWS = 2
+local SCALE_FACTOR = 0.3125
+local SLOT_IMG_SIZE = 200
+local GRID_COLS = 4
+local GRID_ROWS = 3
+local PIECE_SIZE = { x = (1920 * SCALE_FACTOR) / GRID_COLS, y = (1080 * SCALE_FACTOR) / GRID_ROWS}
 local TOTAL_PIECES = GRID_COLS * GRID_ROWS
 local TARGET_START_X = 1200
-local TARGET_START_Y = 600
+local TARGET_START_Y = 800
 
 --- ===================================== ---
 --- 			Main Functions
@@ -25,6 +30,7 @@ function init(self)
 	msg.post('.', 'acquire_input_focus')
 
 	set_init_data(self)
+	slot_generate(self)
 	cursor_generate(self)
 	piece_generate(self)
 end
@@ -33,16 +39,18 @@ end
 ---@param self game_controller.script
 ---@param dt number
 function update(self, dt)
-	draw_grid(self)
+	-- draw_grid(self)
 end
 
 ---@package
 ---@param self game_controller.script
 ---@param message_id hash
----@param message table
+---@param message table	
 ---@param sender url
 function on_message(self, message_id, message, sender)
-	
+	if message_id == hash('scene_end') then
+		show_end(self)
+	end	
 end
 
 ---@package
@@ -51,11 +59,15 @@ end
 ---@param action on_input.action
 ---@return boolean|nil
 function on_input(self, action_id, action)
-	local mouse_pos = vmath.vector3(action.x, action.y, 1)
-	go.set_position(mouse_pos, self.cursor_id)
+	if action.x and action.y then
+		local pos = vmath.vector3(action.x, action.y, 1)
+		go.set_position(pos)
+	end
 
 	if action_id == hash('touch') and action.pressed then
-		SoundController.play('sfx_thip', SoundController.GROUP_SFX)
+		if self.is_scene_end then
+			next_scene()
+		end
 	end
 end
 
@@ -69,7 +81,34 @@ end
 --- ===================================== ---
 
 set_init_data = function (self, data)
+	self.is_scene_end = false
 	self.scaled = false
+	msg.post('/end', 'disable')
+	self.end_animation = panthera.create_go(end_animation)
+end
+
+slot_generate = function (self)
+	local total_pieces = GRID_COLS * GRID_ROWS
+	local scale_x = PIECE_SIZE.x / SLOT_IMG_SIZE
+	local scale_y = PIECE_SIZE.y / SLOT_IMG_SIZE
+	local slot_scale = vmath.vector3(scale_x, scale_y, 1)
+	for i = 1, total_pieces do
+		local grid_x = (i - 1) % GRID_COLS
+		local grid_y = math.floor((i - 1) / GRID_COLS)
+
+		local target_x = TARGET_START_X + grid_x * PIECE_SIZE.x
+		local target_y = TARGET_START_Y - grid_y * PIECE_SIZE.y
+		local pos = vmath.vector3(target_x, target_y, 0.5)
+		local slot_go_id = factory.create('/factories#slot_factory', pos, nil, nil, slot_scale)
+		local slot = {
+			go_id = slot_go_id,
+			id = i,
+			grid_x = grid_x,
+			grid_y = grid_y,
+			position = pos
+		}
+		table.insert(GameData.slots, slot)
+	end
 end
 
 piece_generate = function (self)
@@ -80,10 +119,10 @@ piece_generate = function (self)
 		local grid_y = math.floor((i - 1) / GRID_COLS)
 
 		-- 计算正确的目标位置 (用于吸附判定)
-		local target_x = TARGET_START_X + grid_x * PIECE_SIZE
-		local target_y = TARGET_START_Y - grid_y * PIECE_SIZE
+		local target_x = TARGET_START_X + grid_x * PIECE_SIZE.x
+		local target_y = TARGET_START_Y - grid_y * PIECE_SIZE.y
 
-		local start_pos = vmath.vector3(math.random(100, 1920), math.random(100, 1080), 0)
+		local start_pos = vmath.vector3(math.random(300, 800), math.random(250, 800), 0)
 		local props = {
 			id = i,
 			target_x = target_x, -- 将目标位置传给对象脚本
@@ -92,19 +131,41 @@ piece_generate = function (self)
 		local go_id = factory.create('/factories#piece_factory', start_pos, nil, props, 1)
 		local piece = {
 			go_id = go_id,
-			id = i,                                            -- 唯一ID
-			grid_x = grid_x,                                   -- 网格列索引
-			grid_y = grid_y,                                   -- 网格行索引
-			correct_pos = vmath.vector3(target_x, target_y, 0) -- 预存目标向量，方便后续计算距离
+			id = i,                                             -- 唯一ID
+			grid_x = grid_x,                                    -- 网格列索引
+			grid_y = grid_y,                                    -- 网格行索引
+			correct_pos = vmath.vector3(target_x, target_y, 0), -- 预存目标向量，方便后续计算距离
+			is_placed = false                                 	-- 是否已正确放置
 		}
 		table.insert(GameData.pieces, piece)
 	end
-	pprint(GameData.pieces)
+	-- pprint(GameData.pieces)
 end
 
 cursor_generate = function (self)
 	local pos = vmath.vector3(960, 540, 0)
 	self.cursor_id = factory.create('/factories#cursor_factory', pos, nil, nil, 2)
+end
+
+show_end = function (self)
+	self.is_scene_end = true
+	msg.post('/end', 'enable')
+	panthera.play(self.end_animation, 'appear')
+	msg.post('/monarch#level_1', 'show_end')
+	for i = 1, GRID_COLS * GRID_ROWS do
+		local sprite_url_1 = msg.url(nil, GameData.pieces[i].go_id, 'sprite')
+		local sprite_url_2 = msg.url(nil, GameData.slots[i].go_id, 'sprite')
+		go.animate(sprite_url_1, 'tint.w', go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_OUTBACK, 0.5)
+		go.animate(sprite_url_2, 'tint.w', go.PLAYBACK_ONCE_FORWARD, 0, go.EASING_OUTBACK, 0.5, 0, function()
+			msg.post(GameData.pieces[i].go_id, 'disable')
+			msg.post(GameData.slots[i].go_id, 'disable')
+		end)
+		
+	end
+end
+
+next_scene = function ()
+	msg.post('/monarch#level_1', 'show_level_2')
 end
 
 draw_grid = function (self)

@@ -1,0 +1,25 @@
+-- slot.script
+
+function init(self)
+	-- 初始化时，可能要把自己设为半透明或者虚线框状态
+	-- 假设默认是 50% 透明度
+	sprite.set_constant("#sprite", "tint", vmath.vector4(1, 1, 1, 0.5))
+end
+
+function on_message(self, message_id, message, sender)
+	-- 收到 "piece_arrived" 消息
+	if message_id == hash("piece_arrived") then
+		print("Slot received message: I am filled!")
+
+		-- 这里可以做很多有趣的视觉反馈：
+
+		-- 方案1：把自己隐藏起来 (因为拼图盖在上面了，省点渲染性能)
+		-- msg.post("#sprite", "disable")
+
+		-- 方案2：高亮一下，表示"激活成功"
+		go.animate("#sprite", "tint", go.PLAYBACK_ONCE_FORWARD, vmath.vector4(0, 1, 0, 1), go.EASING_INQUAD, 0.5)
+
+		-- 方案3：甚至可以播放一个粒子特效！
+		-- particlefx.play("#confetti")
+	end
+end

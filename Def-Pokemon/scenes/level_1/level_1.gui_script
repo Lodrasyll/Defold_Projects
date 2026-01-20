@@ -46,7 +46,7 @@ local function view_update_progress(self)
 
     if precent == 1 then
         monarch.show('level_2')
-        SoundController.play('confirm', SoundController.GROUP_SFX)
+        SoundController.play('sfx_confirm', SoundController.GROUP_SFX)
     end
     
     local new_width = precent * self.max_progress_bar_width
@@ -83,7 +83,7 @@ local function next_option(self)
     end
     print(self.current_cursor)
     view_update_cursor(self)
-    SoundController.play('Thip', SoundController.GROUP_SFX)
+    SoundController.play('sfx_thip', SoundController.GROUP_SFX)
 end
 
 local function next_text(self)
@@ -152,7 +152,7 @@ function on_input(self, action_id, action)
         if action_id == Input.CLICK or action_id == Input.START then
             if action.pressed then
                 next_text(self)
-                SoundController.play('Thip', SoundController.GROUP_SFX)
+                SoundController.play('sfx_thip', SoundController.GROUP_SFX)
             end
         end
     elseif self.state == states.CHOOSING then
@@ -169,7 +169,7 @@ function on_input(self, action_id, action)
                 self.state = states.PROGRESSING
                 view_update_ui(self)
             end
-            SoundController.play('confirm', SoundController.GROUP_SFX)
+            SoundController.play('sfx_confirm', SoundController.GROUP_SFX)
         end
     elseif self.state == states.PROGRESSING then
         -- 1. 只管改数值
@@ -188,7 +188,7 @@ function on_input(self, action_id, action)
         if action_id == Input.LEFT or action_id == Input.RIGHT then
             if action.pressed then
                 view_update_progress(self)
-                SoundController.play('Thip', SoundController.GROUP_SFX)
+                SoundController.play('sfx_thip', SoundController.GROUP_SFX)
             end
         end
     end

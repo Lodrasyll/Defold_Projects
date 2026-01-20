@@ -7,6 +7,11 @@ animations {
   end_tile: 1
 }
 animations {
+  id: "10"
+  start_tile: 10
+  end_tile: 10
+}
+animations {
   id: "2"
   start_tile: 2
   end_tile: 2

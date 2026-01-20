@@ -12,32 +12,19 @@ embedded_components {
   data: "default_animation: \"1\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "slice9 {\n"
-  "  x: 10.0\n"
-  "  y: 10.0\n"
-  "  z: 10.0\n"
-  "  w: 10.0\n"
+  "  x: 1.0\n"
+  "  y: 1.0\n"
+  "  z: 1.0\n"
+  "  w: 1.0\n"
   "}\n"
   "size {\n"
   "  x: 200.0\n"
   "  y: 200.0\n"
   "}\n"
-  "size_mode: SIZE_MODE_MANUAL\n"
   "textures {\n"
   "  sampler: \"texture_sampler\"\n"
-  "  texture: \"/assets/textures/generated/my_default.tilesource\"\n"
+  "  texture: \"/assets/textures/generated/puzzle_1.atlas\"\n"
   "}\n"
-  ""
-}
-embedded_components {
-  id: "label"
-  type: "label"
-  data: "size {\n"
-  "  x: 48.0\n"
-  "  y: 48.0\n"
-  "}\n"
-  "text: \"1\"\n"
-  "font: \"/assets/fonts/Koulen.font\"\n"
-  "material: \"/builtins/fonts/label-df.material\"\n"
   ""
 }
 embedded_components {
@@ -59,28 +46,9 @@ embedded_components {
   "    index: 0\n"
   "    count: 3\n"
   "  }\n"
-  "  data: 100.0\n"
-  "  data: 100.0\n"
+  "  data: 64.0\n"
+  "  data: 64.0\n"
   "  data: 10.0\n"
   "}\n"
   ""
-}
-embedded_components {
-  id: "pos"
-  type: "label"
-  data: "size {\n"
-  "  x: 48.0\n"
-  "  y: 48.0\n"
-  "}\n"
-  "text: \"1\"\n"
-  "font: \"/assets/fonts/Koulen.font\"\n"
-  "material: \"/builtins/fonts/label-df.material\"\n"
-  ""
-  position {
-    y: -38.0
-  }
-  scale {
-    x: 0.5
-    y: 0.5
-  }
 }

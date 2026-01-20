@@ -53,7 +53,7 @@ function on_message(self, message_id, message, sender)
 
     if message_id == hash('show_dialog') then
         gui.set_text(gui.get_node('battle_message/text'), message.text)
-        SoundController.play('confirm', SoundController.GROUP_SFX)
+        SoundController.play('sfx_confirm', SoundController.GROUP_SFX)
     -- elseif message_id == hash('hide_dialog') then
     --     gui.set_enabled(gui.get_node('battle_message/text'), false)
     end

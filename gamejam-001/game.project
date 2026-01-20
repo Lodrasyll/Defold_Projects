@@ -1,5 +1,6 @@
 [bootstrap]
 main_collection = /main.collectionc
+render = /game/entities/gameobj/default.renderc
 
 [script]
 shared_state = 1
@@ -38,6 +39,10 @@ default_texture_min_filter = nearest
 default_texture_mag_filter = nearest
 
 [physics]
-debug = 0
 debug_alpha = 0.4
+
+[render]
+clear_color_red = 0.1
+clear_color_green = 0.1
+clear_color_blue = 0.15
 

@@ -1,0 +1,62 @@
+fonts {
+  name: "ChillBitmap_7px"
+  font: "/assets/fonts/ChillBitmap_7px.font"
+}
+nodes {
+  size {
+    x: 200.0
+    y: 200.0
+  }
+  type: TYPE_BOX
+  id: "title"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  position {
+    y: 76.0
+  }
+  size {
+    x: 300.0
+    y: 100.0
+  }
+  type: TYPE_TEXT
+  text: "\347\254\254\344\270\200\347\253\240\357\274\232\345\274\200\347\253\257"
+  font: "ChillBitmap_7px"
+  id: "character_text"
+  parent: "title"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: 1.0
+  }
+  size {
+    x: 200.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "\345\205\263\345\215\241\357\274\2321/3"
+  font: "ChillBitmap_7px"
+  id: "level_text"
+  parent: "title"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    y: -50.0
+  }
+  size {
+    x: 200.0
+    y: 50.0
+  }
+  type: TYPE_TEXT
+  text: "\350\277\233\345\272\246\357\274\2320/6"
+  font: "ChillBitmap_7px"
+  id: "progress_text"
+  parent: "title"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

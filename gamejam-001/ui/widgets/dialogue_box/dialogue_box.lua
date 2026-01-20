@@ -15,6 +15,11 @@ function M:init()
 
 end
 
+function M:set_texts_data_copy(line)
+	self.text_node = self:get_node('dialogue_box/text')
+	self.druid:new_text(self.text_node, line)
+end
+
 function M:set_texts_data(texts)
 	self.texts = texts
 	self.text_node = self:get_node('dialogue_box/text')
@@ -22,7 +27,7 @@ function M:set_texts_data(texts)
 end
 
 function M:on_click()
-	SoundController.play('Thip', SoundController.GROUP_SFX)
+	SoundController.play('sfx_thip', SoundController.GROUP_SFX)
 	self:next_text()
 end
 

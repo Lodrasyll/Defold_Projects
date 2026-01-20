@@ -1,7 +1,8 @@
 local monarch = require "monarch.monarch"
 local druid = require('druid.druid')
+local texts = require('game.entities.gameobj.texts')
 local event = require('event.event')
-local texts = require('data.text')
+
 local dialogue_widget = require('ui.widgets.dialogue_box.dialogue_box')
 
 local on_dialogue_finished
@@ -45,5 +46,5 @@ end
 appear = function (self)
     local appear_target_pos = gui.get_position(self.root_node)
     gui.set_position(self.root_node, vmath.vector3(960, 1500, 0))
-    gui.animate(self.root_node, 'position', appear_target_pos, go.EASING_LINEAR, 0.4)
+    gui.animate(self.root_node, 'position', appear_target_pos, go.EASING_OUTCUBIC, 0.8)
 end

@@ -1,7 +1,15 @@
+components {
+  id: "slot"
+  component: "/game/entities/gameobj/slot.script"
+  position {
+    x: -110.728355
+    y: -151.92448
+  }
+}
 embedded_components {
   id: "sprite"
   type: "sprite"
-  data: "default_animation: \"2\"\n"
+  data: "default_animation: \"10\"\n"
   "material: \"/builtins/materials/sprite.material\"\n"
   "slice9 {\n"
   "  x: 10.0\n"

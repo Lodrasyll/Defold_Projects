@@ -42,7 +42,7 @@ function on_input(self, action_id, action)
     if action_id == Input.START then
         if action.pressed then
             monarch.show('select_menu')
-            SoundController.play('confirm', SoundController.GROUP_SFX)
+            SoundController.play('sfx_confirm', SoundController.GROUP_SFX)
         end
     end
     return self.druid:on_input(action_id, action)

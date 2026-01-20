@@ -20,7 +20,7 @@ function M:next_option(self)
 		self.current_cursor = 1
 	end
 	self:view_update_cursor(self)
-	SoundController.play('Thip', SoundController.GROUP_SFX)
+	SoundController.play('sfx_thip', SoundController.GROUP_SFX)
 end
 
 -- function M:on_select(index)
@@ -58,7 +58,7 @@ function M:init()
 end
 function M:on_click(index)
 	self.on_option_select:trigger(index)
-	SoundController.play('Thip', SoundController.GROUP_SFX)
+	SoundController.play('sfx_thip', SoundController.GROUP_SFX)
 end
 
 function M:on_input(action_id, action)
