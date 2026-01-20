@@ -1,0 +1,144 @@
+local GameData = require('game.entities.gameobj.game_data')
+local cursor = require('in.cursor')
+local SoundController = require('core.components.sound_controller')
+
+local set_init_data
+local cursor_generate
+local piece_generate
+local check_snap
+local draw_grid
+
+local PIECE_SIZE = 200
+local GRID_COLS = 3
+local GRID_ROWS = 2
+local TOTAL_PIECES = GRID_COLS * GRID_ROWS
+local TARGET_START_X = 1200
+local TARGET_START_Y = 600
+
+--- ===================================== ---
+--- 			Main Functions
+--- ===================================== ---
+
+---@package
+---@param self game_controller.script
+function init(self)
+	msg.post('.', 'acquire_input_focus')
+
+	set_init_data(self)
+	cursor_generate(self)
+	piece_generate(self)
+end
+
+---@package
+---@param self game_controller.script
+---@param dt number
+function update(self, dt)
+	draw_grid(self)
+end
+
+---@package
+---@param self game_controller.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	
+end
+
+---@package
+---@param self cursor_scr.script
+---@param action_id hash
+---@param action on_input.action
+---@return boolean|nil
+function on_input(self, action_id, action)
+	local mouse_pos = vmath.vector3(action.x, action.y, 1)
+	go.set_position(mouse_pos, self.cursor_id)
+
+	if action_id == hash('touch') and action.pressed then
+		SoundController.play('sfx_thip', SoundController.GROUP_SFX)
+	end
+end
+
+--- ===================================== ---
+--- 			Main Functions
+--- ===================================== ---
+
+
+--- ===================================== ---
+--- 			Custom Functions
+--- ===================================== ---
+
+set_init_data = function (self, data)
+	self.scaled = false
+end
+
+piece_generate = function (self)
+	local total_pieces = GRID_COLS * GRID_ROWS
+	for i = 1, total_pieces do
+		-- 核心逻辑移植：计算网格坐标 (逻辑大脑)
+		local grid_x = (i - 1) % GRID_COLS
+		local grid_y = math.floor((i - 1) / GRID_COLS)
+
+		-- 计算正确的目标位置 (用于吸附判定)
+		local target_x = TARGET_START_X + grid_x * PIECE_SIZE
+		local target_y = TARGET_START_Y - grid_y * PIECE_SIZE
+
+		local start_pos = vmath.vector3(math.random(100, 1920), math.random(100, 1080), 0)
+		local props = {
+			id = i,
+			target_x = target_x, -- 将目标位置传给对象脚本
+			target_y = target_y
+		}
+		local go_id = factory.create('/factories#piece_factory', start_pos, nil, props, 1)
+		local piece = {
+			go_id = go_id,
+			id = i,                                            -- 唯一ID
+			grid_x = grid_x,                                   -- 网格列索引
+			grid_y = grid_y,                                   -- 网格行索引
+			correct_pos = vmath.vector3(target_x, target_y, 0) -- 预存目标向量，方便后续计算距离
+		}
+		table.insert(GameData.pieces, piece)
+	end
+	pprint(GameData.pieces)
+end
+
+cursor_generate = function (self)
+	local pos = vmath.vector3(960, 540, 0)
+	self.cursor_id = factory.create('/factories#cursor_factory', pos, nil, nil, 2)
+end
+
+draw_grid = function (self)
+	-- 绘制目标区域网格 (Debug模式，对应 love.graphics.rectangle("line"...))
+	-- Defold 推荐使用 draw_line 进行快速调试绘制
+	-- 计算半个格子的偏移量
+	local offset = PIECE_SIZE / 2
+
+	for row = 0, GRID_ROWS - 1 do
+		for col = 0, GRID_COLS - 1 do
+			-- 1. 获取中心坐标 (这是你存的数据)
+			local center_x = TARGET_START_X + col * PIECE_SIZE
+			local center_y = TARGET_START_Y - row * PIECE_SIZE
+
+			-- 2. 【关键修改】计算画线的"左下角"起点
+			-- 既然 center_x 是中心，那左边框就在 center_x - 100
+			local left = center_x - offset
+			local bottom = center_y - offset
+			local right = center_x + offset
+			local top = center_y + offset
+
+			-- 3. 使用计算好的边界画线
+			local p1 = vmath.vector3(left, bottom, 0)  -- 左下
+			local p2 = vmath.vector3(right, bottom, 0) -- 右下
+			local p3 = vmath.vector3(right, top, 0)    -- 右上
+			local p4 = vmath.vector3(left, top, 0)     -- 左上
+			msg.post("@render:", "draw_line", { start_point = p1, end_point = p2, color = vmath.vector4(1, 1, 1, 0.5) })
+			msg.post("@render:", "draw_line", { start_point = p2, end_point = p3, color = vmath.vector4(1, 1, 1, 0.5) })
+			msg.post("@render:", "draw_line", { start_point = p3, end_point = p4, color = vmath.vector4(1, 1, 1, 0.5) })
+			msg.post("@render:", "draw_line", { start_point = p4, end_point = p1, color = vmath.vector4(1, 1, 1, 0.5) })
+		end
+	end
+end
+
+--- ===================================== ---
+--- 			Custom Functions
+--- ===================================== ---

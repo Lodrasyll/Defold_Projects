@@ -1,0 +1,10 @@
+name: "dialogue"
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"dialogue\"\n"
+  "  component: \"/ui/scenes/level_2/dialogue/dialogue.gui\"\n"
+  "}\n"
+  ""
+}

@@ -1,0 +1,14 @@
+image: "/assets/textures/generated/graphics/simple_ui.png"
+tile_width: 16
+tile_height: 16
+animations {
+  id: "179"
+  start_tile: 179
+  end_tile: 179
+}
+animations {
+  id: "cursor"
+  start_tile: 135
+  end_tile: 135
+}
+extrude_borders: 2

@@ -1,0 +1,10 @@
+name: "game_over"
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"game_over\"\n"
+  "  component: \"/scenes/game_over/game_over.gui\"\n"
+  "}\n"
+  ""
+}

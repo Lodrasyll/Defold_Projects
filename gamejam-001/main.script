@@ -1,0 +1,21 @@
+local monarch = require('monarch.monarch')
+
+---@package
+---@param self main.script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+    msg.post('#', 'show_main_menu')
+    defos.disable_window_resize()
+    defos.set_cursor_visible(false)
+end
+
+---@package
+---@param self main.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+    if message_id == hash('show_main_menu') then
+        monarch.show('main_menu')
+    end
+end

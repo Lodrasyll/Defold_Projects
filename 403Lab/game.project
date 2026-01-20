@@ -43,3 +43,6 @@ default_texture_min_filter = nearest
 max_particle_count = 2048
 max_particle_buffer_count = 2048
 
+[physics]
+debug = 1
+

@@ -1,0 +1,32 @@
+name: "level_1"
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"level_1\"\n"
+  "  component: \"/scenes/level_1/level_1.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "factories"
+  data: "components {\n"
+  "  id: \"cursor_factory\"\n"
+  "  component: \"/game/entities/gameobj/cursor_factory.factory\"\n"
+  "}\n"
+  "embedded_components {\n"
+  "  id: \"piece_factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/entities/gameobj/piece.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "game_controller"
+  data: "components {\n"
+  "  id: \"game_controller\"\n"
+  "  component: \"/game/entities/gameobj/game_controller.script\"\n"
+  "}\n"
+  ""
+}

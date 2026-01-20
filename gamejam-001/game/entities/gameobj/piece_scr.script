@@ -1,0 +1,96 @@
+local cursor = require('in.cursor')
+
+go.property("id", 0)       -- 允许工厂传递ID
+go.property("target_x", 0) -- 正确的网格位置X
+go.property("target_y", 0) -- 正确的网格位置Y
+go.property("is_placed", false)
+
+local set_init_data
+
+---@package
+---@param self piece_scr.script
+function init(self)
+	set_init_data(self)
+end
+
+---@package
+---@param self piece_scr.script
+---@param dt number
+function update(self, dt)
+	label.set_text('#pos', tostring(go.get_position()))
+end
+
+---@package
+---@param self piece_scr.script
+---@param message_id hash
+---@param message table
+---@param sender url
+function on_message(self, message_id, message, sender)
+	-- 【新增】 如果已经拼好了，直接无视所有拖拽信号
+	if self.is_placed then return end
+
+	if message_id == cursor.DRAG_START then
+		if not self.scaled then
+			go.animate('.', 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(1.1, 1.1, 0), go.EASING_OUTBACK, 0.5)
+			self.scaled = true
+			-- 视觉优化：拿起来时让它浮在最上面 (Z轴设为 1)
+			local pos = go.get_position()
+			pos.z = 1
+			go.set_position(pos)
+		end
+	elseif message_id == cursor.DRAG_END then
+		-- 1. 获取当前位置和目标位置
+        local current_pos = go.get_position()
+        local target_pos = vmath.vector3(self.target_x, self.target_y, 0) -- 目标Z轴通常是0
+		
+		-- 2. 计算距离 (记得忽略 Z 轴！)
+        local distance_vec = current_pos - target_pos
+        distance_vec.z = 0 -- 拍扁向量，只算平面距离
+        local distance = vmath.length(distance_vec)
+        
+        -- 3. 判断阈值 (这里设为 50 像素)
+        local SNAP_THRESHOLD = 100
+		-- 打印距离调试，让你看到到底差多少
+		print("Distance check: " .. distance .. " (Threshold: " .. SNAP_THRESHOLD .. ")")
+        
+        if distance < SNAP_THRESHOLD then
+            -- ✅ 成功吸附！
+            print("Piece " .. self.id .. " Snapped!")
+            
+            -- A. 物理锁定：瞬移到目标位置
+            target_pos.z = 0 -- 放回到底层
+            go.set_position(target_pos)
+            
+            -- B. 状态锁定：标记为已放置
+            self.is_placed = true
+            
+            -- C. 彻底禁止拖动：禁用碰撞体 (Defold 最佳实践)
+            -- 这样 Cursor 就再也检测不到它了，光标会直接穿透过去
+            msg.post("#collisionobject", "disable") 
+            
+            -- D. 视觉反馈：恢复大小，或者闪一下表示成功
+            go.animate('.', 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(1.0, 1.0, 1), go.EASING_OUTBOUNCE, 0.3)
+		else
+            -- === 【新增】失败分支 (如果不加这个，松手后Z轴会卡在1，导致层级混乱) ===
+            print("❌ Missed!")
+            
+            -- 1. 视觉复位：恢复正常大小
+            go.animate('.', 'scale', go.PLAYBACK_ONCE_FORWARD, vmath.vector3(1.0, 1.0, 1), go.EASING_OUTBACK, 0.5)
+            
+            -- 2. 层级复位：把 Z 轴放回普通层级 (比如 0.1)
+            -- 如果不做这步，这块碎片就会一直浮在所有东西上面
+            local pos = go.get_position()
+            pos.z = 0.1 
+            go.set_position(pos)
+		end
+		self.scaled = false
+	end
+end
+
+
+set_init_data = function (self)
+	self.scaled = false
+
+	sprite.play_flipbook('#sprite', tostring(self.id))
+	label.set_text('#label', tostring(self.id))
+end
