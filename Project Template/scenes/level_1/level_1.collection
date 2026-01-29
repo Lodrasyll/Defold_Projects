@@ -1,4 +1,33 @@
 name: "level_1"
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+}
+instances {
+  id: "sprite_scroll"
+  prototype: "/shaders/sprite_scroll.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+  component_properties {
+    id: "animate_shader"
+    properties {
+      id: "opacity"
+      value: "0.1"
+      type: PROPERTY_TYPE_NUMBER
+    }
+  }
+  scale3 {
+    x: 1920.0
+    y: 1080.0
+    z: 572.502
+  }
+}
 scale_along_z: 0
 embedded_instances {
   id: "monarch"
