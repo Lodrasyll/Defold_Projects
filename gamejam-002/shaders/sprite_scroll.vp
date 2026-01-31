@@ -1,0 +1,22 @@
+// single_scroll.vp
+attribute highp vec4 position;
+attribute mediump vec2 texcoord0;
+
+uniform mediump mat4 mtx_worldview;
+uniform mediump mat4 mtx_proj;
+uniform mediump vec4 animation_time; // 材质中设置的常量
+
+varying mediump vec2 var_texcoord0; // 我们只需要这一个变量
+
+void main()
+{
+    vec4 p = mtx_worldview * vec4(position.xyz, 1.0);
+    
+    // 原教程建议在顶点着色器中计算偏移以优化性能
+    // 直接在这里计算 x 轴的减法偏移
+    var_texcoord0 = vec2(texcoord0.x - animation_time.x, texcoord0.y);
+    
+    gl_Position = mtx_proj * p;
+}
+
+

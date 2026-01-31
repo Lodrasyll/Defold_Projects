@@ -1,0 +1,63 @@
+go.property('type', 0)
+
+local DESTORY_TIME = 1.2
+local LIGHT_RADIUS = 250
+
+---@package
+---@param self enemy.script
+function init(self)
+	local anim = tostring(self.type)
+	sprite.play_flipbook('#sprite', anim)
+	
+	self.scroll_speed = 120
+	self.direction = -1
+
+	go.animate(".", "scale.y", go.PLAYBACK_LOOP_PINGPONG, 0.32, go.EASING_INOUTSINE, 0.3)
+    go.animate(".", "scale.x", go.PLAYBACK_LOOP_PINGPONG, 0.28, go.EASING_INOUTSINE, 0.4)
+
+	self.timer = DESTORY_TIME
+	self.is_dying = false
+end
+
+---@package
+---@param self enemy.script
+---@param dt number
+function update(self, dt)
+	local pos = go.get_position()
+	pos.x = pos.x + self.scroll_speed * self.direction * dt
+	go.set_position(pos)
+
+	local lgiht_pos = go.get_position('/light')
+	local distance = vmath.length(pos - lgiht_pos)
+	if distance <= LIGHT_RADIUS then
+		self.timer = self.timer - dt
+
+		local progress = self.timer / DESTORY_TIME
+		go.animate('#sprite', 'tint', go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, progress, progress, 1), go.EASING_INBOUNCE, progress)
+
+		if self.timer <= 0 then
+			die(self)
+		end
+	else
+		if self.timer < DESTORY_TIME then
+			self.timer = DESTORY_TIME
+			
+			if self.is_dying then
+				go.animate('#sprite', 'tint', go.PLAYBACK_ONCE_FORWARD, vmath.vector4(1, 1, 1, 1), go.EASING_INBOUNCE, self.timer)
+				self.is_dying = false
+			end
+		end
+	end
+
+
+end
+
+die = function (self)
+	if self.dead then return end
+	self.dead = true
+
+	-- 播放死亡特效
+	msg.post("/camera", "shake", { intensity = 0.005, duration = 0.2 })
+	-- particlefx.play("#explosion") -- 如果有粒子
+	go.delete()
+end

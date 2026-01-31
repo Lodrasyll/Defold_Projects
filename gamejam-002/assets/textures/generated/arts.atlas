@@ -1,0 +1,50 @@
+images {
+  image: "/assets/textures/generated/graphics/arts/protected.png"
+}
+images {
+  image: "/assets/textures/generated/graphics/arts/1.png"
+}
+images {
+  image: "/assets/textures/generated/graphics/arts/2.png"
+}
+images {
+  image: "/assets/textures/generated/graphics/arts/3.png"
+}
+images {
+  image: "/assets/textures/generated/graphics/arts/4.png"
+}
+images {
+  image: "/assets/textures/generated/graphics/arts/5.png"
+}
+images {
+  image: "/assets/textures/generated/graphics/arts/6.png"
+}
+images {
+  image: "/assets/textures/generated/graphics/arts/7.png"
+}
+animations {
+  id: "light"
+  images {
+    image: "/assets/textures/generated/graphics/arts/circle_000.png"
+  }
+  images {
+    image: "/assets/textures/generated/graphics/arts/circle_001.png"
+  }
+  images {
+    image: "/assets/textures/generated/graphics/arts/circle_002.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 9
+}
+animations {
+  id: "ground"
+  images {
+    image: "/assets/textures/generated/graphics/arts/ground_000_copy.png"
+  }
+  images {
+    image: "/assets/textures/generated/graphics/arts/ground_001_copy.png"
+  }
+  playback: PLAYBACK_LOOP_FORWARD
+  fps: 2
+}
+extrude_borders: 2

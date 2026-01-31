@@ -1,0 +1,68 @@
+-- ====== 依赖 ======
+local ScrollController = require('core/components/scroll_controller')
+local GameData = require('game.all.game_data')
+
+
+-- ====== 变量 ======
+local WINDOW_WIDTH = sys.get_config_number('display.width')
+local WINDOW_HEIGHT = sys.get_config_number('display.height')
+
+local spawn_time = math.random(1, 4)
+
+-- ====== 函数 ======
+local spawn_enemies
+local spawn_light
+local is_in_light
+
+
+
+---@package
+---@param self game_controller.script
+function init(self)
+    msg.post('.', 'acquire_input_focus')
+
+    spawn_enemies(self)
+    timer.delay(spawn_time, true, function()
+        spawn_enemies(self)
+        spawn_time = 2.0
+    end)
+end
+
+---@package
+---@param self game_controller.script
+---@param dt number
+function update(self, dt)
+    ScrollController.bg_scroll(go.get_id('/ground'), nil, dt)
+
+    if is_in_light(self) then
+        print('in light')
+    else
+        print('in dark')
+    end
+end
+
+
+
+spawn_enemies = function(self)
+    local url = '/enemy_factory#factory'
+    local pos = vmath.vector3(WINDOW_WIDTH + 50, 300, 1)
+    local props = { type = math.random(1, 7) }
+    local enemy_id = factory.create(url, pos, nil, props, 0.3)
+    print('enemy!')
+end
+
+spawn_light = function (self)
+    local url = '/light_factory#factory'
+    local pos = vmath.vector3(WINDOW_WIDTH / 2, WINDOW_HEIGHT, 1)
+    self.light_id = factory.create(url, pos, nil, nil, 1.0)
+end
+
+is_in_light = function (self)
+    local player_pos = go.get_position('/friend')
+    local light_pos = go.get_position(self.light_id)
+    local distance = player_pos - light_pos
+    if vmath.length(distance) < 260 then
+        return true
+    end
+    return false
+end

@@ -1,0 +1,124 @@
+name: "level_1"
+instances {
+  id: "camera"
+  prototype: "/orthographic/camera.go"
+  position {
+    x: 960.0
+    y: 540.0
+  }
+}
+instances {
+  id: "sprite_scroll"
+  prototype: "/shaders/sprite_scroll.go"
+  position {
+    x: 960.0
+    y: 540.0
+    z: -1.0
+  }
+  component_properties {
+    id: "animate_shader"
+    properties {
+      id: "gap_x"
+      value: "0.4"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "gap_y"
+      value: "0.4"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "speed_x"
+      value: "0.1"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "speed_y"
+      value: "0.1"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "opacity"
+      value: "0.1"
+      type: PROPERTY_TYPE_NUMBER
+    }
+    properties {
+      id: "bg_color"
+      value: "1.0, 1.0, 1.0, 1.0"
+      type: PROPERTY_TYPE_VECTOR4
+    }
+  }
+  scale3 {
+    x: 1920.0
+    y: 1080.0
+    z: 572.502
+  }
+}
+instances {
+  id: "friend"
+  prototype: "/game/all/friend.go"
+  position {
+    x: 392.0
+    y: 300.0
+  }
+  scale3 {
+    x: 0.3
+    y: 0.3
+  }
+}
+instances {
+  id: "light"
+  prototype: "/game/all/light.go"
+}
+scale_along_z: 0
+embedded_instances {
+  id: "monarch"
+  data: "components {\n"
+  "  id: \"level_1\"\n"
+  "  component: \"/scenes/level_1/level_1.gui\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "game_controller"
+  data: "components {\n"
+  "  id: \"game_controller\"\n"
+  "  component: \"/game/all/game_controller.script\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "enemy_factory"
+  data: "embedded_components {\n"
+  "  id: \"factory\"\n"
+  "  type: \"factory\"\n"
+  "  data: \"prototype: \\\"/game/all/enemy.go\\\"\\n"
+  "\"\n"
+  "}\n"
+  ""
+}
+embedded_instances {
+  id: "world"
+  children: "ground"
+  data: ""
+}
+embedded_instances {
+  id: "ground"
+  data: "embedded_components {\n"
+  "  id: \"sprite\"\n"
+  "  type: \"sprite\"\n"
+  "  data: \"default_animation: \\\"ground\\\"\\n"
+  "material: \\\"/builtins/materials/sprite.material\\\"\\n"
+  "textures {\\n"
+  "  sampler: \\\"texture_sampler\\\"\\n"
+  "  texture: \\\"/assets/textures/generated/arts.atlas\\\"\\n"
+  "}\\n"
+  "\"\n"
+  "}\n"
+  ""
+  position {
+    x: 1280.0
+    y: 19.0
+    z: -0.1
+  }
+}

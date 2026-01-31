@@ -1,0 +1,68 @@
+-- -- 暴露属性到编辑器面板
+-- go.property("pattern_size", 120.0)                         -- 【尺寸】值越大，图案越大；值越小，图案越密集
+-- go.property("opacity", 0.5)                                -- 【透明度】0.0 (不可见) ~ 1.0 (完全清晰)
+-- go.property("speed_x", 0.1)                                -- X轴速度
+-- go.property("speed_y", 0.1)                                -- Y轴速度
+-- go.property("bg_color", vmath.vector4(0.1, 0.1, 0.1, 1.0)) -- 背景色
+
+-- function init(self)
+-- 	self.time = 0
+
+-- 	-- 初始化背景色
+-- 	model.set_constant("#plane", "bg_color", self.bg_color)
+
+-- 	-- 初始化透明度 (注意我们把 float 打包进 vector4)
+-- 	local opacity_vec = vmath.vector4(self.opacity, 0, 0, 0)
+-- 	model.set_constant("#plane", "opacity_setting", opacity_vec)
+-- end
+
+-- function update(self, dt)
+-- 	self.time = self.time + dt
+
+-- 	-- 1. 更新滚动和尺寸参数
+-- 	-- params.y 就是尺寸，直接对应 self.pattern_size
+-- 	local params = vmath.vector4(self.time, self.pattern_size, self.speed_x, self.speed_y)
+-- 	model.set_constant("#plane", "params", params)
+
+-- 	-- 2. (可选) 如果你需要在运行时动态修改透明度，把这行也放在 update 里
+-- 	-- 如果只是静态设置，放在 init 就够了，但为了调试方便建议放这里
+-- 	local opacity_vec = vmath.vector4(self.opacity, 0, 0, 0)
+-- 	model.set_constant("#plane", "opacity_setting", opacity_vec)
+-- end
+
+-- 基础外观
+go.property("tile_width", 120.0)  -- 【宽】单独控制宽度 (解决拉伸)
+go.property("tile_height", 120.0) -- 【高】单独控制高度 (解决拉伸)
+go.property("gap_x", 0.2)         -- 【左右间隔】0.0~0.9 (值越大间隙越大)
+go.property("gap_y", 0.2)         -- 【上下间隔】0.0~0.9
+
+-- 运动与布局
+go.property("speed_x", 0.5)        -- 滚动速度 X
+go.property("speed_y", 0.2)        -- 滚动速度 Y
+go.property("stagger_offset", 0.5) -- 【错位】0.0=对齐, 0.5=标准砖墙错位
+go.property("opacity", 1.0)        -- 透明度
+
+-- 颜色
+go.property("bg_color", vmath.vector4(0.1, 0.1, 0.1, 1.0))
+
+function init(self)
+	self.time = 0
+	model.set_constant("#plane", "bg_color", self.bg_color)
+	self.msg_url = "#plane" -- 方便后面调用
+end
+
+function update(self, dt)
+	self.time = self.time + dt
+
+	-- 1. 组装 Layout 属性 (控制形状和间隙)
+	-- 如果你的图片被压扁了，就调大 tile_height 或者调小 tile_width，直到它变圆为止！
+	local layout = vmath.vector4(self.tile_width, self.tile_height, self.gap_x, self.gap_y)
+	model.set_constant(self.msg_url, "layout_props", layout)
+
+	-- 2. 组装 Scroll 属性 (控制运动和错位)
+	local scroll = vmath.vector4(self.time, self.stagger_offset, self.speed_x, self.speed_y)
+	model.set_constant(self.msg_url, "scroll_props", scroll)
+
+	-- 3. 透明度
+	model.set_constant(self.msg_url, "opacity_setting", vmath.vector4(self.opacity, 0, 0, 0))
+end

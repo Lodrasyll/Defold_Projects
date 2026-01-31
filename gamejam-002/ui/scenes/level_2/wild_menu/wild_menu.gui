@@ -1,0 +1,78 @@
+script: "/ui/scenes/level_2/wild_menu/wild_menu.gui_script"
+nodes {
+  position {
+    x: 1670.0
+    y: 930.0
+  }
+  size {
+    x: 500.0
+    y: 300.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  type: TYPE_TEMPLATE
+  id: "selection_menu"
+  parent: "root"
+  inherit_alpha: true
+  template: "/ui/widgets/selection_menu/selection_menu.gui"
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/root"
+  parent: "selection_menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/menu"
+  parent: "selection_menu/root"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/cursor"
+  parent: "selection_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/option_1"
+  parent: "selection_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "selection_menu/option_text_1"
+  parent: "selection_menu/option_1"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/option_2"
+  parent: "selection_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "selection_menu/option_text_2"
+  parent: "selection_menu/option_2"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_BOX
+  id: "selection_menu/option_3"
+  parent: "selection_menu/menu"
+  template_node_child: true
+}
+nodes {
+  type: TYPE_TEXT
+  id: "selection_menu/option_text_3"
+  parent: "selection_menu/option_3"
+  template_node_child: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

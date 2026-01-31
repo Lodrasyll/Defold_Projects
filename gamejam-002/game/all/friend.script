@@ -1,0 +1,30 @@
+
+
+---@package
+---@param self friend.script
+function init(self)
+	go.animate(".", "scale.y", go.PLAYBACK_LOOP_PINGPONG, 0.32, go.EASING_INOUTSINE, 0.3)
+	go.animate(".", "scale.x", go.PLAYBACK_LOOP_PINGPONG, 0.28, go.EASING_INOUTSINE, 0.4)
+
+	self.is_jump = false
+	self.jump_interval = math.random(1, 3)
+	self.jump_height = 80
+end
+
+---@package
+---@param self friend.script
+---@param dt number
+function update(self, dt)
+	if not self.is_jump then
+		self.jump_interval = self.jump_interval - dt
+		if self.jump_interval <= 0 then
+			self.is_jump = true
+			self.jump_interval = math.random(1, 3)
+
+			local pos = go.get_position()
+			go.animate('.', 'position.y', go.PLAYBACK_ONCE_PINGPONG, pos.y + self.jump_height, go.EASING_OUTQUAD, 0.4, 0, function()
+				self.is_jump = false
+			end)
+		end
+	end
+end
