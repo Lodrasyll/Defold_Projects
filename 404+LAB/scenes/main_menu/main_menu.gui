@@ -1,0 +1,81 @@
+script: "/scenes/main_menu/main_menu.gui_script"
+fonts {
+  name: "ChillBitmap"
+  font: "/assets/fonts/ChillBitmap_7px.font"
+}
+fonts {
+  name: "Koulen"
+  font: "/assets/fonts/Koulen.font"
+}
+nodes {
+  size {
+    x: 1920.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  id: "root"
+  pivot: PIVOT_SW
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+  visible: false
+}
+nodes {
+  size {
+    x: 1920.0
+    y: 1080.0
+  }
+  type: TYPE_BOX
+  id: "bg"
+  pivot: PIVOT_SW
+  parent: "root"
+  inherit_alpha: true
+  size_mode: SIZE_MODE_AUTO
+}
+nodes {
+  position {
+    x: 960.0
+    y: 849.0
+  }
+  scale {
+    x: 2.0
+    y: 2.0
+  }
+  size {
+    x: 600.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "Def-Project Template"
+  font: "Koulen"
+  id: "game_title"
+  parent: "root"
+  inherit_alpha: true
+}
+nodes {
+  position {
+    x: 960.0
+    y: 140.0
+  }
+  size {
+    x: 350.0
+    y: 100.0
+  }
+  color {
+    x: 0.0
+    y: 0.0
+    z: 0.0
+  }
+  type: TYPE_TEXT
+  text: "PRESS ENTER"
+  font: "Koulen"
+  id: "tip"
+  parent: "root"
+  inherit_alpha: true
+}
+material: "/builtins/materials/gui.material"
+adjust_reference: ADJUST_REFERENCE_PARENT

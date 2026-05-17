@@ -1,0 +1,28 @@
+
+-- Rive events trigger when the splash intro starts and ends and is used to not allow input while the intro is playing.
+-- The logic is done within the rive statemachine.
+local function rive_event_handler(self, message_id, message)
+	print("received event", message.name)
+end
+
+
+-- Get input focus then start the splash statemachine.
+function init(self)
+	msg.post(".", "acquire_input_focus")
+end
+
+
+-- Enable rive input for the model.
+function on_input(self, action_id, action)
+	if not action_id or action_id == hash("touch") then
+
+		if action.pressed then
+			rive.pointer_down("#SPLASH", action.x, action.y)
+		elseif action.released then
+			rive.pointer_up("#SPLASH", action.x, action.y)
+		else
+			rive.pointer_move("#SPLASH", action.x, action.y)
+		end
+
+	end
+end

@@ -1,0 +1,10 @@
+mesh: "/builtins/assets/meshes/quad.dae"
+name: "unnamed"
+materials {
+  name: "default"
+  material: "/shaders/sprite_scroll.material"
+  textures {
+    sampler: "tex0"
+    texture: "/assets/textures/generated/graphics/black_001_256x256.png"
+  }
+}
